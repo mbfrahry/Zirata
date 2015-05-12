@@ -1,0 +1,17 @@
+TODO List
+
+Map Rotation:
+  Fix where enemy ships go after rotation
+  Fix bullets paths for both enemy and player
+  
+Change gameplay to energy based
+  Add energy block
+  Turrets have a range/cone where they can shoot
+  Turn turrets on with energy 
+  Your turning slows down the more energy you use
+  
+Upgrade path
+  Buy expansion slots
+  Buy blocks or blocks drop
+    Can convert these into whatever you want
+    
