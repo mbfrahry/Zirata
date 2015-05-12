@@ -15,3 +15,5 @@ Upgrade path
   Buy blocks or blocks drop
     Can convert these into whatever you want
     
+Only have to do sine and cosine once since we are only using .1 and -.1 to rotate. It's constant and that makes 
+it easy to increase and decrease the speed
