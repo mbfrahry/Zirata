@@ -15,6 +15,11 @@ public class World {
 	public static final int WORLD_STATE_LAST_ENEMY = 1;
 	public static final int WORLD_STATE_LEVEL_END = 2;
 	public static final int WORLD_STATE_GAME_OVER = 3;
+
+	public static final float POS_SIN_ANGLE = (float)Math.sin(0.0035);
+	public static final float NEG_SIN_ANGLE = (float) Math.sin(-0.0035);
+	public static final float POS_COS_ANGLE = (float)Math.cos(0.0035);
+
 	
 	public Player player;
 	public final ArrayList<Enemy> enemies;
@@ -41,6 +46,7 @@ public class World {
 		this.state = WORLD_STATE_RUNNING;
 		rand = new Random();
 
+		//enemyAngle = (float)0.0035;
 		enemyAngle = 0;
 		worldAngle = 0;
 		moveRight = false;
@@ -62,11 +68,13 @@ public class World {
 	private void updateWorld(float deltaTime){
 		if(moveRight){
 			worldAngle -= .2;
-			enemyAngle = -.2f;
+			//enemyAngle = Math.abs(enemyAngle);
+			enemyAngle = POS_SIN_ANGLE;
 		}
 		if(moveLeft){
 			worldAngle += .2;
-			enemyAngle = .2f;
+			//enemyAngle = -Math.abs(enemyAngle);
+			enemyAngle = NEG_SIN_ANGLE;
 		}
 	}
 
@@ -102,12 +110,10 @@ public class World {
 					double y = currBlock.position.y;
 					x -= 160;
 					y -= 210;
-					double radian = enemyAngle * Math.PI / 180;
-					currBlock.position.x = (float) ( x * Math.cos(radian) + y * -Math.sin(radian));
-					currBlock.position.y = (float)(x * Math.sin(radian) + y * Math.cos(radian));
+					currBlock.position.x = (float) ( x * POS_COS_ANGLE + y * -enemyAngle);
+					currBlock.position.y = (float)(x * enemyAngle + y * POS_COS_ANGLE);
 					currBlock.position.x += 160;
 					currBlock.position.y += 210;
-					Log.d("new position", "Waddup doe " + (x) + " " + (y) + " " + currBlock.position.x + " " + currBlock.position.y + " " + x * Math.cos(0) + " " + y * -Math.sin(0));
 				}
 
 				if(currBlock.getClass().equals(EnemyTurretBlock.class)){
