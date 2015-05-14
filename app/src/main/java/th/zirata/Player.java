@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import android.util.Log;
 
+import com.badlogic.androidgames.framework.math.Vector2;
+
 public class Player {
 
 	public ArrayList<Block> playerBlocks = new ArrayList<Block>();

@@ -6,11 +6,13 @@ import java.util.Random;
 import android.util.Log;
 
 import com.badlogic.androidgames.framework.math.OverlapTester;
+import com.badlogic.androidgames.framework.math.Vector2;
 
 public class World {
 
 	public static final float WORLD_WIDTH = 320;
 	public static final float WORLD_HEIGHT = 480;
+	public Vector2 WORLD_MID_POINT;
 	public static final int WORLD_STATE_RUNNING = 0;
 	public static final int WORLD_STATE_LAST_ENEMY = 1;
 	public static final int WORLD_STATE_LEVEL_END = 2;
@@ -46,6 +48,8 @@ public class World {
 		this.state = WORLD_STATE_RUNNING;
 		rand = new Random();
 
+		WORLD_MID_POINT = new Vector2( WORLD_WIDTH/2, WORLD_HEIGHT/2);
+
 		//enemyAngle = (float)0.0035;
 		enemyAngle = 0;
 		worldAngle = 0;
@@ -68,14 +72,13 @@ public class World {
 	private void updateWorld(float deltaTime){
 		if(moveRight){
 			worldAngle -= .2;
-			//enemyAngle = Math.abs(enemyAngle);
 			enemyAngle = POS_SIN_ANGLE;
 		}
 		if(moveLeft){
 			worldAngle += .2;
-			//enemyAngle = -Math.abs(enemyAngle);
 			enemyAngle = NEG_SIN_ANGLE;
 		}
+		Log.d("World Angle", worldAngle + " " );
 	}
 
 	private void updatePlayer(float deltaTime){
@@ -91,7 +94,7 @@ public class World {
 				timeToNextEnemy -= 0.5;
 			}
 			
-			if(enemyNum >= Settings.numEnemies){
+			if(enemyNum >= 1){//Settings.numEnemies){
 				state = WORLD_STATE_LAST_ENEMY;
 			}
 			
@@ -105,7 +108,7 @@ public class World {
 
 				if(moveLeft || moveRight) {
 
-
+					currBlock.rotate(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
 					double x = currBlock.position.x;
 					double y = currBlock.position.y;
 					x -= 160;
@@ -161,7 +164,7 @@ public class World {
 	}
 	
 	private void generateEnemy(){
-		if(rand.nextFloat() > 0.25){
+		if(rand.nextFloat() > 0){
 			enemies.add(new Enemy(1));
 		}
 		else{
