@@ -2,6 +2,7 @@ package th.zirata;
 
 import com.badlogic.androidgames.framework.DynamicGameObject;
 import com.badlogic.androidgames.framework.math.Vector2;
+import android.util.Log;
 
 public class Block extends DynamicGameObject {
 

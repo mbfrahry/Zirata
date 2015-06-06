@@ -21,11 +21,13 @@ public class World {
 	public static final float POS_SIN_ANGLE = (float)Math.sin(0.0035);
 	public static final float NEG_SIN_ANGLE = (float) Math.sin(-0.0035);
 	public static final float POS_COS_ANGLE = (float)Math.cos(0.0035);
-
+	public static final ArrayList<Bullet> PLAYER_BULLETS = new ArrayList<Bullet>();
 	
 	public Player player;
 	public final ArrayList<Enemy> enemies;
 	public final ArrayList<Bullet> enemyBullets;
+	public final ArrayList<Bullet> playerBullets;
+
 	public float lastEnemyTime;
 	public float timeToNextEnemy;
 	public float enemyNum;
@@ -42,6 +44,7 @@ public class World {
 		this.player = new Player();
 		enemies = new ArrayList<Enemy>();
 		enemyBullets = new ArrayList<Bullet>();
+		playerBullets = new ArrayList<Bullet>();
 		lastEnemyTime = 0;
 		timeToNextEnemy = 4;
 		enemyNum = 0;
@@ -60,6 +63,7 @@ public class World {
 	public void update(float deltaTime){
 		updateWorld(deltaTime);
 		updatePlayer(deltaTime);
+		updatePlayerBullets(deltaTime);
 		updateEnemies(deltaTime);
 		updateEnemyBullets(deltaTime);
 		checkPlayerBullets();
@@ -67,6 +71,7 @@ public class World {
 		checkPlayerCollision();
 		checkLevelEnd();
 		checkGameOver();
+
 	}
 
 	private void updateWorld(float deltaTime){
@@ -78,11 +83,18 @@ public class World {
 			worldAngle += .2;
 			enemyAngle = NEG_SIN_ANGLE;
 		}
-		Log.d("World Angle", worldAngle + " " );
 	}
 
 	private void updatePlayer(float deltaTime){
 		player.update(deltaTime);
+	}
+
+	private void updatePlayerBullets(float deltaTime){
+		for(int i = 0; i < PLAYER_BULLETS.size(); i++) {
+			if (moveLeft || moveRight) {
+				PLAYER_BULLETS.get(i).rotate(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
+			}
+		}
 	}
 	
 	private void updateEnemies(float deltaTime){
@@ -94,7 +106,7 @@ public class World {
 				timeToNextEnemy -= 0.5;
 			}
 			
-			if(enemyNum >= 1){//Settings.numEnemies){
+			if(enemyNum >= Settings.numEnemies){
 				state = WORLD_STATE_LAST_ENEMY;
 			}
 			
@@ -107,16 +119,7 @@ public class World {
 				Block currBlock = enemy.enemyBlocks.get(j);
 
 				if(moveLeft || moveRight) {
-
 					currBlock.rotate(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
-					double x = currBlock.position.x;
-					double y = currBlock.position.y;
-					x -= 160;
-					y -= 210;
-					currBlock.position.x = (float) ( x * POS_COS_ANGLE + y * -enemyAngle);
-					currBlock.position.y = (float)(x * enemyAngle + y * POS_COS_ANGLE);
-					currBlock.position.x += 160;
-					currBlock.position.y += 210;
 				}
 
 				if(currBlock.getClass().equals(EnemyTurretBlock.class)){
@@ -134,8 +137,10 @@ public class World {
 	}
 	
 	public void updateEnemyBullets(float deltaTime){
-		//Log.d("EnemyBulletSize", enemyBullets.size() + " ");
 		for(int i = 0; i < enemyBullets.size(); i++){
+			if (moveLeft || moveRight) {
+				enemyBullets.get(i).rotate(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
+			}
 			enemyBullets.get(i).update(deltaTime);
 			if(enemyBullets.get(i).outOfBounds()){
 				enemyBullets.remove(i);
@@ -164,7 +169,7 @@ public class World {
 	}
 	
 	private void generateEnemy(){
-		if(rand.nextFloat() > 0){
+		if(rand.nextFloat() > .25){
 			enemies.add(new Enemy(1));
 		}
 		else{
@@ -186,27 +191,10 @@ public class World {
 
 
 	private void checkPlayerBullets(){
-		for(int i = 0; i < player.playerBlocks.size(); i++){
-			Block currBlock = player.playerBlocks.get(i);
-			if(currBlock.getClass().equals(TurretBlock.class)){
-				TurretBlock tBlock = (TurretBlock)currBlock;
-				Bullet b;
-				for(int j = 0; j < tBlock.bullets.size(); j++){
-					b = tBlock.bullets.get(j);
-					if(checkEnemyCollision(b)){
-						tBlock.bullets.remove(j);
-					}
-				}
-			}
-			if(currBlock.getClass().equals(MachineGunBlock.class)){
-				MachineGunBlock mgBlock = (MachineGunBlock)currBlock;
-				Bullet b;
-				for(int j = 0; j < mgBlock.bullets.size(); j++){
-					b = mgBlock.bullets.get(j);
-					if(checkEnemyCollision(b)){
-						mgBlock.bullets.remove(j);
-					}
-				}
+		for(int i = 0; i < PLAYER_BULLETS.size(); i++) {
+			Bullet b = PLAYER_BULLETS.get(i);
+			if (checkEnemyCollision(b)) {
+				PLAYER_BULLETS.remove(i);
 			}
 		}
 	}

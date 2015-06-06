@@ -64,8 +64,6 @@ public class WorldRenderer {
 					if(tBlock.numBullets < tBlock.maxBullets){
 						batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.turretBaseRegion);
 						batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, rotate.sub(currBlock.position).angle()-90, Assets.turretTopRegion);
-						//.sub(currBlock.position)
-						//currBlock.lastTouch.sub(currBlock.position).angle()
 					}
 					else{
 						//empty turret block
@@ -76,10 +74,6 @@ public class WorldRenderer {
 					for(int k = tBlock.numBullets; k < tBlock.maxBullets; k++){
 						batcher.drawSprite(currBlock.position.x -8 + 3*k, currBlock.position.y - 8, 5, 5, Assets.bulletRegion);
 					}
-					Bullet b;
-					for(int j = 0; j < tBlock.bullets.size(); j++){
-						bullets.add(tBlock.bullets.get(j));
-					}
 				}
 
 				else if(currBlock.getClass().equals(ArmorBlock.class)){
@@ -87,11 +81,7 @@ public class WorldRenderer {
 				}
 				
 				else if(currBlock.getClass().equals(MachineGunBlock.class)){
-					MachineGunBlock mgBlock = (MachineGunBlock)currBlock;
 					batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, currBlock.lastTouch.sub(currBlock.position).angle(), Assets.machineGunBlockRegion);
-					for(int k = 0; k < mgBlock.bullets.size(); k++){
-						bullets.add(mgBlock.bullets.get(k));
-					}
 				}
 
 				else{
@@ -99,8 +89,8 @@ public class WorldRenderer {
 				}
 			}
 			Bullet b;
-			for(int i = 0; i < bullets.size(); i++){
-				b = bullets.get(i);
+			for(int i = 0; i < world.PLAYER_BULLETS.size(); i++){
+				b = world.PLAYER_BULLETS.get(i);
 				batcher.drawSprite(b.position.x, b.position.y, 5, 5, Assets.bulletRegion);
 			}
 		}

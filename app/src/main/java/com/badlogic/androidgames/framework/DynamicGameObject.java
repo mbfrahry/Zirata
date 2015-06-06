@@ -1,7 +1,6 @@
 package com.badlogic.androidgames.framework;
 
 import android.util.Log;
-
 import com.badlogic.androidgames.framework.math.Vector2;
 
 public class DynamicGameObject extends GameObject {
@@ -25,10 +24,9 @@ public class DynamicGameObject extends GameObject {
         position.y += midPoint.y;
 
 
-        //x = velocity.x;
-       // y = velocity.y;
-        //Log.d("Velocity ", velocity.x + " " +  velocity.y);
-        //velocity.x = ( x * cosMath + y * sinMath);
-        //velocity.y = (x * -sinMath + y * cosMath);
+        x = velocity.x;
+        y = velocity.y;
+        velocity.x = ( x * cosMath - y * sinMath);
+        velocity.y = (x * sinMath + y * cosMath);
     }
 }

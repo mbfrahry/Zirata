@@ -18,6 +18,7 @@ public class Player {
 	}
 	
 	public void update(float deltaTime){
+
 		Block currBlock;
 		for(int i = 0; i < playerBlocks.size(); i++){			
 			currBlock = playerBlocks.get(i);
