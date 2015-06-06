@@ -23,6 +23,7 @@ public class BlockUpgradeScreen extends GLScreen{
 	Rectangle armorBounds;
 	Rectangle turretBounds;
 	Rectangle machineGunBounds;
+	Rectangle energyBounds;
 	Vector2 touchPoint;
 	int blockNum;
 	Block lastBlock;
@@ -34,9 +35,10 @@ public class BlockUpgradeScreen extends GLScreen{
         guiCam = new Camera2D(glGraphics, 320, 480);
         backBounds = new Rectangle(0, 0, 64, 64);
         forwardBounds = new Rectangle(320-64, 0, 64, 64);
-        armorBounds = new Rectangle(0, 310-25, 350, 50);
-        turretBounds = new Rectangle(0, 250-25, 350, 50);
-        machineGunBounds = new Rectangle(0, 190-25, 350, 50);
+        armorBounds = new Rectangle(100-25, 250-25, 50, 50);
+        turretBounds = new Rectangle(50-25, 250-25, 50, 50);
+        machineGunBounds = new Rectangle(150-25, 250-25, 50, 50);
+		energyBounds = new Rectangle(200-25, 250-25, 50, 50);
 		touchPoint = new Vector2();
 		batcher = new SpriteBatcher(glGraphics, 500);
 		lastBlock = PlayerSave.playerBlocks.get(blockNum);
@@ -78,6 +80,12 @@ public class BlockUpgradeScreen extends GLScreen{
 					game.setScreen(new BuildScreen(game));
 					return;
 				}
+				if(OverlapTester.pointInRectangle(energyBounds, touchPoint)){
+					changeBlock("energy");
+					game.setScreen(new BuildScreen(game));
+					return;
+				}
+
 			}
 		}		
 		
@@ -97,6 +105,10 @@ public class BlockUpgradeScreen extends GLScreen{
 		}
 		if(blockType.equals("machineGun")){
 			MachineGunBlock newBlock = new MachineGunBlock(currBlock.position.x, currBlock.position.y, 10);
+			PlayerSave.playerBlocks.add(blockNum, newBlock);
+		}
+		if(blockType.equals("energy")){
+			EnergyBlock newBlock = new EnergyBlock(currBlock.position.x, currBlock.position.y, 10);
 			PlayerSave.playerBlocks.add(blockNum, newBlock);
 		}
 		PlayerSave.save(game.getFileIO());
@@ -133,14 +145,17 @@ public class BlockUpgradeScreen extends GLScreen{
 		else if(currBlock.getClass().equals(MachineGunBlock.class)){
 			batcher.drawSprite(x, y, 24, 24, Assets.machineGunBlockRegion);
 		}
-
+		else if(currBlock.getClass().equals(EnergyBlock.class)){
+			batcher.drawSprite(x, y, 24, 24, Assets.energyBlockRegion);
+		}
 		else{
 			batcher.drawSprite(x, y, 24, 24, Assets.baseBlockRegion);
 		}
-		batcher.drawSprite(160, 250, 350, 50, Assets.turretBaseRegion);
-		batcher.drawSprite(160, 250, 350, 50, Assets. turretTopRegion);
-		batcher.drawSprite(160, 310, 350, 50, Assets.armorBlockRegion);
-		batcher.drawSprite(160, 190, 350, 50, Assets.machineGunBlockRegion);
+		batcher.drawSprite(50, 250, 50, 50, Assets.turretBaseRegion);
+		batcher.drawSprite(50, 250, 50, 50, Assets. turretTopRegion);
+		batcher.drawSprite(100, 250, 50, 50, Assets.armorBlockRegion);
+		batcher.drawSprite(150, 250, 50, 50, Assets.machineGunBlockRegion);
+		batcher.drawSprite(200, 250, 50, 50, Assets.energyBlockRegion);
 		batcher.endBatch();
 		
 		batcher.beginBatch(Assets.mainMenuTextures);
