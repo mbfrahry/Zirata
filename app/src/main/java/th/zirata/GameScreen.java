@@ -136,8 +136,7 @@ public class GameScreen extends GLScreen {
 						Block currBlock = world.player.playerBlocks.get(blockNum[event.pointer]);
 						currBlock.lastTouch.x = touchPoint.x;
 						currBlock.lastTouch.y = touchPoint.y;
-					
-						currBlock.action();
+
 						if(!currBlock.active && currBlock.energyCost <= world.player.energy) {
 							currBlock.active = true;
 						}

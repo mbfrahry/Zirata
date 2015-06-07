@@ -86,6 +86,14 @@ public class World {
 	}
 
 	private void updatePlayer(float deltaTime){
+		Block currBlock;
+		for(int i = 0; i < player.playerBlocks.size(); i++){
+			currBlock = player.playerBlocks.get(i);
+			if(currBlock.getClass().equals(TurretBlock.class) && currBlock.active && enemies.size() > 0 && enemies.get(0).enemyBlocks.size() > 0){
+				TurretBlock tBlock = (TurretBlock) currBlock;
+				tBlock.action(enemies.get(0).enemyBlocks.get(0));
+			}
+		}
 		player.update(deltaTime);
 	}
 
@@ -152,10 +160,6 @@ public class World {
 		if(tBlock.state == tBlock.TURRET_READY && tBlock.bullets.size() < 1){
 			if(player.playerBlocks.size() > 0){
 				Block randBlock = player.playerBlocks.get(Math.abs(rand.nextInt()) % player.playerBlocks.size());
-				//BlockAction blockAction = new BlockAction();
-				//blockAction.x = randBlock.position.x;
-				//blockAction.y = randBlock.position.y;
-				//tBlock.action(blockAction);
 				enemyBullets.add(new Bullet(tBlock.position.x, tBlock.position.y,randBlock.position.x, randBlock.position.y));
 				tBlock.resetBlock();
 			}

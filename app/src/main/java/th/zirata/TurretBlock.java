@@ -30,9 +30,9 @@ public class TurretBlock extends Block{
 		state = TURRET_READY;
 	}
 	
-	public void action(){
-		if(state == TURRET_READY){
-			World.PLAYER_BULLETS.add(new Bullet(position.x, position.y, lastTouch.x, lastTouch.y));
+	public void action(Block enemyBlock){
+		if(state == TURRET_READY ){
+			World.PLAYER_BULLETS.add(new Bullet(position.x, position.y, enemyBlock.position.x, enemyBlock.position.y));
 			numBullets++;
 			if(numBullets >= maxBullets){
 				state = TURRET_RELOADING;
