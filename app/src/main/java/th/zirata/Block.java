@@ -2,7 +2,6 @@ package th.zirata;
 
 import com.badlogic.androidgames.framework.DynamicGameObject;
 import com.badlogic.androidgames.framework.math.Vector2;
-import android.util.Log;
 
 public class Block extends DynamicGameObject {
 
@@ -10,13 +9,17 @@ public class Block extends DynamicGameObject {
 	public static final float BLOCK_HEIGHT = 24;
 	int health;
 	int maxHealth;
+	int energyCost;
 	Vector2 lastTouch;
+	boolean active;
 	
-	public Block(float x, float y, int health){
+	public Block(float x, float y, int health, int energyCost){
 		super(x, y, BLOCK_WIDTH, BLOCK_HEIGHT);
 		this.health = health;
 		this.maxHealth = health;
+		this.energyCost = energyCost;
 		lastTouch = new Vector2(x, y + BLOCK_HEIGHT/2);
+		active = false;
 	}
 	
 	public void action() {

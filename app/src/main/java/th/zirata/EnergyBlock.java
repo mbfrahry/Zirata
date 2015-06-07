@@ -8,7 +8,7 @@ public class EnergyBlock extends Block{
     public int energy;
 
     public EnergyBlock(float x, float y, int health, int energy){
-        super(x, y, health);
+        super(x, y, health, 0);
         this.energy = energy;
     }
 

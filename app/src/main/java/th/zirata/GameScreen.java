@@ -77,7 +77,6 @@ public class GameScreen extends GLScreen {
 	}
 	
 	private void updateReady() {
-		world.player.getEnergy();
 		state = GAME_RUNNING;
 	}
 
@@ -139,6 +138,12 @@ public class GameScreen extends GLScreen {
 						currBlock.lastTouch.y = touchPoint.y;
 					
 						currBlock.action();
+						if(!currBlock.active && currBlock.energyCost <= world.player.energy) {
+							currBlock.active = true;
+						}
+						else {
+							currBlock.active = false;
+						}
 						blockNum[event.pointer] = -1;
 						return;
 					} catch(Exception e){

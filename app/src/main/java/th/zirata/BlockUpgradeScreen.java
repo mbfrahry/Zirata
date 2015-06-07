@@ -100,11 +100,11 @@ public class BlockUpgradeScreen extends GLScreen{
 			PlayerSave.playerBlocks.add(blockNum, newBlock);
 		}
 		if(blockType.equals("turret")){
-			TurretBlock newBlock = new TurretBlock(currBlock.position.x, currBlock.position.y, 10);
+			TurretBlock newBlock = new TurretBlock(currBlock.position.x, currBlock.position.y, 10, 3 );
 			PlayerSave.playerBlocks.add(blockNum, newBlock);
 		}
 		if(blockType.equals("machineGun")){
-			MachineGunBlock newBlock = new MachineGunBlock(currBlock.position.x, currBlock.position.y, 10);
+			MachineGunBlock newBlock = new MachineGunBlock(currBlock.position.x, currBlock.position.y, 10, 3);
 			PlayerSave.playerBlocks.add(blockNum, newBlock);
 		}
 		if(blockType.equals("energy")){

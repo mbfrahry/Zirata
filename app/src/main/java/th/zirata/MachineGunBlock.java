@@ -17,8 +17,8 @@ public class MachineGunBlock extends Block {
 	
 	int state;
 	
-	public MachineGunBlock(float x, float y, int health){
-		super(x, y, health);
+	public MachineGunBlock(float x, float y, int health, int energyCost){
+		super(x, y, health, energyCost);
 		bullets = new ArrayList<Bullet>();
 		maxBullets = 10;
 		numBullets = 0;

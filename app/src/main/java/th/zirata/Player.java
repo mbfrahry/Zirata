@@ -24,15 +24,18 @@ public class Player {
 		for(int i = 0; i < playerBlocks.size(); i++){
 			if(playerBlocks.get(i).getClass().equals(EnergyBlock.class)){
 				EnergyBlock currBlock = (EnergyBlock) playerBlocks.get(i);
-
-				Log.d("Velocity", currBlock.energy + " ");
 				currEnergy += currBlock.energy;
+			}
+			if(playerBlocks.get(i).active){
+				currEnergy -= playerBlocks.get(i).energyCost;
 			}
 		}
 		energy = currEnergy;
 	}
 	
 	public void update(float deltaTime){
+
+		getEnergy();
 		Block currBlock;
 		for(int i = 0; i < playerBlocks.size(); i++){			
 			currBlock = playerBlocks.get(i);

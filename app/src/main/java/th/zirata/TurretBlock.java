@@ -18,8 +18,8 @@ public class TurretBlock extends Block{
 	
 	int state; 
 	
-	public TurretBlock(float x, float y, int health){
-		super(x, y, health);
+	public TurretBlock(float x, float y, int health, int energyCost){
+		super(x, y, health, energyCost);
 		bullets = new ArrayList<Bullet>();
 		maxBullets = 3;
 		numBullets = 0;

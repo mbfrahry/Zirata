@@ -12,13 +12,13 @@ import com.badlogic.androidgames.framework.FileIO;
 public class PlayerSave {
 	
 	public static ArrayList<Block> playerBlocks = new ArrayList<Block>(){{
-		add(new Block(160, 240, 10));
+		add(new Block(160, 240, 10, 0));
 	}};
 	public static String file = ".player";
 	
 	public static void load(FileIO files){
 		playerBlocks = new ArrayList<Block>(){{
-			add(new Block(160, 240, 10));
+			add(new Block(160, 240, 10, 0));
 		}};
 		BufferedReader in = null;
 		try{
@@ -90,16 +90,16 @@ public class PlayerSave {
 	
 	public static void createBlock(int blockType, float x, float y){
 		if(blockType == 0){
-			playerBlocks.add(new Block(x, y, 10));
+			playerBlocks.add(new Block(x, y, 10, 0));
 		}
 		if(blockType == 1){
-			playerBlocks.add(new TurretBlock(x, y, 10));
+			playerBlocks.add(new TurretBlock(x, y, 10, 3));
 		}
 		if(blockType == 2){
 			playerBlocks.add(new ArmorBlock(x, y, 20));
 		}
 		if(blockType == 3){
-			playerBlocks.add(new MachineGunBlock(x, y, 10));
+			playerBlocks.add(new MachineGunBlock(x, y, 10, 3));
 		}
 		if(blockType == 4){
 			playerBlocks.add(new EnergyBlock(x, y, 10, 10));
@@ -108,7 +108,7 @@ public class PlayerSave {
 	
 	public static void reset(){
 		playerBlocks = new ArrayList<Block>(){{
-			add(new Block(160, 240, 10));
+			add(new Block(160, 240, 10, 0));
 		}};
 	}
 }

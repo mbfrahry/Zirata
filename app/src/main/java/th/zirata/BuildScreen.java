@@ -166,7 +166,7 @@ public class BuildScreen extends GLScreen{
 			
 			emptyBlock = checkAdjacentBlocks(currBlock);
 			for(int j = 0; j < emptyBlock.size(); j++){
-				Block newBlock = new Block(0, 0, 10);
+				Block newBlock = new Block(0, 0, 10, 0);
 				if(emptyBlock.get(j) == 0){
 					newBlock.position.x = currBlock.position.x;
 					newBlock.position.y = currBlock.position.y + 25;
