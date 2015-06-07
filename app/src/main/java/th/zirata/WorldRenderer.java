@@ -48,12 +48,12 @@ public class WorldRenderer {
 		renderPlayer();
 		renderEnemies();
 		renderEnemyBullets();
+		renderText();
 	}
 	
 	private void renderPlayer(){
 
 		if(world.player.playerBlocks.size() > 0){
-			ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 			batcher.beginBatch(Assets.blockTextures);
 
 			for(int i = 0; i < world.player.playerBlocks.size(); i++){
@@ -72,7 +72,7 @@ public class WorldRenderer {
 					}
 					//renders how many bullets the block can shoot
 					for(int k = tBlock.numBullets; k < tBlock.maxBullets; k++){
-						batcher.drawSprite(currBlock.position.x -8 + 3*k, currBlock.position.y - 8, 5, 5, Assets.bulletRegion);
+						batcher.drawSprite(currBlock.position.x - 8 + 3 * k, currBlock.position.y - 8, 5, 5, Assets.bulletRegion);
 					}
 				}
 
@@ -82,6 +82,10 @@ public class WorldRenderer {
 				
 				else if(currBlock.getClass().equals(MachineGunBlock.class)){
 					batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, currBlock.lastTouch.sub(currBlock.position).angle(), Assets.machineGunBlockRegion);
+				}
+
+				else if(currBlock.getClass().equals(EnergyBlock.class)){
+					batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.energyBlockRegion);
 				}
 
 				else{
@@ -128,13 +132,18 @@ public class WorldRenderer {
 							}
 						}
 
+						else if(currBlock.getClass().equals(EnergyBlock.class)){
+							batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.energyBlockRegion);
+						}
+
 						else{
 							batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.baseBlockRegion);
 						}
 					}
 				}
 				batcher.endBatch();
-			}catch(Exception e){
+			}
+			catch(Exception e){
 
 			}
 		}
@@ -151,5 +160,11 @@ public class WorldRenderer {
 			}
 			batcher.endBatch();
 		}
+	}
+
+	private void renderText(){
+		batcher.beginBatch(Assets.mainMenuTextures);
+		Assets.font.drawText(batcher, "Energy: " + world.player.energy + " ", 16, 480 - 20);
+		batcher.endBatch();
 	}
 }

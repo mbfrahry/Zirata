@@ -5,8 +5,11 @@ package th.zirata;
  */
 public class EnergyBlock extends Block{
 
-    public EnergyBlock(float x, float y, int health){
+    public int energy;
+
+    public EnergyBlock(float x, float y, int health, int energy){
         super(x, y, health);
+        this.energy = energy;
     }
 
 }

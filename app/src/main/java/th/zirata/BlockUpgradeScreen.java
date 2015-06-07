@@ -108,7 +108,7 @@ public class BlockUpgradeScreen extends GLScreen{
 			PlayerSave.playerBlocks.add(blockNum, newBlock);
 		}
 		if(blockType.equals("energy")){
-			EnergyBlock newBlock = new EnergyBlock(currBlock.position.x, currBlock.position.y, 10);
+			EnergyBlock newBlock = new EnergyBlock(currBlock.position.x, currBlock.position.y, 10, 10);
 			PlayerSave.playerBlocks.add(blockNum, newBlock);
 		}
 		PlayerSave.save(game.getFileIO());

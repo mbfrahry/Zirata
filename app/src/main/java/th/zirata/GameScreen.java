@@ -39,7 +39,7 @@ public class GameScreen extends GLScreen {
     
     public GameScreen(Game game) {
         super(game);
-        state = GAME_RUNNING;
+        state = GAME_READY;
         guiCam = new Camera2D(glGraphics, 320, 480);
         touchPoint = new Vector2();
         batcher = new SpriteBatcher(glGraphics, 1000);
@@ -77,9 +77,8 @@ public class GameScreen extends GLScreen {
 	}
 	
 	private void updateReady() {
-	    if(game.getInput().getTouchEvents().size() > 0) {
-	        state = GAME_RUNNING;
-	    }
+		world.player.getEnergy();
+		state = GAME_RUNNING;
 	}
 
 	private void updateRunning(float deltaTime) {
@@ -262,14 +261,17 @@ public class GameScreen extends GLScreen {
 	}
 	
 	private void presentReady() {
+
 	}
 	
 	private void presentRunning() {
-		
+
 	}
 	
-	private void presentPaused() {        
+	private void presentPaused() {
+
 	}
+
 	private void presentLevelEnd(){
 		
 	}

@@ -66,6 +66,9 @@ public class PlayerSave {
 				else if (currBlock.getClass().equals(MachineGunBlock.class)){
 					out.write(3 + "\n");
 				}
+				else if (currBlock.getClass().equals(EnergyBlock.class)){
+					out.write(4 + "\n");
+				}
 				
 				else{
 					out.write(0 + "\n");
@@ -97,6 +100,9 @@ public class PlayerSave {
 		}
 		if(blockType == 3){
 			playerBlocks.add(new MachineGunBlock(x, y, 10));
+		}
+		if(blockType == 4){
+			playerBlocks.add(new EnergyBlock(x, y, 10, 10));
 		}
 	}
 	
