@@ -22,6 +22,7 @@ public class Assets {
 	public static TextureRegion emptyTurretBlockRegion;
 	public static TextureRegion potentialBlockRegion;
 	public static TextureRegion bulletRegion;
+	public static TextureRegion greenBulletRegion;
 	public static TextureRegion machineGunBlockRegion;
 	public static TextureRegion turretBaseRegion;
 	public static TextureRegion turretTopRegion;
@@ -52,6 +53,7 @@ public class Assets {
 		potentialBlockRegion = new TextureRegion(blockTextures, 78, 52, 25, 25);
 		machineGunBlockRegion = new TextureRegion(blockTextures, 26, 77, 25, 25);
 		bulletRegion = new TextureRegion(blockTextures,  0, 103, 5, 5);
+		greenBulletRegion = new TextureRegion(blockTextures, 6, 103, 5, 5);
 		turretBaseRegion =  new TextureRegion(blockTextures, 0, 0, 50, 50);
 		turretTopRegion = new TextureRegion(blockTextures, 51, 0, 50, 50);
 		energyBlockRegion = new TextureRegion(blockTextures, 0, 77, 25, 25);

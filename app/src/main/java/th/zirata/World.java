@@ -76,11 +76,11 @@ public class World {
 
 	private void updateWorld(float deltaTime){
 		if(moveRight){
-			worldAngle -= .2;
+			worldAngle += .2;
 			enemyAngle = POS_SIN_ANGLE;
 		}
 		if(moveLeft){
-			worldAngle += .2;
+			worldAngle -= .2;
 			enemyAngle = NEG_SIN_ANGLE;
 		}
 	}

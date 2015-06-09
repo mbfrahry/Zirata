@@ -61,18 +61,14 @@ public class WorldRenderer {
 				if(currBlock.getClass().equals(TurretBlock.class)){
 					TurretBlock tBlock = (TurretBlock)currBlock;
 					Vector2 rotate = new Vector2(currBlock.lastTouch);
-					if(tBlock.numBullets < tBlock.maxBullets){
-						batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.turretBaseRegion);
-						batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, rotate.sub(currBlock.position).angle()-90, Assets.turretTopRegion);
+					batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.turretBaseRegion);
+					batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, rotate.sub(currBlock.position).angle()-90, Assets.turretTopRegion);
+
+					if(tBlock.active){
+						batcher.drawSprite(currBlock.position.x - 8 + 3, currBlock.position.y - 8, 5, 5, Assets.greenBulletRegion);
 					}
 					else{
-						//empty turret block
-						batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.turretBaseRegion);
-						batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets. turretTopRegion);
-					}
-					//renders how many bullets the block can shoot
-					for(int k = tBlock.numBullets; k < tBlock.maxBullets; k++){
-						batcher.drawSprite(currBlock.position.x - 8 + 3 * k, currBlock.position.y - 8, 5, 5, Assets.bulletRegion);
+						batcher.drawSprite(currBlock.position.x - 8 + 3, currBlock.position.y - 8, 5, 5, Assets.bulletRegion);
 					}
 				}
 
