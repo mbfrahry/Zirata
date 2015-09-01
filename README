@@ -1,9 +1,7 @@
 TODO List
   
 Change gameplay to energy based
-  Add energy block
   Turrets have a range/cone where they can shoot
-  Turn turrets on with energy 
   Your turning slows down the more energy you use
   
 Upgrade path
@@ -11,3 +9,7 @@ Upgrade path
   Buy blocks or blocks drop
     Can convert these into whatever you want
     
+
+Add block bank
+  Allows you to swap the blocks in and out that you have purchased
+  
