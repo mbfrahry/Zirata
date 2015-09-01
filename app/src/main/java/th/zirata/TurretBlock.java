@@ -11,14 +11,23 @@ public class TurretBlock extends Block{
 	int numBullets;
 	float reloadTime;
 	float currTime;
-	
+
+	float fireAngle;
+	float fireArcAngle;
+	int fireRange;
+
+	float coneX1;
+	float coneY1;
+	float coneX2;
+	float coneY2;
+
 	public static final int TURRET_READY = 0;
 	public static final int TURRET_RELOADING = 1;
 	
 	
 	int state; 
 	
-	public TurretBlock(float x, float y, int health, int energyCost){
+	public TurretBlock(float x, float y, int health, int energyCost, float fireAngle){
 		super(x, y, health, energyCost);
 		bullets = new ArrayList<Bullet>();
 		maxBullets = 3;
@@ -26,9 +35,42 @@ public class TurretBlock extends Block{
 		
 		reloadTime = 3;
 		currTime = 0;
-		
+
+		this.fireAngle = fireAngle;
+		fireArcAngle = 30;
+		fireRange = 150;
+
+		if(fireAngle == 0){
+			coneX1 = (float)(x - 12 + (Math.cos(( fireAngle + fireArcAngle)*Math.PI/180)) * fireRange/2);
+			coneY1 = (float)(y - 12 + (Math.sin(( fireAngle + fireArcAngle)*Math.PI/180)) * fireRange/2);
+			coneX2 = (float)(x - 12 + (Math.cos(( fireAngle - fireArcAngle)*Math.PI/180)) * fireRange/2);
+			coneY2 = (float)(y + 12 + (Math.sin(( fireAngle - fireArcAngle)*Math.PI/180)) * fireRange/2);
+		}
+		else if(fireAngle == 90){
+			coneX1 = (float)(x + 12 + (Math.cos(( fireAngle + fireArcAngle)*Math.PI/180)) * fireRange/2);
+			coneY1 = (float)(y - 12 + (Math.sin(( fireAngle + fireArcAngle)*Math.PI/180)) * fireRange/2);
+			coneX2 = (float)(x - 12 + (Math.cos(( fireAngle - fireArcAngle)*Math.PI/180)) * fireRange/2);
+			coneY2 = (float)(y - 12 + (Math.sin(( fireAngle - fireArcAngle)*Math.PI/180)) * fireRange/2);
+		}
+		else if(fireAngle == 180){
+			coneX1 = (float)(x + 12 + (Math.cos(( fireAngle + fireArcAngle)*Math.PI/180)) * fireRange/2);
+			coneY1 = (float)(y + 12 + (Math.sin(( fireAngle + fireArcAngle)*Math.PI/180)) * fireRange/2);
+			coneX2 = (float)(x + 12 + (Math.cos(( fireAngle - fireArcAngle)*Math.PI/180)) * fireRange/2);
+			coneY2 = (float)(y - 12 + (Math.sin(( fireAngle - fireArcAngle)*Math.PI/180)) * fireRange/2);
+		}
+		else{
+			coneX1 = (float)(x - 12 + (Math.cos(( fireAngle + fireArcAngle)*Math.PI/180)) * fireRange/2);
+			coneY1 = (float)(y + 12 + (Math.sin(( fireAngle + fireArcAngle)*Math.PI/180)) * fireRange/2);
+			coneX2 = (float)(x + 12 + (Math.cos(( fireAngle - fireArcAngle)*Math.PI/180)) * fireRange/2);
+			coneY2 = (float)(y + 12 + (Math.sin(( fireAngle - fireArcAngle)*Math.PI/180)) * fireRange/2);
+		}
+
 		state = TURRET_READY;
+
+
 	}
+
+
 	
 	public void action(Block enemyBlock){
 		if(state == TURRET_READY ){

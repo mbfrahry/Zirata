@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.badlogic.androidgames.framework.gl.Camera2D;
 import com.badlogic.androidgames.framework.gl.SpriteBatcher;
+import com.badlogic.androidgames.framework.impl.AndroidGraphics;
 import com.badlogic.androidgames.framework.impl.GLGraphics;
 import com.badlogic.androidgames.framework.math.Vector2;
 
@@ -66,10 +67,15 @@ public class WorldRenderer {
 
 					if(tBlock.active){
 						batcher.drawSprite(currBlock.position.x - 8 + 3, currBlock.position.y - 8, 5, 5, Assets.greenBulletRegion);
+
+						batcher.drawSprite(tBlock.coneX1, tBlock.coneY1, tBlock.fireRange, 1, (tBlock.fireAngle + tBlock.fireArcAngle), Assets.bulletRegion);
+						batcher.drawSprite(tBlock.coneX2, tBlock.coneY2, tBlock.fireRange, 1, (tBlock.fireAngle - tBlock.fireArcAngle), Assets.bulletRegion);
+
 					}
 					else{
 						batcher.drawSprite(currBlock.position.x - 8 + 3, currBlock.position.y - 8, 5, 5, Assets.bulletRegion);
 					}
+
 				}
 
 				else if(currBlock.getClass().equals(ArmorBlock.class)){

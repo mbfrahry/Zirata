@@ -1,5 +1,7 @@
 package th.zirata;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -31,8 +33,13 @@ public class PlayerSave {
 				int blockType = Integer.parseInt(in.readLine());
 				float x = Float.parseFloat(in.readLine());
 				float y = Float.parseFloat(in.readLine());
-				createBlock(blockType, x, y);
-				
+				if(blockType == 1){
+					float angle = Float.parseFloat(in.readLine());
+					createBlock(blockType, x, y, angle);
+				}
+				else {
+					createBlock(blockType, x, y);
+				}
 			}
 		}catch(IOException e){
 			
@@ -73,7 +80,14 @@ public class PlayerSave {
 				else{
 					out.write(0 + "\n");
 				}
-				out.write(currBlock.position.x + "\n" + currBlock.position.y + "\n");
+				if (currBlock.getClass().equals(TurretBlock.class)){
+					TurretBlock turBlock = (TurretBlock) currBlock;
+					Log.d("Velocity", turBlock.fireAngle + " ");
+					out.write(currBlock.position.x + "\n" + currBlock.position.y + "\n" + turBlock.fireAngle +"\n");
+				}
+				else {
+					out.write(currBlock.position.x + "\n" + currBlock.position.y + "\n");
+				}
 
 			}
 		}catch(IOException e){
@@ -92,9 +106,7 @@ public class PlayerSave {
 		if(blockType == 0){
 			playerBlocks.add(new Block(x, y, 10, 0));
 		}
-		if(blockType == 1){
-			playerBlocks.add(new TurretBlock(x, y, 10, 3));
-		}
+
 		if(blockType == 2){
 			playerBlocks.add(new ArmorBlock(x, y, 20));
 		}
@@ -104,8 +116,15 @@ public class PlayerSave {
 		if(blockType == 4){
 			playerBlocks.add(new EnergyBlock(x, y, 10, 10));
 		}
+
 	}
-	
+
+	public static void createBlock(int blockType, float x, float y, float angle){
+		if(blockType == 1){
+			playerBlocks.add(new TurretBlock(x, y, 10, 3, angle));
+		}
+	}
+
 	public static void reset(){
 		playerBlocks = new ArrayList<Block>(){{
 			add(new Block(160, 240, 10, 0));

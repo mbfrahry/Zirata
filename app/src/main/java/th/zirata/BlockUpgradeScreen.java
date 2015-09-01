@@ -18,8 +18,6 @@ public class BlockUpgradeScreen extends GLScreen{
 
 	Camera2D guiCam;
 	SpriteBatcher batcher;
-	Rectangle backBounds;
-	Rectangle forwardBounds;
 	Rectangle armorBounds;
 	Rectangle turretBounds;
 	Rectangle machineGunBounds;
@@ -33,8 +31,6 @@ public class BlockUpgradeScreen extends GLScreen{
 		super(game);
 		this.blockNum = blockNum;
         guiCam = new Camera2D(glGraphics, 320, 480);
-        backBounds = new Rectangle(0, 0, 64, 64);
-        forwardBounds = new Rectangle(320-64, 0, 64, 64);
         armorBounds = new Rectangle(100-25, 250-25, 50, 50);
         turretBounds = new Rectangle(50-25, 250-25, 50, 50);
         machineGunBounds = new Rectangle(150-25, 250-25, 50, 50);
@@ -54,25 +50,15 @@ public class BlockUpgradeScreen extends GLScreen{
 			guiCam.touchToWorld(touchPoint);
 			
 			if(event.type == TouchEvent.TOUCH_UP){
-				if(OverlapTester.pointInRectangle(backBounds, touchPoint)){
-					PlayerSave.playerBlocks.remove(blockNum);
-					PlayerSave.playerBlocks.add(blockNum, lastBlock);
-					game.setScreen(new BuildScreen(game));
-					return;
-				}
-				
-				if(OverlapTester.pointInRectangle(forwardBounds, touchPoint)){
-					game.setScreen(new BuildScreen(game));
-					return;
-				}
+
 				if(OverlapTester.pointInRectangle(armorBounds, touchPoint)){
 					changeBlock("armor");
 					game.setScreen(new BuildScreen(game));
 					return;
 				}
 				if(OverlapTester.pointInRectangle(turretBounds, touchPoint)){
-					changeBlock("turret");
-					game.setScreen(new BuildScreen(game));
+					Block currBlock = PlayerSave.playerBlocks.get(blockNum);
+					game.setScreen(new BlockDirectionScreen(game, currBlock.position, blockNum));
 					return;
 				}
 				if(OverlapTester.pointInRectangle(machineGunBounds, touchPoint)){
@@ -100,8 +86,7 @@ public class BlockUpgradeScreen extends GLScreen{
 			PlayerSave.playerBlocks.add(blockNum, newBlock);
 		}
 		if(blockType.equals("turret")){
-			TurretBlock newBlock = new TurretBlock(currBlock.position.x, currBlock.position.y, 10, 3 );
-			PlayerSave.playerBlocks.add(blockNum, newBlock);
+			game.setScreen(new BlockDirectionScreen(game, currBlock.position, blockNum));
 		}
 		if(blockType.equals("machineGun")){
 			MachineGunBlock newBlock = new MachineGunBlock(currBlock.position.x, currBlock.position.y, 10, 3);
@@ -157,12 +142,7 @@ public class BlockUpgradeScreen extends GLScreen{
 		batcher.drawSprite(150, 250, 50, 50, Assets.machineGunBlockRegion);
 		batcher.drawSprite(200, 250, 50, 50, Assets.energyBlockRegion);
 		batcher.endBatch();
-		
-		batcher.beginBatch(Assets.mainMenuTextures);
-		batcher.drawSprite(290, 30, 60, 60, Assets.arrowRegion);
-		batcher.drawSprite(30, 30, -60, 60, Assets.arrowRegion);
-		batcher.endBatch();
-		
+
 		gl.glDisable(GL10.GL_BLEND);
 
 		
