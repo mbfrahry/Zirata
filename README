@@ -1,7 +1,6 @@
 TODO List
   
 Change gameplay to energy based
-  Turrets have a range/cone where they can shoot
   Your turning slows down the more energy you use
   
 Upgrade path
@@ -13,3 +12,20 @@ Upgrade path
 Add block bank
   Allows you to swap the blocks in and out that you have purchased
   
+Unique enemy movements
+  -aka galaga movements
+  
+Moving background to simulate ship velocity
+
+Paralax background
+
+Different blocks
+  Multiplier block
+  Freeze Block
+  etc
+
+Refactor the crappy looking code
+
+Better UI
+
+Tutorials/Help Page
