@@ -29,8 +29,9 @@ Tutorials/Help Page
 
 Bugs:
   Bullets go past cone range
-  Turret firing 3 bullets
   Energy goes negative when energy block is lost
 
 Max was here.
 Clear .ship file appropriately
+
+Show offscreen enemies with a red area 
