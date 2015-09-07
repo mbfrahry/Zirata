@@ -6,7 +6,11 @@ public class EnemyTurretBlock extends TurretBlock{
 	float initialTimeToFire;
 	public static final int TURRET_WAITING = 2;
 	int bulletDamage;
-	
+
+	public EnemyTurretBlock(double[] info){
+		this((float)info[0], (float)info[1], (int)info[2]);
+	}
+
 	public EnemyTurretBlock(float x, float y, int health){
 		//TODO Fix angle
 		super(x, y, health, 0, 0);

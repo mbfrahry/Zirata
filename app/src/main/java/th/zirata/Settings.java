@@ -70,5 +70,5 @@ public class Settings {
 		enemyHealth = 10;
 		numEnemies = 10;
 	}
-	
+
 }

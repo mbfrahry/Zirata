@@ -25,8 +25,12 @@ public class TurretBlock extends Block{
 	public static final int TURRET_RELOADING = 1;
 	
 	int bulletDamage;
-	int state; 
-	
+	int state;
+
+	public TurretBlock(double[] info){
+		this((float)info[0], (float)info[1], (int)info[2], (int)info[3], (float)info[4]);
+	}
+
 	public TurretBlock(float x, float y, int health, int energyCost, float fireAngle){
 		super(x, y, health, energyCost);
 		bullets = new ArrayList<Bullet>();

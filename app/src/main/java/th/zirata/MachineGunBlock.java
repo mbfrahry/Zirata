@@ -17,7 +17,11 @@ public class MachineGunBlock extends Block {
 	public static final int TURRET_RELOADING = 1;
 	
 	int state;
-	
+
+	public MachineGunBlock(double[] info){
+		this((float)info[0], (float)info[1], (int)info[2], (int)info[3]);
+	}
+
 	public MachineGunBlock(float x, float y, int health, int energyCost){
 		super(x, y, health, energyCost);
 		bullets = new ArrayList<Bullet>();

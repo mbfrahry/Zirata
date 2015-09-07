@@ -23,7 +23,7 @@ public class PlayerSave {
 	public static ArrayList<Block> playerBlocks = new ArrayList<Block>(){{
 		add(new Block(160, 240, 10, 0));
 	}};
-	public static String file = ".player";
+	public static String file = ".ship";
 
 
 
@@ -49,12 +49,13 @@ public class PlayerSave {
 		while(reader.hasNext()){
 			readBlock(reader);
 		}
-
+        reader.endArray();
 	}
 
 	public static void readBlock(JsonReader reader) throws IOException{
 		String type = null;
 		double[] blockInfo;
+        reader.beginObject();
 		while (reader.hasNext()) {
 			String name = reader.nextName();
 			if(name.equals("Type")) {
@@ -63,12 +64,12 @@ public class PlayerSave {
 
 			}
 			if(name.equals("Info")) {
-				blockInfo = readBlockArray(reader);
+				blockInfo = readBlockInfoArray(reader);
 				if(type != null) {
 					try {
 						Class<?> blockType = Class.forName(type);
 						Constructor<?> blockConstructor = blockType.getConstructor(String.class);
-						Object object = blockConstructor.newInstance(new Object[]{blockInfo});
+						Object object = blockConstructor.newInstance(blockInfo);
 						playerBlocks.add((Block)object);
 					} catch (ClassNotFoundException e) {
 
@@ -88,7 +89,7 @@ public class PlayerSave {
 		reader.endObject();
 	}
 
-	public static double[] readBlockArray(JsonReader reader) throws IOException{
+	public static double[] readBlockInfoArray(JsonReader reader) throws IOException{
 		double[] blockInfo = new double[10];
 		int count = 0;
 		reader.beginArray();
@@ -177,9 +178,11 @@ public class PlayerSave {
 		writer.beginArray();
 		writer.value(block.position.x);
 		writer.value(block.position.y);
+		writer.value(block.health);
+		writer.value(block.energyCost);
 		if(block.getClass().equals(TurretBlock.class)){
 			TurretBlock tBlock = (TurretBlock)block;
-			writer.name("FireAngle").value(tBlock.fireAngle);
+			writer.value(tBlock.fireAngle);
 		}
 		writer.endArray();
 	}

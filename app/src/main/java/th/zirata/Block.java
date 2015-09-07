@@ -21,7 +21,7 @@ public class Block extends DynamicGameObject {
 		lastTouch = new Vector2(x, y + BLOCK_HEIGHT/2);
 		active = false;
 	}
-	
+
 	public void action() {
 	}
 	
