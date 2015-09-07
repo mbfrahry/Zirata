@@ -3,8 +3,6 @@ package th.zirata;
 import java.util.ArrayList;
 import java.util.Random;
 
-import android.util.Log;
-
 import com.badlogic.androidgames.framework.math.OverlapTester;
 import com.badlogic.androidgames.framework.math.Vector2;
 
@@ -53,7 +51,6 @@ public class World {
 
 		WORLD_MID_POINT = new Vector2( WORLD_WIDTH/2, WORLD_HEIGHT/2);
 
-		//enemyAngle = (float)0.0035;
 		enemyAngle = 0;
 		worldAngle = 0;
 		moveRight = false;
@@ -113,7 +110,6 @@ public class World {
 		if(rotateSpeed > .6) {
 			rotateSpeed = .6;
 		}
-		Log.d("Velocity", rotateSpeed + " ");
 		return rotateSpeed;
 	}
 

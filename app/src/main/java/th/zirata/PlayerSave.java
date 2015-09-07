@@ -42,17 +42,24 @@ public class PlayerSave {
 
 			}
 		}
+
+		Log.d("Velocity", playerBlocks.get(0).health + " ");
 	}
 
 	public static void readBlocksArray(JsonReader reader) throws IOException{
+		ArrayList<Block> newBlocks = new ArrayList<Block>();
 		reader.beginArray();
 		while(reader.hasNext()){
-			readBlock(reader);
+			readBlock(reader, newBlocks);
 		}
         reader.endArray();
+
+		if ( newBlocks.size() > 0){
+			playerBlocks = newBlocks;
+		}
 	}
 
-	public static void readBlock(JsonReader reader) throws IOException{
+	public static void readBlock(JsonReader reader, ArrayList<Block> newBlocks) throws IOException{
 		String type = null;
 		double[] blockInfo;
         reader.beginObject();
@@ -60,17 +67,15 @@ public class PlayerSave {
 			String name = reader.nextName();
 			if(name.equals("Type")) {
 				type = reader.nextString();
-
-
 			}
 			if(name.equals("Info")) {
 				blockInfo = readBlockInfoArray(reader);
 				if(type != null) {
 					try {
 						Class<?> blockType = Class.forName(type);
-						Constructor<?> blockConstructor = blockType.getConstructor(String.class);
+						Constructor<?> blockConstructor = blockType.getConstructor(double[].class);
 						Object object = blockConstructor.newInstance(blockInfo);
-						playerBlocks.add((Block)object);
+						newBlocks.add((Block) object);
 					} catch (ClassNotFoundException e) {
 
 					} catch (NoSuchMethodException e) {
@@ -100,43 +105,6 @@ public class PlayerSave {
 		reader.endArray();
 		return blockInfo;
 	}
-	/*
-	public static void load(FileIO files){
-		playerBlocks = new ArrayList<Block>(){{
-			add(new Block(160, 240, 10, 0));
-		}};
-		BufferedReader in = null;
-		try{
-			in = new BufferedReader(new InputStreamReader(files.readFile(file)));
-			int numBlocks = Integer.parseInt(in.readLine());
-			if(numBlocks > 0){
-				playerBlocks.remove(0);
-			}
-			for(int i = 0; i < numBlocks; i++){
-				int blockType = Integer.parseInt(in.readLine());
-				float x = Float.parseFloat(in.readLine());
-				float y = Float.parseFloat(in.readLine());
-				if(blockType == 1){
-					float angle = Float.parseFloat(in.readLine());
-					createBlock(blockType, x, y, angle);
-				}
-				else {
-					createBlock(blockType, x, y);
-				}
-			}
-		}catch(IOException e){
-			
-		}catch(NumberFormatException e){
-			
-		}finally{
-			try{
-				if(in != null)
-					in.close();
-			}catch(IOException e){
-				
-			}
-		}
-	}*/
 
 	public static void save(FileIO files){
 		JsonWriter writer = null;
@@ -167,7 +135,7 @@ public class PlayerSave {
 
 	private static void writeBlock(JsonWriter writer, Block block) throws IOException{
 		writer.beginObject();
-		writer.name("Type").value(block.getClass().toString());
+		writer.name("Type").value(block.getClass().toString().replace("class ", ""));
 		writer.name("Info");
 		writeInformationArray(writer, block);
 
@@ -178,8 +146,12 @@ public class PlayerSave {
 		writer.beginArray();
 		writer.value(block.position.x);
 		writer.value(block.position.y);
-		writer.value(block.health);
+		writer.value(block.maxHealth);
 		writer.value(block.energyCost);
+		if(block.getClass().equals(EnergyBlock.class)){
+			EnergyBlock eBlock = (EnergyBlock)block;
+			writer.value(eBlock.energy);
+		}
 		if(block.getClass().equals(TurretBlock.class)){
 			TurretBlock tBlock = (TurretBlock)block;
 			writer.value(tBlock.fireAngle);
@@ -188,54 +160,6 @@ public class PlayerSave {
 	}
 
 
-	/*
-	public static void save(FileIO files){
-		BufferedWriter out = null;
-		try {
-			out = new BufferedWriter(new OutputStreamWriter(files.writeFile(file)));
-			out.write(playerBlocks.size() + "\n");
-			for(int i = 0; i < playerBlocks.size(); i++){
-				Block currBlock = playerBlocks.get(i);
-				if(currBlock.getClass().equals(TurretBlock.class)){
-					out.write(1 + "\n");
-				}
-
-				else if(currBlock.getClass().equals(ArmorBlock.class)){
-					out.write(2 + "\n");
-				}
-
-				else if (currBlock.getClass().equals(MachineGunBlock.class)){
-					out.write(3 + "\n");
-				}
-				else if (currBlock.getClass().equals(EnergyBlock.class)){
-					out.write(4 + "\n");
-				}
-				
-				else{
-					out.write(0 + "\n");
-				}
-				if (currBlock.getClass().equals(TurretBlock.class)){
-					TurretBlock turBlock = (TurretBlock) currBlock;
-					Log.d("Velocity", turBlock.fireAngle + " ");
-					out.write(currBlock.position.x + "\n" + currBlock.position.y + "\n" + turBlock.fireAngle +"\n");
-				}
-				else {
-					out.write(currBlock.position.x + "\n" + currBlock.position.y + "\n");
-				}
-
-			}
-		}catch(IOException e){
-
-		}finally{
-			try{
-				if(out != null)
-					out.close();
-			}catch(IOException e){
-
-			}
-		}
-	}*/
-	
 	public static void createBlock(int blockType, float x, float y){
 		if(blockType == 0){
 			playerBlocks.add(new Block(x, y, 10, 0));
@@ -248,7 +172,7 @@ public class PlayerSave {
 			playerBlocks.add(new MachineGunBlock(x, y, 10, 3));
 		}
 		if(blockType == 4){
-			playerBlocks.add(new EnergyBlock(x, y, 10, 10));
+			playerBlocks.add(new EnergyBlock(x, y, 10, 0, 10));
 		}
 
 	}

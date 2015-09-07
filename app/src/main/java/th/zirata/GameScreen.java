@@ -215,15 +215,7 @@ public class GameScreen extends GLScreen {
 	}
 	
 	private void updateGameOver() {
-	    List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
-	    int len = touchEvents.size();
-	    /*
-	    for(int i = 0; i < len; i++) {                   
-	        TouchEvent event = touchEvents.get(i);
-	        if(event.type != TouchEvent.TOUCH_UP)
-	            continue;
-	        game.setScreen(new MainMenuScreen(game));
-	    }*/
+
 	    PlayerSave.load(game.getFileIO());
 	    game.setScreen(new MainMenuScreen(game));
 	}
@@ -294,6 +286,7 @@ public class GameScreen extends GLScreen {
     }
 
     @Override
-    public void dispose() {       
+    public void dispose() {
+
     }
 }
