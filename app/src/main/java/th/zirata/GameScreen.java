@@ -97,12 +97,12 @@ public class GameScreen extends GLScreen {
 						return;
 					}
 				}
-				if(event.y > 450){
-					if(event.x < 50){
+				if(touchPoint.y < 50){
+					if(touchPoint.x < 50){
 						world.moveRight = true;
 						world.moveLeft = false;
 					}
-					if(event.x > 50 && event.x < 100){
+					if(touchPoint.x > 50 && touchPoint.x < 100){
 						world.moveLeft = true;
 						world.moveRight = false;
 					}
@@ -149,8 +149,8 @@ public class GameScreen extends GLScreen {
 
 					}
 				}
-				if(event.y > 450){
-					if(event.x < 100){
+				if(touchPoint.y < 50){
+					if(touchPoint.x < 100){
 						world.moveLeft = false;
 						world.moveRight = false;
 					}
