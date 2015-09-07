@@ -7,9 +7,14 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import com.badlogic.androidgames.framework.FileIO;
+import com.badlogic.androidgames.framework.math.Vector2;
+
 import android.util.JsonReader;
 import android.util.JsonWriter;
 
@@ -19,7 +24,82 @@ public class PlayerSave {
 		add(new Block(160, 240, 10, 0));
 	}};
 	public static String file = ".player";
-	
+
+
+
+	public static void load(FileIO files){
+		JsonReader reader = null;
+		try {
+			reader = new JsonReader(new InputStreamReader(files.readFile(file), "UTF-8"));
+			readBlocksArray(reader);
+		}catch(IOException e){
+
+		}finally{
+			try{
+				if(reader != null)
+					reader.close();
+			}catch(IOException e){
+
+			}
+		}
+	}
+
+	public static void readBlocksArray(JsonReader reader) throws IOException{
+		reader.beginArray();
+		while(reader.hasNext()){
+			readBlock(reader);
+		}
+
+	}
+
+	public static void readBlock(JsonReader reader) throws IOException{
+		String type = null;
+		double[] blockInfo;
+		while (reader.hasNext()) {
+			String name = reader.nextName();
+			if(name.equals("Type")) {
+				type = reader.nextString();
+
+
+			}
+			if(name.equals("Info")) {
+				blockInfo = readBlockArray(reader);
+				if(type != null) {
+					try {
+						Class<?> blockType = Class.forName(type);
+						Constructor<?> blockConstructor = blockType.getConstructor(String.class);
+						Object object = blockConstructor.newInstance(new Object[]{blockInfo});
+						playerBlocks.add((Block)object);
+					} catch (ClassNotFoundException e) {
+
+					} catch (NoSuchMethodException e) {
+
+					} catch (IllegalAccessException e) {
+
+					} catch (InstantiationException e) {
+
+					} catch (InvocationTargetException e) {
+
+					}
+				}
+			}
+		}
+
+		reader.endObject();
+	}
+
+	public static double[] readBlockArray(JsonReader reader) throws IOException{
+		double[] blockInfo = new double[10];
+		int count = 0;
+		reader.beginArray();
+		while(reader.hasNext()){
+			blockInfo[count] = reader.nextDouble();
+			count++;
+		}
+		reader.endArray();
+		return blockInfo;
+	}
+	/*
 	public static void load(FileIO files){
 		playerBlocks = new ArrayList<Block>(){{
 			add(new Block(160, 240, 10, 0));
@@ -55,24 +135,55 @@ public class PlayerSave {
 				
 			}
 		}
-	}
+	}*/
 
 	public static void save(FileIO files){
-		JsonWriter out = null;
+		JsonWriter writer = null;
 		try{
-			out = new JsonWriter(new OutputStreamWriter(files.writeFile(file)));
-			out.setIndent(" ");
+			writer = new JsonWriter(new OutputStreamWriter(files.writeFile(file)));
+			writer.setIndent(" ");
+			writeBlocksArray(writer);
+			writer.close();
 		}catch(IOException e){
 
 		}finally{
 			try{
-				if(out != null)
-					out.close();
+				if(writer != null)
+					writer.close();
 			}catch(IOException e){
 
 			}
 		}
 	}
+
+	private static void writeBlocksArray(JsonWriter writer) throws IOException {
+		writer.beginArray();
+		for (Block block : playerBlocks) {
+			writeBlock(writer, block);
+		}
+		writer.endArray();
+	}
+
+	private static void writeBlock(JsonWriter writer, Block block) throws IOException{
+		writer.beginObject();
+		writer.name("Type").value(block.getClass().toString());
+		writer.name("Info");
+		writeInformationArray(writer, block);
+
+		writer.endObject();
+	}
+
+	private static void writeInformationArray(JsonWriter writer, Block block) throws IOException{
+		writer.beginArray();
+		writer.value(block.position.x);
+		writer.value(block.position.y);
+		if(block.getClass().equals(TurretBlock.class)){
+			TurretBlock tBlock = (TurretBlock)block;
+			writer.name("FireAngle").value(tBlock.fireAngle);
+		}
+		writer.endArray();
+	}
+
 
 	/*
 	public static void save(FileIO files){
