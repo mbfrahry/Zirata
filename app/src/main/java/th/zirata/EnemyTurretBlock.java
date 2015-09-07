@@ -5,7 +5,7 @@ public class EnemyTurretBlock extends TurretBlock{
 	float timeToFire;
 	float initialTimeToFire;
 	public static final int TURRET_WAITING = 2;
-	
+	int bulletDamage;
 	
 	public EnemyTurretBlock(float x, float y, int health){
 		//TODO Fix angle
@@ -13,6 +13,7 @@ public class EnemyTurretBlock extends TurretBlock{
 		initialTimeToFire = 6;
 		timeToFire = initialTimeToFire;
 		super.state = TURRET_WAITING;
+		bulletDamage = 3;
 	}
 	
 	public void resetBlock(){

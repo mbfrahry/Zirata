@@ -11,7 +11,8 @@ public class MachineGunBlock extends Block {
 	float currTime;
 	float timeToNextBullet;
 	float initialTimeToNextBullet;
-	
+	int bulletDamage;
+
 	public static final int TURRET_READY = 0;
 	public static final int TURRET_RELOADING = 1;
 	
@@ -22,6 +23,7 @@ public class MachineGunBlock extends Block {
 		bullets = new ArrayList<Bullet>();
 		maxBullets = 10;
 		numBullets = 0;
+		bulletDamage = 10;
 		
 		initialTimeToNextBullet = 0.25f;
 		timeToNextBullet = initialTimeToNextBullet;
@@ -33,7 +35,7 @@ public class MachineGunBlock extends Block {
 	
 	public void action(){
 		if(state == TURRET_READY && timeToNextBullet < 0){
-			World.PLAYER_BULLETS.add(new Bullet(position.x, position.y, lastTouch.x, lastTouch.y));
+			World.PLAYER_BULLETS.add(new Bullet(position.x, position.y, lastTouch.x, lastTouch.y, bulletDamage));
 			numBullets++;
 			if(numBullets >= maxBullets){
 				state = TURRET_RELOADING;

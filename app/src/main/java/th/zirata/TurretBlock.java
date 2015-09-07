@@ -24,14 +24,15 @@ public class TurretBlock extends Block{
 	public static final int TURRET_READY = 0;
 	public static final int TURRET_RELOADING = 1;
 	
-	
+	int bulletDamage;
 	int state; 
 	
 	public TurretBlock(float x, float y, int health, int energyCost, float fireAngle){
 		super(x, y, health, energyCost);
 		bullets = new ArrayList<Bullet>();
-		maxBullets = 3;
+		maxBullets = 1;
 		numBullets = 0;
+		bulletDamage = 10;
 		
 		reloadTime = 3;
 		currTime = 0;
@@ -75,7 +76,7 @@ public class TurretBlock extends Block{
 	public void action(Block enemyBlock){
 		if(state == TURRET_READY ){
 			lastTouch.set(enemyBlock.position.x + 12 , enemyBlock.position.y + 12 );
-			World.PLAYER_BULLETS.add(new Bullet(position.x, position.y, enemyBlock.position.x + 12 , enemyBlock.position.y + 12 ));
+			World.PLAYER_BULLETS.add(new Bullet(position.x, position.y, enemyBlock.position.x + 12 , enemyBlock.position.y + 12, bulletDamage ));
 			numBullets++;
 			if(numBullets >= maxBullets){
 				state = TURRET_RELOADING;

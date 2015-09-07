@@ -50,6 +50,8 @@ public class BlockDirectionScreen extends GLScreen{
             guiCam.touchToWorld(touchPoint);
 
             if(event.type == Input.TouchEvent.TOUCH_UP) {
+                //TODO Fix this
+
                 if(OverlapTester.pointInRectangle(rightBounds, touchPoint)){
                     PlayerSave.playerBlocks.remove(blockNum);
                     PlayerSave.createBlock(1, position.x, position.y, 0);

@@ -27,7 +27,7 @@ public class GameScreen extends GLScreen {
     int state;
     Camera2D guiCam;
     Vector2 touchPoint;
-    SpriteBatcher batcher;    
+    SpriteBatcher batcher;
     Rectangle pauseBounds;
     Rectangle resumeBounds;
     Rectangle quitBounds;
@@ -49,7 +49,7 @@ public class GameScreen extends GLScreen {
         renderer = new WorldRenderer(glGraphics, batcher, world);
         pauseBounds = new Rectangle(320- 64, 480- 64, 64, 64);
         resumeBounds = new Rectangle(160 - 96, 240, 192, 36);
-        quitBounds = new Rectangle(160 - 96, 240 - 36, 192, 36);
+        quitBounds = new Rectangle(320- 64, 480- 64, 64, 64);
         fpsCounter = new FPSCounter();
         
     }
@@ -127,10 +127,10 @@ public class GameScreen extends GLScreen {
 
 			if(event.type == TouchEvent.TOUCH_UP){
 
-				//if(OverlapTester.pointInRectangle(pauseBounds, touchPoint)) {
-				//	state = GAME_PAUSED;
-				//	return;
-				//}
+				if(OverlapTester.pointInRectangle(quitBounds, touchPoint)) {
+					game.setScreen(new MainMenuScreen(game));
+					return;
+				}
 				if(blockNum[event.pointer] != -1){	
 					try{
 						Block currBlock = world.player.playerBlocks.get(blockNum[event.pointer]);

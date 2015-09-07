@@ -167,6 +167,9 @@ public class WorldRenderer {
 	private void renderText(){
 		batcher.beginBatch(Assets.mainMenuTextures);
 		Assets.font.drawText(batcher, "Energy: " + world.player.energy + " ", 16, 480 - 20);
+
+		batcher.drawSprite(30, 30, -60, 60, Assets.arrowRegion);
+		batcher.drawSprite(60, 30, 60, 60, Assets.arrowRegion);
 		batcher.endBatch();
 	}
 }

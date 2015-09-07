@@ -61,11 +61,12 @@ public class BlockUpgradeScreen extends GLScreen{
 					game.setScreen(new BlockDirectionScreen(game, currBlock.position, blockNum));
 					return;
 				}
+				/*
 				if(OverlapTester.pointInRectangle(machineGunBounds, touchPoint)){
 					changeBlock("machineGun");
 					game.setScreen(new BuildScreen(game));
 					return;
-				}
+				}*/
 				if(OverlapTester.pointInRectangle(energyBounds, touchPoint)){
 					changeBlock("energy");
 					game.setScreen(new BuildScreen(game));

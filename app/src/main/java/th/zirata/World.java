@@ -91,10 +91,41 @@ public class World {
 			currBlock = player.playerBlocks.get(i);
 			if(currBlock.getClass().equals(TurretBlock.class) && currBlock.active && enemies.size() > 0 && enemies.get(0).enemyBlocks.size() > 0){
 				TurretBlock tBlock = (TurretBlock) currBlock;
-				tBlock.action(enemies.get(0).enemyBlocks.get(0));
+				int closestEnemy = enemyInRange(tBlock, enemies);
+				if(closestEnemy >= 0) {
+					tBlock.action(enemies.get(closestEnemy).enemyBlocks.get(0));
+				}
 			}
 		}
 		player.update(deltaTime);
+	}
+
+	private int enemyInRange(TurretBlock tBlock, ArrayList<Enemy> enemies){
+		Enemy enemy;
+		for(int i = 0; i < enemies.size(); i++){
+			enemy = enemies.get(i);
+			//Log.d("Velocity", tBlock.position.dist(enemy.enemyBlocks.get(0).position) + " ");
+			if(tBlock.position.dist(enemy.enemyBlocks.get(0).position) < tBlock.fireRange - 35){
+
+				double angleBetween = tBlock.position.angleBetween(enemy.enemyBlocks.get(0).position);
+				float posAngle = tBlock.fireAngle + tBlock.fireArcAngle;
+				float negAngle = tBlock.fireAngle - tBlock.fireArcAngle;
+				Log.d("Velocity", angleBetween + " ");
+				if (negAngle < 0){
+					negAngle += tBlock.fireArcAngle;
+					posAngle += tBlock.fireArcAngle;
+					angleBetween = (angleBetween + tBlock.fireArcAngle)%360;
+				}
+				Log.d("Velocity", angleBetween + " " + posAngle + " " +  negAngle);
+					if(angleBetween <= posAngle){
+						Log.d("Velocity", angleBetween + " " + negAngle);
+						if(angleBetween >= negAngle){
+							return i;
+						}
+				}
+			}
+		}
+		return -1;
 	}
 
 	private void updatePlayerBullets(float deltaTime){
@@ -160,7 +191,7 @@ public class World {
 		if(tBlock.state == tBlock.TURRET_READY && tBlock.bullets.size() < 1){
 			if(player.playerBlocks.size() > 0){
 				Block randBlock = player.playerBlocks.get(Math.abs(rand.nextInt()) % player.playerBlocks.size());
-				enemyBullets.add(new Bullet(tBlock.position.x, tBlock.position.y,randBlock.position.x, randBlock.position.y));
+				enemyBullets.add(new Bullet(tBlock.position.x, tBlock.position.y,randBlock.position.x, randBlock.position.y, tBlock.bulletDamage));
 				tBlock.resetBlock();
 			}
 		}

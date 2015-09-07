@@ -13,11 +13,11 @@ public class Bullet extends DynamicGameObject{
 	Random rand;
 	int damage;
 	
-	public Bullet(float x, float y, float targX, float targY) {
+	public Bullet(float x, float y, float targX, float targY, int damage) {
 		super(x, y, BULLET_WIDTH, BULLET_HEIGHT);
 		rand = new Random();
 		setVelocity(targX, targY);
-		damage = 10;
+		this.damage = damage;
 	}
 	
 	public void setVelocity(float targX, float targY){

@@ -125,4 +125,15 @@ public class Vector2 {
 		float distY = this.y - y;
 		return distX * distX + distY * distY;
 	}
+
+	public double angleBetween(Vector2 other){
+		double xDiff = other.x - this.x;
+		double yDiff = other.y - this.y;
+
+		double angle = Math.toDegrees(Math.atan2(yDiff, xDiff));
+		if(angle < 0 ){
+			angle += 360;
+		}
+		return angle;
+	}
 }
