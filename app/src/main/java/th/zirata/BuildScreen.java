@@ -35,6 +35,7 @@ public class BuildScreen extends GLScreen{
 		potentialBlocks = new ArrayList<Block>();
 		getPotentialBlocks();
 		printBlocks();
+		Settings.spaceBucks = 100;
     }
 
 	@Override

@@ -18,9 +18,9 @@ public class World {
 	public static final int WORLD_STATE_LEVEL_END = 2;
 	public static final int WORLD_STATE_GAME_OVER = 3;
 
-	public static final float POS_SIN_ANGLE = (float)Math.sin(0.0035);
-	public static final float NEG_SIN_ANGLE = (float) Math.sin(-0.0035);
-	public static final float POS_COS_ANGLE = (float)Math.cos(0.0035);
+	public static float POS_SIN_ANGLE = (float)Math.sin(0.0035);
+	public static float NEG_SIN_ANGLE = (float) Math.sin(-0.0035);
+	public static float POS_COS_ANGLE = (float)Math.cos(0.0035);
 	public static final ArrayList<Bullet> PLAYER_BULLETS = new ArrayList<Bullet>();
 	
 	public Player player;
@@ -75,14 +75,22 @@ public class World {
 	}
 
 	private void updateWorld(float deltaTime){
+		double angleDiff = findSpeed();
+
+		POS_SIN_ANGLE = (float)Math.sin(Math.toRadians(angleDiff));
+		NEG_SIN_ANGLE = (float)Math.sin(-Math.toRadians(angleDiff));
+		POS_COS_ANGLE = (float)Math.cos(Math.toRadians(angleDiff));
 		if(moveRight){
-			worldAngle += .2;
+			worldAngle += angleDiff;
+
 			enemyAngle = POS_SIN_ANGLE;
 		}
 		if(moveLeft){
-			worldAngle -= .2;
+			worldAngle -= angleDiff;
+
 			enemyAngle = NEG_SIN_ANGLE;
 		}
+
 	}
 
 	private void updatePlayer(float deltaTime){
@@ -100,25 +108,30 @@ public class World {
 		player.update(deltaTime);
 	}
 
+	private double findSpeed(){
+		double rotateSpeed = .1 + .01*player.energy;
+		if(rotateSpeed > .6) {
+			rotateSpeed = .6;
+		}
+		Log.d("Velocity", rotateSpeed + " ");
+		return rotateSpeed;
+	}
+
 	private int enemyInRange(TurretBlock tBlock, ArrayList<Enemy> enemies){
 		Enemy enemy;
 		for(int i = 0; i < enemies.size(); i++){
 			enemy = enemies.get(i);
-			//Log.d("Velocity", tBlock.position.dist(enemy.enemyBlocks.get(0).position) + " ");
 			if(tBlock.position.dist(enemy.enemyBlocks.get(0).position) < tBlock.fireRange - 35){
 
 				double angleBetween = tBlock.position.angleBetween(enemy.enemyBlocks.get(0).position);
 				float posAngle = tBlock.fireAngle + tBlock.fireArcAngle;
 				float negAngle = tBlock.fireAngle - tBlock.fireArcAngle;
-				Log.d("Velocity", angleBetween + " ");
 				if (negAngle < 0){
 					negAngle += tBlock.fireArcAngle;
 					posAngle += tBlock.fireArcAngle;
 					angleBetween = (angleBetween + tBlock.fireArcAngle)%360;
 				}
-				Log.d("Velocity", angleBetween + " " + posAngle + " " +  negAngle);
 					if(angleBetween <= posAngle){
-						Log.d("Velocity", angleBetween + " " + negAngle);
 						if(angleBetween >= negAngle){
 							return i;
 						}

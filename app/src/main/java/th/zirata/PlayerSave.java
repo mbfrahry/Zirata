@@ -10,6 +10,8 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 import com.badlogic.androidgames.framework.FileIO;
+import android.util.JsonReader;
+import android.util.JsonWriter;
 
 public class PlayerSave {
 	
@@ -54,7 +56,25 @@ public class PlayerSave {
 			}
 		}
 	}
-	
+
+	public static void save(FileIO files){
+		JsonWriter out = null;
+		try{
+			out = new JsonWriter(new OutputStreamWriter(files.writeFile(file)));
+			out.setIndent(" ");
+		}catch(IOException e){
+
+		}finally{
+			try{
+				if(out != null)
+					out.close();
+			}catch(IOException e){
+
+			}
+		}
+	}
+
+	/*
 	public static void save(FileIO files){
 		BufferedWriter out = null;
 		try {
@@ -100,7 +120,7 @@ public class PlayerSave {
 
 			}
 		}
-	}
+	}*/
 	
 	public static void createBlock(int blockType, float x, float y){
 		if(blockType == 0){
