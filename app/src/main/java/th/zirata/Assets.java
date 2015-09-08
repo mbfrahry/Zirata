@@ -1,5 +1,6 @@
 package th.zirata;
 
+import com.badlogic.androidgames.framework.Sound;
 import com.badlogic.androidgames.framework.gl.Font;
 import com.badlogic.androidgames.framework.gl.Texture;
 import com.badlogic.androidgames.framework.gl.TextureRegion;
@@ -33,7 +34,9 @@ public class Assets {
 	public static TextureRegion arrowRegion;
 	
 	public static Font font;
-	
+
+	public static Sound explosionSound;
+	public static Sound shootSound;
 	
 	
 	public static void load(GLGame game){
@@ -62,7 +65,11 @@ public class Assets {
 		playRegion = new TextureRegion(mainMenuTextures, 0, 121, 64, 37);
 		arrowRegion = new TextureRegion(mainMenuTextures, 65, 121, 30, 30);
 		font = new Font(mainMenuTextures, 0, 0, 16, 16, 20);
-		
+
+		explosionSound = game.getAudio().newSound("Explosion.wav");
+		shootSound = game.getAudio().newSound("Shoot.wav");
+
+
 		Settings.load(game.getFileIO());
 		PlayerSave.load(game.getFileIO());
 	}
@@ -71,5 +78,10 @@ public class Assets {
 		backgroundTextures.reload();
 		blockTextures.reload();
 		mainMenuTextures.reload();
+	}
+
+	public static void playSound(Sound sound) {
+		if(Settings.soundEnabled)
+			sound.play(1);
 	}
 }

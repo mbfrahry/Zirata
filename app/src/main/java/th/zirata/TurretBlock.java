@@ -81,6 +81,7 @@ public class TurretBlock extends Block{
 		if(state == TURRET_READY ){
 			lastTouch.set(enemyBlock.position.x + 12 , enemyBlock.position.y + 12 );
 			World.PLAYER_BULLETS.add(new Bullet(position.x, position.y, enemyBlock.position.x + 12 , enemyBlock.position.y + 12, bulletDamage ));
+			Assets.playSound(Assets.shootSound);
 			numBullets++;
 			if(numBullets >= maxBullets){
 				state = TURRET_RELOADING;

@@ -172,6 +172,7 @@ public class Enemy{
 			currBlock.update(deltaTime);
 			if(currBlock.checkDeath()){
 				enemyBlocks.remove(i);
+				Assets.playSound(Assets.explosionSound);
 			}
 			if(currBlock.position.x > 450 || currBlock.position.y > 500 || currBlock.position.x < -30 || currBlock.position.y < -30){
 				enemyBlocks.remove(i);
