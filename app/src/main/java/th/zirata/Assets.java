@@ -1,5 +1,6 @@
 package th.zirata;
 
+import com.badlogic.androidgames.framework.Music;
 import com.badlogic.androidgames.framework.Sound;
 import com.badlogic.androidgames.framework.gl.Font;
 import com.badlogic.androidgames.framework.gl.Texture;
@@ -35,6 +36,8 @@ public class Assets {
 	
 	public static Font font;
 
+	public static Music song1;
+
 	public static Sound explosionSound;
 	public static Sound shootSound;
 	
@@ -65,6 +68,10 @@ public class Assets {
 		playRegion = new TextureRegion(mainMenuTextures, 0, 121, 64, 37);
 		arrowRegion = new TextureRegion(mainMenuTextures, 65, 121, 30, 30);
 		font = new Font(mainMenuTextures, 0, 0, 16, 16, 20);
+
+		song1 = game.getAudio().newMusic("Song1.mp3");
+		song1.setLooping(true);
+		song1.setVolume(0.5f);
 
 		explosionSound = game.getAudio().newSound("Explosion.wav");
 		shootSound = game.getAudio().newSound("Shoot.wav");

@@ -29,6 +29,7 @@ public class MainMenuScreen extends GLScreen{
 		batcher = new SpriteBatcher(glGraphics, 100);
 		playBounds = new Rectangle(160 - 50, 200 - 50, 128, 74);
 		resetBounds = new Rectangle(160 - 50, 200 - 100, 128, 74);
+		soundBounds = new Rectangle(0, 0, 50, 50);
 		touchPoint = new Vector2();
 	}
 	
@@ -45,6 +46,16 @@ public class MainMenuScreen extends GLScreen{
 				
 				if(OverlapTester.pointInRectangle(playBounds, touchPoint)){
 					game.setScreen(new BuildScreen(game));
+					return;
+				}
+
+				if(OverlapTester.pointInRectangle(soundBounds, touchPoint)){
+					if(Assets.song1.isPlaying()){
+						Assets.song1.stop();
+					}
+					else{
+						Assets.song1.play();
+					}
 					return;
 				}
 				
