@@ -14,6 +14,8 @@ import com.badlogic.androidgames.framework.math.OverlapTester;
 import com.badlogic.androidgames.framework.math.Rectangle;
 import com.badlogic.androidgames.framework.math.Vector2;
 
+import th.zirata.Help.MainHelpScreen;
+
 public class MainMenuScreen extends GLScreen{
 
 	Camera2D guiCam;
@@ -21,14 +23,16 @@ public class MainMenuScreen extends GLScreen{
 	Rectangle soundBounds;
 	Rectangle playBounds;
 	Rectangle resetBounds;
+	Rectangle helpBounds;
 	Vector2 touchPoint;
 	
 	public MainMenuScreen(Game game){
 		super(game);
 		guiCam = new Camera2D(glGraphics, 320, 480);
 		batcher = new SpriteBatcher(glGraphics, 100);
-		playBounds = new Rectangle(160 - 50, 200 - 50, 128, 74);
-		resetBounds = new Rectangle(160 - 50, 200 - 100, 128, 74);
+		playBounds = new Rectangle(160 - 50, 200-25, 128, 74);
+		helpBounds = new Rectangle(160 - 50, 125-25, 110, 55);
+		resetBounds = new Rectangle(160 - 50, 400 - 100, 128, 74);
 		soundBounds = new Rectangle(0, 0, 50, 50);
 		touchPoint = new Vector2();
 	}
@@ -46,6 +50,11 @@ public class MainMenuScreen extends GLScreen{
 				
 				if(OverlapTester.pointInRectangle(playBounds, touchPoint)){
 					game.setScreen(new BuildScreen(game));
+					return;
+				}
+
+				if(OverlapTester.pointInRectangle(helpBounds, touchPoint)){
+					game.setScreen(new MainHelpScreen(game));
 					return;
 				}
 
@@ -87,6 +96,7 @@ public class MainMenuScreen extends GLScreen{
 		
 		batcher.beginBatch(Assets.mainMenuTextures);
 		batcher.drawSprite(160, 200, 128, 74, Assets.playRegion);
+		batcher.drawSprite(160, 125, 110, 55, Assets.helpRegion);
 		batcher.endBatch();
 		
 		gl.glDisable(GL10.GL_BLEND);

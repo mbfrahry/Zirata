@@ -23,7 +23,7 @@ public class PlayerSave {
 	public static ArrayList<Block> playerBlocks = new ArrayList<Block>(){{
 		add(new Block(160, 240, 10, 0));
 	}};
-	public static String file = ".ship";
+	public static String file = ".ship3";
 
 
 
@@ -95,9 +95,12 @@ public class PlayerSave {
 	}
 
 	public static double[] readBlockInfoArray(JsonReader reader) throws IOException{
-		double[] blockInfo = new double[10];
-		int count = 0;
+		double[] blockInfo = null;
 		reader.beginArray();
+		if(reader.hasNext()) {
+			blockInfo = new double[reader.nextInt()];
+		}
+		int count = 0;
 		while(reader.hasNext()){
 			blockInfo[count] = reader.nextDouble();
 			count++;
@@ -144,10 +147,17 @@ public class PlayerSave {
 
 	private static void writeInformationArray(JsonWriter writer, Block block) throws IOException{
 		writer.beginArray();
+		writer.value(block.constructorArgLength);
 		writer.value(block.position.x);
 		writer.value(block.position.y);
 		writer.value(block.maxHealth);
 		writer.value(block.energyCost);
+		if(block.getClass().equals(MultiplierBlock.class)){
+			MultiplierBlock mBlock = (MultiplierBlock)block;
+			writer.value(mBlock.multiplier);
+			writer.value(mBlock.multiplierTime);
+			writer.value(mBlock.cooldown);
+		}
 		if(block.getClass().equals(EnergyBlock.class)){
 			EnergyBlock eBlock = (EnergyBlock)block;
 			writer.value(eBlock.energy);

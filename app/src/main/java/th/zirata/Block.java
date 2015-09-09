@@ -12,6 +12,8 @@ public class Block extends DynamicGameObject {
 	int energyCost;
 	Vector2 lastTouch;
 	boolean active;
+
+	int constructorArgLength;
 	
 	public Block(float x, float y, int health, int energyCost){
 		super(x, y, BLOCK_WIDTH, BLOCK_HEIGHT);
@@ -20,6 +22,8 @@ public class Block extends DynamicGameObject {
 		this.energyCost = energyCost;
 		lastTouch = new Vector2(x, y + BLOCK_HEIGHT/2);
 		active = false;
+
+		constructorArgLength = 4;
 	}
 
 	public void action() {

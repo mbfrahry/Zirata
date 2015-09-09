@@ -27,12 +27,19 @@ public class TurretBlock extends Block{
 	int bulletDamage;
 	int state;
 
+	public double[] defaultValueArray = {0};
+
 	public TurretBlock(double[] info){
-		this((float)info[0], (float)info[1], (int)info[2], (int)info[3], (float)info[4]);
+		this((float)info[0], (float)info[1], (int)info[2], (int)info[3], 0);
+
+		if(info.length >= 5){
+			this.fireAngle = (int)info[4];
+		}
 	}
 
 	public TurretBlock(float x, float y, int health, int energyCost, float fireAngle){
 		super(x, y, health, energyCost);
+		this.constructorArgLength = 5;
 		bullets = new ArrayList<Bullet>();
 		maxBullets = 1;
 		numBullets = 0;
@@ -79,7 +86,7 @@ public class TurretBlock extends Block{
 	
 	public void action(Block enemyBlock){
 		if(state == TURRET_READY ){
-			lastTouch.set(enemyBlock.position.x + 12 , enemyBlock.position.y + 12 );
+			lastTouch.set(enemyBlock.position.x + 12, enemyBlock.position.y + 12);
 			World.PLAYER_BULLETS.add(new Bullet(position.x, position.y, enemyBlock.position.x + 12 , enemyBlock.position.y + 12, bulletDamage ));
 			Assets.playSound(Assets.shootSound);
 			numBullets++;

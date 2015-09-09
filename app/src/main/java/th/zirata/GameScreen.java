@@ -115,12 +115,12 @@ public class GameScreen extends GLScreen {
 						Block currBlock = world.player.playerBlocks.get(blockNum[event.pointer]);
 						currBlock.lastTouch.x = touchPoint.x;
 						currBlock.lastTouch.y = touchPoint.y;
-						
+
 						if(currBlock.getClass().equals(MachineGunBlock.class)){
 							currBlock.action();
 						}
 					}catch(Exception e){
-						
+
 					}
 				}
 			}

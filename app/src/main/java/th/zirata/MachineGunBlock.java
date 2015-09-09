@@ -2,6 +2,8 @@ package th.zirata;
 
 import java.util.ArrayList;
 
+//TODO
+//This whole block needs to be redone.
 public class MachineGunBlock extends Block {
 
 	ArrayList<Bullet> bullets;

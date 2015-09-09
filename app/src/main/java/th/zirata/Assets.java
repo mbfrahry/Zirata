@@ -20,12 +20,11 @@ public class Assets {
 	public static TextureRegion fullArmorBlockRegion;
 	public static TextureRegion midArmorBlockRegion;
 	public static TextureRegion lowArmorBlockRegion;
-	public static TextureRegion turretBlockRegion;
-	public static TextureRegion emptyTurretBlockRegion;
 	public static TextureRegion potentialBlockRegion;
 	public static TextureRegion bulletRegion;
 	public static TextureRegion greenBulletRegion;
-	public static TextureRegion machineGunBlockRegion;
+	public static TextureRegion yellowBulletRegion;
+	public static TextureRegion multiplierBlockRegion;
 	public static TextureRegion turretBaseRegion;
 	public static TextureRegion turretTopRegion;
 	
@@ -33,6 +32,7 @@ public class Assets {
 	public static Texture mainMenuTextures;
 	public static TextureRegion playRegion;
 	public static TextureRegion arrowRegion;
+	public static TextureRegion helpRegion;
 	
 	public static Font font;
 
@@ -40,34 +40,34 @@ public class Assets {
 
 	public static Sound explosionSound;
 	public static Sound shootSound;
-	
+
 	
 	public static void load(GLGame game){
 		backgroundTextures = new Texture(game, "Backgrounds.png");
 		backgroundRegion = new TextureRegion(backgroundTextures,  0, 0, 1333, 2000);
 		nearStarRegion = new TextureRegion(backgroundTextures,  1334, 0, 1333, 2000);
 		farStarRegion = new TextureRegion(backgroundTextures,  2668, 0, 1333, 2000);
-		
+
 		blockTextures = new Texture(game, "Blocks.png");
-		baseBlockRegion = new TextureRegion(blockTextures, 102, 26, 25, 25);
-		armorBlockRegion = new TextureRegion(blockTextures, 102, 0, 25, 25);
+		baseBlockRegion = new TextureRegion(blockTextures, 0, 77, 25, 25);
+		armorBlockRegion = new TextureRegion(blockTextures, 0, 51, 25, 25);
 		lowArmorBlockRegion = new TextureRegion(blockTextures, 52, 51, 25, 25);
-		midArmorBlockRegion = new TextureRegion(blockTextures, 52, 77, 25, 25);
-		fullArmorBlockRegion = new TextureRegion(blockTextures, 26, 51, 25, 25);
-		turretBlockRegion = new TextureRegion(blockTextures, 78, 78, 25, 25);
-		emptyTurretBlockRegion = new TextureRegion(blockTextures, 0, 51, 25, 25);
-		potentialBlockRegion = new TextureRegion(blockTextures, 78, 52, 25, 25);
-		machineGunBlockRegion = new TextureRegion(blockTextures, 26, 77, 25, 25);
-		bulletRegion = new TextureRegion(blockTextures,  0, 103, 5, 5);
-		greenBulletRegion = new TextureRegion(blockTextures, 6, 103, 5, 5);
+		midArmorBlockRegion = new TextureRegion(blockTextures, 78, 51, 25, 25);
+		fullArmorBlockRegion = new TextureRegion(blockTextures, 26, 77, 25, 25);
+		potentialBlockRegion = new TextureRegion(blockTextures, 78, 77, 25, 25);
+		multiplierBlockRegion = new TextureRegion(blockTextures, 52, 77, 25, 25);
+		bulletRegion = new TextureRegion(blockTextures,  102, 0, 5, 5);
+		greenBulletRegion = new TextureRegion(blockTextures, 102, 6, 5, 5);
+		yellowBulletRegion = new TextureRegion(blockTextures, 102, 12, 5, 5);
 		turretBaseRegion =  new TextureRegion(blockTextures, 0, 0, 50, 50);
 		turretTopRegion = new TextureRegion(blockTextures, 51, 0, 50, 50);
-		energyBlockRegion = new TextureRegion(blockTextures, 0, 77, 25, 25);
+		energyBlockRegion = new TextureRegion(blockTextures, 26, 51, 25, 25);
 		
 		mainMenuTextures = new Texture(game, "MenuItems.png");
-		playRegion = new TextureRegion(mainMenuTextures, 0, 121, 64, 37);
-		arrowRegion = new TextureRegion(mainMenuTextures, 65, 121, 30, 30);
+		playRegion = new TextureRegion(mainMenuTextures, 65, 121, 64, 37);
+		arrowRegion = new TextureRegion(mainMenuTextures, 130, 121, 30, 30);
 		font = new Font(mainMenuTextures, 0, 0, 16, 16, 20);
+		helpRegion = new TextureRegion(mainMenuTextures, 0, 121, 64, 37);
 
 		song1 = game.getAudio().newMusic("Song1.mp3");
 		song1.setLooping(true);

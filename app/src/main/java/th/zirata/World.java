@@ -101,6 +101,9 @@ public class World {
 					tBlock.action(enemies.get(closestEnemy).enemyBlocks.get(0));
 				}
 			}
+			if(currBlock.getClass().equals(MultiplierBlock.class) && currBlock.active){
+				currBlock.action();
+			}
 		}
 		player.update(deltaTime);
 	}

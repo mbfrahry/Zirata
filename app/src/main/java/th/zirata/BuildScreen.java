@@ -132,8 +132,8 @@ public class BuildScreen extends GLScreen{
 			else if(currBlock.getClass().equals(ArmorBlock.class)){
 				batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.armorBlockRegion);
 			}
-			else if (currBlock.getClass().equals(MachineGunBlock.class)){
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.machineGunBlockRegion);
+			else if (currBlock.getClass().equals(MultiplierBlock.class)){
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.multiplierBlockRegion);
 			}
 			else if (currBlock.getClass().equals(EnergyBlock.class)){
 				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.energyBlockRegion);
