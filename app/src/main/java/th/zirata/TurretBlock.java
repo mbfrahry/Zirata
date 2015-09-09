@@ -35,6 +35,9 @@ public class TurretBlock extends Block{
 		if(info.length >= 5){
 			this.fireAngle = (int)info[4];
 		}
+
+		calcCone(position.x, position.y);
+
 	}
 
 	public TurretBlock(float x, float y, int health, int energyCost, float fireAngle){
@@ -52,6 +55,14 @@ public class TurretBlock extends Block{
 		fireArcAngle = 30;
 		fireRange = 150;
 
+		calcCone(x, y);
+
+		state = TURRET_READY;
+
+
+	}
+
+	private void calcCone(float x, float y){
 		if(fireAngle == 0){
 			coneX1 = (float)(x - 12 + (Math.cos(( fireAngle + fireArcAngle)*Math.PI/180)) * fireRange/2);
 			coneY1 = (float)(y - 12 + (Math.sin(( fireAngle + fireArcAngle)*Math.PI/180)) * fireRange/2);
@@ -76,12 +87,7 @@ public class TurretBlock extends Block{
 			coneX2 = (float)(x + 12 + (Math.cos(( fireAngle - fireArcAngle)*Math.PI/180)) * fireRange/2);
 			coneY2 = (float)(y + 12 + (Math.sin(( fireAngle - fireArcAngle)*Math.PI/180)) * fireRange/2);
 		}
-
-		state = TURRET_READY;
-
-
 	}
-
 
 	
 	public void action(Block enemyBlock){
