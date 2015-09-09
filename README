@@ -1,14 +1,31 @@
-TODO List
+Started
+  Refactor the crappy looking code - Started 
+  Multiplier block- Started
+  Tutorials/Help Page 
+
+Needs to be done 
+
+Clear .ship file appropriately
+
+TextureReader class
+  -It will read in sprite sheet and update TextureRegions accordingly.
+
+Better UI/Intuitivness
+
+Add block bank
+  Allows you to swap the blocks in and out that you have purchased
   
 Upgrade path
   Buy expansion slots
   Buy blocks or blocks drop
     Can convert these into whatever you want
-    
 
-Add block bank
-  Allows you to swap the blocks in and out that you have purchased
-  
+Different blocks
+  Freeze Block
+  etc
+
+Show offscreen enemies with a red area 
+
 Unique enemy movements
   -aka galaga movements
   
@@ -16,22 +33,18 @@ Moving background to simulate ship velocity
 
 Paralax background
 
-Different blocks
-  Multiplier block
-  Freeze Block
-  etc
 
-Refactor the crappy looking code
 
-Better UI
-
-Tutorials/Help Page
 
 Bugs:
   Bullets go past cone range
   Energy goes negative when energy block is lost
 
 Max was here.
-Clear .ship file appropriately
 
-Show offscreen enemies with a red area 
+
+
+
+
+  
+  
