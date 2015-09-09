@@ -1,5 +1,9 @@
 package th.zirata;
 
+import android.util.JsonWriter;
+
+import java.io.IOException;
+
 /**
  * Created by Matthew on 6/6/2015.
  */
@@ -28,6 +32,8 @@ public class EnergyBlock extends Block{
         this.energy = energy;
     }
 
-
+    public void writeExtraInfo(JsonWriter writer) throws IOException {
+        writer.value(energy);
+    }
 
 }

@@ -1,5 +1,9 @@
 package th.zirata;
 
+import android.util.JsonWriter;
+
+import java.io.IOException;
+
 /**
  * Created by Matthew on 9/8/2015.
  */
@@ -70,6 +74,12 @@ public class MultiplierBlock extends Block{
             }
         }
 
+    }
+
+    public void writeExtraInfo(JsonWriter writer) throws IOException {
+        writer.value(multiplier);
+        writer.value(multiplierTime);
+        writer.value(cooldown);
     }
 
 }

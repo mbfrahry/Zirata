@@ -1,7 +1,11 @@
 package th.zirata;
 
+import android.util.JsonWriter;
+
 import com.badlogic.androidgames.framework.DynamicGameObject;
 import com.badlogic.androidgames.framework.math.Vector2;
+
+import java.io.IOException;
 
 public class Block extends DynamicGameObject {
 
@@ -31,6 +35,10 @@ public class Block extends DynamicGameObject {
 	
 	public void update(float deltaTime){
 		
+	}
+
+	public void writeExtraInfo(JsonWriter writer) throws IOException{
+
 	}
 	
 	public boolean checkDeath(){

@@ -1,7 +1,9 @@
 package th.zirata;
 
+import android.util.JsonWriter;
 import android.util.Log;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class TurretBlock extends Block{
@@ -118,5 +120,9 @@ public class TurretBlock extends Block{
 			}
 		}
 
+	}
+
+	public void writeExtraInfo(JsonWriter writer) throws IOException {
+		writer.value(fireAngle);
 	}
 }

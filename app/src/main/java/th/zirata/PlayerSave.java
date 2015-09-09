@@ -152,20 +152,7 @@ public class PlayerSave {
 		writer.value(block.position.y);
 		writer.value(block.maxHealth);
 		writer.value(block.energyCost);
-		if(block.getClass().equals(MultiplierBlock.class)){
-			MultiplierBlock mBlock = (MultiplierBlock)block;
-			writer.value(mBlock.multiplier);
-			writer.value(mBlock.multiplierTime);
-			writer.value(mBlock.cooldown);
-		}
-		if(block.getClass().equals(EnergyBlock.class)){
-			EnergyBlock eBlock = (EnergyBlock)block;
-			writer.value(eBlock.energy);
-		}
-		if(block.getClass().equals(TurretBlock.class)){
-			TurretBlock tBlock = (TurretBlock)block;
-			writer.value(tBlock.fireAngle);
-		}
+		block.writeExtraInfo(writer);
 		writer.endArray();
 	}
 
