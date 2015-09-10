@@ -50,36 +50,29 @@ public class BlockDirectionScreen extends GLScreen{
             guiCam.touchToWorld(touchPoint);
 
             if(event.type == Input.TouchEvent.TOUCH_UP) {
-                //TODO Fix this
-
+                float fireAngle = -1;
                 if(OverlapTester.pointInRectangle(rightBounds, touchPoint)){
-                    PlayerSave.playerBlocks.remove(blockNum);
-                    PlayerSave.createBlock(1, position.x, position.y, 0);
-                    PlayerSave.save(game.getFileIO());
-                    game.setScreen(new BuildScreen(game));
+                    fireAngle = 0;
+                }
+                else if(OverlapTester.pointInRectangle(leftBounds, touchPoint)){
+                    fireAngle = 180;
+                }
+                else if(OverlapTester.pointInRectangle(upBounds, touchPoint)){
+                    fireAngle = 90;
+                }
+                else if(OverlapTester.pointInRectangle(downBounds, touchPoint)){
+                    fireAngle = 270;
+                }
+                else{
+                    //Touch not on direction, be aware when adding new if statements
                     return;
                 }
-                if(OverlapTester.pointInRectangle(leftBounds, touchPoint)){
-                    PlayerSave.playerBlocks.remove(blockNum);
-                    PlayerSave.createBlock(1, position.x, position.y, 180);
-                    PlayerSave.save(game.getFileIO());
-                    game.setScreen(new BuildScreen(game));
-                    return;
-                }
-                if(OverlapTester.pointInRectangle(upBounds, touchPoint)){
-                    PlayerSave.playerBlocks.remove(blockNum);
-                    PlayerSave.createBlock(1, position.x, position.y, 90);
-                    PlayerSave.save(game.getFileIO());
-                    game.setScreen(new BuildScreen(game));
-                    return;
-                }
-                if(OverlapTester.pointInRectangle(downBounds, touchPoint)){
-                    PlayerSave.playerBlocks.remove(blockNum);
-                    PlayerSave.createBlock(1, position.x, position.y, 270);
-                    PlayerSave.save(game.getFileIO());
-                    game.setScreen(new BuildScreen(game));
-                    return;
-                }
+
+                PlayerSave.playerBlocks.remove(blockNum);
+                PlayerSave.playerBlocks.add(new TurretBlock(position, fireAngle));
+                PlayerSave.save(game.getFileIO());
+                game.setScreen(new BuildScreen(game));
+                return;
             }
         }
 

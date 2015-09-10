@@ -2,6 +2,8 @@ package th.zirata;
 
 import android.util.JsonWriter;
 
+import com.badlogic.androidgames.framework.math.Vector2;
+
 import java.io.IOException;
 
 /**
@@ -23,18 +25,12 @@ public class MultiplierBlock extends Block{
     public static final int MULTIPLIER_MULTIPLYING = 1;
     public static final int MULTIPLIER_COOLING = 2;
 
-    public MultiplierBlock(double[] info){
-        this((float)info[0], (float)info[1], (int)info[2],(int)info[3], 1.5f, 5, 15);
-        if(info.length >= 5){
-            this.multiplier = (float)info[4];
-        }
-        if(info.length >= 6){
-            this.multiplierTime = (float)info[5];
-        }
-        if(info.length >= 7){
-            this.cooldown= (float)info[6];
-        }
+    public MultiplierBlock(Vector2 position){
+        this(position.x, position.y, 10, 0, 1.5f, 5, 10);
+    }
 
+    public MultiplierBlock(double[] info){
+        this((float)info[0], (float)info[1], (int)info[2],(int)info[3], (float)info[4], (float)info[5], (float)info[6]);
     }
 
     public MultiplierBlock(float x, float y, int health, int energyCost, float multiplier,  float multiplierTime, float cooldown){
@@ -54,6 +50,11 @@ public class MultiplierBlock extends Block{
             state = MULTIPLIER_MULTIPLYING;
         }
         active = false;
+    }
+
+    @Override
+    public void action(World world) {
+
     }
 
     public void update(float deltaTime){

@@ -3,6 +3,8 @@ package th.zirata;
 import android.util.JsonWriter;
 import android.util.Log;
 
+import com.badlogic.androidgames.framework.math.Vector2;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -30,6 +32,10 @@ public class TurretBlock extends Block{
 	int state;
 
 	public double[] defaultValueArray = {0};
+
+	public TurretBlock(Vector2 position, float fireAngle){
+        this(position.x, position.y, 10, 3, fireAngle);
+	}
 
 	public TurretBlock(double[] info){
 		this((float)info[0], (float)info[1], (int)info[2], (int)info[3], 0);
@@ -91,7 +97,7 @@ public class TurretBlock extends Block{
 		}
 	}
 
-	
+	//TODO: Convert this to take in Wolrd world
 	public void action(Block enemyBlock){
 		if(state == TURRET_READY ){
 			lastTouch.set(enemyBlock.position.x + 12, enemyBlock.position.y + 12);
@@ -103,7 +109,12 @@ public class TurretBlock extends Block{
 			}
 		}
 	}
-	
+
+	@Override
+	public void action(World world) {
+
+	}
+
 	public void update(float deltaTime){
 		if(state == TURRET_RELOADING){
 			currTime+= deltaTime;

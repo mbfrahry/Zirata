@@ -174,12 +174,6 @@ public class PlayerSave {
 
 	}
 
-	public static void createBlock(int blockType, float x, float y, float angle){
-		if(blockType == 1){
-			playerBlocks.add(new TurretBlock(x, y, 10, 3, angle));
-		}
-	}
-
 	public static void reset(){
 		playerBlocks = new ArrayList<Block>(){{
 			add(new Block(160, 240, 10, 0));

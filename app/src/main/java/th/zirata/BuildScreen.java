@@ -34,7 +34,8 @@ public class BuildScreen extends GLScreen{
 		batcher = new SpriteBatcher(glGraphics, 500);
 		potentialBlocks = new ArrayList<Block>();
 		getPotentialBlocks();
-		printBlocks();
+		//printBlocks();
+		//TODO: Take this out
 		Settings.spaceBucks = 100;
     }
 
@@ -91,19 +92,19 @@ public class BuildScreen extends GLScreen{
 		
 	}
 	
-	public void printBlocks(){
-		Block cBlock;
-		
-		for(int i = 0; i < PlayerSave.playerBlocks.size(); i ++){
-			cBlock = PlayerSave.playerBlocks.get(i);
-			Log.d("PlayerBlock: " + i, cBlock.position.x + " " + cBlock.position.y);
-		}
-		
-		for(int i = 0; i < potentialBlocks.size(); i ++){
-			cBlock = potentialBlocks.get(i);
-			Log.d("PotentialBlock: " + i, cBlock.position.x + " " + cBlock.position.y);
-		}
-	}
+//	public void printBlocks(){
+//		Block cBlock;
+//
+//		for(int i = 0; i < PlayerSave.playerBlocks.size(); i ++){
+//			cBlock = PlayerSave.playerBlocks.get(i);
+//			Log.d("PlayerBlock: " + i, cBlock.position.x + " " + cBlock.position.y);
+//		}
+//
+//		for(int i = 0; i < potentialBlocks.size(); i ++){
+//			cBlock = potentialBlocks.get(i);
+//			Log.d("PotentialBlock: " + i, cBlock.position.x + " " + cBlock.position.y);
+//		}
+//	}
 
 	@Override
 	public void present(float deltaTime) {
@@ -161,40 +162,37 @@ public class BuildScreen extends GLScreen{
 	}
 	
 	public void getPotentialBlocks(){
-		ArrayList<Integer> emptyBlock = new ArrayList<Integer>();
+		ArrayList<Integer> emptyBlocks;
 		for(int i = 0; i < PlayerSave.playerBlocks.size(); i++){
 			Block currBlock = PlayerSave.playerBlocks.get(i);
 			
-			emptyBlock = checkAdjacentBlocks(currBlock);
-			for(int j = 0; j < emptyBlock.size(); j++){
-				Block newBlock = new Block(0, 0, 10, 0);
-				if(emptyBlock.get(j) == 0){
-					newBlock.position.x = currBlock.position.x;
-					newBlock.position.y = currBlock.position.y + 25;
-					addPotentialBlock(newBlock);
+			emptyBlocks = checkAdjacentBlocks(currBlock);
+			for(int j = 0; j < emptyBlocks.size(); j++){
+				BlankBlock newBlock = new BlankBlock(new Vector2(0,0));
+				int xAdd = 0;
+				int yAdd = 0;
+				if(emptyBlocks.get(j) == 0){
+					yAdd = 25;
 				}
-				if(emptyBlock.get(j) == 1){
-					newBlock.position.x = currBlock.position.x + 25;
-					newBlock.position.y = currBlock.position.y;
-					addPotentialBlock(newBlock);
+				else if(emptyBlocks.get(j) == 1){
+					xAdd = 25;
 				}
-				if(emptyBlock.get(j) == 2){
-					newBlock.position.x = currBlock.position.x;
-					newBlock.position.y = currBlock.position.y - 25;
-					addPotentialBlock(newBlock);
+				else if(emptyBlocks.get(j) == 2){
+					yAdd = -25;
 				}
-				if(emptyBlock.get(j) == 3){
-					newBlock.position.x = currBlock.position.x - 25;
-					newBlock.position.y = currBlock.position.y;
-					addPotentialBlock(newBlock);
+				else if(emptyBlocks.get(j) == 3){
+					xAdd = -25;
 				}
+				newBlock.position.x = currBlock.position.x + xAdd;
+				newBlock.position.y = currBlock.position.y + yAdd;
+				addPotentialBlock(newBlock);
 			}
 			
 		}
 	}
 
 	public ArrayList<Integer> checkAdjacentBlocks(Block block){
-		ArrayList<Integer> emptyBlock = new ArrayList<Integer>(){{
+		ArrayList<Integer> emptyBlocks = new ArrayList<Integer>(){{
 			add(0);
 			add(1);
 			add(2);
@@ -202,45 +200,45 @@ public class BuildScreen extends GLScreen{
 		}};
 		
 		for(int i = 0; i < PlayerSave.playerBlocks.size(); i++){
-			if(emptyBlock.size() == 0){
+			if(emptyBlocks.size() == 0){
 				continue;
 			}
 			Block currBlock = PlayerSave.playerBlocks.get(i);
+			Integer toRemove = -1;
 			if(block.position.y + 25 == currBlock.position.y && block.position.x == currBlock.position.x){
-				emptyBlock.remove(new Integer(0));
+				toRemove = 0;
 			}
 			
-			if(block.position.x + 25 == currBlock.position.x && block.position.y == currBlock.position.y){
-				emptyBlock.remove(new Integer(1));
+			else if(block.position.x + 25 == currBlock.position.x && block.position.y == currBlock.position.y){
+				toRemove = 1;
 			}
 			
-			if(block.position.y - 25 == currBlock.position.y && block.position.x == currBlock.position.x){
-				emptyBlock.remove(new Integer(2));
+			else if(block.position.y - 25 == currBlock.position.y && block.position.x == currBlock.position.x){
+				toRemove = 2;
 			}
 			
-			if(block.position.x - 25 == currBlock.position.x && block.position.y == currBlock.position.y){
-				emptyBlock.remove(new Integer(3));
+			else if(block.position.x - 25 == currBlock.position.x && block.position.y == currBlock.position.y){
+				toRemove = 3;
 			}
-
+			else{
+				continue;
+			}
+			emptyBlocks.remove(toRemove);
 
 		}
-		return emptyBlock;
+		return emptyBlocks;
 	}
 	
 	public void addPotentialBlock(Block newBlock){
-		if(newBlock.position.x < 20 || newBlock.position.x + 25 > 320){
+		if(newBlock.position.x < 20 || newBlock.position.x + 25 > 320 || newBlock.position.y < 0 || newBlock.position.y +25 > 480){
 			return;
 		}
-		if(newBlock.position.y < 0 || newBlock.position.y +25 > 480)
+		if(newBlock.position.x < 64 && newBlock.position.y < 75 || newBlock.position.x > 250 && newBlock.position.y < 75){
 			return;
-		
-		if(newBlock.position.x < 64 && newBlock.position.y < 75)
-			return;
-		if(newBlock.position.x > 250 && newBlock.position.y < 75)
-			return;
+		}
 		for(int i = 0; i < potentialBlocks.size(); i++){
 			Block currBlock = potentialBlocks.get(i);
-			if(newBlock.position.x == currBlock.position.x && newBlock.position.y == currBlock.position.y){
+			if(newBlock.position.equals(currBlock.position)){
 				return;
 			}
 		}

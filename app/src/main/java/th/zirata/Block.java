@@ -7,7 +7,7 @@ import com.badlogic.androidgames.framework.math.Vector2;
 
 import java.io.IOException;
 
-public class Block extends DynamicGameObject {
+public abstract class Block extends DynamicGameObject {
 
 	public static final float BLOCK_WIDTH = 24;
 	public static final float BLOCK_HEIGHT = 24;
@@ -30,16 +30,11 @@ public class Block extends DynamicGameObject {
 		constructorArgLength = 4;
 	}
 
-	public void action() {
-	}
+	public abstract void action(World world);
 	
-	public void update(float deltaTime){
-		
-	}
+	public abstract void update(float deltaTime);
 
-	public void writeExtraInfo(JsonWriter writer) throws IOException{
-
-	}
+	public abstract void writeExtraInfo(JsonWriter writer) throws IOException;
 	
 	public boolean checkDeath(){
 		if(health <= 0){
