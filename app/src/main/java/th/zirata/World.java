@@ -1,5 +1,7 @@
 package th.zirata;
 
+import android.preference.MultiSelectListPreference;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -102,7 +104,8 @@ public class World {
 				}
 			}
 			if(currBlock.getClass().equals(MultiplierBlock.class) && currBlock.active){
-				currBlock.action();
+				MultiplierBlock mBlock = (MultiplierBlock)currBlock;
+				mBlock.action(this);
 			}
 		}
 		player.update(deltaTime);

@@ -6,6 +6,7 @@ import com.badlogic.androidgames.framework.DynamicGameObject;
 import com.badlogic.androidgames.framework.math.Vector2;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Block extends DynamicGameObject {
 
@@ -46,5 +47,37 @@ public class Block extends DynamicGameObject {
 			return true;
 		}
 		return false;
+	}
+
+	public ArrayList<Block> grabAdjacentBlocks(ArrayList<Block> blocks){
+		ArrayList<Block> adjacentBlocks = new ArrayList<Block>();
+		for(int i = 0; i < blocks.size(); i++){
+			Block currBlock = blocks.get(i);
+			boolean toAdd = false;
+			if(position.y + 25 == currBlock.position.y && position.x == currBlock.position.x){
+				toAdd = true;
+			}
+
+			else if(position.x + 25 == currBlock.position.x && position.y == currBlock.position.y){
+				toAdd = true;
+			}
+
+			else if(position.y - 25 == currBlock.position.y && position.x == currBlock.position.x){
+				toAdd = true;
+			}
+
+			else if(position.x - 25 == currBlock.position.x && position.y == currBlock.position.y){
+				toAdd = true;
+			}
+			if (toAdd){
+				adjacentBlocks.add(currBlock);
+			}
+
+		}
+		return adjacentBlocks;
+	}
+
+	public void multiply(float multiplier){
+
 	}
 }

@@ -3,6 +3,7 @@ package th.zirata;
 import android.util.JsonWriter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by Matthew on 9/8/2015.
@@ -18,13 +19,14 @@ public class MultiplierBlock extends Block{
     float multiplierTime;
     float multiplierActiveTime;
     int state;
+    ArrayList<Block> multiplyingBlocks;
 
     public static final int MULTIPLIER_READY = 0;
     public static final int MULTIPLIER_MULTIPLYING = 1;
     public static final int MULTIPLIER_COOLING = 2;
 
     public MultiplierBlock(double[] info){
-        this((float)info[0], (float)info[1], (int)info[2],(int)info[3], 1.5f, 5, 15);
+        this((float) info[0], (float) info[1], (int) info[2], (int) info[3], 1.5f, 5, 15);
         if(info.length >= 5){
             this.multiplier = (float)info[4];
         }
@@ -34,7 +36,6 @@ public class MultiplierBlock extends Block{
         if(info.length >= 7){
             this.cooldown= (float)info[6];
         }
-
     }
 
     public MultiplierBlock(float x, float y, int health, int energyCost, float multiplier,  float multiplierTime, float cooldown){
@@ -47,11 +48,17 @@ public class MultiplierBlock extends Block{
         state = MULTIPLIER_READY;
         cooldownTime = 0;
         multiplierActiveTime = 0;
+        multiplyingBlocks = new ArrayList<Block>();
     }
 
-    public void action(){
+    public void action(World world){
         if( state == MULTIPLIER_READY ){
             state = MULTIPLIER_MULTIPLYING;
+
+            multiplyingBlocks = grabAdjacentBlocks(world.player.playerBlocks);
+            for(int i = 0; i < multiplyingBlocks.size(); i++){
+                multiplyingBlocks.get(i).multiply(multiplier);
+            }
         }
         active = false;
     }
@@ -62,6 +69,9 @@ public class MultiplierBlock extends Block{
             if(multiplierActiveTime > multiplierTime){
                 state = MULTIPLIER_COOLING;
                 multiplierActiveTime = 0;
+                for(int i = 0; i < multiplyingBlocks.size(); i++){
+                    multiplyingBlocks.get(i).multiply(1/multiplier);
+                }
             }
 
         }
@@ -82,4 +92,8 @@ public class MultiplierBlock extends Block{
         writer.value(cooldown);
     }
 
+
+    public void multiply(float multiplier){
+
+    }
 }

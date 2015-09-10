@@ -11,4 +11,8 @@ public class ArmorBlock extends Block{
 	public ArmorBlock(float x, float y, int health){
 		super(x, y, health, 0);
 	}
+
+	public void multiply(float multiplier){
+		this.health *= multiplier;
+	}
 }

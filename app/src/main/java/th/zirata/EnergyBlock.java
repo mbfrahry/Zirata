@@ -36,4 +36,8 @@ public class EnergyBlock extends Block{
         writer.value(energy);
     }
 
+    public void multiply(float multiplier){
+        this.energy *= multiplier;
+    }
+
 }

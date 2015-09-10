@@ -125,4 +125,8 @@ public class TurretBlock extends Block{
 	public void writeExtraInfo(JsonWriter writer) throws IOException {
 		writer.value(fireAngle);
 	}
+
+	public void multiply(float multiplier){
+		this.bulletDamage *= multiplier;
+	}
 }
