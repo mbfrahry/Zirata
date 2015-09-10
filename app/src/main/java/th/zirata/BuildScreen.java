@@ -143,15 +143,19 @@ public class BuildScreen extends GLScreen{
 			batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24 , 24 , Assets.potentialBlockRegion);
 		}
 
-		batcher.drawSprite(160, 30, 180, 45, Assets.turretBaseRegion);
+
 		batcher.endBatch();
 		
 		batcher.beginBatch(Assets.mainMenuTextures);
 		batcher.drawSprite(290, 30, 60, 60, Assets.arrowRegion);
 		batcher.drawSprite(30, 30, -60, 60, Assets.arrowRegion);
-		Assets.font.drawText(batcher, "SpaceBucks: " + Settings.spaceBucks + " ", 16, 480-20);
+		Assets.font.drawText(batcher, "SpaceBucks: " + Settings.spaceBucks + " ", 16, 480 - 20);
 		Assets.font.drawText(batcher, "Next Block Cost: " + Settings.nextBlockCost, 16, 480-40);
-		Assets.font.drawText(batcher, "Block Bank", 90, 30);
+
+
+		batcher.drawSprite(160, 30, 180, 45, Assets.rectangleRegion);
+		Assets.font.drawText(batcher, "Block Bank", 85, 30);
+
 		batcher.endBatch();
 		
 		gl.glDisable(GL10.GL_BLEND);
