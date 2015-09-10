@@ -22,20 +22,24 @@ public class BuildScreen extends GLScreen{
 	SpriteBatcher batcher;
 	Rectangle backBounds;
 	Rectangle forwardBounds;
+	Rectangle blockMenuBounds;
 	Vector2 touchPoint;
 	ArrayList<Block> potentialBlocks;
+
+	boolean showBlockMenu;
 	
 	public BuildScreen(Game game) {
         super(game);
         guiCam = new Camera2D(glGraphics, 320, 480);
         backBounds = new Rectangle(0, 0, 64, 64);
         forwardBounds = new Rectangle(320-64, 0, 64, 64);
+		blockMenuBounds = new Rectangle(130, 0, 64, 64);
 		touchPoint = new Vector2();
 		batcher = new SpriteBatcher(glGraphics, 500);
 		potentialBlocks = new ArrayList<Block>();
 		getPotentialBlocks();
-		printBlocks();
 		Settings.spaceBucks = 100;
+		showBlockMenu = false;
     }
 
 	@Override
@@ -57,6 +61,11 @@ public class BuildScreen extends GLScreen{
 					Settings.save(game.getFileIO());
 					PlayerSave.save(game.getFileIO());
 					game.setScreen(new GameScreen(game));
+					return;
+				}
+
+				if(OverlapTester.pointInRectangle(blockMenuBounds, touchPoint)){
+					showBlockMenu = true;
 					return;
 				}
 				
@@ -89,20 +98,6 @@ public class BuildScreen extends GLScreen{
 			}
 		}
 		
-	}
-	
-	public void printBlocks(){
-		Block cBlock;
-		
-		for(int i = 0; i < PlayerSave.playerBlocks.size(); i ++){
-			cBlock = PlayerSave.playerBlocks.get(i);
-			Log.d("PlayerBlock: " + i, cBlock.position.x + " " + cBlock.position.y);
-		}
-		
-		for(int i = 0; i < potentialBlocks.size(); i ++){
-			cBlock = potentialBlocks.get(i);
-			Log.d("PotentialBlock: " + i, cBlock.position.x + " " + cBlock.position.y);
-		}
 	}
 
 	@Override
@@ -147,6 +142,8 @@ public class BuildScreen extends GLScreen{
 			Block currBlock = potentialBlocks.get(i);
 			batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24 , 24 , Assets.potentialBlockRegion);
 		}
+
+		batcher.drawSprite(160, 30, 180, 45, Assets.turretBaseRegion);
 		batcher.endBatch();
 		
 		batcher.beginBatch(Assets.mainMenuTextures);
@@ -154,6 +151,7 @@ public class BuildScreen extends GLScreen{
 		batcher.drawSprite(30, 30, -60, 60, Assets.arrowRegion);
 		Assets.font.drawText(batcher, "SpaceBucks: " + Settings.spaceBucks + " ", 16, 480-20);
 		Assets.font.drawText(batcher, "Next Block Cost: " + Settings.nextBlockCost, 16, 480-40);
+		Assets.font.drawText(batcher, "Block Bank", 90, 30);
 		batcher.endBatch();
 		
 		gl.glDisable(GL10.GL_BLEND);
