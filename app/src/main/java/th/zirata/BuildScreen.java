@@ -143,6 +143,10 @@ public class BuildScreen extends GLScreen{
 			batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24 , 24 , Assets.potentialBlockRegion);
 		}
 
+		if(showBlockMenu){
+			//draw all my blocks based on what has been selected
+		}
+
 
 		batcher.endBatch();
 		
@@ -150,14 +154,26 @@ public class BuildScreen extends GLScreen{
 		batcher.drawSprite(290, 30, 60, 60, Assets.arrowRegion);
 		batcher.drawSprite(30, 30, -60, 60, Assets.arrowRegion);
 		Assets.font.drawText(batcher, "SpaceBucks: " + Settings.spaceBucks + " ", 16, 480 - 20);
-		Assets.font.drawText(batcher, "Next Block Cost: " + Settings.nextBlockCost, 16, 480-40);
-
-
-		batcher.drawSprite(160, 30, 180, 45, Assets.rectangleRegion);
-		Assets.font.drawText(batcher, "Block Bank", 85, 30);
+		Assets.font.drawText(batcher, "Next Block Cost: " + Settings.nextBlockCost, 16, 480 - 40);
 
 		batcher.endBatch();
-		
+
+		if(showBlockMenu){
+			batcher.beginBatch(Assets.mainMenuTextures);
+			batcher.drawSprite(160, 100, 320, 200, Assets.rectangleRegion);
+			batcher.drawSprite(40, 175, 80, 50, Assets.rectangleRegion);
+			batcher.drawSprite(120, 175, 80, 50, Assets.rectangleRegion);
+			batcher.drawSprite(200, 175, 80, 50, Assets.rectangleRegion);
+			batcher.drawSprite(280, 175, 80, 50, Assets.rectangleRegion);
+			batcher.endBatch();
+
+		}
+		else{
+			batcher.beginBatch(Assets.mainMenuTextures);
+			batcher.drawSprite(160, 30, 180, 45, Assets.rectangleRegion);
+			Assets.font.drawText(batcher, "Block Bank", 85, 30);
+			batcher.endBatch();
+		}
 		gl.glDisable(GL10.GL_BLEND);
 		
 	}
