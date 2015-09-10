@@ -34,6 +34,8 @@ public class Assets {
 	public static TextureRegion arrowRegion;
 	public static TextureRegion helpRegion;
 	public static TextureRegion rectangleRegion;
+	public static TextureRegion darkGrayRectangleRegion;
+	public static TextureRegion addIcon;
 
 	public static Font font;
 
@@ -65,11 +67,13 @@ public class Assets {
 		energyBlockRegion = new TextureRegion(blockTextures, 26, 51, 25, 25);
 		
 		mainMenuTextures = new Texture(game, "MenuItems.png");
-		playRegion = new TextureRegion(mainMenuTextures, 65, 121, 64, 37);
-		arrowRegion = new TextureRegion(mainMenuTextures, 181, 121, 30, 30);
+		playRegion = new TextureRegion(mainMenuTextures, 0, 159, 64, 37);
+		arrowRegion = new TextureRegion(mainMenuTextures, 116, 121, 30, 30);
 		font = new Font(mainMenuTextures, 0, 0, 16, 16, 20);
 		helpRegion = new TextureRegion(mainMenuTextures, 0, 121, 64, 37);
-		rectangleRegion = new TextureRegion(mainMenuTextures, 130, 121, 50, 25);
+		rectangleRegion = new TextureRegion(mainMenuTextures, 65, 147, 50, 25);
+		darkGrayRectangleRegion = new TextureRegion(mainMenuTextures, 65, 121, 50, 25);
+		addIcon = new TextureRegion(mainMenuTextures, 116, 152, 25, 25);
 
 		song1 = game.getAudio().newMusic("Song1.mp3");
 		song1.setLooping(true);
