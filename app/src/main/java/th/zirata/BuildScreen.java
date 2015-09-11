@@ -148,10 +148,12 @@ public class BuildScreen extends GLScreen{
 
 					for(int j = 0; j <= ownedBlocksByType.size(); j++){
 						if(OverlapTester.pointInRectangle(firstShopBlock, touchPoint)){
-							if(ownedBlocksByType.size() > 0 && ownedBlocksByType.size() > j && blockBankOption  == BLOCK_BANK_TURRET) {
-								Block currBlock = ownedBlocksByType.get(j);
-								game.setScreen(new BlockDirectionScreen(game, currBlock.position, PlayerSave.playerBlocks.indexOf(currBlock)));
-								return;
+							if(ownedBlocksByType.size() > 0 && ownedBlocksByType.size() > j ) {
+								if(blockBankOption == BLOCK_BANK_TURRET) {
+									Block currBlock = ownedBlocksByType.get(j);
+									game.setScreen(new BlockDirectionScreen(game, currBlock.position, PlayerSave.playerBlocks.indexOf(currBlock)));
+									return;
+								}
 							}
 							else if (firstShopBlock.lowerLeft.y > 15){
 								if(blockBankOption  == BLOCK_BANK_TURRET){
