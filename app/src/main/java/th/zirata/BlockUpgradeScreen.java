@@ -37,7 +37,7 @@ public class BlockUpgradeScreen extends GLScreen{
 		energyBounds = new Rectangle(200-25, 250-25, 50, 50);
 		touchPoint = new Vector2();
 		batcher = new SpriteBatcher(glGraphics, 500);
-		lastBlock = PlayerSave.playerBlocks.get(blockNum);
+		lastBlock = PlayerSave.activeBlocks.get(blockNum);
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class BlockUpgradeScreen extends GLScreen{
 					return;
 				}
 				if(OverlapTester.pointInRectangle(turretBounds, touchPoint)){
-					Block currBlock = PlayerSave.playerBlocks.get(blockNum);
+					Block currBlock = PlayerSave.activeBlocks.get(blockNum);
 					game.setScreen(new BlockDirectionScreen(game, currBlock.position, blockNum));
 					return;
 				}
@@ -79,23 +79,23 @@ public class BlockUpgradeScreen extends GLScreen{
 	}
 	
 	public void changeBlock(String blockType){
-		Block currBlock = PlayerSave.playerBlocks.get(blockNum);
-		PlayerSave.playerBlocks.remove(blockNum);
+		Block currBlock = PlayerSave.activeBlocks.get(blockNum);
+		PlayerSave.activeBlocks.remove(blockNum);
 
 		if(blockType.equals("armor")){
 			ArmorBlock newBlock = new ArmorBlock(currBlock.position.x, currBlock.position.y, 20);
-			PlayerSave.playerBlocks.add(blockNum, newBlock);
+			PlayerSave.activeBlocks.add(blockNum, newBlock);
 		}
 		if(blockType.equals("turret")){
 			game.setScreen(new BlockDirectionScreen(game, currBlock.position, blockNum));
 		}
 		if(blockType.equals("multiplier")){
 			MultiplierBlock newBlock = new MultiplierBlock(currBlock.position.x, currBlock.position.y, 10, 0, 1.5f, 5, 10);
-			PlayerSave.playerBlocks.add(blockNum, newBlock);
+			PlayerSave.activeBlocks.add(blockNum, newBlock);
 		}
 		if(blockType.equals("energy")){
 			EnergyBlock newBlock = new EnergyBlock(currBlock.position.x, currBlock.position.y, 10, 0, 10);
-			PlayerSave.playerBlocks.add(blockNum, newBlock);
+			PlayerSave.activeBlocks.add(blockNum, newBlock);
 		}
 		PlayerSave.save(game.getFileIO());
 	}
@@ -117,7 +117,7 @@ public class BlockUpgradeScreen extends GLScreen{
 
 
 		batcher.beginBatch(Assets.blockTextures);
-		Block currBlock = PlayerSave.playerBlocks.get(blockNum);
+		Block currBlock = PlayerSave.activeBlocks.get(blockNum);
 		int x = 160;
 		int y = 450;
 		if(currBlock.getClass().equals(TurretBlock.class)){

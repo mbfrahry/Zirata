@@ -19,11 +19,15 @@ import android.util.JsonReader;
 import android.util.JsonWriter;
 
 public class PlayerSave {
-	
-	public static ArrayList<Block> playerBlocks = new ArrayList<Block>(){{
+
+
+	public static ArrayList<Block> bankedBlocks = new ArrayList<Block>(){{
 		add(new Block(160, 240, 10, 0));
 	}};
-	public static String file = ".ship3";
+	public static ArrayList<Block> activeBlocks = new ArrayList<Block>(){{
+		add(new Block(160, 240, 10, 0));
+	}};
+	public static String file = ".ship21";
 
 
 
@@ -43,20 +47,33 @@ public class PlayerSave {
 			}
 		}
 
-		Log.d("Velocity", playerBlocks.get(0).health + " ");
 	}
 
 	public static void readBlocksArray(JsonReader reader) throws IOException{
-		ArrayList<Block> newBlocks = new ArrayList<Block>();
+		ArrayList<Block> potentialBankBlocks = new ArrayList<Block>();
+		reader.beginArray();
 		reader.beginArray();
 		while(reader.hasNext()){
-			readBlock(reader, newBlocks);
+			readBlock(reader, potentialBankBlocks);
 		}
-        reader.endArray();
+		reader.endArray();
 
-		if ( newBlocks.size() > 0){
-			playerBlocks = newBlocks;
+		if ( potentialBankBlocks.size() > 0){
+			bankedBlocks = potentialBankBlocks;
 		}
+
+		ArrayList<Block> potentialActiveBlocks = new ArrayList<Block>();
+		reader.beginArray();
+		while(reader.hasNext()){
+			readBlock(reader, potentialActiveBlocks);
+		}
+		reader.endArray();
+
+		if ( potentialActiveBlocks.size() > 0){
+			activeBlocks = potentialActiveBlocks;
+		}
+
+
 	}
 
 	public static void readBlock(JsonReader reader, ArrayList<Block> newBlocks) throws IOException{
@@ -130,10 +147,22 @@ public class PlayerSave {
 
 	private static void writeBlocksArray(JsonWriter writer) throws IOException {
 		writer.beginArray();
-		for (Block block : playerBlocks) {
+
+		writer.beginArray();
+		for (Block block : bankedBlocks) {
 			writeBlock(writer, block);
 		}
 		writer.endArray();
+
+		writer.beginArray();
+		for (Block block : activeBlocks) {
+			writeBlock(writer, block);
+		}
+		writer.endArray();
+
+		writer.endArray();
+
+
 	}
 
 	private static void writeBlock(JsonWriter writer, Block block) throws IOException{
@@ -141,7 +170,6 @@ public class PlayerSave {
 		writer.name("Type").value(block.getClass().toString().replace("class ", ""));
 		writer.name("Info");
 		writeInformationArray(writer, block);
-
 		writer.endObject();
 	}
 
@@ -157,31 +185,18 @@ public class PlayerSave {
 	}
 
 
-	public static void createBlock(int blockType, float x, float y){
-		if(blockType == 0){
-			playerBlocks.add(new Block(x, y, 10, 0));
-		}
-
-		if(blockType == 2){
-			playerBlocks.add(new ArmorBlock(x, y, 20));
-		}
-		if(blockType == 3){
-			playerBlocks.add(new MachineGunBlock(x, y, 10, 3));
-		}
-		if(blockType == 4){
-			playerBlocks.add(new EnergyBlock(x, y, 10, 0, 10));
-		}
-
-	}
 
 	public static void createBlock(int blockType, float x, float y, float angle){
 		if(blockType == 1){
-			playerBlocks.add(new TurretBlock(x, y, 10, 3, angle));
+			activeBlocks.add(new TurretBlock(x, y, 10, 3, angle));
 		}
 	}
 
 	public static void reset(){
-		playerBlocks = new ArrayList<Block>(){{
+		activeBlocks = new ArrayList<Block>(){{
+			add(new Block(160, 240, 10, 0));
+		}};
+		bankedBlocks = new ArrayList<Block>(){{
 			add(new Block(160, 240, 10, 0));
 		}};
 	}

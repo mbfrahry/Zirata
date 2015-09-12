@@ -53,28 +53,28 @@ public class BlockDirectionScreen extends GLScreen{
                 //TODO Fix this
 
                 if(OverlapTester.pointInRectangle(rightBounds, touchPoint)){
-                    PlayerSave.playerBlocks.remove(blockNum);
+                    PlayerSave.activeBlocks.remove(blockNum);
                     PlayerSave.createBlock(1, position.x, position.y, 0);
                     PlayerSave.save(game.getFileIO());
                     game.setScreen(new BuildScreen(game));
                     return;
                 }
                 if(OverlapTester.pointInRectangle(leftBounds, touchPoint)){
-                    PlayerSave.playerBlocks.remove(blockNum);
+                    PlayerSave.activeBlocks.remove(blockNum);
                     PlayerSave.createBlock(1, position.x, position.y, 180);
                     PlayerSave.save(game.getFileIO());
                     game.setScreen(new BuildScreen(game));
                     return;
                 }
                 if(OverlapTester.pointInRectangle(upBounds, touchPoint)){
-                    PlayerSave.playerBlocks.remove(blockNum);
+                    PlayerSave.activeBlocks.remove(blockNum);
                     PlayerSave.createBlock(1, position.x, position.y, 90);
                     PlayerSave.save(game.getFileIO());
                     game.setScreen(new BuildScreen(game));
                     return;
                 }
                 if(OverlapTester.pointInRectangle(downBounds, touchPoint)){
-                    PlayerSave.playerBlocks.remove(blockNum);
+                    PlayerSave.activeBlocks.remove(blockNum);
                     PlayerSave.createBlock(1, position.x, position.y, 270);
                     PlayerSave.save(game.getFileIO());
                     game.setScreen(new BuildScreen(game));
