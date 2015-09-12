@@ -82,7 +82,6 @@ public class BuildScreen extends GLScreen{
 
 				if (event.type == TouchEvent.TOUCH_UP) {
 
-
 					if (selectedBankBlock != null && selectedActiveBlock == null) {
 						selectedBankBlock = null;
 						showBlockBank = true;
@@ -123,15 +122,15 @@ public class BuildScreen extends GLScreen{
 								return;
 							}
 						}
-						/*
+
 						for (int j = 0; j < PlayerSave.activeBlocks.size(); j++) {
 							Block currBlock = PlayerSave.activeBlocks.get(j);
 							pBlockBounds = new Rectangle(currBlock.position.x - 12, currBlock.position.y - 12, 25, 25);
 							if (OverlapTester.pointInRectangle(pBlockBounds, touchPoint)) {
-								game.setScreen(new BlockUpgradeScreen(game, j));
+								game.setScreen(new BlockUpgradeScreen(game, currBlock));
 								return;
 							}
-						}*/
+						}
 					} else {
 						checkBankBlocks(touchPoint);
 					}
@@ -196,20 +195,6 @@ public class BuildScreen extends GLScreen{
 		}
 		
 	}
-	
-//	public void printBlocks(){
-//		Block cBlock;
-//
-//		for(int i = 0; i < PlayerSave.playerBlocks.size(); i ++){
-//			cBlock = PlayerSave.playerBlocks.get(i);
-//			Log.d("PlayerBlock: " + i, cBlock.position.x + " " + cBlock.position.y);
-//		}
-//
-//		for(int i = 0; i < potentialBlocks.size(); i ++){
-//			cBlock = potentialBlocks.get(i);
-//			Log.d("PotentialBlock: " + i, cBlock.position.x + " " + cBlock.position.y);
-//		}
-//	}
 
 
 	private void checkBankBlocks(Vector2 touchPoint){
@@ -243,7 +228,7 @@ public class BuildScreen extends GLScreen{
 			Block currBlock = ownedBlocksByType.get(j);
 			bankBlockBounds = new Rectangle(currBlock.position.x - 12, currBlock.position.y - 12, 25, 25);
 			if(OverlapTester.pointInRectangle(bankBlockBounds, touchPoint)){
-
+				game.setScreen(new BlockUpgradeScreen(game, currBlock));
 			}
 		}
 		//Checks if add block was pressed
