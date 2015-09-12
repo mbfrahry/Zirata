@@ -80,14 +80,14 @@ public class World {
 		NEG_SIN_ANGLE = (float)Math.sin(-POS_SIN_ANGLE);
 		POS_COS_ANGLE = (float)Math.cos(Math.toRadians(angleDiff));
 		if(moveRight){
-			worldAngle += angleDiff;
-
-			enemyAngle = POS_SIN_ANGLE;
-		}
-		if(moveLeft){
 			worldAngle -= angleDiff;
 
 			enemyAngle = NEG_SIN_ANGLE;
+		}
+		if(moveLeft){
+			worldAngle += angleDiff;
+
+			enemyAngle = POS_SIN_ANGLE;
 		}
 
 	}
