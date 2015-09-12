@@ -88,10 +88,10 @@ public class WorldRenderer {
 					if(mBlock.state == mBlock.MULTIPLIER_READY){
 						batcher.drawSprite(currBlock.position.x , currBlock.position.y + 2, 10, 10, Assets.bulletRegion);
 					}
-					if(mBlock.state == mBlock.MULTIPLIER_MULTIPLYING){
+					else if(mBlock.state == mBlock.MULTIPLIER_MULTIPLYING){
 						batcher.drawSprite(currBlock.position.x, currBlock.position.y +2, 10, 10, Assets.greenBulletRegion);
 					}
-					if(mBlock.state == mBlock.MULTIPLIER_COOLING){
+					else if(mBlock.state == mBlock.MULTIPLIER_COOLING){
 						batcher.drawSprite(currBlock.position.x, currBlock.position.y + 2, 10, 10, Assets.yellowBulletRegion);
 					}
 
@@ -136,10 +136,10 @@ public class WorldRenderer {
 							if(currBlock.health <= currBlock.maxHealth && currBlock.health > currBlock.maxHealth*.7){
 								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.fullArmorBlockRegion);
 							}
-							if(currBlock.health <= currBlock.maxHealth*.7 && currBlock.health > currBlock.maxHealth*.3){
+							else if(currBlock.health <= currBlock.maxHealth*.7 && currBlock.health > currBlock.maxHealth*.3){
 								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.midArmorBlockRegion);
 							}
-							if(currBlock.health <= currBlock.maxHealth*.3 && currBlock.health > 0){
+							else if(currBlock.health <= currBlock.maxHealth*.3 && currBlock.health > 0){
 								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.lowArmorBlockRegion);
 							}
 						}

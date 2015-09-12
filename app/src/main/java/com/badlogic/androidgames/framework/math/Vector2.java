@@ -87,7 +87,11 @@ public class Vector2 {
 			angle+=360;
 		return angle;
 	}
-	
+
+	public boolean equals(Vector2 other){
+		return this.x == other.x && this.y == other.y;
+	}
+
 	public Vector2 rotate(float angle){
 		float rad = angle *TO_RADIANS;
 		float cos = FloatMath.cos(rad);
