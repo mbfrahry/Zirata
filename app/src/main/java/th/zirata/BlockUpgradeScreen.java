@@ -113,17 +113,8 @@ public class BlockUpgradeScreen extends GLScreen{
 		String[] upgradeableAttributes = block.getUpgradableAttributes();
 		for (int i = 0; i < upgradeableAttributes.length; i++){
 			batcher.drawSprite(160, 100 + i*80, 320, 80, Assets.rectangleRegion);
-			Assets.font.drawText(batcher, "Upgrade " + upgradeableAttributes[i], 80, 100 + i*80);
+			Assets.font.drawText(batcher, upgradeableAttributes[i], 15, 125 + i*80);
 		}
-		batcher.endBatch();
-	}
-
-	private void drawArmorBlockAttributes(){
-
-		batcher.beginBatch(Assets.mainMenuTextures);
-		batcher.drawSprite(80, 100, 160, 80, Assets.rectangleRegion);
-		//batcher.drawSprite(240, 100, 160, 80, Assets.rectangleRegion);
-		//batcher.drawSprite(40, 175, 80, 50, Assets.darkGrayRectangleRegion);
 		batcher.endBatch();
 	}
 
@@ -134,29 +125,13 @@ public class BlockUpgradeScreen extends GLScreen{
 		}
 	}
 
-	private void drawTurretBlockAttributes(){
-		batcher.beginBatch(Assets.mainMenuTextures);
-		batcher.drawSprite(80, 100, 160, 80, Assets.rectangleRegion);
-		batcher.drawSprite(240, 100, 160, 80, Assets.rectangleRegion);
-		//batcher.drawSprite(40, 175, 80, 50, Assets.darkGrayRectangleRegion);
-		batcher.endBatch();
+	private void updateEnergyAttributes(){
+		Rectangle pBlockBounds = new Rectangle(0, 50, 160, 80);
+		if (OverlapTester.pointInRectangle(pBlockBounds, touchPoint)) {
+			game.setScreen(new BuildScreen(game));
+		}
 	}
 
-	private void drawEnergyBlockAttributes(){
-		batcher.beginBatch(Assets.mainMenuTextures);
-		batcher.drawSprite(80, 100, 160, 80, Assets.rectangleRegion);
-		batcher.drawSprite(240, 100, 160, 80, Assets.rectangleRegion);
-		//batcher.drawSprite(40, 175, 80, 50, Assets.darkGrayRectangleRegion);
-		batcher.endBatch();
-	}
-
-	private void drawMultiplierBlockAttributes(){
-		batcher.beginBatch(Assets.mainMenuTextures);
-		batcher.drawSprite(80, 100, 160, 80, Assets.rectangleRegion);
-		batcher.drawSprite(240, 100, 160, 80, Assets.rectangleRegion);
-		//batcher.drawSprite(40, 175, 80, 50, Assets.darkGrayRectangleRegion);
-		batcher.endBatch();
-	}
 
 	@Override
 	public void pause() {
