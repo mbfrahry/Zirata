@@ -81,7 +81,7 @@ public class BlockUpgradeScreen extends GLScreen{
 			batcher.drawSprite(x, y, 24, 24, Assets.turretBaseRegion);
 			batcher.drawSprite(x, y, 24, 24, Assets. turretTopRegion);
 		}
-//test
+		//Test
 		else if(block.getClass().equals(ArmorBlock.class)){
 			batcher.drawSprite(x, y, 24, 24, Assets.armorBlockRegion);
 
