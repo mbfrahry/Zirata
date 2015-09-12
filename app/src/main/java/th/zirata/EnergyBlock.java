@@ -69,6 +69,16 @@ public class EnergyBlock extends Block{
         return new float[]{5, 1};
     }
 
+    @Override
+    public void updateAttribute(int attributeIndex, float upgradeNum) {
+        if(attributeIndex == 0){
+            this.health += upgradeNum;
+        }
+        else if (attributeIndex == 1){
+            this.energy += upgradeNum;
+        }
+    }
+
     public void multiply(float multiplier){
         this.energy *= multiplier;
     }

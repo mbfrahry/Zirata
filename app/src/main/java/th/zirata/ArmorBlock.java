@@ -55,6 +55,13 @@ public class ArmorBlock extends Block{
 		return new float[]{20};
 	}
 
+	@Override
+	public void updateAttribute(int attributeIndex, float upgradeNum) {
+		if(attributeIndex == 0){
+			this.health += upgradeNum;
+		}
+	}
+
 	public void multiply(float multiplier){
 		this.health *= multiplier;
 	}

@@ -106,6 +106,22 @@ public class MultiplierBlock extends Block{
         return new float[]{5, -1, 1, .1f};
     }
 
+    @Override
+    public void updateAttribute(int attributeIndex, float upgradeNum) {
+        if(attributeIndex == 0){
+            this.health += upgradeNum;
+        }
+        if(attributeIndex == 1){
+            this.cooldown += upgradeNum;
+        }
+        if(attributeIndex == 2){
+            this.multiplierTime += upgradeNum;
+        }
+        if(attributeIndex == 3){
+            this.multiplier += upgradeNum;
+        }
+    }
+
 
     public void multiply(float multiplier){
 

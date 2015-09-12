@@ -44,4 +44,9 @@ public class BlankBlock extends Block {
     public float[] getUpgradeValues() {
         return new float[0];
     }
+
+    @Override
+    public void updateAttribute(int attributeIndex, float upgradeNum) {
+
+    }
 }

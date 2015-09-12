@@ -45,9 +45,7 @@ public class BlockUpgradeScreen extends GLScreen{
 					game.setScreen(new BuildScreen(game));
 					return;
 				}
-				if (block.getClass() == ArmorBlock.class){
-					updateArmorAttributes();
-				}
+				updateAttributes();
 
 			}
 		}		
@@ -124,10 +122,17 @@ public class BlockUpgradeScreen extends GLScreen{
 		batcher.endBatch();
 	}
 
-	private void updateArmorAttributes(){
-		Rectangle pBlockBounds = new Rectangle(0, 50, 160, 80);
-		if (OverlapTester.pointInRectangle(pBlockBounds, touchPoint)) {
-			game.setScreen(new BuildScreen(game));
+	private void updateAttributes(){
+		String[] upgradeableAttributes = block.getUpgradableAttributes();
+		float[] attributeValues = block.getAttributeVals();
+		float[] upgradeValues = block.getUpgradeValues();
+		Rectangle attrBlockBounds;
+		for(int i = 0; i < upgradeableAttributes.length; i++) {
+			attrBlockBounds =  new Rectangle(0, 50 + 100 * i, 320, 80);
+			if (OverlapTester.pointInRectangle(attrBlockBounds, touchPoint)) {
+				block.updateAttribute(i, upgradeValues[i]);
+				PlayerSave.save(game.getFileIO());
+			}
 		}
 	}
 
