@@ -12,6 +12,7 @@ import java.util.ArrayList;
  */
 public class MultiplierBlock extends Block{
 
+    public static String[] UpgradeAttributes = new String[]{"Health", "Cooldown", "Active Time", "Multiplier"};
 
     public double[] defaultValueArray = {1.5, 5, 15};
 
@@ -88,6 +89,11 @@ public class MultiplierBlock extends Block{
         writer.value(multiplier);
         writer.value(multiplierTime);
         writer.value(cooldown);
+    }
+
+    @Override
+    public String[] getUpgradableAttributes() {
+        return UpgradeAttributes;
     }
 
 

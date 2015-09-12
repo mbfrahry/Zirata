@@ -29,4 +29,9 @@ public class BlankBlock extends Block {
     public void writeExtraInfo(JsonWriter writer) throws IOException {
 
     }
+
+    @Override
+    public String[] getUpgradableAttributes() {
+        return new String[0];
+    }
 }

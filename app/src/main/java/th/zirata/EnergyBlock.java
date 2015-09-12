@@ -11,6 +11,8 @@ import java.io.IOException;
  */
 public class EnergyBlock extends Block{
 
+    public static String[] UpgradeAttributes = new String[]{"Health", "Energy"};
+
     public int energy;
     public double[] defaultValueArray = {10};
 
@@ -50,6 +52,11 @@ public class EnergyBlock extends Block{
 
     public void writeExtraInfo(JsonWriter writer) throws IOException {
         writer.value(energy);
+    }
+
+    @Override
+    public String[] getUpgradableAttributes() {
+        return UpgradeAttributes;
     }
 
     public void multiply(float multiplier){

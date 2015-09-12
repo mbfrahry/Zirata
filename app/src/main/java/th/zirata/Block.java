@@ -7,6 +7,7 @@ import com.badlogic.androidgames.framework.math.Vector2;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public abstract class Block extends DynamicGameObject {
 
@@ -19,7 +20,9 @@ public abstract class Block extends DynamicGameObject {
 	boolean active;
 
 	int constructorArgLength;
-	
+
+	ArrayList<String> attributes;
+
 	public Block(float x, float y, int health, int energyCost){
 		super(x, y, BLOCK_WIDTH, BLOCK_HEIGHT);
 		this.health = health;
@@ -29,6 +32,9 @@ public abstract class Block extends DynamicGameObject {
 		active = false;
 
 		constructorArgLength = 4;
+
+		attributes = new ArrayList<String>();
+		attributes.add("health");
 	}
 
 	public abstract void action(World world);
@@ -36,7 +42,9 @@ public abstract class Block extends DynamicGameObject {
 	public abstract void update(float deltaTime);
 
 	public abstract void writeExtraInfo(JsonWriter writer) throws IOException;
-	
+
+	public abstract String[] getUpgradableAttributes();
+
 	public boolean checkDeath(){
 		if(health <= 0){
 			return true;

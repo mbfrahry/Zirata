@@ -5,8 +5,11 @@ import android.util.JsonWriter;
 import com.badlogic.androidgames.framework.math.Vector2;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ArmorBlock extends Block{
+
+	public static String[] UpgradeAttributes = new String[]{"Health", "Shield", "Macho"};
 
 	int constructorArgLength = 4;
 
@@ -35,6 +38,11 @@ public class ArmorBlock extends Block{
 	@Override
 	public void writeExtraInfo(JsonWriter writer) throws IOException {
 
+	}
+
+	@Override
+	public String[] getUpgradableAttributes() {
+		return UpgradeAttributes;
 	}
 
 	public void multiply(float multiplier){

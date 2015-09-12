@@ -22,7 +22,6 @@ public class BlockUpgradeScreen extends GLScreen{
 	Rectangle backBounds;
 	Block block;
 	
-	
 	public BlockUpgradeScreen(Game game, Block block) {
 		super(game);
 		this.block = block;
@@ -45,6 +44,9 @@ public class BlockUpgradeScreen extends GLScreen{
 				if (OverlapTester.pointInRectangle(backBounds, touchPoint)) {
 					game.setScreen(new BuildScreen(game));
 					return;
+				}
+				if (block.getClass() == ArmorBlock.class){
+					updateArmorAttributes();
 				}
 
 			}
@@ -79,32 +81,76 @@ public class BlockUpgradeScreen extends GLScreen{
 		int y = 450;
 		if(block.getClass().equals(TurretBlock.class)){
 			batcher.drawSprite(x, y, 24, 24, Assets.turretBaseRegion);
-			batcher.drawSprite(x, y, 24, 24, Assets. turretTopRegion);
+			batcher.drawSprite(x, y, 24, 24, Assets.turretTopRegion);
+			//drawTurretBlockAttributes();
 		}
 		//Test
 		else if(block.getClass().equals(ArmorBlock.class)){
 			batcher.drawSprite(x, y, 24, 24, Assets.armorBlockRegion);
-
-			batcher.endBatch();
-			drawArmorBlockAttributes();
+			//drawArmorBlockAttributes();
 		}
 		else if(block.getClass().equals(MultiplierBlock.class)){
 			batcher.drawSprite(x, y, 24, 24, Assets.multiplierBlockRegion);
+			//drawMultiplierBlockAttributes();
 		}
 		else if(block.getClass().equals(EnergyBlock.class)){
 			batcher.drawSprite(x, y, 24, 24, Assets.energyBlockRegion);
+			//drawEnergyBlockAttributes();
 		}
 		else{
 			batcher.drawSprite(x, y, 24, 24, Assets.baseBlockRegion);
 		}
-
 		batcher.endBatch();
+		drawAttributeButtons();
+
 
 		gl.glDisable(GL10.GL_BLEND);
 
 	}
 
+	private void drawAttributeButtons(){
+		batcher.beginBatch(Assets.mainMenuTextures);
+		String[] upgradeableAttributes = block.getUpgradableAttributes();
+		for (int i = 0; i < upgradeableAttributes.length; i++){
+			batcher.drawSprite(160, 100 + i*80, 320, 80, Assets.rectangleRegion);
+			Assets.font.drawText(batcher, "Upgrade " + upgradeableAttributes[i], 80, 100 + i*80);
+		}
+		batcher.endBatch();
+	}
+
 	private void drawArmorBlockAttributes(){
+
+		batcher.beginBatch(Assets.mainMenuTextures);
+		batcher.drawSprite(80, 100, 160, 80, Assets.rectangleRegion);
+		//batcher.drawSprite(240, 100, 160, 80, Assets.rectangleRegion);
+		//batcher.drawSprite(40, 175, 80, 50, Assets.darkGrayRectangleRegion);
+		batcher.endBatch();
+	}
+
+	private void updateArmorAttributes(){
+		Rectangle pBlockBounds = new Rectangle(0, 50, 160, 80);
+		if (OverlapTester.pointInRectangle(pBlockBounds, touchPoint)) {
+			game.setScreen(new BuildScreen(game));
+		}
+	}
+
+	private void drawTurretBlockAttributes(){
+		batcher.beginBatch(Assets.mainMenuTextures);
+		batcher.drawSprite(80, 100, 160, 80, Assets.rectangleRegion);
+		batcher.drawSprite(240, 100, 160, 80, Assets.rectangleRegion);
+		//batcher.drawSprite(40, 175, 80, 50, Assets.darkGrayRectangleRegion);
+		batcher.endBatch();
+	}
+
+	private void drawEnergyBlockAttributes(){
+		batcher.beginBatch(Assets.mainMenuTextures);
+		batcher.drawSprite(80, 100, 160, 80, Assets.rectangleRegion);
+		batcher.drawSprite(240, 100, 160, 80, Assets.rectangleRegion);
+		//batcher.drawSprite(40, 175, 80, 50, Assets.darkGrayRectangleRegion);
+		batcher.endBatch();
+	}
+
+	private void drawMultiplierBlockAttributes(){
 		batcher.beginBatch(Assets.mainMenuTextures);
 		batcher.drawSprite(80, 100, 160, 80, Assets.rectangleRegion);
 		batcher.drawSprite(240, 100, 160, 80, Assets.rectangleRegion);

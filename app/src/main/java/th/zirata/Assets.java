@@ -6,6 +6,9 @@ import com.badlogic.androidgames.framework.gl.Font;
 import com.badlogic.androidgames.framework.gl.Texture;
 import com.badlogic.androidgames.framework.gl.TextureRegion;
 import com.badlogic.androidgames.framework.impl.GLGame;
+
+import java.util.HashMap;
+
 public class Assets {
 
 	public static Texture backgroundTextures;
@@ -44,8 +47,32 @@ public class Assets {
 	public static Sound explosionSound;
 	public static Sound shootSound;
 
+	public static HashMap textureRegions;
+
 	
 	public static void load(GLGame game){
+//		textureRegions = new HashMap();
+//
+//		//textureRegions.put("name", new Integer(4));
+//		String sampleLine = "region = 0 0 3 4";
+//
+//		//Open file and read it line by line
+//		for (int i = 0; i < 5; i++){
+//
+//			//Parse each line and read numbers into array
+//			String[] lineVals = sampleLine.split(" = ");
+//			String[] coords = sampleLine.split(" ");
+//			float x1 = Float.parseFloat(coords[0]);
+//			float y1 = Float.parseFloat(coords[1]);
+//			float width = Float.parseFloat(coords[2]);
+//			float height = Float.parseFloat(coords[3]);
+//			textureRegions.put(lineVals[0], new TextureRegion(backgroundTextures, x1, y1, width, height));
+//
+//		}
+
+
+
+
 		backgroundTextures = new Texture(game, "Backgrounds.png");
 		backgroundRegion = new TextureRegion(backgroundTextures,  0, 0, 1333, 2000);
 		nearStarRegion = new TextureRegion(backgroundTextures,  1334, 0, 1333, 2000);

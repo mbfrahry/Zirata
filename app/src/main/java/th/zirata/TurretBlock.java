@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 public class TurretBlock extends Block{
 
+	public static String[] UpgradeAttributes = new String[]{"Health", "Cooldown", "Active Time", "Multiplier"};
+
 	ArrayList<Bullet> bullets;
 	int maxBullets;
 	int numBullets;
@@ -159,6 +161,11 @@ public class TurretBlock extends Block{
 
 	public void writeExtraInfo(JsonWriter writer) throws IOException {
 		writer.value(fireAngle);
+	}
+
+	@Override
+	public String[] getUpgradableAttributes() {
+		return UpgradeAttributes;
 	}
 
 	public void multiply(float multiplier){
