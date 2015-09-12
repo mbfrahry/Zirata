@@ -217,25 +217,21 @@ public class BuildScreen extends GLScreen{
 			Block currBlock = ownedBlocksByType.get(j);
 			bankBlockBounds = new Rectangle(currBlock.position.x - 12, currBlock.position.y - 12, 25, 25);
 			if(OverlapTester.pointInRectangle(bankBlockBounds, touchPoint)){
-				if(ownedBlocksByType.size() > 0 && ownedBlocksByType.size() > j ) {
-					if(blockBankOption == BLOCK_BANK_TURRET) {
-						//game.setScreen(new BlockDirectionScreen(game, currBlock.position, PlayerSave.activeBlocks.indexOf(currBlock)));
-						return;
-					}
-				}
+
 			}
 		}
 		//Checks if add block was pressed
 		if(bankBlockBounds == null){
-			bankBlockBounds = new Rectangle(26, 130, 24, 24);
+			bankBlockBounds = new Rectangle(26-12, 130-12, 25, 25);
 		}
 		else{
-			bankBlockBounds = new Rectangle(ownedBlocksByType.get(ownedBlocksByType.size() - 1).position.x -12, ownedBlocksByType.get(ownedBlocksByType.size() - 1).position.y -12, 24, 24);
+			bankBlockBounds = new Rectangle(ownedBlocksByType.get(ownedBlocksByType.size() - 1).position.x -12, ownedBlocksByType.get(ownedBlocksByType.size() - 1).position.y -12, 25, 25);
 			bankBlockBounds.lowerLeft.x +=30;
 			if(bankBlockBounds.lowerLeft.x >  300) {
 				bankBlockBounds.lowerLeft.x = 18;
 				bankBlockBounds.lowerLeft.y -= 30;
 			}
+
 		}
 		if (bankBlockBounds.lowerLeft.y > 15 && OverlapTester.pointInRectangle(bankBlockBounds, touchPoint)){
 			Block block = null;
