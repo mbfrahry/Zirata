@@ -13,147 +13,64 @@ public class Enemy{
 		enemyBlocks = new ArrayList<Block>();
 		rand = new Random();
 		this.enemyType = enemyType;
+		editBlockAttributes();
+	}
+
+	public void editBlockAttributes(){
+		float num = rand.nextFloat();
+		
+		int health = Settings.enemyHealth;
+		float x;
+		float y;
+		float multiplier = 1;
+		if(num <= 0.25f){
+			x = -15;
+			y = rand.nextFloat() * 480;
+		}
+		else if(num > 0.25f && num <= 0.5f ){
+			x = 330;
+			y = rand.nextFloat() * 480;
+			multiplier = -1;
+		}
+		else if(num > 0.5f && num <= 0.75f){
+			x = rand.nextFloat() * 320;
+			y = -10;
+			if(x > 160){
+				multiplier = -1;
+			}
+		}
+		else{
+			x = rand.nextFloat() * 320;
+			y = 490;
+			if(x > 160){
+				multiplier = -1;
+			}
+		}
+		double angle = Math.atan((240-y)/(160-x));
+		double xVelocity = multiplier*Math.cos(angle)*10;
+		double yVelocity = multiplier*Math.sin(angle)*10;
+		generateBlock(enemyType, health, x, y, (float)xVelocity, (float)yVelocity);
+
 		if(enemyType == 1){
-			generateArmorBlock();
+			//TurretBlock special actions
 		}
-		if(enemyType == 2){
-			generateTurretBlock();
-		}
-	}
-	
-	public void generateTurretBlock(){
-		float num = rand.nextFloat();
-		
-		int health = Settings.enemyHealth;
-		
-		if(num <= 0.25f){
-			float x = -15;
-			float y = rand.nextFloat() * 480;
-			
-			double angle = Math.atan((240-y)/(160-x));
-			double xVelocity = Math.cos(angle)*10;
-			double yVelocity = Math.sin(angle)*10;
-			
-			generateBlock(enemyType, health, x, y, (float)xVelocity, (float)yVelocity);
-		}
-		if(num > 0.25f && num <= 0.5f ){
-			float x = 330;
-			float y = rand.nextFloat() * 480;
-			
-			double angle = Math.atan((240-y)/(160-x));
-			double xVelocity = -Math.cos(angle)*10;
-			double yVelocity = -Math.sin(angle)*10;
-			generateBlock(enemyType, health, x, y, (float)xVelocity, (float)yVelocity);
-		}
-		
-		if(num > 0.5f && num <= 0.75f){
-			float x = rand.nextFloat() * 320;
-			float y = -10;
-			double angle = Math.atan((240-y)/(160-x));
-			double xVelocity;
-			double yVelocity;
-			if(x <= 160){
-				yVelocity = Math.sin(angle)*10;
-				xVelocity = Math.cos(angle)*10;
-			}
-			else{
-				yVelocity = -Math.sin(angle)*10;
-				xVelocity = -Math.cos(angle)*10;
-			}
-			generateBlock(enemyType, health, x, y, (float)xVelocity, (float)yVelocity);
-		}
-		else{
-			float x = rand.nextFloat() * 320;
-			float y = 490;
-			double angle = Math.atan((240-y)/(160-x));
-			double xVelocity;
-			double yVelocity;
-			if(x <= 160){
-				yVelocity = Math.sin(angle)*10;
-				xVelocity = Math.cos(angle)*10;
-			}
-			else{
-				yVelocity = -Math.sin(angle)*10;
-				xVelocity = -Math.cos(angle)*10;
-			}
-			generateBlock(enemyType, health, x, y, (float)xVelocity, (float)yVelocity);
+		else if(enemyType == 2){
+			//ArmorBlock special actions
 		}
 	}
 	
-	public void generateArmorBlock(){
-		float num = rand.nextFloat();
-		
-		int health = Settings.enemyHealth;
-		
-		if(num <= 0.25f){
-			float x = -15;
-			float y = rand.nextFloat() * 480;
-			
-			double angle = Math.atan((240-y)/(160-x));
-			double xVelocity = Math.cos(angle)*10;
-			double yVelocity = Math.sin(angle)*10;
-			
-			generateBlock(enemyType, health, x, y, (float)xVelocity, (float)yVelocity);
-		}
-		if(num > 0.25f && num <= 0.5f ){
-			float x = 330;
-			float y = rand.nextFloat() * 480;
-			
-			double angle = Math.atan((240-y)/(160-x));
-			double xVelocity = -Math.cos(angle)*10;
-			double yVelocity = -Math.sin(angle)*10;
-			generateBlock(enemyType, health, x, y, (float)xVelocity, (float)yVelocity);
-		}
-		
-		if(num > 0.5f && num <= 0.75f){
-			float x = rand.nextFloat() * 320;
-			float y = -10;
-			double angle = Math.atan((240-y)/(160-x));
-			double xVelocity;
-			double yVelocity;
-			if(x <= 160){
-				yVelocity = Math.sin(angle)*10;
-				xVelocity = Math.cos(angle)*10;
-			}
-			else{
-				yVelocity = -Math.sin(angle)*10;
-				xVelocity = -Math.cos(angle)*10;
-			}
-			generateBlock(enemyType, health, x, y, (float)xVelocity, (float)yVelocity);
-						
-		}
-		else{
-			float x = rand.nextFloat() * 320;
-			float y = 490;
-			double angle = Math.atan((240-y)/(160-x));
-			double xVelocity;
-			double yVelocity;
-			if(x <= 160){
-				yVelocity = Math.sin(angle)*10;
-				xVelocity = Math.cos(angle)*10;
-			}
-			else{
-				yVelocity = -Math.sin(angle)*10;
-				xVelocity = -Math.cos(angle)*10;
-			}
-			generateBlock(enemyType, health, x, y, (float)xVelocity, (float)yVelocity);
-		}
-	}
+
 	
 	public void generateBlock(int enemyType, int health, float x, float y, float xVelocity, float yVelocity){
+		Block newEnemyBlock = null;
 		if(enemyType == 1){
-			ArmorBlock armorBlock;
-			armorBlock = new ArmorBlock(x, y, health);
-			armorBlock.velocity.add(xVelocity, yVelocity);
-			enemyBlocks.add(armorBlock);
+			newEnemyBlock = new ArmorBlock(x, y, health);
 		}
-		if(enemyType == 2){
-			EnemyTurretBlock turretBlock;
-			turretBlock = new EnemyTurretBlock(x, y, health);
-			turretBlock.velocity.add(xVelocity, yVelocity);
-			enemyBlocks.add(turretBlock);
+		else if(enemyType == 2){
+			newEnemyBlock = new EnemyTurretBlock(x, y, health);
 		}
-		
+		newEnemyBlock.velocity.add(xVelocity, yVelocity);
+		enemyBlocks.add(newEnemyBlock);
 	}
 	
 	public boolean checkDead(){
@@ -174,7 +91,7 @@ public class Enemy{
 				enemyBlocks.remove(i);
 				Assets.playSound(Assets.explosionSound);
 			}
-			if(currBlock.position.x > 450 || currBlock.position.y > 500 || currBlock.position.x < -30 || currBlock.position.y < -30){
+			else if(currBlock.position.x > 600 || currBlock.position.y > 650 || currBlock.position.x < -180 || currBlock.position.y < -180){
 				enemyBlocks.remove(i);
 			}
 		}

@@ -12,7 +12,6 @@ public class EnemyTurretBlock extends TurretBlock{
 	}
 
 	public EnemyTurretBlock(float x, float y, int health){
-		//TODO Fix angle
 		super(x, y, health, 0, 0);
 		initialTimeToFire = 6;
 		timeToFire = initialTimeToFire;

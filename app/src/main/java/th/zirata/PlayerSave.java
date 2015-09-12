@@ -22,10 +22,10 @@ public class PlayerSave {
 
 
 	public static ArrayList<Block> bankedBlocks = new ArrayList<Block>(){{
-		add(new Block(160, 240, 10, 0));
+		add(new BlankBlock(new Vector2(160, 240)));
 	}};
 	public static ArrayList<Block> activeBlocks = new ArrayList<Block>(){{
-		add(new Block(160, 240, 10, 0));
+		add(new BlankBlock(new Vector2(160, 240)));
 	}};
 	public static String file = ".ship21";
 
@@ -184,20 +184,12 @@ public class PlayerSave {
 		writer.endArray();
 	}
 
-
-
-	public static void createBlock(int blockType, float x, float y, float angle){
-		if(blockType == 1){
-			activeBlocks.add(new TurretBlock(x, y, 10, 3, angle));
-		}
-	}
-
 	public static void reset(){
 		activeBlocks = new ArrayList<Block>(){{
-			add(new Block(160, 240, 10, 0));
+			add(new BlankBlock(new Vector2(160, 240)));
 		}};
 		bankedBlocks = new ArrayList<Block>(){{
-			add(new Block(160, 240, 10, 0));
+			add(new BlankBlock(new Vector2(160, 240)));
 		}};
 	}
 }

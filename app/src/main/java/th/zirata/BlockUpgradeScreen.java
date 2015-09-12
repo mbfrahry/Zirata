@@ -51,24 +51,27 @@ public class BlockUpgradeScreen extends GLScreen{
 			
 			if(event.type == TouchEvent.TOUCH_UP){
 
-				if(OverlapTester.pointInRectangle(armorBounds, touchPoint)){
-					changeBlock("armor");
-					game.setScreen(new BuildScreen(game));
-					return;
-				}
 				if(OverlapTester.pointInRectangle(turretBounds, touchPoint)){
 					Block currBlock = PlayerSave.activeBlocks.get(blockNum);
 					game.setScreen(new BlockDirectionScreen(game, currBlock.position, blockNum));
 					return;
 				}
-
-				if(OverlapTester.pointInRectangle(multiplierBounds, touchPoint)){
-					changeBlock("multiplier");
-					game.setScreen(new BuildScreen(game));
-					return;
-				}
-				if(OverlapTester.pointInRectangle(energyBounds, touchPoint)){
-					changeBlock("energy");
+				else{
+					String blockType = "";
+					if(OverlapTester.pointInRectangle(armorBounds, touchPoint)){
+						blockType = "armor";
+					}
+					else if(OverlapTester.pointInRectangle(multiplierBounds, touchPoint)){
+						blockType = "multiplier";
+					}
+					else if(OverlapTester.pointInRectangle(energyBounds, touchPoint)){
+						blockType = "energy";
+					}
+					else{
+						//No valid selections were made
+						return;
+					}
+					changeBlock(blockType);
 					game.setScreen(new BuildScreen(game));
 					return;
 				}
@@ -89,14 +92,21 @@ public class BlockUpgradeScreen extends GLScreen{
 		if(blockType.equals("turret")){
 			game.setScreen(new BlockDirectionScreen(game, currBlock.position, blockNum));
 		}
-		if(blockType.equals("multiplier")){
-			MultiplierBlock newBlock = new MultiplierBlock(currBlock.position.x, currBlock.position.y, 10, 0, 1.5f, 5, 10);
+		else{
+			Block newBlock = null;
+			if(blockType.equals("armor")){
+				newBlock = new ArmorBlock(currBlock.position);
+			}
+			else if(blockType.equals("multiplier")){
+				newBlock = new MultiplierBlock(currBlock.position);
+			}
+			else if(blockType.equals("energy")){
+				newBlock = new EnergyBlock(currBlock.position);
+
+			}
 			PlayerSave.activeBlocks.add(blockNum, newBlock);
 		}
-		if(blockType.equals("energy")){
-			EnergyBlock newBlock = new EnergyBlock(currBlock.position.x, currBlock.position.y, 10, 0, 10);
-			PlayerSave.activeBlocks.add(blockNum, newBlock);
-		}
+
 		PlayerSave.save(game.getFileIO());
 	}
 
