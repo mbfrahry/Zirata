@@ -180,6 +180,7 @@ public class WorldRenderer {
 
 		batcher.drawSprite(30, 30, -60, 60, Assets.textureRegions.get("Arrow"));
 		batcher.drawSprite(60, 30, 60, 60, Assets.textureRegions.get("Arrow"));
+		batcher.drawSprite(285, 30, 60, 60, Assets.textureRegions.get("PowerButton"));
 		batcher.endBatch();
 	}
 }
