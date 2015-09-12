@@ -155,6 +155,8 @@ public class BuildScreen extends GLScreen{
 						if (showBlockBank == true) {
 							showBlockBank = false;
 						}
+						selectedBankBlock.position.x = touchPoint.x;
+						selectedBankBlock.position.y = touchPoint.y;
 						Rectangle pBlockBounds;
 						for (int j = 0; j < PlayerSave.activeBlocks.size(); j++) {
 							Block currBlock = PlayerSave.activeBlocks.get(j);
@@ -296,6 +298,21 @@ public class BuildScreen extends GLScreen{
 			}
 			else{
 				batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.baseBlockRegion);
+			}
+		}
+		if(selectedBankBlock != null) {
+			Block currBlock = selectedBankBlock;
+			if (currBlock.getClass().equals(TurretBlock.class)) {
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.turretBaseRegion);
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.turretTopRegion);
+			} else if (currBlock.getClass().equals(ArmorBlock.class)) {
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.armorBlockRegion);
+			} else if (currBlock.getClass().equals(MultiplierBlock.class)) {
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.multiplierBlockRegion);
+			} else if (currBlock.getClass().equals(EnergyBlock.class)) {
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.energyBlockRegion);
+			} else {
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.baseBlockRegion);
 			}
 		}
 		
