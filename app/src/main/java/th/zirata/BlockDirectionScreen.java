@@ -95,19 +95,19 @@ public class BlockDirectionScreen extends GLScreen{
 
 
         batcher.beginBatch(Assets.blockTextures);
-        batcher.drawSprite(150, 250, 50, 50, Assets.turretBaseRegion);
-        batcher.drawSprite(150, 250, 50, 50, Assets.turretTopRegion);
+        batcher.drawSprite(150, 250, 50, 50, Assets.textureRegions.get("TurretTop"));
+        batcher.drawSprite(150, 250, 50, 50, Assets.textureRegions.get("TurretBase"));
         batcher.endBatch();
 
         batcher.beginBatch(Assets.mainMenuTextures);
         //right
-        batcher.drawSprite(210, 250, 60, 60, Assets.arrowRegion);
+        batcher.drawSprite(210, 250, 60, 60, Assets.textureRegions.get("Arrow"));
         //left
-        batcher.drawSprite(90, 250, -60, 60, 0, Assets.arrowRegion);
+        batcher.drawSprite(90, 250, -60, 60, 0, Assets.textureRegions.get("Arrow"));
         //up
-        batcher.drawSprite(150, 310, 60, 60, 90, Assets.arrowRegion);
+        batcher.drawSprite(150, 310, 60, 60, 90, Assets.textureRegions.get("Arrow"));
         //down
-        batcher.drawSprite(150, 190, -60, 60, 90, Assets.arrowRegion);
+        batcher.drawSprite(150, 190, -60, 60, 90, Assets.textureRegions.get("Arrow"));
         batcher.endBatch();
 
         gl.glDisable(GL10.GL_BLEND);

@@ -62,53 +62,53 @@ public class WorldRenderer {
 				if(currBlock.getClass().equals(TurretBlock.class)){
 					TurretBlock tBlock = (TurretBlock)currBlock;
 					Vector2 rotate = new Vector2(currBlock.lastTouch);
-					batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.turretBaseRegion);
-					batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, rotate.sub(currBlock.position).angle()-90, Assets.turretTopRegion);
+					batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretBase"));
+					batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, rotate.sub(currBlock.position).angle()-90, Assets.textureRegions.get("TurretTop"));
 
 					if(tBlock.active){
-						batcher.drawSprite(currBlock.position.x - 8 + 3, currBlock.position.y - 8, 5, 5, Assets.greenBulletRegion);
+						batcher.drawSprite(currBlock.position.x - 8 + 3, currBlock.position.y - 8, 5, 5, Assets.textureRegions.get("GreenBullet"));
 
-						batcher.drawSprite(tBlock.coneX1, tBlock.coneY1, tBlock.fireRange, 1, (tBlock.fireAngle + tBlock.fireArcAngle), Assets.bulletRegion);
-						batcher.drawSprite(tBlock.coneX2, tBlock.coneY2, tBlock.fireRange, 1, (tBlock.fireAngle - tBlock.fireArcAngle), Assets.bulletRegion);
+						batcher.drawSprite(tBlock.coneX1, tBlock.coneY1, tBlock.fireRange, 1, (tBlock.fireAngle + tBlock.fireArcAngle), Assets.textureRegions.get("Bullet"));
+						batcher.drawSprite(tBlock.coneX2, tBlock.coneY2, tBlock.fireRange, 1, (tBlock.fireAngle - tBlock.fireArcAngle), Assets.textureRegions.get("Bullet"));
 
 					}
 					else{
-						batcher.drawSprite(currBlock.position.x - 8 + 3, currBlock.position.y - 8, 5, 5, Assets.bulletRegion);
+						batcher.drawSprite(currBlock.position.x - 8 + 3, currBlock.position.y - 8, 5, 5, Assets.textureRegions.get("Bullet"));
 					}
 
 				}
 
 				else if(currBlock.getClass().equals(ArmorBlock.class)){
-					batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.armorBlockRegion);
+					batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.textureRegions.get("ArmorBlock"));
 				}
 				
 				else if(currBlock.getClass().equals(MultiplierBlock.class)){
 					MultiplierBlock mBlock = (MultiplierBlock)currBlock;
-					batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.multiplierBlockRegion);
+					batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
 					if(mBlock.state == mBlock.MULTIPLIER_READY){
-						batcher.drawSprite(currBlock.position.x , currBlock.position.y + 2, 10, 10, Assets.bulletRegion);
+						batcher.drawSprite(currBlock.position.x , currBlock.position.y + 2, 10, 10, Assets.textureRegions.get("Bullet"));
 					}
 					else if(mBlock.state == mBlock.MULTIPLIER_MULTIPLYING){
-						batcher.drawSprite(currBlock.position.x, currBlock.position.y +2, 10, 10, Assets.greenBulletRegion);
+						batcher.drawSprite(currBlock.position.x, currBlock.position.y +2, 10, 10, Assets.textureRegions.get("GreenBullet"));
 					}
 					else if(mBlock.state == mBlock.MULTIPLIER_COOLING){
-						batcher.drawSprite(currBlock.position.x, currBlock.position.y + 2, 10, 10, Assets.yellowBulletRegion);
+						batcher.drawSprite(currBlock.position.x, currBlock.position.y + 2, 10, 10, Assets.textureRegions.get("YellowBullet"));
 					}
 
 				}
 
 				else if(currBlock.getClass().equals(EnergyBlock.class)){
-					batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.energyBlockRegion);
+					batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.textureRegions.get("EnergyBlock"));
 				}
 
 				else{
-					batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.baseBlockRegion);
+					batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.textureRegions.get("BaseBlock"));
 				}
 			}
 			Bullet b;
 			for(int i = 0; i < world.PLAYER_BULLETS.size(); i++){
 				b = world.PLAYER_BULLETS.get(i);
-				batcher.drawSprite(b.position.x, b.position.y, 5, 5, Assets.bulletRegion);
+				batcher.drawSprite(b.position.x, b.position.y, 5, 5, Assets.textureRegions.get("Bullet"));
 			}
 		}
 	    batcher.endBatch();
@@ -122,34 +122,34 @@ public class WorldRenderer {
 					for(int j = 0; j < world.enemies.get(i).enemyBlocks.size(); j++){
 						Block currBlock = world.enemies.get(i).enemyBlocks.get(j);
 						if(currBlock.getClass().equals(EnemyTurretBlock.class)){
-							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.turretBaseRegion);
-							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets. turretTopRegion);
+							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretBase"));
+							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretTop"));
 							EnemyTurretBlock tBlock = (EnemyTurretBlock)currBlock;
 							Bullet b;
 							for(int k = 0; k < tBlock.bullets.size(); k++){
 								b = tBlock.bullets.get(k);
-								batcher.drawSprite(b.position.x, b.position.y, 5, 5, Assets.bulletRegion);
+								batcher.drawSprite(b.position.x, b.position.y, 5, 5, Assets.textureRegions.get("Bullet"));
 							}
 						}
 
 						else if(currBlock.getClass().equals(ArmorBlock.class)){
 							if(currBlock.health <= currBlock.maxHealth && currBlock.health > currBlock.maxHealth*.7){
-								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.fullArmorBlockRegion);
+								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.textureRegions.get("FullHealthArmorBlock"));
 							}
 							else if(currBlock.health <= currBlock.maxHealth*.7 && currBlock.health > currBlock.maxHealth*.3){
-								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.midArmorBlockRegion);
+								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.textureRegions.get("MidHealthArmorBlock"));
 							}
 							else if(currBlock.health <= currBlock.maxHealth*.3 && currBlock.health > 0){
-								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.lowArmorBlockRegion);
+								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.textureRegions.get("LowHealthArmorBlock"));
 							}
 						}
 
 						else if(currBlock.getClass().equals(EnergyBlock.class)){
-							batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.energyBlockRegion);
+							batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.textureRegions.get("EnergyBlock"));
 						}
 
 						else{
-							batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.baseBlockRegion);
+							batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.textureRegions.get("BaseBlock"));
 						}
 					}
 				}
@@ -167,7 +167,7 @@ public class WorldRenderer {
 			Bullet b;
 			for(int i = 0; i < world.enemyBullets.size(); i++){
 				b = world.enemyBullets.get(i);
-				batcher.drawSprite(b.position.x, b.position.y, 5, 5, Assets.bulletRegion);
+				batcher.drawSprite(b.position.x, b.position.y, 5, 5, Assets.textureRegions.get("Bullet"));
 
 			}
 			batcher.endBatch();
@@ -178,8 +178,8 @@ public class WorldRenderer {
 		batcher.beginBatch(Assets.mainMenuTextures);
 		Assets.font.drawText(batcher, "Energy: " + world.player.energy + " ", 16, 480 - 20);
 
-		batcher.drawSprite(30, 30, -60, 60, Assets.arrowRegion);
-		batcher.drawSprite(60, 30, 60, 60, Assets.arrowRegion);
+		batcher.drawSprite(30, 30, -60, 60, Assets.textureRegions.get("Arrow"));
+		batcher.drawSprite(60, 30, 60, 60, Assets.textureRegions.get("Arrow"));
 		batcher.endBatch();
 	}
 }

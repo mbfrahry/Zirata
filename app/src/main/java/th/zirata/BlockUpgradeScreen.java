@@ -71,7 +71,7 @@ public class BlockUpgradeScreen extends GLScreen{
 
 
 		batcher.beginBatch(Assets.mainMenuTextures);
-		batcher.drawSprite(30, 30, -60, 60, Assets.arrowRegion);
+		batcher.drawSprite(30, 30, -60, 60, Assets.textureRegions.get("Arrow"));
 		Assets.font.drawText(batcher, "Make block betta", 16, 480 - 20);
 		batcher.endBatch();
 
@@ -79,25 +79,25 @@ public class BlockUpgradeScreen extends GLScreen{
 		int x = 160;
 		int y = 430;
 		if(block.getClass().equals(TurretBlock.class)){
-			batcher.drawSprite(x, y, 24, 24, Assets.turretBaseRegion);
-			batcher.drawSprite(x, y, 24, 24, Assets.turretTopRegion);
+			batcher.drawSprite(x, y, 24, 24, Assets.textureRegions.get("TurretBase"));
+			batcher.drawSprite(x, y, 24, 24, Assets.textureRegions.get("TurretTop"));
 			//drawTurretBlockAttributes();
 		}
 		//Test
 		else if(block.getClass().equals(ArmorBlock.class)){
-			batcher.drawSprite(x, y, 24, 24, Assets.armorBlockRegion);
+			batcher.drawSprite(x, y, 24, 24, Assets.textureRegions.get("ArmorBlock"));
 			//drawArmorBlockAttributes();
 		}
 		else if(block.getClass().equals(MultiplierBlock.class)){
-			batcher.drawSprite(x, y, 24, 24, Assets.multiplierBlockRegion);
+			batcher.drawSprite(x, y, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
 			//drawMultiplierBlockAttributes();
 		}
 		else if(block.getClass().equals(EnergyBlock.class)){
-			batcher.drawSprite(x, y, 24, 24, Assets.energyBlockRegion);
+			batcher.drawSprite(x, y, 24, 24, Assets.textureRegions.get("EnergyBlock"));
 			//drawEnergyBlockAttributes();
 		}
 		else{
-			batcher.drawSprite(x, y, 24, 24, Assets.baseBlockRegion);
+			batcher.drawSprite(x, y, 24, 24, Assets.textureRegions.get("BaseBlock"));
 		}
 		batcher.endBatch();
 		drawAttributeButtons();
@@ -114,7 +114,7 @@ public class BlockUpgradeScreen extends GLScreen{
 		float[] upgradeValues = block.getUpgradeValues();
 		for (int i = 0; i < upgradeableAttributes.length; i++){
 			float nextVal = attributeValues[i]+upgradeValues[i];
-			batcher.drawSprite(160, 100 + i * 80, 320, 80, Assets.rectangleRegion);
+			batcher.drawSprite(160, 100 + i * 80, 320, 80, Assets.textureRegions.get("Rectangle"));
 			Assets.font.drawText(batcher, upgradeableAttributes[i], 15, 125 + i * 80);
 			Assets.font.drawText(batcher, "Current: " + attributeValues[i], 15, 100 + i * 80);
 			Assets.font.drawText(batcher, "Next: " + nextVal , 15, 75 + i*80);

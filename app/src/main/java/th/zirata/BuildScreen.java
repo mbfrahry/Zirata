@@ -284,48 +284,48 @@ public class BuildScreen extends GLScreen{
 		for(int i = 0; i < PlayerSave.activeBlocks.size(); i++){
 			Block currBlock = PlayerSave.activeBlocks.get(i);
 			if(currBlock.getClass().equals(TurretBlock.class)){
-				batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.turretBaseRegion);
-				batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets. turretTopRegion);
+				batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretBase"));
+				batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretTop"));
 			}
 			
 			else if(currBlock.getClass().equals(ArmorBlock.class)){
-				batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.armorBlockRegion);
+				batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.textureRegions.get("ArmorBlock"));
 			}
 			else if (currBlock.getClass().equals(MultiplierBlock.class)){
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.multiplierBlockRegion);
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
 			}
 			else if (currBlock.getClass().equals(EnergyBlock.class)){
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.energyBlockRegion);
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("EnergyBlock"));
 			}
 			else{
-				batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.baseBlockRegion);
+				batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.textureRegions.get("BaseBlock"));
 			}
 		}
 		if(selectedBankBlock != null) {
 			Block currBlock = selectedBankBlock;
 			if (currBlock.getClass().equals(TurretBlock.class)) {
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.turretBaseRegion);
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.turretTopRegion);
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretTop"));
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretBase"));
 			} else if (currBlock.getClass().equals(ArmorBlock.class)) {
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.armorBlockRegion);
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("ArmorBlock"));
 			} else if (currBlock.getClass().equals(MultiplierBlock.class)) {
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.multiplierBlockRegion);
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
 			} else if (currBlock.getClass().equals(EnergyBlock.class)) {
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.energyBlockRegion);
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("EnergyBlock"));
 			} else {
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.baseBlockRegion);
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("BaseBlock"));
 			}
 		}
 		
 		for(int i = 0; i < potentialBlocks.size(); i++){
 			Block currBlock = potentialBlocks.get(i);
-			batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24 , 24 , Assets.potentialBlockRegion);
+			batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24 , 24 , Assets.textureRegions.get("PotentialBlock"));
 		}
 		batcher.endBatch();
 		
 		batcher.beginBatch(Assets.mainMenuTextures);
-		batcher.drawSprite(290, 30, 60, 60, Assets.arrowRegion);
-		batcher.drawSprite(30, 30, -60, 60, Assets.arrowRegion);
+		batcher.drawSprite(290, 30, 60, 60, Assets.textureRegions.get("Arrow"));
+		batcher.drawSprite(30, 30, -60, 60, Assets.textureRegions.get("Arrow"));
 		Assets.font.drawText(batcher, "SpaceBucks: " + Settings.spaceBucks + " ", 16, 480 - 20);
 		Assets.font.drawText(batcher, "Next Block Cost: " + Settings.nextBlockCost, 16, 480 - 40);
 
@@ -335,7 +335,7 @@ public class BuildScreen extends GLScreen{
 			drawBlockBank();
 		} else {
 			batcher.beginBatch(Assets.mainMenuTextures);
-			batcher.drawSprite(160, 30, 180, 45, Assets.rectangleRegion);
+			batcher.drawSprite(160, 30, 180, 45, Assets.textureRegions.get("Rectangle"));
 			Assets.font.drawText(batcher, "Block Bank", 85, 30);
 			batcher.endBatch();
 		}
@@ -345,37 +345,37 @@ public class BuildScreen extends GLScreen{
 
 	private void drawBlockBank(){
 		batcher.beginBatch(Assets.mainMenuTextures);
-		batcher.drawSprite(290, 225, -60, 60, 90, Assets.arrowRegion);
+		batcher.drawSprite(290, 225, -60, 60, 90, Assets.textureRegions.get("Arrow"));
 		Assets.font.drawText(batcher, "Close", 245, 265);
 
-		batcher.drawSprite(160, 100, 320, 200, Assets.rectangleRegion);
+		batcher.drawSprite(160, 100, 320, 200, Assets.textureRegions.get("Rectangle"));
 
-		batcher.drawSprite(40, 175, 80, 50, Assets.rectangleRegion);
-		batcher.drawSprite(120, 175, 80, 50, Assets.rectangleRegion);
-		batcher.drawSprite(200, 175, 80, 50, Assets.rectangleRegion);
-		batcher.drawSprite(280, 175, 80, 50, Assets.rectangleRegion);
+		batcher.drawSprite(40, 175, 80, 50, Assets.textureRegions.get("Rectangle"));
+		batcher.drawSprite(120, 175, 80, 50, Assets.textureRegions.get("Rectangle"));
+		batcher.drawSprite(200, 175, 80, 50, Assets.textureRegions.get("Rectangle"));
+		batcher.drawSprite(280, 175, 80, 50, Assets.textureRegions.get("Rectangle"));
 		if(blockBankOption == BLOCK_BANK_TURRET){
-			batcher.drawSprite(40, 175, 80, 50, Assets.darkGrayRectangleRegion);
+			batcher.drawSprite(40, 175, 80, 50, Assets.textureRegions.get("DarkGrayRectangle"));
 		}
 		else if (blockBankOption == BLOCK_BANK_ARMOR){
-			batcher.drawSprite(120, 175, 80, 50, Assets.darkGrayRectangleRegion);
+			batcher.drawSprite(120, 175, 80, 50, Assets.textureRegions.get("DarkGrayRectangle"));
 		}
 		else if (blockBankOption == BLOCK_BANK_ENERGY){
-			batcher.drawSprite(200, 175, 80, 50, Assets.darkGrayRectangleRegion);
+			batcher.drawSprite(200, 175, 80, 50, Assets.textureRegions.get("DarkGrayRectangle"));
 		}
 		else if (blockBankOption == BLOCK_BANK_MULTIPLIER){
-			batcher.drawSprite(280, 175, 80, 50, Assets.darkGrayRectangleRegion);
+			batcher.drawSprite(280, 175, 80, 50, Assets.textureRegions.get("DarkGrayRectangle"));
 		}
 
 
 		batcher.endBatch();
 
 		batcher.beginBatch(Assets.blockTextures);
-		batcher.drawSprite(40, 175, 24, 24, Assets.turretBaseRegion);
-		batcher.drawSprite(40, 175, 24, 24, Assets.turretTopRegion);
-		batcher.drawSprite(120, 175, 24, 24, Assets.armorBlockRegion);
-		batcher.drawSprite(200, 175, 24, 24, Assets.energyBlockRegion);
-		batcher.drawSprite(280, 175, 24, 24, Assets.multiplierBlockRegion);
+		batcher.drawSprite(40, 175, 24, 24, Assets.textureRegions.get("TurretBase"));
+		batcher.drawSprite(40, 175, 24, 24, Assets.textureRegions.get("TurretTop"));
+		batcher.drawSprite(120, 175, 24, 24, Assets.textureRegions.get("ArmorBlock"));
+		batcher.drawSprite(200, 175, 24, 24, Assets.textureRegions.get("EnergyBlock"));
+		batcher.drawSprite(280, 175, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
 
 		int storeX = 26;
 		int storeY = 130;
@@ -384,18 +384,18 @@ public class BuildScreen extends GLScreen{
 			currBlock.position.x = storeX;
 			currBlock.position.y = storeY;
 			if(blockBankOption == BLOCK_BANK_TURRET) {
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.turretBaseRegion);
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.turretTopRegion);
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretBase"));
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretTop"));
 
 			}
 			else if(blockBankOption == BLOCK_BANK_ARMOR){
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.armorBlockRegion);
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("ArmorBlock"));
 			}
 			else if(blockBankOption == BLOCK_BANK_ENERGY){
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.energyBlockRegion);
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("EnergyBlock"));
 			}
 			else if(blockBankOption == BLOCK_BANK_MULTIPLIER){
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.multiplierBlockRegion);
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
 			}
 
 			storeX += 30;
@@ -409,7 +409,7 @@ public class BuildScreen extends GLScreen{
 
 		if(storeY > 15) {
 			batcher.beginBatch(Assets.mainMenuTextures);
-			batcher.drawSprite(storeX, storeY, 24, 24, Assets.addIcon);
+			batcher.drawSprite(storeX, storeY, 24, 24, Assets.textureRegions.get("addIcon"));
 			batcher.endBatch();
 		}
 
