@@ -1,42 +1,41 @@
 Started
-  Refactor the crappy looking code - Started 
   Tutorials/Help Page 
 
 Needs to be done 
 
-Clear .ship file appropriately
-
-TextureReader class
-  -It will read in sprite sheet and update TextureRegions accordingly.
-
-Better UI/Intuitivness
-
-Upgrade path
-  Buy expansion slots
-  Buy blocks or blocks drop
-    Can convert these into whatever you want
-
-Different blocks
-  Freeze Block
-  etc
-
-Show offscreen enemies with a red area 
-
-Unique enemy movements
-  -aka galaga movements
+  Clear .ship file appropriately
   
-Moving background to simulate ship velocity
-
-Paralax background
-
-
-
-
-Bugs:
-  Bullets go past cone range
-  Energy goes negative when energy block is lost
-
-Max was here.
+  TextureReader class
+    -It will read in sprite sheet and update TextureRegions accordingly.
+  
+  Better UI/Intuitivness
+  
+  Upgrade path
+    Buy expansion slots
+    Buy blocks or blocks drop
+      Can convert these into whatever you want
+  
+  Different blocks
+    Freeze Block
+    etc
+  
+  Show offscreen enemies with a red area 
+  
+  Unique enemy movements
+    -aka galaga movements
+    
+  Moving background to simulate ship velocity
+  
+  Paralax background
+  
+  
+  
+  
+  Bugs:
+    Bullets go past cone range
+    Energy goes negative when energy block is lost
+  
+  Max was here.
 
 
 
