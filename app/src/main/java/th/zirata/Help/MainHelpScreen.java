@@ -66,9 +66,9 @@ public class MainHelpScreen extends GLScreen {
 
         gl.glEnable(GL10.GL_TEXTURE_2D);
         batcher.beginBatch(Assets.backgroundTextures);
-        batcher.drawSprite(160, 240, 320, 480, Assets.backgroundRegion);
-        batcher.drawSprite(160, 240, 320, 480, Assets.nearStarRegion);
-        batcher.drawSprite(160, 240, 320, 480, Assets.farStarRegion);
+        batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("Background"));
+        batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("NearStarBG"));
+        batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("StarBG"));
         batcher.endBatch();
 
         gl.glEnable(GL10.GL_BLEND);

@@ -36,9 +36,9 @@ public class WorldRenderer {
 
 	public void renderBackground(){
 		batcher.beginBatch(Assets.backgroundTextures);
-		batcher.drawSprite(160, 240, 320, 480, world.worldAngle, Assets.backgroundRegion);
-		batcher.drawSprite(160, 240, 320, 480, world.worldAngle, Assets.nearStarRegion);
-		batcher.drawSprite(160, 240, 320, 480, world.worldAngle, Assets.farStarRegion);
+		batcher.drawSprite(160, 240, 320, 480, world.worldAngle, Assets.textureRegions.get("Background"));
+		batcher.drawSprite(160, 240, 320, 480, world.worldAngle, Assets.textureRegions.get("NearStarBG"));
+		batcher.drawSprite(160, 240, 320, 480, world.worldAngle, Assets.textureRegions.get("StarBG"));
 		batcher.endBatch();
 	}
 	

@@ -61,9 +61,9 @@ public class BlockUpgradeScreen extends GLScreen{
 		guiCam.setViewportAndMatrices();
 		
 		batcher.beginBatch(Assets.backgroundTextures);
-		batcher.drawSprite(160, 240, 320, 480, Assets.backgroundRegion);
-		batcher.drawSprite(160, 240, 320, 480, Assets.nearStarRegion);
-		batcher.drawSprite(160, 240, 320, 480, Assets.farStarRegion);
+		batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("Background"));
+		batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("NearStarBG"));
+		batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("StarBG"));
 		batcher.endBatch();
 		
 		gl.glEnable(GL10.GL_BLEND);
@@ -72,7 +72,7 @@ public class BlockUpgradeScreen extends GLScreen{
 
 		batcher.beginBatch(Assets.mainMenuTextures);
 		batcher.drawSprite(30, 30, -60, 60, Assets.arrowRegion);
-		Assets.font.drawText(batcher, "Make block betta",  16, 480 - 20);
+		Assets.font.drawText(batcher, "Make block betta", 16, 480 - 20);
 		batcher.endBatch();
 
 		batcher.beginBatch(Assets.blockTextures);
@@ -116,7 +116,7 @@ public class BlockUpgradeScreen extends GLScreen{
 			float nextVal = attributeValues[i]+upgradeValues[i];
 			batcher.drawSprite(160, 100 + i * 80, 320, 80, Assets.rectangleRegion);
 			Assets.font.drawText(batcher, upgradeableAttributes[i], 15, 125 + i * 80);
-			Assets.font.drawText(batcher, "Current: " + attributeValues[i] , 15, 100 + i*80);
+			Assets.font.drawText(batcher, "Current: " + attributeValues[i], 15, 100 + i * 80);
 			Assets.font.drawText(batcher, "Next: " + nextVal , 15, 75 + i*80);
 		}
 		batcher.endBatch();
