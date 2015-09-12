@@ -1,5 +1,8 @@
 package th.zirata;
 
+import android.util.JsonWriter;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 //TODO
@@ -38,7 +41,12 @@ public class MachineGunBlock extends Block {
 		
 		state = TURRET_READY;
 	}
-	
+
+	@Override
+	public void action(World world) {
+
+	}
+
 	public void action(){
 		if(state == TURRET_READY && timeToNextBullet < 0){
 			World.PLAYER_BULLETS.add(new Bullet(position.x, position.y, lastTouch.x, lastTouch.y, bulletDamage));
@@ -66,5 +74,10 @@ public class MachineGunBlock extends Block {
 				World.PLAYER_BULLETS.remove(i);
 			}
 		}
+	}
+
+	@Override
+	public void writeExtraInfo(JsonWriter writer) throws IOException {
+
 	}
 }

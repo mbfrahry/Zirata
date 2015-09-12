@@ -38,7 +38,7 @@ public class TurretBlock extends Block{
 	}
 
 	public TurretBlock(double[] info){
-		this((float)info[0], (float)info[1], (int)info[2], (int)info[3], 0);
+		this((float) info[0], (float) info[1], (int) info[2], (int) info[3], 0);
 
 		if(info.length >= 5){
 			this.fireAngle = (int)info[4];
@@ -71,48 +71,72 @@ public class TurretBlock extends Block{
 	}
 
 	private void calcCone(float x, float y){
+        int x1add = 12;
+		int x2add = 12;
+		int y1add = 12;
+		int y2add = 12;
 		if(fireAngle == 0){
-			coneX1 = (float)(x - 12 + (Math.cos(( fireAngle + fireArcAngle)*Math.PI/180)) * fireRange/2);
-			coneY1 = (float)(y - 12 + (Math.sin(( fireAngle + fireArcAngle)*Math.PI/180)) * fireRange/2);
-			coneX2 = (float)(x - 12 + (Math.cos(( fireAngle - fireArcAngle)*Math.PI/180)) * fireRange/2);
-			coneY2 = (float)(y + 12 + (Math.sin(( fireAngle - fireArcAngle)*Math.PI/180)) * fireRange/2);
+			x1add *= -1;
+			y1add *= -1;
+			x2add *= -1;
 		}
 		else if(fireAngle == 90){
-			coneX1 = (float)(x + 12 + (Math.cos(( fireAngle + fireArcAngle)*Math.PI/180)) * fireRange/2);
-			coneY1 = (float)(y - 12 + (Math.sin(( fireAngle + fireArcAngle)*Math.PI/180)) * fireRange/2);
-			coneX2 = (float)(x - 12 + (Math.cos(( fireAngle - fireArcAngle)*Math.PI/180)) * fireRange/2);
-			coneY2 = (float)(y - 12 + (Math.sin(( fireAngle - fireArcAngle)*Math.PI/180)) * fireRange/2);
+			y1add *= -1;
+			x2add *= -1;
+			y2add *= -1;
 		}
 		else if(fireAngle == 180){
-			coneX1 = (float)(x + 12 + (Math.cos(( fireAngle + fireArcAngle)*Math.PI/180)) * fireRange/2);
-			coneY1 = (float)(y + 12 + (Math.sin(( fireAngle + fireArcAngle)*Math.PI/180)) * fireRange/2);
-			coneX2 = (float)(x + 12 + (Math.cos(( fireAngle - fireArcAngle)*Math.PI/180)) * fireRange/2);
-			coneY2 = (float)(y - 12 + (Math.sin(( fireAngle - fireArcAngle)*Math.PI/180)) * fireRange/2);
+			y2add *= -1;
 		}
 		else{
-			coneX1 = (float)(x - 12 + (Math.cos(( fireAngle + fireArcAngle)*Math.PI/180)) * fireRange/2);
-			coneY1 = (float)(y + 12 + (Math.sin(( fireAngle + fireArcAngle)*Math.PI/180)) * fireRange/2);
-			coneX2 = (float)(x + 12 + (Math.cos(( fireAngle - fireArcAngle)*Math.PI/180)) * fireRange/2);
-			coneY2 = (float)(y + 12 + (Math.sin(( fireAngle - fireArcAngle)*Math.PI/180)) * fireRange/2);
+			x1add *= -1;
 		}
-	}
-
-	//TODO: Convert this to take in Wolrd world
-	public void action(Block enemyBlock){
-		if(state == TURRET_READY ){
-			lastTouch.set(enemyBlock.position.x + 12, enemyBlock.position.y + 12);
-			World.PLAYER_BULLETS.add(new Bullet(position.x, position.y, enemyBlock.position.x + 12 , enemyBlock.position.y + 12, bulletDamage ));
-			Assets.playSound(Assets.shootSound);
-			numBullets++;
-			if(numBullets >= maxBullets){
-				state = TURRET_RELOADING;
-			}
-		}
+		coneX1 = (float)(x + x1add + (Math.cos(( fireAngle + fireArcAngle)*Math.PI/180)) * fireRange/2);
+		coneY1 = (float)(y + y1add + (Math.sin(( fireAngle + fireArcAngle)*Math.PI/180)) * fireRange/2);
+		coneX2 = (float)(x + x2add + (Math.cos(( fireAngle - fireArcAngle)*Math.PI/180)) * fireRange/2);
+		coneY2 = (float)(y + y2add + (Math.sin(( fireAngle - fireArcAngle)*Math.PI/180)) * fireRange/2);
 	}
 
 	@Override
 	public void action(World world) {
+		int closestEnemy = enemyInRange(world.enemies);
+		if(closestEnemy >= 0){
+			Block enemyBlock = world.enemies.get(closestEnemy).enemyBlocks.get(0);
+			if(state == TURRET_READY ){
+				lastTouch.set(enemyBlock.position.x + 12, enemyBlock.position.y + 12);
+				World.PLAYER_BULLETS.add(new Bullet(position.x, position.y, enemyBlock.position.x + 12 , enemyBlock.position.y + 12, bulletDamage ));
+				Assets.playSound(Assets.shootSound);
+				numBullets++;
+				if(numBullets >= maxBullets){
+					state = TURRET_RELOADING;
+				}
+			}
+		}
 
+	}
+
+	private int enemyInRange(ArrayList<Enemy> enemies){
+		Enemy enemy;
+		for(int i = 0; i < enemies.size(); i++){
+			enemy = enemies.get(i);
+			if(position.dist(enemy.enemyBlocks.get(0).position) < fireRange - 35){
+
+				double angleBetween = position.angleBetween(enemy.enemyBlocks.get(0).position);
+				float posAngle = fireAngle + fireArcAngle;
+				float negAngle = fireAngle - fireArcAngle;
+				if (negAngle < 0){
+					negAngle += fireArcAngle;
+					posAngle += fireArcAngle;
+					angleBetween = (angleBetween + fireArcAngle)%360;
+				}
+				if(angleBetween <= posAngle){
+					if(angleBetween >= negAngle){
+						return i;
+					}
+				}
+			}
+		}
+		return -1;
 	}
 
 	public void update(float deltaTime){

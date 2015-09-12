@@ -26,30 +26,21 @@ public class Bullet extends DynamicGameObject{
 		double angle = Math.atan(xDiff / yDiff);
 		double xVelocity = 0;
 		double yVelocity = 0;
-		if(xDiff >= 0 && yDiff > 0){
-			yVelocity = -Math.cos(angle);
-			xVelocity = -Math.sin(angle);
+		double multiplier = 1;
+		if((xDiff >= 0 && yDiff > 0) || (xDiff <= 0 && yDiff > 0)){
+			multiplier = -1;
 		}
-		if(xDiff >= 0 && yDiff < 0){
-			yVelocity = Math.cos(angle);
-			xVelocity = Math.sin(angle);
-		}
-		if(xDiff <= 0 && yDiff > 0){
-			yVelocity = -Math.cos(angle);
-			xVelocity = -Math.sin(angle);
-		}
-		if(xDiff < 0 && yDiff <= 0){
-			yVelocity = Math.cos(angle);
-			xVelocity = Math.sin(angle);
-		}
+		yVelocity = multiplier*Math.cos(angle);
+		xVelocity = multiplier*Math.sin(angle);
 		velocity.add((float)xVelocity * 50, (float)yVelocity * 50);
 	}
 	
 	public boolean outOfBounds(){
+		boolean toReturn = false;
 		if(position.x > 320 || position.x < 0 || position.y < 0 || position.y > 480){
-			return true;
+			toReturn = true;
 		}
-		return false;
+		return toReturn;
 	}
 	
 	public void update(float deltaTime){

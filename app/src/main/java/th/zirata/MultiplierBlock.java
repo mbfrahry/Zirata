@@ -45,16 +45,12 @@ public class MultiplierBlock extends Block{
         multiplierActiveTime = 0;
     }
 
-    public void action(){
+    @Override
+    public void action(World world) {
         if( state == MULTIPLIER_READY ){
             state = MULTIPLIER_MULTIPLYING;
         }
         active = false;
-    }
-
-    @Override
-    public void action(World world) {
-
     }
 
     public void update(float deltaTime){

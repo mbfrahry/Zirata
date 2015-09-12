@@ -89,14 +89,7 @@ public class GameScreen extends GLScreen {
 			guiCam.touchToWorld(touchPoint);
 			
 			if(event.type == TouchEvent.TOUCH_DOWN){
-				for(int j = 0; j < world.player.playerBlocks.size(); j++){
-					Block currBlock = world.player.playerBlocks.get(j);
-					pBlockBounds = new Rectangle(currBlock.position.x -12, currBlock.position.y-12, 25, 25);
-					if(OverlapTester.pointInRectangle(pBlockBounds, touchPoint)){
-						blockNum[event.pointer] = j;
-						return;
-					}
-				}
+
 				if(touchPoint.y < 50){
 					if(touchPoint.x < 50){
 						world.moveRight = true;
@@ -109,33 +102,27 @@ public class GameScreen extends GLScreen {
 				}
 			}
 			
-			if(event.type == TouchEvent.TOUCH_DRAGGED){
-				if(blockNum[event.pointer] != -1){
-					try{
-						Block currBlock = world.player.playerBlocks.get(blockNum[event.pointer]);
-						currBlock.lastTouch.x = touchPoint.x;
-						currBlock.lastTouch.y = touchPoint.y;
-
-						if(currBlock.getClass().equals(MachineGunBlock.class)){
-							currBlock.action();
-						}
-					}catch(Exception e){
-
-					}
-				}
-			}
+//			if(event.type == TouchEvent.TOUCH_DRAGGED){
+//				if(blockNum[event.pointer] != -1){
+//					try{
+//						Block currBlock = world.player.playerBlocks.get(blockNum[event.pointer]);
+//						currBlock.lastTouch.x = touchPoint.x;
+//						currBlock.lastTouch.y = touchPoint.y;
+//
+//						if(currBlock.getClass().equals(MachineGunBlock.class)){
+//							currBlock.action(world);
+//						}
+//					}catch(Exception e){
+//
+//					}
+//				}
+//			}
 
 			if(event.type == TouchEvent.TOUCH_UP){
-
-				if(OverlapTester.pointInRectangle(quitBounds, touchPoint)) {
-					game.setScreen(new MainMenuScreen(game));
-					return;
-				}
-				if(blockNum[event.pointer] != -1){	
-					try{
-						Block currBlock = world.player.playerBlocks.get(blockNum[event.pointer]);
-						currBlock.lastTouch.x = touchPoint.x;
-						currBlock.lastTouch.y = touchPoint.y;
+				for(int j = 0; j < world.player.playerBlocks.size(); j++){
+					Block currBlock = world.player.playerBlocks.get(j);
+					pBlockBounds = new Rectangle(currBlock.position.x -12, currBlock.position.y-12, 25, 25);
+					if(OverlapTester.pointInRectangle(pBlockBounds, touchPoint)){
 
 						if(!currBlock.active && currBlock.energyCost <= world.player.energy) {
 							currBlock.active = true;
@@ -143,11 +130,12 @@ public class GameScreen extends GLScreen {
 						else {
 							currBlock.active = false;
 						}
-						blockNum[event.pointer] = -1;
 						return;
-					} catch(Exception e){
-
 					}
+				}
+				if(OverlapTester.pointInRectangle(quitBounds, touchPoint)) {
+					game.setScreen(new MainMenuScreen(game));
+					return;
 				}
 				if(touchPoint.y < 50){
 					if(touchPoint.x < 100){

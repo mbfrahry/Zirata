@@ -75,7 +75,7 @@ public class World {
 		double angleDiff = findSpeed();
 
 		POS_SIN_ANGLE = (float)Math.sin(Math.toRadians(angleDiff));
-		NEG_SIN_ANGLE = (float)Math.sin(-Math.toRadians(angleDiff));
+		NEG_SIN_ANGLE = (float)Math.sin(-POS_SIN_ANGLE);
 		POS_COS_ANGLE = (float)Math.cos(Math.toRadians(angleDiff));
 		if(moveRight){
 			worldAngle += angleDiff;
@@ -96,13 +96,10 @@ public class World {
 			currBlock = player.playerBlocks.get(i);
 			if(currBlock.getClass().equals(TurretBlock.class) && currBlock.active && enemies.size() > 0 && enemies.get(0).enemyBlocks.size() > 0){
 				TurretBlock tBlock = (TurretBlock) currBlock;
-				int closestEnemy = enemyInRange(tBlock, enemies);
-				if(closestEnemy >= 0) {
-					tBlock.action(enemies.get(closestEnemy).enemyBlocks.get(0));
-				}
+				tBlock.action(this);
 			}
 			if(currBlock.getClass().equals(MultiplierBlock.class) && currBlock.active){
-				currBlock.action();
+				currBlock.action(this);
 			}
 		}
 		player.update(deltaTime);
@@ -116,29 +113,7 @@ public class World {
 		return rotateSpeed;
 	}
 
-	private int enemyInRange(TurretBlock tBlock, ArrayList<Enemy> enemies){
-		Enemy enemy;
-		for(int i = 0; i < enemies.size(); i++){
-			enemy = enemies.get(i);
-			if(tBlock.position.dist(enemy.enemyBlocks.get(0).position) < tBlock.fireRange - 35){
 
-				double angleBetween = tBlock.position.angleBetween(enemy.enemyBlocks.get(0).position);
-				float posAngle = tBlock.fireAngle + tBlock.fireArcAngle;
-				float negAngle = tBlock.fireAngle - tBlock.fireArcAngle;
-				if (negAngle < 0){
-					negAngle += tBlock.fireArcAngle;
-					posAngle += tBlock.fireArcAngle;
-					angleBetween = (angleBetween + tBlock.fireArcAngle)%360;
-				}
-					if(angleBetween <= posAngle){
-						if(angleBetween >= negAngle){
-							return i;
-						}
-				}
-			}
-		}
-		return -1;
-	}
 
 	private void updatePlayerBullets(float deltaTime){
 		for(int i = 0; i < PLAYER_BULLETS.size(); i++) {
@@ -189,11 +164,12 @@ public class World {
 	
 	public void updateEnemyBullets(float deltaTime){
 		for(int i = 0; i < enemyBullets.size(); i++){
+			Bullet b = enemyBullets.get(i);
 			if (moveLeft || moveRight) {
-				enemyBullets.get(i).rotate(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
+				b.rotate(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
 			}
-			enemyBullets.get(i).update(deltaTime);
-			if(enemyBullets.get(i).outOfBounds()){
+			b.update(deltaTime);
+			if(b.outOfBounds()){
 				enemyBullets.remove(i);
 			}
 		}
@@ -216,12 +192,14 @@ public class World {
 	}
 	
 	private void generateEnemy(){
+		int enemyType = 0;
 		if(rand.nextFloat() > .25){
-			enemies.add(new Enemy(1));
+			enemyType = 1;
 		}
 		else{
-			enemies.add(new Enemy(2));
+			enemyType = 2;
 		}
+		enemies.add(new Enemy(enemyType));
 		enemyNum += 1;
 	}
 	

@@ -21,7 +21,7 @@ import android.util.JsonWriter;
 public class PlayerSave {
 	
 	public static ArrayList<Block> playerBlocks = new ArrayList<Block>(){{
-		add(new Block(160, 240, 10, 0));
+		add(new BlankBlock(new Vector2(160,240)));
 	}};
 	public static String file = ".ship3";
 
@@ -156,27 +156,9 @@ public class PlayerSave {
 		writer.endArray();
 	}
 
-
-	public static void createBlock(int blockType, float x, float y){
-		if(blockType == 0){
-			playerBlocks.add(new Block(x, y, 10, 0));
-		}
-
-		if(blockType == 2){
-			playerBlocks.add(new ArmorBlock(x, y, 20));
-		}
-		if(blockType == 3){
-			playerBlocks.add(new MachineGunBlock(x, y, 10, 3));
-		}
-		if(blockType == 4){
-			playerBlocks.add(new EnergyBlock(x, y, 10, 0, 10));
-		}
-
-	}
-
 	public static void reset(){
 		playerBlocks = new ArrayList<Block>(){{
-			add(new Block(160, 240, 10, 0));
+			add(new BlankBlock(new Vector2(160,240)));
 		}};
 	}
 }
