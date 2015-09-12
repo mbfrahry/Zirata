@@ -74,11 +74,12 @@ public class BlockUpgradeScreen extends GLScreen{
 
 		batcher.beginBatch(Assets.mainMenuTextures);
 		batcher.drawSprite(30, 30, -60, 60, Assets.arrowRegion);
+		Assets.font.drawText(batcher, "Make block betta",  16, 480 - 20);
 		batcher.endBatch();
 
 		batcher.beginBatch(Assets.blockTextures);
 		int x = 160;
-		int y = 450;
+		int y = 430;
 		if(block.getClass().equals(TurretBlock.class)){
 			batcher.drawSprite(x, y, 24, 24, Assets.turretBaseRegion);
 			batcher.drawSprite(x, y, 24, 24, Assets.turretTopRegion);
