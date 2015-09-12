@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import android.util.Log;
-
 import com.badlogic.androidgames.framework.Game;
 import com.badlogic.androidgames.framework.Input.TouchEvent;
 import com.badlogic.androidgames.framework.gl.Camera2D;
@@ -28,13 +26,13 @@ public class BuildScreen extends GLScreen{
 	Rectangle blockBankArmorBounds;
 	Rectangle blockBankEnergyBounds;
 	Rectangle blockBankMultiplierBounds;
-	Rectangle firstShopBlock;
 	Vector2 touchPoint;
 	ArrayList<Block> potentialBlocks;
 	ArrayList<Block> ownedBlocksByType;
+	Block selectedBankBlock;
+	Block selectedActiveBlock;
 
-
-	boolean showBlockMenu;
+	boolean showBlockBank;
 	int blockBankOption;
 	public static final int BLOCK_BANK_TURRET = 0;
 	public static final int BLOCK_BANK_ARMOR = 1;
@@ -53,14 +51,17 @@ public class BuildScreen extends GLScreen{
 		blockBankArmorBounds  = new Rectangle(80, 160, 80, 50);
 		blockBankEnergyBounds  = new Rectangle(160, 160, 80, 50);
 		blockBankMultiplierBounds  = new Rectangle(240, 160, 80, 50);
-		firstShopBlock = new Rectangle(18, 120, 24, 24);
+
+		selectedBankBlock = null;
+		selectedActiveBlock = null;
 
 		touchPoint = new Vector2();
 		batcher = new SpriteBatcher(glGraphics, 500);
+
 		potentialBlocks = new ArrayList<Block>();
 		getPotentialBlocks();
 		Settings.spaceBucks = 100;
-		showBlockMenu = false;
+		showBlockBank = false;
 		blockBankOption = BLOCK_BANK_TURRET;
 		ownedBlocksByType = getBlocksFromType(TurretBlock.class);
     }
@@ -75,7 +76,31 @@ public class BuildScreen extends GLScreen{
 			guiCam.touchToWorld(touchPoint);
 			
 			if(event.type == TouchEvent.TOUCH_UP){
-				if(!showBlockMenu) {
+				if(selectedActiveBlock != null && selectedBankBlock != null){
+					PlayerSave.bankedBlocks.remove(selectedBankBlock);
+					PlayerSave.activeBlocks.remove(selectedActiveBlock);
+					selectedBankBlock.position.x = selectedActiveBlock.position.x;
+					selectedBankBlock.position.y = selectedActiveBlock.position.y;
+					PlayerSave.bankedBlocks.add(selectedActiveBlock);
+					PlayerSave.activeBlocks.add(selectedBankBlock);
+					resetBlockBank();
+					if(selectedBankBlock.getClass() == TurretBlock.class){
+						game.setScreen(new BlockDirectionScreen(game, selectedBankBlock.position, PlayerSave.activeBlocks.indexOf(selectedBankBlock)));
+					}
+					else {
+						selectedActiveBlock = null;
+						selectedBankBlock = null;
+					}
+
+					return;
+				}
+
+				if(selectedBankBlock != null && selectedActiveBlock == null){
+					selectedBankBlock = null;
+					showBlockBank = true;
+				}
+
+				if(!showBlockBank) {
 					if (OverlapTester.pointInRectangle(backBounds, touchPoint)) {
 						game.setScreen(new MainMenuScreen(game));
 						return;
@@ -89,7 +114,7 @@ public class BuildScreen extends GLScreen{
 					}
 
 					if (OverlapTester.pointInRectangle(blockMenuBounds, touchPoint)) {
-						showBlockMenu = true;
+						showBlockBank = true;
 						return;
 					}
 
@@ -99,97 +124,139 @@ public class BuildScreen extends GLScreen{
 						pBlockBounds = new Rectangle(currBlock.position.x - 12, currBlock.position.y - 12, 25, 25);
 						if (OverlapTester.pointInRectangle(pBlockBounds, touchPoint)) {
 							if (Settings.spaceBucks >= Settings.nextBlockCost) {
-								PlayerSave.playerBlocks.add(currBlock);
+								PlayerSave.activeBlocks.add(currBlock);
 								PlayerSave.save(game.getFileIO());
 								potentialBlocks.remove(j);
 								getPotentialBlocks();
 								Settings.spaceBucks -= Settings.nextBlockCost;
-								Settings.nextBlockCost = PlayerSave.playerBlocks.size();
+								Settings.nextBlockCost = PlayerSave.activeBlocks.size();
 								Settings.save(game.getFileIO());
 							}
 							return;
 						}
 					}
-
-					for (int j = 0; j < PlayerSave.playerBlocks.size(); j++) {
-						Block currBlock = PlayerSave.playerBlocks.get(j);
+/*
+					for (int j = 0; j < PlayerSave.activeBlocks.size(); j++) {
+						Block currBlock = PlayerSave.activeBlocks.get(j);
 						pBlockBounds = new Rectangle(currBlock.position.x - 12, currBlock.position.y - 12, 25, 25);
 						if (OverlapTester.pointInRectangle(pBlockBounds, touchPoint)) {
 							game.setScreen(new BlockUpgradeScreen(game, j));
 							return;
 						}
-					}
+					}*/
 				}
 				else{
-					if (OverlapTester.pointInRectangle(closeBlockMenuBounds, touchPoint)) {
-						showBlockMenu = false;
-						return;
-					}
-					else if (OverlapTester.pointInRectangle(blockBankTurretBounds, touchPoint) && blockBankOption != BLOCK_BANK_TURRET) {
-						blockBankOption = BLOCK_BANK_TURRET;
-						ownedBlocksByType = getBlocksFromType(TurretBlock.class);
-						return;
-					}
-					else if (OverlapTester.pointInRectangle(blockBankArmorBounds, touchPoint) && blockBankOption != BLOCK_BANK_ARMOR) {
-						blockBankOption = BLOCK_BANK_ARMOR;
-						ownedBlocksByType = getBlocksFromType(ArmorBlock.class);
-						return;
-					}
-					else if (OverlapTester.pointInRectangle(blockBankEnergyBounds, touchPoint) && blockBankOption != BLOCK_BANK_ENERGY) {
-						blockBankOption = BLOCK_BANK_ENERGY;
-						ownedBlocksByType = getBlocksFromType(EnergyBlock.class);
-						return;
-					}
-					else if (OverlapTester.pointInRectangle(blockBankMultiplierBounds, touchPoint) && blockBankOption != BLOCK_BANK_MULTIPLIER) {
-						blockBankOption = BLOCK_BANK_MULTIPLIER;
-						ownedBlocksByType = getBlocksFromType(MultiplierBlock.class);
-						return;
-					}
+					checkBankBlocks(touchPoint);
+				}
+			}
 
-					for(int j = 0; j <= ownedBlocksByType.size(); j++){
-						if(OverlapTester.pointInRectangle(firstShopBlock, touchPoint)){
-							if(ownedBlocksByType.size() > 0 && ownedBlocksByType.size() > j ) {
-								if(blockBankOption == BLOCK_BANK_TURRET) {
-									Block currBlock = ownedBlocksByType.get(j);
-									game.setScreen(new BlockDirectionScreen(game, currBlock.position, PlayerSave.playerBlocks.indexOf(currBlock)));
-									return;
-								}
-							}
-							else if (firstShopBlock.lowerLeft.y > 15){
-								if(blockBankOption  == BLOCK_BANK_TURRET){
-									PlayerSave.playerBlocks.add(new TurretBlock(0, 0, 10, 3, 0));
-									ownedBlocksByType = getBlocksFromType(TurretBlock.class);
-								}
-								if(blockBankOption  == BLOCK_BANK_ARMOR){
-									PlayerSave.playerBlocks.add(new ArmorBlock(0, 0, 10));
-									ownedBlocksByType = getBlocksFromType(ArmorBlock.class);
-								}
-								if(blockBankOption  == BLOCK_BANK_ENERGY){
-									PlayerSave.playerBlocks.add(new EnergyBlock(0, 0, 10, 0 ,3));
-									ownedBlocksByType = getBlocksFromType(EnergyBlock.class);
-								}
-								if(blockBankOption  == BLOCK_BANK_MULTIPLIER){
-									PlayerSave.playerBlocks.add(new MultiplierBlock(0, 0, 10, 1,5f, 0 ,3));
-									ownedBlocksByType = getBlocksFromType(MultiplierBlock.class);
-								}
-							}
-						}
-
-						firstShopBlock.lowerLeft.x += 30;
-						if(firstShopBlock.lowerLeft.x >  300){
-							firstShopBlock.lowerLeft.x = 18;
-							firstShopBlock.lowerLeft.y -= 30;
+			if(event.type == TouchEvent.TOUCH_DOWN){
+				if(showBlockBank == true){
+					Rectangle bankBlockBounds;
+					for(int j = 0; j < ownedBlocksByType.size(); j++) {
+						Block currBlock = ownedBlocksByType.get(j);
+						bankBlockBounds = new Rectangle(currBlock.position.x - 12, currBlock.position.y - 12, 25, 25);
+						if (OverlapTester.pointInRectangle(bankBlockBounds, touchPoint)) {
+							selectedBankBlock = currBlock;
 						}
 					}
-					firstShopBlock.lowerLeft.x = 18;
-					firstShopBlock.lowerLeft.y = 120;
+
+				}
+
+			}
+
+			if(event.type == TouchEvent.TOUCH_DRAGGED){
+				if(selectedBankBlock != null){
+					if(showBlockBank == true ) {
+						showBlockBank = false;
+					}
+					Rectangle pBlockBounds;
+					for (int j = 0; j < PlayerSave.activeBlocks.size(); j++) {
+						Block currBlock = PlayerSave.activeBlocks.get(j);
+						pBlockBounds = new Rectangle(currBlock.position.x - 12, currBlock.position.y - 12, 25, 25);
+						if (OverlapTester.pointInRectangle(pBlockBounds, touchPoint)) {
+							selectedActiveBlock = currBlock;
+							return;
+						}
+					}
+				}
+			}
+
+		}
+	}
 
 
+	private void checkBankBlocks(Vector2 touchPoint){
+		if (OverlapTester.pointInRectangle(closeBlockMenuBounds, touchPoint)) {
+			showBlockBank = false;
+			return;
+		}
+		else if (OverlapTester.pointInRectangle(blockBankTurretBounds, touchPoint) && blockBankOption != BLOCK_BANK_TURRET) {
+			blockBankOption = BLOCK_BANK_TURRET;
+			ownedBlocksByType = getBlocksFromType(TurretBlock.class);
+			return;
+		}
+		else if (OverlapTester.pointInRectangle(blockBankArmorBounds, touchPoint) && blockBankOption != BLOCK_BANK_ARMOR) {
+			blockBankOption = BLOCK_BANK_ARMOR;
+			ownedBlocksByType = getBlocksFromType(ArmorBlock.class);
+			return;
+		}
+		else if (OverlapTester.pointInRectangle(blockBankEnergyBounds, touchPoint) && blockBankOption != BLOCK_BANK_ENERGY) {
+			blockBankOption = BLOCK_BANK_ENERGY;
+			ownedBlocksByType = getBlocksFromType(EnergyBlock.class);
+			return;
+		}
+		else if (OverlapTester.pointInRectangle(blockBankMultiplierBounds, touchPoint) && blockBankOption != BLOCK_BANK_MULTIPLIER) {
+			blockBankOption = BLOCK_BANK_MULTIPLIER;
+			ownedBlocksByType = getBlocksFromType(MultiplierBlock.class);
+			return;
+		}
+
+		Rectangle bankBlockBounds = null;
+		for(int j = 0; j < ownedBlocksByType.size(); j++){
+			Block currBlock = ownedBlocksByType.get(j);
+			bankBlockBounds = new Rectangle(currBlock.position.x - 12, currBlock.position.y - 12, 25, 25);
+			if(OverlapTester.pointInRectangle(bankBlockBounds, touchPoint)){
+				if(ownedBlocksByType.size() > 0 && ownedBlocksByType.size() > j ) {
+					if(blockBankOption == BLOCK_BANK_TURRET) {
+						//game.setScreen(new BlockDirectionScreen(game, currBlock.position, PlayerSave.activeBlocks.indexOf(currBlock)));
+						return;
+					}
 				}
 			}
 		}
-		
+		//Checks if add block was pressed
+		if(bankBlockBounds == null){
+			bankBlockBounds = new Rectangle(26, 130, 24, 24);
+		}
+		else{
+			bankBlockBounds = new Rectangle(ownedBlocksByType.get(ownedBlocksByType.size() - 1).position.x -12, ownedBlocksByType.get(ownedBlocksByType.size() - 1).position.y -12, 24, 24);
+			bankBlockBounds.lowerLeft.x +=30;
+			if(bankBlockBounds.lowerLeft.x >  300) {
+				bankBlockBounds.lowerLeft.x = 18;
+				bankBlockBounds.lowerLeft.y -= 30;
+			}
+		}
+		if (bankBlockBounds.lowerLeft.y > 15 && OverlapTester.pointInRectangle(bankBlockBounds, touchPoint)){
+			Block block = null;
+			if(blockBankOption  == BLOCK_BANK_TURRET){
+				block = new TurretBlock(-100, -100, 10, 3, 0);
+			}
+			if(blockBankOption  == BLOCK_BANK_ARMOR){
+				block = new ArmorBlock(-100, -100, 20);
+			}
+			if(blockBankOption  == BLOCK_BANK_ENERGY){
+				block = new EnergyBlock(-100, -100, 10, 0, 10);
+			}
+			if(blockBankOption  == BLOCK_BANK_MULTIPLIER){
+				block = new MultiplierBlock(-100, -100, 10, 0, 1.5f, 5, 10);
+			}
+			PlayerSave.bankedBlocks.add(block);
+			ownedBlocksByType = getBlocksFromType(block.getClass());
+		}
+
 	}
+
 
 	@Override
 	public void present(float deltaTime) {
@@ -208,8 +275,8 @@ public class BuildScreen extends GLScreen{
 		
 		
 		batcher.beginBatch(Assets.blockTextures);
-		for(int i = 0; i < PlayerSave.playerBlocks.size(); i++){
-			Block currBlock = PlayerSave.playerBlocks.get(i);
+		for(int i = 0; i < PlayerSave.activeBlocks.size(); i++){
+			Block currBlock = PlayerSave.activeBlocks.get(i);
 			if(currBlock.getClass().equals(TurretBlock.class)){
 				batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.turretBaseRegion);
 				batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets. turretTopRegion);
@@ -244,75 +311,8 @@ public class BuildScreen extends GLScreen{
 
 		batcher.endBatch();
 
-		if(showBlockMenu){
-			batcher.beginBatch(Assets.mainMenuTextures);
-			batcher.drawSprite(290, 225, -60, 60, 90, Assets.arrowRegion);
-			Assets.font.drawText(batcher, "Close", 245, 265);
-
-			batcher.drawSprite(160, 100, 320, 200, Assets.rectangleRegion);
-
-			batcher.drawSprite(40, 175, 80, 50, Assets.rectangleRegion);
-			batcher.drawSprite(120, 175, 80, 50, Assets.rectangleRegion);
-			batcher.drawSprite(200, 175, 80, 50, Assets.rectangleRegion);
-			batcher.drawSprite(280, 175, 80, 50, Assets.rectangleRegion);
-			if(blockBankOption == BLOCK_BANK_TURRET){
-				batcher.drawSprite(40, 175, 80, 50, Assets.darkGrayRectangleRegion);
-
-			}
-			else if (blockBankOption == BLOCK_BANK_ARMOR){
-				batcher.drawSprite(120, 175, 80, 50, Assets.darkGrayRectangleRegion);
-			}
-			else if (blockBankOption == BLOCK_BANK_ENERGY){
-				batcher.drawSprite(200, 175, 80, 50, Assets.darkGrayRectangleRegion);
-			}
-			else if (blockBankOption == BLOCK_BANK_MULTIPLIER){
-				batcher.drawSprite(280, 175, 80, 50, Assets.darkGrayRectangleRegion);
-			}
-
-
-			batcher.endBatch();
-
-			batcher.beginBatch(Assets.blockTextures);
-			batcher.drawSprite(40, 175, 24, 24, Assets.turretBaseRegion);
-			batcher.drawSprite(40, 175, 24, 24, Assets.turretTopRegion);
-			batcher.drawSprite(120, 175, 24, 24, Assets.armorBlockRegion);
-			batcher.drawSprite(200, 175, 24, 24, Assets.energyBlockRegion);
-			batcher.drawSprite(280, 175, 24, 24, Assets.multiplierBlockRegion);
-
-			int storeX = 26;
-			int storeY = 130;
-			for(int i = 0; i < ownedBlocksByType.size(); i++){
-				if(blockBankOption == BLOCK_BANK_TURRET) {
-					batcher.drawSprite(storeX, storeY, 24, 24, Assets.turretBaseRegion);
-					batcher.drawSprite(storeX, storeY, 24, 24, Assets.turretTopRegion);
-
-				}
-				else if(blockBankOption == BLOCK_BANK_ARMOR){
-					batcher.drawSprite(storeX, storeY, 24, 24, Assets.armorBlockRegion);
-				}
-				else if(blockBankOption == BLOCK_BANK_ENERGY){
-					batcher.drawSprite(storeX, storeY, 24, 24, Assets.energyBlockRegion);
-				}
-				else if(blockBankOption == BLOCK_BANK_MULTIPLIER){
-					batcher.drawSprite(storeX, storeY, 24, 24, Assets.multiplierBlockRegion);
-				}
-
-				storeX += 30;
-				if(storeX >  300){
-					storeX = 26;
-					storeY -= 30;
-				}
-			}
-
-			batcher.endBatch();
-
-			if(storeY > 15) {
-				batcher.beginBatch(Assets.mainMenuTextures);
-				batcher.drawSprite(storeX, storeY, 24, 24, Assets.addIcon);
-				batcher.endBatch();
-			}
-
-
+		if(showBlockBank){
+			drawBlockBank();
 		} else {
 			batcher.beginBatch(Assets.mainMenuTextures);
 			batcher.drawSprite(160, 30, 180, 45, Assets.rectangleRegion);
@@ -322,11 +322,83 @@ public class BuildScreen extends GLScreen{
 		gl.glDisable(GL10.GL_BLEND);
 		
 	}
+
+	private void drawBlockBank(){
+		batcher.beginBatch(Assets.mainMenuTextures);
+		batcher.drawSprite(290, 225, -60, 60, 90, Assets.arrowRegion);
+		Assets.font.drawText(batcher, "Close", 245, 265);
+
+		batcher.drawSprite(160, 100, 320, 200, Assets.rectangleRegion);
+
+		batcher.drawSprite(40, 175, 80, 50, Assets.rectangleRegion);
+		batcher.drawSprite(120, 175, 80, 50, Assets.rectangleRegion);
+		batcher.drawSprite(200, 175, 80, 50, Assets.rectangleRegion);
+		batcher.drawSprite(280, 175, 80, 50, Assets.rectangleRegion);
+		if(blockBankOption == BLOCK_BANK_TURRET){
+			batcher.drawSprite(40, 175, 80, 50, Assets.darkGrayRectangleRegion);
+		}
+		else if (blockBankOption == BLOCK_BANK_ARMOR){
+			batcher.drawSprite(120, 175, 80, 50, Assets.darkGrayRectangleRegion);
+		}
+		else if (blockBankOption == BLOCK_BANK_ENERGY){
+			batcher.drawSprite(200, 175, 80, 50, Assets.darkGrayRectangleRegion);
+		}
+		else if (blockBankOption == BLOCK_BANK_MULTIPLIER){
+			batcher.drawSprite(280, 175, 80, 50, Assets.darkGrayRectangleRegion);
+		}
+
+
+		batcher.endBatch();
+
+		batcher.beginBatch(Assets.blockTextures);
+		batcher.drawSprite(40, 175, 24, 24, Assets.turretBaseRegion);
+		batcher.drawSprite(40, 175, 24, 24, Assets.turretTopRegion);
+		batcher.drawSprite(120, 175, 24, 24, Assets.armorBlockRegion);
+		batcher.drawSprite(200, 175, 24, 24, Assets.energyBlockRegion);
+		batcher.drawSprite(280, 175, 24, 24, Assets.multiplierBlockRegion);
+
+		int storeX = 26;
+		int storeY = 130;
+		for(int i = 0; i < ownedBlocksByType.size(); i++){
+			Block currBlock = ownedBlocksByType.get(i);
+			currBlock.position.x = storeX;
+			currBlock.position.y = storeY;
+			if(blockBankOption == BLOCK_BANK_TURRET) {
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.turretBaseRegion);
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.turretTopRegion);
+
+			}
+			else if(blockBankOption == BLOCK_BANK_ARMOR){
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.armorBlockRegion);
+			}
+			else if(blockBankOption == BLOCK_BANK_ENERGY){
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.energyBlockRegion);
+			}
+			else if(blockBankOption == BLOCK_BANK_MULTIPLIER){
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.multiplierBlockRegion);
+			}
+
+			storeX += 30;
+			if(storeX >  300){
+				storeX = 26;
+				storeY -= 30;
+			}
+		}
+
+		batcher.endBatch();
+
+		if(storeY > 15) {
+			batcher.beginBatch(Assets.mainMenuTextures);
+			batcher.drawSprite(storeX, storeY, 24, 24, Assets.addIcon);
+			batcher.endBatch();
+		}
+
+	}
 	
 	public void getPotentialBlocks(){
 		ArrayList<Integer> emptyBlock = new ArrayList<Integer>();
-		for(int i = 0; i < PlayerSave.playerBlocks.size(); i++){
-			Block currBlock = PlayerSave.playerBlocks.get(i);
+		for(int i = 0; i < PlayerSave.activeBlocks.size(); i++){
+			Block currBlock = PlayerSave.activeBlocks.get(i);
 			
 			emptyBlock = checkAdjacentBlocks(currBlock);
 			for(int j = 0; j < emptyBlock.size(); j++){
@@ -364,11 +436,11 @@ public class BuildScreen extends GLScreen{
 			add(3);
 		}};
 		
-		for(int i = 0; i < PlayerSave.playerBlocks.size(); i++){
+		for(int i = 0; i < PlayerSave.activeBlocks.size(); i++){
 			if(emptyBlock.size() == 0){
 				continue;
 			}
-			Block currBlock = PlayerSave.playerBlocks.get(i);
+			Block currBlock = PlayerSave.activeBlocks.get(i);
 			if(block.position.y + 25 == currBlock.position.y && block.position.x == currBlock.position.x){
 				emptyBlock.remove(new Integer(0));
 			}
@@ -412,13 +484,32 @@ public class BuildScreen extends GLScreen{
 
 	public ArrayList<Block> getBlocksFromType(Class clazz){
 		ArrayList<Block> blocksRequested = new ArrayList<Block>();
-		for(int i = 0; i < PlayerSave.playerBlocks.size(); i++){
-			Block currBlock = PlayerSave.playerBlocks.get(i);
+		for(int i = 0; i < PlayerSave.bankedBlocks.size(); i++){
+			Block currBlock = PlayerSave.bankedBlocks.get(i);
 			if(currBlock.getClass() == clazz){
 				blocksRequested.add(currBlock);
 			}
 		}
 		return blocksRequested;
+	}
+
+	public void resetBlockBank(){
+		if ( blockBankOption == BLOCK_BANK_TURRET) {
+			ownedBlocksByType = getBlocksFromType(TurretBlock.class);
+			return;
+		}
+		else if (blockBankOption == BLOCK_BANK_ARMOR) {
+			ownedBlocksByType = getBlocksFromType(ArmorBlock.class);
+			return;
+		}
+		else if ( blockBankOption == BLOCK_BANK_ENERGY) {
+			ownedBlocksByType = getBlocksFromType(EnergyBlock.class);
+			return;
+		}
+		else if ( blockBankOption == BLOCK_BANK_MULTIPLIER) {
+			ownedBlocksByType = getBlocksFromType(MultiplierBlock.class);
+			return;
+		}
 	}
 	
 	@Override

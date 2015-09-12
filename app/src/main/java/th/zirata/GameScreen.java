@@ -131,7 +131,7 @@ public class GameScreen extends GLScreen {
 					game.setScreen(new MainMenuScreen(game));
 					return;
 				}
-				if(blockNum[event.pointer] != -1){	
+				if(blockNum[event.pointer] != -1){
 					try{
 						Block currBlock = world.player.playerBlocks.get(blockNum[event.pointer]);
 						currBlock.lastTouch.x = touchPoint.x;

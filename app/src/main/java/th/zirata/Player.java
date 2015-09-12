@@ -8,8 +8,8 @@ public class Player {
     public int energy;
 
 	public Player(){
-		for(int i = 0; i < PlayerSave.playerBlocks.size(); i++){
-			Block currBlock = PlayerSave.playerBlocks.get(i);
+		for(int i = 0; i < PlayerSave.activeBlocks.size(); i++){
+			Block currBlock = PlayerSave.activeBlocks.get(i);
 			playerBlocks.add(currBlock);
 		}
 		energy = 3;
