@@ -45,6 +45,10 @@ public abstract class Block extends DynamicGameObject {
 
 	public abstract String[] getUpgradableAttributes();
 
+	public abstract float[] getAttributeVals();
+
+	public abstract float[] getUpgradeValues();
+
 	public boolean checkDeath(){
 		if(health <= 0){
 			return true;

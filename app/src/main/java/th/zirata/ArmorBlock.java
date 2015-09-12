@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class ArmorBlock extends Block{
 
-	public static String[] UpgradeAttributes = new String[]{"Health", "Shield", "Macho"};
+	public static String[] UpgradeAttributes = new String[]{"Health"};
 
 	int constructorArgLength = 4;
 
@@ -18,7 +18,7 @@ public class ArmorBlock extends Block{
 	}
 
 	public ArmorBlock(double[] info){
-		this((float)info[0], (float)info[1], (int)info[2]);
+		this((float) info[0], (float) info[1], (int) info[2]);
 	}
 
 	public ArmorBlock(float x, float y, int health){
@@ -43,6 +43,16 @@ public class ArmorBlock extends Block{
 	@Override
 	public String[] getUpgradableAttributes() {
 		return UpgradeAttributes;
+	}
+
+	@Override
+	public float[] getAttributeVals() {
+		return new float[]{this.health};
+	}
+
+	@Override
+	public float[] getUpgradeValues() {
+		return new float[]{20};
 	}
 
 	public void multiply(float multiplier){

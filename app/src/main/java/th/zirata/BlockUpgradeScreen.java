@@ -111,9 +111,14 @@ public class BlockUpgradeScreen extends GLScreen{
 	private void drawAttributeButtons(){
 		batcher.beginBatch(Assets.mainMenuTextures);
 		String[] upgradeableAttributes = block.getUpgradableAttributes();
+		float[] attributeValues = block.getAttributeVals();
+		float[] upgradeValues = block.getUpgradeValues();
 		for (int i = 0; i < upgradeableAttributes.length; i++){
-			batcher.drawSprite(160, 100 + i*80, 320, 80, Assets.rectangleRegion);
-			Assets.font.drawText(batcher, upgradeableAttributes[i], 15, 125 + i*80);
+			float nextVal = attributeValues[i]+upgradeValues[i];
+			batcher.drawSprite(160, 100 + i * 80, 320, 80, Assets.rectangleRegion);
+			Assets.font.drawText(batcher, upgradeableAttributes[i], 15, 125 + i * 80);
+			Assets.font.drawText(batcher, "Current: " + attributeValues[i] , 15, 100 + i*80);
+			Assets.font.drawText(batcher, "Next: " + nextVal , 15, 75 + i*80);
 		}
 		batcher.endBatch();
 	}

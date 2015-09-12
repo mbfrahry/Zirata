@@ -96,6 +96,16 @@ public class MultiplierBlock extends Block{
         return UpgradeAttributes;
     }
 
+    @Override
+    public float[] getAttributeVals() {
+        return new float[]{this.health, this.cooldown, this.multiplierTime, this.multiplier};
+    }
+
+    @Override
+    public float[] getUpgradeValues() {
+        return new float[]{5, -1, 1, .1f};
+    }
+
 
     public void multiply(float multiplier){
 

@@ -85,4 +85,14 @@ public class MachineGunBlock extends Block {
 	public String[] getUpgradableAttributes() {
 		return new String[0];
 	}
+
+	@Override
+	public float[] getAttributeVals() {
+		return new float[0];
+	}
+
+	@Override
+	public float[] getUpgradeValues() {
+		return new float[0];
+	}
 }

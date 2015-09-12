@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class TurretBlock extends Block{
 
-	public static String[] UpgradeAttributes = new String[]{"Health", "Cooldown", "Active Time", "Multiplier"};
+	public static String[] UpgradeAttributes = new String[]{"Health"};
 
 	ArrayList<Bullet> bullets;
 	int maxBullets;
@@ -166,6 +166,16 @@ public class TurretBlock extends Block{
 	@Override
 	public String[] getUpgradableAttributes() {
 		return UpgradeAttributes;
+	}
+
+	@Override
+	public float[] getAttributeVals() {
+		return new float[]{this.health};
+	}
+
+	@Override
+	public float[] getUpgradeValues() {
+		return new float[]{5};
 	}
 
 	public void multiply(float multiplier){

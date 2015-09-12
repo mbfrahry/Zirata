@@ -59,6 +59,16 @@ public class EnergyBlock extends Block{
         return UpgradeAttributes;
     }
 
+    @Override
+    public float[] getAttributeVals() {
+        return new float[]{this.health, this.energy};
+    }
+
+    @Override
+    public float[] getUpgradeValues() {
+        return new float[]{5, 1};
+    }
+
     public void multiply(float multiplier){
         this.energy *= multiplier;
     }
