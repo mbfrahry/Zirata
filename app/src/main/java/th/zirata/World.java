@@ -127,14 +127,14 @@ public class World {
 	
 	private void updateEnemies(float deltaTime){
 		lastEnemyTime += deltaTime;
-		if(lastEnemyTime > timeToNextEnemy && state != WORLD_STATE_LAST_ENEMY){
+		if(lastEnemyTime > .1 && state != WORLD_STATE_LAST_ENEMY){
 			generateEnemy();
 			
 			if(enemyNum % 4 == 0 && timeToNextEnemy > 2){
 				timeToNextEnemy -= 0.5;
 			}
 			
-			if(enemyNum >= Settings.numEnemies){
+			if(enemyNum >= 500){
 				state = WORLD_STATE_LAST_ENEMY;
 			}
 			
@@ -194,8 +194,8 @@ public class World {
 	}
 	
 	private void generateEnemy(){
-		int enemyType = 0;
-		if(rand.nextFloat() > .25){
+		int enemyType;
+		if(rand.nextFloat() > 0){//.25){
 			enemyType = 1;
 		}
 		else{
