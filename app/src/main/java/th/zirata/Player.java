@@ -6,12 +6,17 @@ public class Player {
 
 	public ArrayList<Block> playerBlocks = new ArrayList<Block>();
     public int energy;
+	public boolean power;
+	ArrayList<Block> poweredBlocks;
 
 	public Player(){
 		for(Block b : PlayerSave.activeBlocks){
 			playerBlocks.add(b);
 		}
-		energy = 3;
+		energy = 0;
+
+		power = true;
+		poweredBlocks = new ArrayList<Block>();
 	}
 
 	public void getEnergy(){
@@ -27,6 +32,19 @@ public class Player {
 		}
 		energy = currEnergy;
 	}
+
+	public void checkPower(){
+		if(power == false){
+			for(int i = 0; i < poweredBlocks.size(); i++){
+				poweredBlocks.get(i).active = false;
+			}
+		}
+		if(power == true){
+			for(int i = 0; i < poweredBlocks.size(); i++){
+				poweredBlocks.get(i).active = true;
+			}
+		}
+	}
 	
 	public void update(float deltaTime){
 
@@ -40,5 +58,6 @@ public class Player {
 				playerBlocks.remove(i);
 			}
 		}
+		checkPower();
 	}
 }

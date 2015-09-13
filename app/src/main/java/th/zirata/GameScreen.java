@@ -32,6 +32,7 @@ public class GameScreen extends GLScreen {
     Rectangle resumeBounds;
     Rectangle quitBounds;
     Rectangle pBlockBounds;
+	Rectangle powerBounds;
     World world;
     WorldRenderer renderer;
     FPSCounter fpsCounter;
@@ -50,6 +51,7 @@ public class GameScreen extends GLScreen {
         pauseBounds = new Rectangle(320- 64, 480- 64, 64, 64);
         resumeBounds = new Rectangle(160 - 96, 240, 192, 36);
         quitBounds = new Rectangle(320- 64, 480- 64, 64, 64);
+		powerBounds = new Rectangle(260, 0, 50, 50);
         fpsCounter = new FPSCounter();
         
     }
@@ -100,6 +102,10 @@ public class GameScreen extends GLScreen {
 						world.moveRight = false;
 					}
 				}
+				if (OverlapTester.pointInRectangle(powerBounds, touchPoint)){
+					world.player.power = false;
+					return;
+				}
 			}
 
 
@@ -111,14 +117,20 @@ public class GameScreen extends GLScreen {
 
 						if (!currBlock.active && currBlock.energyCost <= world.player.energy) {
 							currBlock.active = true;
+							world.player.poweredBlocks.add(currBlock);
 						} else {
 							currBlock.active = false;
+							world.player.poweredBlocks.remove(currBlock);
 						}
 						return;
 					}
 				}
 				if (OverlapTester.pointInRectangle(quitBounds, touchPoint)) {
 					game.setScreen(new MainMenuScreen(game));
+					return;
+				}
+				if (OverlapTester.pointInRectangle(powerBounds, touchPoint)){
+					world.player.power = true;
 					return;
 				}
 				if (touchPoint.y < 50) {
