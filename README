@@ -4,16 +4,17 @@ Started
 Needs to be done 
 
   Clear .ship file appropriately
-  
-  TextureReader class
-    -It will read in sprite sheet and update TextureRegions accordingly.
-  
   Better UI/Intuitivness
   
-  Upgrade path
-    Buy expansion slots
-    Buy blocks or blocks drop
-      Can convert these into whatever you want
+  Implement Power Button
+  
+  Decide how to do levels
+    Arcadey
+    Or map
+    
+  Fusion of blocks
+  
+  Block upgrade paths
   
   Different blocks
     Freeze Block
