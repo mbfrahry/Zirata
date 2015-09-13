@@ -6,8 +6,6 @@ Needs to be done
   Clear .ship file appropriately
   Better UI/Intuitivness
   
-  Implement Power Button
-  
   Decide how to do levels
     Arcadey
     Or map
@@ -28,9 +26,6 @@ Needs to be done
   Moving background to simulate ship velocity
   
   Paralax background
-  
-  
-  
   
   Bugs:
     Bullets go past cone range
