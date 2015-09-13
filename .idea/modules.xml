@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Zirata.iml" filepath="$PROJECT_DIR$/Zirata.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Zirata2.iml" filepath="$PROJECT_DIR$/Zirata2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
