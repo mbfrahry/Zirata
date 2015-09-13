@@ -117,7 +117,9 @@ public class GameScreen extends GLScreen {
 
 						if (!currBlock.active && currBlock.energyCost <= world.player.energy) {
 							currBlock.active = true;
-							world.player.poweredBlocks.add(currBlock);
+							if(currBlock.energyCost > 0) {
+								world.player.poweredBlocks.add(currBlock);
+							}
 						} else {
 							currBlock.active = false;
 							world.player.poweredBlocks.remove(currBlock);
