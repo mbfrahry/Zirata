@@ -27,7 +27,7 @@ public class PlayerSave {
 	public static ArrayList<Block> activeBlocks = new ArrayList<Block>(){{
 		add(new BlankBlock(new Vector2(160, 240)));
 	}};
-	public static String file = ".ship25";
+	public static String file = ".ship26";
 
 
 
@@ -60,6 +60,8 @@ public class PlayerSave {
 		reader.endArray();
 
 		if ( potentialActiveBlocks.size() > 0){
+			activeBlocks.clear();
+			bankedBlocks.clear();
 			for(int i = 0; i < potentialActiveBlocks.size(); i++){
 				activeBlocks.add(potentialActiveBlocks.get(i));
 				bankedBlocks.add(potentialActiveBlocks.get(i));
@@ -78,7 +80,7 @@ public class PlayerSave {
 			bankedBlocks.addAll(potentialBankBlocks);
 		}
 
-
+		reader.endArray();
 
 	}
 
