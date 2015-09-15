@@ -149,7 +149,17 @@ public class BuildScreen extends GLScreen{
 						Rectangle bankBlockBounds;
 						for (int j = 0; j < ownedBlocksByType.size(); j++) {
 							Block currBlock = ownedBlocksByType.get(j);
-							bankBlockBounds = new Rectangle(currBlock.position.x - 12, currBlock.position.y - 12, 25, 25);
+
+//							storeX += 30;
+//							if(storeX >  300){
+//								storeX = 26;
+//								storeY -= 30;
+//							}
+
+							int xval =(26 + j*30)%300;
+							int yval = 130 - 30*((26 + j*30)/300);
+
+							bankBlockBounds = new Rectangle(xval - 12, yval - 12, 25, 25);
 							if (OverlapTester.pointInRectangle(bankBlockBounds, touchPoint)) {
 								selectedBankBlock = currBlock;
 								//PlayerSave.bankedBlocks.remove(selectedBankBlock);
@@ -260,7 +270,10 @@ public class BuildScreen extends GLScreen{
 			bankBlockBounds = new Rectangle(26-12, 130-12, 25, 25);
 		}
 		else{
-			bankBlockBounds = new Rectangle(ownedBlocksByType.get(ownedBlocksByType.size() - 1).position.x -12, ownedBlocksByType.get(ownedBlocksByType.size() - 1).position.y -12, 25, 25);
+			int xval =(26 + (ownedBlocksByType.size()-1)*30)%300;
+			int yval = 130 - 30*((26 + (ownedBlocksByType.size()-1)*30)/300);
+
+			bankBlockBounds = new Rectangle(xval -12, yval -12, 25, 25);
 			bankBlockBounds.lowerLeft.x +=30;
 			if(bankBlockBounds.lowerLeft.x >  300) {
 				bankBlockBounds.lowerLeft.x = 18;
@@ -268,6 +281,7 @@ public class BuildScreen extends GLScreen{
 			}
 
 		}
+
 		if (bankBlockBounds.lowerLeft.y > 15 && OverlapTester.pointInRectangle(bankBlockBounds, touchPoint)){
 			Block block = null;
 			if(blockBankOption  == BLOCK_BANK_TURRET){
