@@ -427,13 +427,13 @@ public class BuildScreen extends GLScreen{
 				}
 			}
 			else{
+				if (currBlock == selectedActiveBlock){
+					batcher.drawSprite(storeX, storeY, 50, 50, Assets.textureRegions.get("GreenBullet"));
+				}
+				else {
+					batcher.drawSprite(storeX, storeY, 50, 50, Assets.textureRegions.get("Bullet"));
+				}
 				if(blockBankOption == BLOCK_BANK_TURRET) {
-					if (currBlock == selectedActiveBlock){
-						batcher.drawSprite(storeX, storeY, 50, 50, Assets.textureRegions.get("GreenBullet"));
-					}
-					else {
-						batcher.drawSprite(storeX, storeY, 50, 50, Assets.textureRegions.get("Bullet"));
-					}
 					batcher.drawSprite(storeX, storeY, 24, 24, Assets.textureRegions.get("TurretBase"));
 					batcher.drawSprite(storeX, storeY, 24, 24, Assets.textureRegions.get("TurretTop"));
 
