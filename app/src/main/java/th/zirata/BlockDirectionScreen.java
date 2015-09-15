@@ -71,7 +71,7 @@ public class BlockDirectionScreen extends GLScreen{
                 PlayerSave.activeBlocks.remove(blockNum);
                 PlayerSave.activeBlocks.add(new TurretBlock(position, fireAngle));
                 PlayerSave.save(game.getFileIO());
-                game.setScreen(new BuildScreen(game, true));
+                game.setScreen(new BuildScreen(game, false));
                 return;
             }
         }

@@ -87,9 +87,10 @@ public class BuildScreen extends GLScreen{
 
 				if (event.type == TouchEvent.TOUCH_UP) {
 
+
 					if (selectedBankBlock != null && selectedActiveBlock == null) {
 						selectedBankBlock = null;
-						showBlockBank = true;
+						showBlockBank = false;
 					}
 
 					if (!showBlockBank) {
@@ -106,7 +107,7 @@ public class BuildScreen extends GLScreen{
 						}
 
 						if (OverlapTester.pointInRectangle(blockMenuBounds, touchPoint)) {
-							showBlockBank = true;
+							showBlockBank = false;
 							return;
 						}
 
@@ -132,7 +133,9 @@ public class BuildScreen extends GLScreen{
 							Block currBlock = PlayerSave.activeBlocks.get(j);
 							pBlockBounds = new Rectangle(currBlock.position.x - 12, currBlock.position.y - 12, 25, 25);
 							if (OverlapTester.pointInRectangle(pBlockBounds, touchPoint) && currBlock.getClass() != BlankBlock.class) {
-								game.setScreen(new BlockUpgradeScreen(game, currBlock));
+								selectedActiveBlock = currBlock;
+								showBlockBank = true;
+								//game.setScreen(new BlockUpgradeScreen(game, currBlock));
 								return;
 							}
 						}
@@ -149,13 +152,28 @@ public class BuildScreen extends GLScreen{
 							bankBlockBounds = new Rectangle(currBlock.position.x - 12, currBlock.position.y - 12, 25, 25);
 							if (OverlapTester.pointInRectangle(bankBlockBounds, touchPoint)) {
 								selectedBankBlock = currBlock;
+								PlayerSave.bankedBlocks.remove(selectedBankBlock);
+								PlayerSave.activeBlocks.remove(selectedActiveBlock);
+								selectedBankBlock.position.x = selectedActiveBlock.position.x;
+								selectedBankBlock.position.y = selectedActiveBlock.position.y;
+								PlayerSave.bankedBlocks.add(selectedActiveBlock);
+								PlayerSave.activeBlocks.add(selectedBankBlock);
+								resetBlockBank();
+								if(selectedBankBlock.getClass() == TurretBlock.class){
+									game.setScreen(new BlockDirectionScreen(game, selectedBankBlock.position, PlayerSave.activeBlocks.indexOf(selectedBankBlock)));
+								}
+								else {
+									selectedActiveBlock = null;
+									selectedBankBlock = null;
+								}
+								showBlockBank = false;
 							}
 						}
 
 					}
 
 				}
-
+/*
 				if (event.type == TouchEvent.TOUCH_DRAGGED) {
 					if (selectedBankBlock != null) {
 						if (showBlockBank == true) {
@@ -174,10 +192,10 @@ public class BuildScreen extends GLScreen{
 							draggingBankBlock = true;
 						}
 					}
-				}
+				}*/
 			}
 
-		}else if (draggingBankBlock){
+		}/*else if (draggingBankBlock){
 			draggingBankBlock = false;
 			if(selectedActiveBlock != null && selectedBankBlock != null){
 				PlayerSave.bankedBlocks.remove(selectedBankBlock);
@@ -198,7 +216,7 @@ public class BuildScreen extends GLScreen{
 				showBlockBank = true;
 				return;
 			}
-		}
+		}*/
 		
 	}
 
