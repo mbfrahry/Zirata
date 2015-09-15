@@ -60,8 +60,10 @@ public class PlayerSave {
 		reader.endArray();
 
 		if ( potentialActiveBlocks.size() > 0){
-			activeBlocks = potentialActiveBlocks;
-			bankedBlocks = potentialActiveBlocks;
+			for(int i = 0; i < potentialActiveBlocks.size(); i++){
+				activeBlocks.add(potentialActiveBlocks.get(i));
+				bankedBlocks.add(potentialActiveBlocks.get(i));
+			}
 		}
 
 		ArrayList<Block> potentialBankBlocks = new ArrayList<Block>();
