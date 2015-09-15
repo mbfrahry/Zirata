@@ -27,7 +27,7 @@ public class PlayerSave {
 	public static ArrayList<Block> activeBlocks = new ArrayList<Block>(){{
 		add(new BlankBlock(new Vector2(160, 240)));
 	}};
-	public static String file = ".ship21";
+	public static String file = ".ship22";
 
 
 

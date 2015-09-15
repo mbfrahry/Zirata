@@ -1,7 +1,6 @@
 package th.zirata;
 
 import android.util.JsonWriter;
-import android.util.Log;
 
 import com.badlogic.androidgames.framework.math.Vector2;
 
@@ -10,12 +9,12 @@ import java.util.ArrayList;
 
 public class TurretBlock extends Block{
 
-	public static String[] UpgradeAttributes = new String[]{"Health"};
+
 
 	ArrayList<Bullet> bullets;
 	int maxBullets;
 	int numBullets;
-	float reloadTime;
+	float fireRate;
 	float currTime;
 
 	float fireAngle;
@@ -33,7 +32,8 @@ public class TurretBlock extends Block{
 	int bulletDamage;
 	int state;
 
-	public double[] defaultValueArray = {0};
+	public double[] defaultValueArray = {0, 10, 2, 150};
+	public static String[] UpgradeAttributes = new String[]{"Health", "Bullet Damage", "Fire Rate", "Range"};
 
 	public TurretBlock(Vector2 position, float fireAngle){
         this(position.x, position.y, 10, 3, fireAngle);
@@ -45,6 +45,15 @@ public class TurretBlock extends Block{
 		if(info.length >= 5){
 			this.fireAngle = (int)info[4];
 		}
+		if(info.length >= 6){
+			this.bulletDamage = (int)info[5];
+		}
+		if(info.length >= 7) {
+			this.fireRate = (int)info[6];
+		}
+		if(info.length >= 8){
+			this.fireRange = (int)info[7];
+		}
 
 		calcCone(position.x, position.y);
 
@@ -52,13 +61,13 @@ public class TurretBlock extends Block{
 
 	public TurretBlock(float x, float y, int health, int energyCost, float fireAngle){
 		super(x, y, health, energyCost);
-		this.constructorArgLength = 5;
+		this.constructorArgLength = 8;
 		bullets = new ArrayList<Bullet>();
 		maxBullets = 1;
 		numBullets = 0;
 		bulletDamage = 10;
 		
-		reloadTime = 3;
+		fireRate = 3;
 		currTime = 0;
 
 		this.fireAngle = fireAngle;
@@ -144,7 +153,7 @@ public class TurretBlock extends Block{
 	public void update(float deltaTime){
 		if(state == TURRET_RELOADING){
 			currTime+= deltaTime;
-			if(currTime >= reloadTime){
+			if(currTime >= fireRate){
 				state = TURRET_READY;
 				currTime = 0;
 				numBullets = 0;
@@ -161,27 +170,35 @@ public class TurretBlock extends Block{
 
 	public void writeExtraInfo(JsonWriter writer) throws IOException {
 		writer.value(fireAngle);
+		writer.value(bulletDamage);
+		writer.value(fireRate);
+		writer.value(fireRange);
 	}
 
-	@Override
 	public String[] getUpgradableAttributes() {
 		return UpgradeAttributes;
 	}
-
-	@Override
 	public float[] getAttributeVals() {
-		return new float[]{this.health};
+		return new float[]{this.health, this.bulletDamage, this.fireRate, this.fireRange};
 	}
 
-	@Override
 	public float[] getUpgradeValues() {
-		return new float[]{5};
+		return new float[]{5, 5, -0.1f, 5};
 	}
 
-	@Override
 	public void updateAttribute(int attributeIndex, float upgradeNum) {
 		if(attributeIndex == 0){
 			this.health += upgradeNum;
+		}
+		if(attributeIndex == 1 ){
+			this.bulletDamage += upgradeNum;
+		}
+		if(attributeIndex == 2 ){
+			this.fireRate += upgradeNum;
+		}
+		if(attributeIndex == 3 ){
+			this.fireRange += upgradeNum;
+			calcCone(position.x, position.y);
 		}
 	}
 

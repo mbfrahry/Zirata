@@ -70,6 +70,11 @@ public class BuildScreen extends GLScreen{
 		draggingBankBlock = false;
     }
 
+	public BuildScreen(Game game, boolean showBlockBank){
+		this(game);
+		this.showBlockBank = showBlockBank;
+	}
+
 	@Override
 	public void update(float deltaTime) {
 		List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
@@ -190,6 +195,7 @@ public class BuildScreen extends GLScreen{
 					selectedBankBlock = null;
 				}
 
+				showBlockBank = true;
 				return;
 			}
 		}

@@ -44,7 +44,7 @@ public class GameScreen extends GLScreen {
         guiCam = new Camera2D(glGraphics, 320, 480);
         touchPoint = new Vector2();
         batcher = new SpriteBatcher(glGraphics, 1000);
-        
+
         PlayerSave.load(game.getFileIO());
         world = new World();
         renderer = new WorldRenderer(glGraphics, batcher, world);
