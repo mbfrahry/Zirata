@@ -132,7 +132,7 @@ public class BuildScreen extends GLScreen{
 						for (int j = 0; j < PlayerSave.activeBlocks.size(); j++) {
 							Block currBlock = PlayerSave.activeBlocks.get(j);
 							pBlockBounds = new Rectangle(currBlock.position.x - 12, currBlock.position.y - 12, 25, 25);
-							if (OverlapTester.pointInRectangle(pBlockBounds, touchPoint) && currBlock.getClass() != BlankBlock.class) {
+							if (OverlapTester.pointInRectangle(pBlockBounds, touchPoint) ){//&& currBlock.getClass() != BlankBlock.class) {
 								selectedActiveBlock = currBlock;
 								showBlockBank = true;
 								//game.setScreen(new BlockUpgradeScreen(game, currBlock));
