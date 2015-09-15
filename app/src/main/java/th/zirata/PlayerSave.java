@@ -27,7 +27,7 @@ public class PlayerSave {
 	public static ArrayList<Block> activeBlocks = new ArrayList<Block>(){{
 		add(new BlankBlock(new Vector2(160, 240)));
 	}};
-	public static String file = ".ship22";
+	public static String file = ".ship25";
 
 
 
@@ -50,19 +50,9 @@ public class PlayerSave {
 	}
 
 	public static void readBlocksArray(JsonReader reader) throws IOException{
-		ArrayList<Block> potentialBankBlocks = new ArrayList<Block>();
-		reader.beginArray();
-		reader.beginArray();
-		while(reader.hasNext()){
-			readBlock(reader, potentialBankBlocks);
-		}
-		reader.endArray();
-
-		if ( potentialBankBlocks.size() > 0){
-			bankedBlocks = potentialBankBlocks;
-		}
 
 		ArrayList<Block> potentialActiveBlocks = new ArrayList<Block>();
+		reader.beginArray();
 		reader.beginArray();
 		while(reader.hasNext()){
 			readBlock(reader, potentialActiveBlocks);
@@ -71,7 +61,21 @@ public class PlayerSave {
 
 		if ( potentialActiveBlocks.size() > 0){
 			activeBlocks = potentialActiveBlocks;
+			bankedBlocks = potentialActiveBlocks;
 		}
+
+		ArrayList<Block> potentialBankBlocks = new ArrayList<Block>();
+
+		reader.beginArray();
+		while(reader.hasNext()){
+			readBlock(reader, potentialBankBlocks);
+		}
+		reader.endArray();
+
+		if ( potentialBankBlocks.size() > 0){
+			bankedBlocks.addAll(potentialBankBlocks);
+		}
+
 
 
 	}
@@ -149,16 +153,20 @@ public class PlayerSave {
 		writer.beginArray();
 
 		writer.beginArray();
-		for (Block block : bankedBlocks) {
-			writeBlock(writer, block);
-		}
-		writer.endArray();
-
-		writer.beginArray();
 		for (Block block : activeBlocks) {
 			writeBlock(writer, block);
 		}
 		writer.endArray();
+
+
+		writer.beginArray();
+		for (Block block : bankedBlocks) {
+			if(!activeBlocks.contains(block)) {
+				writeBlock(writer, block);
+			}
+		}
+		writer.endArray();
+
 
 		writer.endArray();
 

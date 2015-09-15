@@ -67,9 +67,12 @@ public class BlockDirectionScreen extends GLScreen{
                     //Touch not on direction, be aware when adding new if statements
                     return;
                 }
-
-                PlayerSave.activeBlocks.remove(blockNum);
-                PlayerSave.activeBlocks.add(new TurretBlock(position, fireAngle));
+                TurretBlock tBlock = (TurretBlock)PlayerSave.activeBlocks.get(blockNum);
+                tBlock.fireAngle = fireAngle;
+                //PlayerSave.activeBlocks.remove(blockNum);
+                //TurretBlock tBlock = new TurretBlock(position, fireAngle);
+                //PlayerSave.activeBlocks.add(tBlock);
+                //PlayerSave.bankedBlocks.add(tBlock);
                 PlayerSave.save(game.getFileIO());
                 game.setScreen(new BuildScreen(game, false));
                 return;

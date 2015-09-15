@@ -152,11 +152,11 @@ public class BuildScreen extends GLScreen{
 							bankBlockBounds = new Rectangle(currBlock.position.x - 12, currBlock.position.y - 12, 25, 25);
 							if (OverlapTester.pointInRectangle(bankBlockBounds, touchPoint)) {
 								selectedBankBlock = currBlock;
-								PlayerSave.bankedBlocks.remove(selectedBankBlock);
+								//PlayerSave.bankedBlocks.remove(selectedBankBlock);
 								PlayerSave.activeBlocks.remove(selectedActiveBlock);
 								selectedBankBlock.position.x = selectedActiveBlock.position.x;
 								selectedBankBlock.position.y = selectedActiveBlock.position.y;
-								PlayerSave.bankedBlocks.add(selectedActiveBlock);
+								//PlayerSave.bankedBlocks.add(selectedActiveBlock);
 								PlayerSave.activeBlocks.add(selectedBankBlock);
 								resetBlockBank();
 								if(selectedBankBlock.getClass() == TurretBlock.class){
@@ -405,22 +405,47 @@ public class BuildScreen extends GLScreen{
 		int storeY = 130;
 		for(int i = 0; i < ownedBlocksByType.size(); i++){
 			Block currBlock = ownedBlocksByType.get(i);
-			currBlock.position.x = storeX;
-			currBlock.position.y = storeY;
-			if(blockBankOption == BLOCK_BANK_TURRET) {
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretBase"));
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretTop"));
+			if(!PlayerSave.activeBlocks.contains(currBlock)){
+				currBlock.position.x = storeX;
+				currBlock.position.y = storeY;
+				if(blockBankOption == BLOCK_BANK_TURRET) {
+					if(PlayerSave.activeBlocks.contains(currBlock)){
+						batcher.drawSprite(currBlock.position.x -3, currBlock.position.y -3, 27, 27, Assets.textureRegions.get("Bullet"));
+					}
+					batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretBase"));
+					batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretTop"));
 
+				}
+				else if(blockBankOption == BLOCK_BANK_ARMOR){
+					batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("ArmorBlock"));
+				}
+				else if(blockBankOption == BLOCK_BANK_ENERGY){
+					batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("EnergyBlock"));
+				}
+				else if(blockBankOption == BLOCK_BANK_MULTIPLIER){
+					batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
+				}
 			}
-			else if(blockBankOption == BLOCK_BANK_ARMOR){
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("ArmorBlock"));
+			else{
+				if(blockBankOption == BLOCK_BANK_TURRET) {
+					if(PlayerSave.activeBlocks.contains(currBlock)){
+						batcher.drawSprite(storeX, storeY, 50, 50, Assets.textureRegions.get("Bullet"));
+					}
+					batcher.drawSprite(storeX, storeY, 24, 24, Assets.textureRegions.get("TurretBase"));
+					batcher.drawSprite(storeX, storeY, 24, 24, Assets.textureRegions.get("TurretTop"));
+
+				}
+				else if(blockBankOption == BLOCK_BANK_ARMOR){
+					batcher.drawSprite(storeX, storeY, 24, 24, Assets.textureRegions.get("ArmorBlock"));
+				}
+				else if(blockBankOption == BLOCK_BANK_ENERGY){
+					batcher.drawSprite(storeX, storeY, 24, 24, Assets.textureRegions.get("EnergyBlock"));
+				}
+				else if(blockBankOption == BLOCK_BANK_MULTIPLIER){
+					batcher.drawSprite(storeX, storeY, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
+				}
 			}
-			else if(blockBankOption == BLOCK_BANK_ENERGY){
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("EnergyBlock"));
-			}
-			else if(blockBankOption == BLOCK_BANK_MULTIPLIER){
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
-			}
+
 
 			storeX += 30;
 			if(storeX >  300){
