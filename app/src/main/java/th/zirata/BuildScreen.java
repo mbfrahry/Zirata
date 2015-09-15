@@ -428,7 +428,10 @@ public class BuildScreen extends GLScreen{
 			}
 			else{
 				if(blockBankOption == BLOCK_BANK_TURRET) {
-					if(PlayerSave.activeBlocks.contains(currBlock)){
+					if (currBlock == selectedActiveBlock){
+						batcher.drawSprite(storeX, storeY, 50, 50, Assets.textureRegions.get("GreenBullet"));
+					}
+					else {
 						batcher.drawSprite(storeX, storeY, 50, 50, Assets.textureRegions.get("Bullet"));
 					}
 					batcher.drawSprite(storeX, storeY, 24, 24, Assets.textureRegions.get("TurretBase"));
