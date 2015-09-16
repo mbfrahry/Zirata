@@ -58,16 +58,6 @@ public class MainMenuScreen extends GLScreen{
 					return;
 				}
 
-				if(OverlapTester.pointInRectangle(soundBounds, touchPoint)){
-					if(Assets.song1.isPlaying()){
-						Assets.song1.stop();
-					}
-					else{
-						Assets.song1.play();
-					}
-					return;
-				}
-				
 				if(OverlapTester.pointInRectangle(resetBounds,touchPoint)){
 					Settings.reset();
 					PlayerSave.reset();

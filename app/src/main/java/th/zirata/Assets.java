@@ -29,8 +29,6 @@ public class Assets {
 
 	public static Font font;
 
-	public static Music song1;
-
 	public static Sound explosionSound;
 	public static Sound shootSound;
 
@@ -49,10 +47,6 @@ public class Assets {
 		mainMenuTextures = new Texture(game, "MenuItems.png");
 		addTextures(game.getFileIO(), mainMenuTextures, "MenuItems.txt");
 		font = new Font(mainMenuTextures, 0, 0, 16, 16, 20);
-
-		song1 = game.getAudio().newMusic("Song1.mp3");
-		song1.setLooping(true);
-		song1.setVolume(0.5f);
 
 		explosionSound = game.getAudio().newSound("Explosion.wav");
 		shootSound = game.getAudio().newSound("Shoot.wav");

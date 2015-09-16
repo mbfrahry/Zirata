@@ -39,6 +39,9 @@ public class BuildScreen extends GLScreen{
 	public static final int BLOCK_BANK_ENERGY = 2;
 	public static final int BLOCK_BANK_MULTIPLIER = 3;
 
+	public float minHeldTime;
+	public float heldTime;
+
 	boolean draggingBankBlock;
 
 	public BuildScreen(Game game) {
@@ -68,6 +71,9 @@ public class BuildScreen extends GLScreen{
 		blockBankOption = BLOCK_BANK_TURRET;
 		ownedBlocksByType = getBlocksFromType(TurretBlock.class);
 		draggingBankBlock = false;
+
+		minHeldTime = 0.5f;
+		heldTime = 0;
     }
 
 	public BuildScreen(Game game, boolean showBlockBank){
@@ -124,6 +130,8 @@ public class BuildScreen extends GLScreen{
 									Settings.spaceBucks -= Settings.nextBlockCost;
 									Settings.nextBlockCost = PlayerSave.activeBlocks.size();
 									Settings.save(game.getFileIO());
+									showBlockBank = true;
+									selectedActiveBlock = currBlock;
 								}
 								return;
 							}
@@ -142,19 +150,11 @@ public class BuildScreen extends GLScreen{
 					} else {
 						checkBankBlocks(touchPoint);
 					}
-				}
 
-				if (event.type == TouchEvent.TOUCH_DOWN) {
 					if (showBlockBank == true) {
 						Rectangle bankBlockBounds;
 						for (int j = 0; j < ownedBlocksByType.size(); j++) {
 							Block currBlock = ownedBlocksByType.get(j);
-
-//							storeX += 30;
-//							if(storeX >  300){
-//								storeX = 26;
-//								storeY -= 30;
-//							}
 
 							int xval =(26 + j*30)%300;
 							int yval = 130 - 30*((26 + j*30)/300);
@@ -162,12 +162,23 @@ public class BuildScreen extends GLScreen{
 							bankBlockBounds = new Rectangle(xval - 12, yval - 12, 25, 25);
 							if (OverlapTester.pointInRectangle(bankBlockBounds, touchPoint)) {
 								selectedBankBlock = currBlock;
-								//PlayerSave.bankedBlocks.remove(selectedBankBlock);
-								PlayerSave.activeBlocks.remove(selectedActiveBlock);
-								selectedBankBlock.position.x = selectedActiveBlock.position.x;
-								selectedBankBlock.position.y = selectedActiveBlock.position.y;
-								//PlayerSave.bankedBlocks.add(selectedActiveBlock);
-								PlayerSave.activeBlocks.add(selectedBankBlock);
+								if(selectedActiveBlock == selectedBankBlock){
+									return;
+								}
+								if(!PlayerSave.activeBlocks.contains(selectedBankBlock)) {
+									PlayerSave.activeBlocks.remove(selectedActiveBlock);
+									selectedBankBlock.position.x = selectedActiveBlock.position.x;
+									selectedBankBlock.position.y = selectedActiveBlock.position.y;
+									PlayerSave.activeBlocks.add(selectedBankBlock);
+								}
+								else {
+									float tempX = selectedActiveBlock.position.x;
+									float tempY = selectedActiveBlock.position.y;
+									selectedActiveBlock.position.x = selectedBankBlock.position.x;
+									selectedActiveBlock.position.y = selectedBankBlock.position.y;
+									selectedBankBlock.position.x = tempX;
+									selectedBankBlock.position.y = tempY;
+								}
 								resetBlockBank();
 								if(selectedBankBlock.getClass() == TurretBlock.class){
 									game.setScreen(new BlockDirectionScreen(game, selectedBankBlock.position, PlayerSave.activeBlocks.indexOf(selectedBankBlock)));
@@ -259,10 +270,44 @@ public class BuildScreen extends GLScreen{
 
 		Rectangle bankBlockBounds = null;
 		for(int j = 0; j < ownedBlocksByType.size(); j++){
+
 			Block currBlock = ownedBlocksByType.get(j);
+
+			int xval =(26 + j*30)%300;
+			int yval = 130 - 30*((26 + j*30)/300);
+
+			bankBlockBounds = new Rectangle(xval - 12, yval - 12, 25, 25);
+			if (OverlapTester.pointInRectangle(bankBlockBounds, touchPoint)) {
+				selectedBankBlock = currBlock;
+				if (selectedActiveBlock == selectedBankBlock) {
+					return;
+				}
+				if (!PlayerSave.activeBlocks.contains(selectedBankBlock)) {
+					PlayerSave.activeBlocks.remove(selectedActiveBlock);
+					selectedBankBlock.position.x = selectedActiveBlock.position.x;
+					selectedBankBlock.position.y = selectedActiveBlock.position.y;
+					PlayerSave.activeBlocks.add(selectedBankBlock);
+				} else {
+					float tempX = selectedActiveBlock.position.x;
+					float tempY = selectedActiveBlock.position.y;
+					selectedActiveBlock.position.x = selectedBankBlock.position.x;
+					selectedActiveBlock.position.y = selectedBankBlock.position.y;
+					selectedBankBlock.position.x = tempX;
+					selectedBankBlock.position.y = tempY;
+				}
+				resetBlockBank();
+				if (selectedBankBlock.getClass() == TurretBlock.class) {
+					game.setScreen(new BlockDirectionScreen(game, selectedBankBlock.position, PlayerSave.activeBlocks.indexOf(selectedBankBlock)));
+				} else {
+					selectedActiveBlock = null;
+					selectedBankBlock = null;
+				}
+				showBlockBank = false;
+			/*Block currBlock = ownedBlocksByType.get(j);
 			bankBlockBounds = new Rectangle(currBlock.position.x - 12, currBlock.position.y - 12, 25, 25);
 			if(OverlapTester.pointInRectangle(bankBlockBounds, touchPoint)){
 				game.setScreen(new BlockUpgradeScreen(game, currBlock));
+			}*/
 			}
 		}
 		//Checks if add block was pressed
@@ -342,8 +387,8 @@ public class BuildScreen extends GLScreen{
 		if(selectedBankBlock != null) {
 			Block currBlock = selectedBankBlock;
 			if (currBlock.getClass().equals(TurretBlock.class)) {
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretTop"));
 				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretBase"));
+				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretTop"));
 			} else if (currBlock.getClass().equals(ArmorBlock.class)) {
 				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("ArmorBlock"));
 			} else if (currBlock.getClass().equals(MultiplierBlock.class)) {
