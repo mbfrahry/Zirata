@@ -22,6 +22,7 @@ public abstract class Block extends DynamicGameObject {
 	int constructorArgLength;
 
 	ArrayList<String> attributes;
+	int maxAttributeNum;
 
 	public Block(float x, float y, int health, int energyCost){
 		super(x, y, BLOCK_WIDTH, BLOCK_HEIGHT);
@@ -35,6 +36,7 @@ public abstract class Block extends DynamicGameObject {
 
 		attributes = new ArrayList<String>();
 		attributes.add("health");
+		maxAttributeNum = 10;
 	}
 
 	public abstract void action(World world);

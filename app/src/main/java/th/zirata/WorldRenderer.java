@@ -67,7 +67,7 @@ public class WorldRenderer {
 
 					if(tBlock.active){
 						batcher.drawSprite(currBlock.position.x - 8 + 3, currBlock.position.y - 8, 5, 5, Assets.textureRegions.get("GreenBullet"));
-
+						//TODO: There is a bug here with drawing the fire arcs. They need to respect the upgraded range
 						batcher.drawSprite(tBlock.coneX1, tBlock.coneY1, tBlock.fireRange, 1, (tBlock.fireAngle + tBlock.fireArcAngle), Assets.textureRegions.get("Bullet"));
 						batcher.drawSprite(tBlock.coneX2, tBlock.coneY2, tBlock.fireRange, 1, (tBlock.fireAngle - tBlock.fireArcAngle), Assets.textureRegions.get("Bullet"));
 
