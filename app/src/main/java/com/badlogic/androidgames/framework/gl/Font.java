@@ -34,4 +34,16 @@ public class Font {
 			x += glyphWidth;
 		}
 	}
+
+	public void drawText(SpriteBatcher batcher, String text, float x, float y, float glyphWidth, float glyphHeight){
+		int len = text.length();
+		for(int i = 0; i < len; i++){
+			int c = text.charAt(i) - ' ';
+			if (c < 0 || c > glyphs.length -1)
+				continue;
+			TextureRegion glyph = glyphs[c];
+			batcher.drawSprite(x, y, glyphWidth, glyphHeight, glyph);
+			x += glyphWidth;
+		}
+	}
 }
