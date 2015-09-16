@@ -12,9 +12,9 @@ import java.util.ArrayList;
  */
 public class MultiplierBlock extends Block{
 
-    public static String[] UpgradeAttributes = new String[]{"Health", "Cooldown", "Active Time", "Multiplier"};
-
-    public double[] defaultValueArray = {1.5, 5, 15};
+    public static String[] UpgradeAttributes = new String[]{"Health", "Cooldown", "Up Time", "Multiplier"};
+    public float[] defaultValueArray = {10, 10, 5, 1.5f};
+    public float[] upgradeValueArray = {5, -1, 1, .1f};
 
     float multiplier;
     float cooldown;
@@ -103,7 +103,7 @@ public class MultiplierBlock extends Block{
 
     @Override
     public float[] getUpgradeValues() {
-        return new float[]{5, -1, 1, .1f};
+        return upgradeValueArray;
     }
 
     @Override
@@ -120,6 +120,25 @@ public class MultiplierBlock extends Block{
         if(attributeIndex == 3){
             this.multiplier += upgradeNum;
         }
+    }
+
+    public int getAttributeLevel(int attributeIndex) {
+        float defaultVal = defaultValueArray[attributeIndex];
+        float currVal = 0;
+        if(attributeIndex == 0){
+            currVal = this.health;
+        }
+        if(attributeIndex == 1){
+            currVal = this.cooldown;
+        }
+        if(attributeIndex == 2){
+            currVal = this.multiplierTime;
+        }
+        if(attributeIndex == 3){
+            currVal = this.multiplier;
+        }
+        float delta = currVal - defaultVal;
+        return (int) Math.abs((delta/upgradeValueArray[attributeIndex]));
     }
 
 

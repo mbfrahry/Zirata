@@ -76,9 +76,10 @@ public class BuildScreen extends GLScreen{
 		heldTime = 0;
     }
 
-	public BuildScreen(Game game, boolean showBlockBank){
+	public BuildScreen(Game game, boolean showBlockBank, Block activeBlock){
 		this(game);
 		this.showBlockBank = showBlockBank;
+		this.selectedActiveBlock = activeBlock;
 	}
 
 	@Override
@@ -143,101 +144,39 @@ public class BuildScreen extends GLScreen{
 							if (OverlapTester.pointInRectangle(pBlockBounds, touchPoint) ){//&& currBlock.getClass() != BlankBlock.class) {
 								selectedActiveBlock = currBlock;
 								showBlockBank = true;
-								//game.setScreen(new BlockUpgradeScreen(game, currBlock));
+								if (selectedActiveBlock.getClass() == TurretBlock.class || selectedActiveBlock.getClass() == BlankBlock.class) {
+									blockBankOption = BLOCK_BANK_TURRET;
+									ownedBlocksByType = getBlocksFromType(TurretBlock.class);
+									return;
+								}
+								else if (selectedActiveBlock.getClass() == ArmorBlock.class) {
+									blockBankOption = BLOCK_BANK_ARMOR;
+									ownedBlocksByType = getBlocksFromType(ArmorBlock.class);
+									return;
+								}
+								else if (selectedActiveBlock.getClass() == EnergyBlock.class) {
+									blockBankOption = BLOCK_BANK_ENERGY;
+									ownedBlocksByType = getBlocksFromType(EnergyBlock.class);
+									return;
+								}
+								else if (selectedActiveBlock.getClass() == MultiplierBlock.class) {
+									blockBankOption = BLOCK_BANK_MULTIPLIER;
+									ownedBlocksByType = getBlocksFromType(MultiplierBlock.class);
+									return;
+								}
 								return;
 							}
 						}
 					} else {
 						checkBankBlocks(touchPoint);
-					}
-
-					if (showBlockBank == true) {
-						Rectangle bankBlockBounds;
-						for (int j = 0; j < ownedBlocksByType.size(); j++) {
-							Block currBlock = ownedBlocksByType.get(j);
-
-							int xval =(26 + j*30)%300;
-							int yval = 130 - 30*((26 + j*30)/300);
-
-							bankBlockBounds = new Rectangle(xval - 12, yval - 12, 25, 25);
-							if (OverlapTester.pointInRectangle(bankBlockBounds, touchPoint)) {
-								selectedBankBlock = currBlock;
-								if(selectedActiveBlock == selectedBankBlock){
-									return;
-								}
-								if(!PlayerSave.activeBlocks.contains(selectedBankBlock)) {
-									PlayerSave.activeBlocks.remove(selectedActiveBlock);
-									selectedBankBlock.position.x = selectedActiveBlock.position.x;
-									selectedBankBlock.position.y = selectedActiveBlock.position.y;
-									PlayerSave.activeBlocks.add(selectedBankBlock);
-								}
-								else {
-									float tempX = selectedActiveBlock.position.x;
-									float tempY = selectedActiveBlock.position.y;
-									selectedActiveBlock.position.x = selectedBankBlock.position.x;
-									selectedActiveBlock.position.y = selectedBankBlock.position.y;
-									selectedBankBlock.position.x = tempX;
-									selectedBankBlock.position.y = tempY;
-								}
-								resetBlockBank();
-								if(selectedBankBlock.getClass() == TurretBlock.class){
-									game.setScreen(new BlockDirectionScreen(game, selectedBankBlock.position, PlayerSave.activeBlocks.indexOf(selectedBankBlock)));
-								}
-								else {
-									selectedActiveBlock = null;
-									selectedBankBlock = null;
-								}
-								showBlockBank = false;
-							}
-						}
-
+						checkUpgradeBounds(touchPoint);
 					}
 
 				}
-/*
-				if (event.type == TouchEvent.TOUCH_DRAGGED) {
-					if (selectedBankBlock != null) {
-						if (showBlockBank == true) {
-							showBlockBank = false;
-						}
-						selectedBankBlock.position.x = touchPoint.x;
-						selectedBankBlock.position.y = touchPoint.y;
-						Rectangle pBlockBounds;
-						for (int j = 0; j < PlayerSave.activeBlocks.size(); j++) {
-							Block currBlock = PlayerSave.activeBlocks.get(j);
-							pBlockBounds = new Rectangle(currBlock.position.x - 12, currBlock.position.y - 12, 25, 25);
-							if (OverlapTester.pointInRectangle(pBlockBounds, touchPoint)) {
-								selectedActiveBlock = currBlock;
-								return;
-							}
-							draggingBankBlock = true;
-						}
-					}
-				}*/
+
 			}
 
-		}/*else if (draggingBankBlock){
-			draggingBankBlock = false;
-			if(selectedActiveBlock != null && selectedBankBlock != null){
-				PlayerSave.bankedBlocks.remove(selectedBankBlock);
-				PlayerSave.activeBlocks.remove(selectedActiveBlock);
-				selectedBankBlock.position.x = selectedActiveBlock.position.x;
-				selectedBankBlock.position.y = selectedActiveBlock.position.y;
-				PlayerSave.bankedBlocks.add(selectedActiveBlock);
-				PlayerSave.activeBlocks.add(selectedBankBlock);
-				resetBlockBank();
-				if(selectedBankBlock.getClass() == TurretBlock.class){
-					game.setScreen(new BlockDirectionScreen(game, selectedBankBlock.position, PlayerSave.activeBlocks.indexOf(selectedBankBlock)));
-				}
-				else {
-					selectedActiveBlock = null;
-					selectedBankBlock = null;
-				}
-
-				showBlockBank = true;
-				return;
-			}
-		}*/
+		}
 		
 	}
 
@@ -299,15 +238,10 @@ public class BuildScreen extends GLScreen{
 				if (selectedBankBlock.getClass() == TurretBlock.class) {
 					game.setScreen(new BlockDirectionScreen(game, selectedBankBlock.position, PlayerSave.activeBlocks.indexOf(selectedBankBlock)));
 				} else {
-					selectedActiveBlock = null;
+					selectedActiveBlock = selectedBankBlock;
 					selectedBankBlock = null;
 				}
-				showBlockBank = false;
-			/*Block currBlock = ownedBlocksByType.get(j);
-			bankBlockBounds = new Rectangle(currBlock.position.x - 12, currBlock.position.y - 12, 25, 25);
-			if(OverlapTester.pointInRectangle(bankBlockBounds, touchPoint)){
-				game.setScreen(new BlockUpgradeScreen(game, currBlock));
-			}*/
+				showBlockBank = true;
 			}
 		}
 		//Checks if add block was pressed
@@ -345,6 +279,19 @@ public class BuildScreen extends GLScreen{
 			ownedBlocksByType = getBlocksFromType(block.getClass());
 		}
 
+	}
+
+	public void checkUpgradeBounds(Vector2 touchPoint){
+		String[] upgradeableAttributes = selectedActiveBlock.getUpgradableAttributes();
+		float[] upgradeValues = selectedActiveBlock.getUpgradeValues();
+		Rectangle attrBlockBounds;
+		for(int i = 0; i < upgradeableAttributes.length; i++) {
+			attrBlockBounds =  new Rectangle(0, 210 + i * 40, 110, 40);
+			if (OverlapTester.pointInRectangle(attrBlockBounds, touchPoint)) {
+				selectedActiveBlock.updateAttribute(i, upgradeValues[i]);
+				PlayerSave.save(game.getFileIO());
+			}
+		}
 	}
 
 	@Override
@@ -416,6 +363,9 @@ public class BuildScreen extends GLScreen{
 
 		if(showBlockBank){
 			drawBlockBank();
+			if(selectedActiveBlock != null && selectedActiveBlock.getClass() != BlankBlock.class){
+				drawBlockUpgrades();
+			}
 		} else {
 			batcher.beginBatch(Assets.mainMenuTextures);
 			batcher.drawSprite(160, 30, 180, 45, Assets.textureRegions.get("Rectangle"));
@@ -524,6 +474,27 @@ public class BuildScreen extends GLScreen{
 			batcher.endBatch();
 		}
 
+	}
+
+	public void drawBlockUpgrades(){
+			batcher.beginBatch(Assets.mainMenuTextures);
+
+			float x = 55;
+			float y = 220;
+
+			//batcher.drawSprite(x, y, 100, 150, Assets.textureRegions.get("Rectangle"));
+			String[] upgradeableAttributes = selectedActiveBlock.getUpgradableAttributes();
+			float[] attributeValues = selectedActiveBlock.getAttributeVals();
+			float[] upgradeValues = selectedActiveBlock.getUpgradeValues();
+			for (int i = 0; i < upgradeableAttributes.length; i++) {
+				float nextVal = attributeValues[i] + upgradeValues[i];
+				batcher.drawSprite(x, y + i * 40, 110, 40, Assets.textureRegions.get("Rectangle"));
+				Assets.font.drawText(batcher, upgradeableAttributes[i], x - 45, y + 10 + i * 40, 10, 10);
+				Assets.font.drawText(batcher, selectedActiveBlock.getAttributeLevel(i) + "", x-45, y-5 + i *40, 10, 10);
+				//Assets.font.drawText(batcher, "Current: " + attributeValues[i], 15, 100 + i * 80);
+				//Assets.font.drawText(batcher, "Next: " + nextVal , 15, 75 + i*80);
+			}
+			batcher.endBatch();
 	}
 	
 	public void getPotentialBlocks(){

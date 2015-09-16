@@ -9,7 +9,10 @@ import java.util.ArrayList;
 
 public class ArmorBlock extends Block{
 
+
 	public static String[] UpgradeAttributes = new String[]{"Health"};
+	public float[] defaultValueArray = {20};
+	public float[] upgradeValueArray = {20};
 
 	int constructorArgLength = 4;
 
@@ -52,7 +55,7 @@ public class ArmorBlock extends Block{
 
 	@Override
 	public float[] getUpgradeValues() {
-		return new float[]{20};
+		return upgradeValueArray;
 	}
 
 	@Override
@@ -60,6 +63,17 @@ public class ArmorBlock extends Block{
 		if(attributeIndex == 0){
 			this.health += upgradeNum;
 		}
+	}
+
+	@Override
+	public int getAttributeLevel(int attributeIndex) {
+		float defaultVal = defaultValueArray[attributeIndex];
+		float currVal = 0;
+		if(attributeIndex == 0){
+			currVal = this.health;
+		}
+		float delta = currVal - defaultVal;
+		return (int) Math.abs((delta/upgradeValueArray[attributeIndex]));
 	}
 
 	public void multiply(float multiplier){

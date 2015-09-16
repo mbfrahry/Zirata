@@ -49,4 +49,8 @@ public class BlankBlock extends Block {
     public void updateAttribute(int attributeIndex, float upgradeNum) {
 
     }
+
+    public int getAttributeLevel(int attributeIndex) {
+        return 0;
+    }
 }

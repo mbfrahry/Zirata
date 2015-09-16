@@ -74,7 +74,7 @@ public class BlockDirectionScreen extends GLScreen{
                 //PlayerSave.activeBlocks.add(tBlock);
                 //PlayerSave.bankedBlocks.add(tBlock);
                 PlayerSave.save(game.getFileIO());
-                game.setScreen(new BuildScreen(game, false));
+                game.setScreen(new BuildScreen(game, true, PlayerSave.activeBlocks.get(blockNum)));
                 return;
             }
         }

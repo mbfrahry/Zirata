@@ -12,9 +12,11 @@ import java.io.IOException;
 public class EnergyBlock extends Block{
 
     public static String[] UpgradeAttributes = new String[]{"Health", "Energy"};
+    public float[] defaultValueArray = {10, 10};
+    public float[] upgradeValueArray = {5, 1};
 
     public int energy;
-    public double[] defaultValueArray = {10};
+
 
     public EnergyBlock(Vector2 position){
         this(position.x, position.y, 10, 0, 10);
@@ -66,7 +68,7 @@ public class EnergyBlock extends Block{
 
     @Override
     public float[] getUpgradeValues() {
-        return new float[]{5, 1};
+        return upgradeValueArray;
     }
 
     @Override
@@ -78,6 +80,21 @@ public class EnergyBlock extends Block{
             this.energy += upgradeNum;
         }
     }
+
+    public int getAttributeLevel(int attributeIndex) {
+        float defaultVal = defaultValueArray[attributeIndex];
+        float currVal = 0;
+        if(attributeIndex == 0){
+            currVal = this.health;
+        }
+        if(attributeIndex == 1){
+            currVal = this.energy;
+        }
+        float delta = currVal - defaultVal;
+        return (int) Math.abs((delta/upgradeValueArray[attributeIndex]));
+    }
+
+
 
     public void multiply(float multiplier){
         this.energy *= multiplier;

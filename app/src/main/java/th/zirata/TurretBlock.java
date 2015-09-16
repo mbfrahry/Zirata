@@ -32,8 +32,9 @@ public class TurretBlock extends Block{
 	int bulletDamage;
 	int state;
 
-	public double[] defaultValueArray = {0, 10, 2, 150};
-	public static String[] UpgradeAttributes = new String[]{"Health", "Bullet Damage", "Fire Rate", "Range"};
+	public static String[] UpgradeAttributes = new String[]{"Health", "Damage", "Fire Rate", "Range"};
+	public float[] defaultValueArray = {10, 10, 3, 150};
+	public float[] upgradeValueArray = {5, 5, -0.1f, 5};
 
 	public TurretBlock(Vector2 position, float fireAngle){
         this(position.x, position.y, 10, 3, fireAngle);
@@ -183,7 +184,7 @@ public class TurretBlock extends Block{
 	}
 
 	public float[] getUpgradeValues() {
-		return new float[]{5, 5, -0.1f, 5};
+		return upgradeValueArray;
 	}
 
 	public void updateAttribute(int attributeIndex, float upgradeNum) {
@@ -200,6 +201,25 @@ public class TurretBlock extends Block{
 			this.fireRange += upgradeNum;
 			calcCone(position.x, position.y);
 		}
+	}
+
+	public int getAttributeLevel(int attributeIndex) {
+		float defaultVal = defaultValueArray[attributeIndex];
+		float currVal = 0;
+		if(attributeIndex == 0){
+			currVal = this.health;
+		}
+		if(attributeIndex == 1){
+			currVal = this.bulletDamage;
+		}
+		if(attributeIndex == 2){
+			currVal = this.fireRate;
+		}
+		if(attributeIndex == 3){
+			currVal = this.fireRange;
+		}
+		float delta = currVal - defaultVal;
+		return (int) Math.abs((delta/upgradeValueArray[attributeIndex]));
 	}
 
 	public void multiply(float multiplier){
