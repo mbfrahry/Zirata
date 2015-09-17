@@ -85,13 +85,13 @@ public class WorldRenderer {
 				else if(currBlock.getClass().equals(MultiplierBlock.class)){
 					MultiplierBlock mBlock = (MultiplierBlock)currBlock;
 					batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
-					if(mBlock.state == mBlock.MULTIPLIER_READY){
+					if(mBlock.state == MultiplierBlock.MULTIPLIER_READY){
 						batcher.drawSprite(currBlock.position.x , currBlock.position.y + 2, 10, 10, Assets.textureRegions.get("Bullet"));
 					}
-					else if(mBlock.state == mBlock.MULTIPLIER_MULTIPLYING){
+					else if(mBlock.state == MultiplierBlock.MULTIPLIER_MULTIPLYING){
 						batcher.drawSprite(currBlock.position.x, currBlock.position.y +2, 10, 10, Assets.textureRegions.get("GreenBullet"));
 					}
-					else if(mBlock.state == mBlock.MULTIPLIER_COOLING){
+					else if(mBlock.state == MultiplierBlock.MULTIPLIER_COOLING){
 						batcher.drawSprite(currBlock.position.x, currBlock.position.y + 2, 10, 10, Assets.textureRegions.get("YellowBullet"));
 					}
 
@@ -106,8 +106,8 @@ public class WorldRenderer {
 				}
 			}
 			Bullet b;
-			for(int i = 0; i < world.PLAYER_BULLETS.size(); i++){
-				b = world.PLAYER_BULLETS.get(i);
+			for(int i = 0; i < World.PLAYER_BULLETS.size(); i++){
+				b = World.PLAYER_BULLETS.get(i);
 				batcher.drawSprite(b.position.x, b.position.y, 5, 5, Assets.textureRegions.get("Bullet"));
 			}
 		}
@@ -156,7 +156,7 @@ public class WorldRenderer {
 				batcher.endBatch();
 			}
 			catch(Exception e){
-
+				//Enemy dies while trying to draw
 			}
 		}
 	}

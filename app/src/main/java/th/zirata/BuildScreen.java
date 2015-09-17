@@ -299,25 +299,40 @@ public class BuildScreen extends GLScreen{
 		GL10 gl = glGraphics.getGL();
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		guiCam.setViewportAndMatrices();
-		
+		gl.glEnable(GL10.GL_TEXTURE_2D);
+
 		batcher.beginBatch(Assets.backgroundTextures);
 		batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("Background"));
 		batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("NearStarBG"));
 		batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("StarBG"));
 		batcher.endBatch();
-		
+
 		gl.glEnable(GL10.GL_BLEND);
 		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
-		
-		
+
+
 		batcher.beginBatch(Assets.blockTextures);
 		for(int i = 0; i < PlayerSave.activeBlocks.size(); i++){
 			Block currBlock = PlayerSave.activeBlocks.get(i);
 			if(currBlock.getClass().equals(TurretBlock.class)){
+                TurretBlock tBlock = (TurretBlock) currBlock;
+				Vector2 rotate;
+				if (tBlock.fireAngle == 0){
+					rotate = new Vector2(1,0);
+				}
+				else if (tBlock.fireAngle == 90){
+					rotate = new Vector2(0,1);
+				}
+				else if (tBlock.fireAngle == 180){
+					rotate = new Vector2(-1,0);
+				}
+				else{
+					rotate = new Vector2(0,-1);
+				}
 				batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretBase"));
-				batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretTop"));
+				batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, rotate.sub(new Vector2(0,0)).angle()-90, Assets.textureRegions.get("TurretTop"));
 			}
-			
+
 			else if(currBlock.getClass().equals(ArmorBlock.class)){
 				batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.textureRegions.get("ArmorBlock"));
 			}
@@ -346,13 +361,13 @@ public class BuildScreen extends GLScreen{
 				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("BaseBlock"));
 			}
 		}
-		
+
 		for(int i = 0; i < potentialBlocks.size(); i++){
 			Block currBlock = potentialBlocks.get(i);
 			batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24 , 24 , Assets.textureRegions.get("PotentialBlock"));
 		}
 		batcher.endBatch();
-		
+
 		batcher.beginBatch(Assets.mainMenuTextures);
 		batcher.drawSprite(290, 30, 60, 60, Assets.textureRegions.get("Arrow"));
 		batcher.drawSprite(30, 30, -60, 60, Assets.textureRegions.get("Arrow"));
@@ -662,7 +677,7 @@ public class BuildScreen extends GLScreen{
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
