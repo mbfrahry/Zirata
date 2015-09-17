@@ -277,8 +277,16 @@ public class BuildScreen extends GLScreen{
 			if(blockBankOption  == BLOCK_BANK_MULTIPLIER){
 				block = new MultiplierBlock(-100, -100, 10, 0, 1.5f, 5, 10);
 			}
+			PlayerSave.activeBlocks.remove(selectedActiveBlock);
+			block.position.x = selectedActiveBlock.position.x;
+			block.position.y = selectedActiveBlock.position.y;
+			selectedActiveBlock = block;
+			PlayerSave.activeBlocks.add(block);
 			PlayerSave.bankedBlocks.add(block);
 			ownedBlocksByType = getBlocksFromType(block.getClass());
+			if (block.getClass() == TurretBlock.class) {
+				game.setScreen(new BlockDirectionScreen(game, block.position, PlayerSave.activeBlocks.indexOf(block)));
+			}
 		}
 
 	}
@@ -358,7 +366,7 @@ public class BuildScreen extends GLScreen{
 			}
 		}
 		gl.glDisable(GL10.GL_BLEND);
-		
+
 	}
 
 	private void drawBlockBank(){
