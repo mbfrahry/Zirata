@@ -1,5 +1,7 @@
 package th.zirata;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -329,6 +331,9 @@ public class BuildScreen extends GLScreen{
 				else{
 					rotate = new Vector2(0,-1);
 				}
+				if (i == 0){
+					Log.d("Rotate", rotate.x + " --- " + rotate.y);
+				}
 				batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretBase"));
 				batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, rotate.sub(new Vector2(0,0)).angle()-90, Assets.textureRegions.get("TurretTop"));
 			}
@@ -344,21 +349,6 @@ public class BuildScreen extends GLScreen{
 			}
 			else{
 				batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.textureRegions.get("BaseBlock"));
-			}
-		}
-		if(selectedBankBlock != null) {
-			Block currBlock = selectedBankBlock;
-			if (currBlock.getClass().equals(TurretBlock.class)) {
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretBase"));
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretTop"));
-			} else if (currBlock.getClass().equals(ArmorBlock.class)) {
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("ArmorBlock"));
-			} else if (currBlock.getClass().equals(MultiplierBlock.class)) {
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
-			} else if (currBlock.getClass().equals(EnergyBlock.class)) {
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("EnergyBlock"));
-			} else {
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("BaseBlock"));
 			}
 		}
 
