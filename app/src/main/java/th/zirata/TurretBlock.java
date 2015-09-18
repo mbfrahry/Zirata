@@ -1,6 +1,7 @@
 package th.zirata;
 
 import android.util.JsonWriter;
+import android.util.Log;
 
 import com.badlogic.androidgames.framework.math.Vector2;
 
@@ -83,10 +84,13 @@ public class TurretBlock extends Block{
 	}
 
 	private void calcCone(float x, float y){
-        int x1add = 12;
+        //Finding the center of the correct edge of the block
+
+		int x1add = 12;
 		int x2add = 12;
 		int y1add = 12;
 		int y2add = 12;
+
 		if(fireAngle == 0){
 			x1add *= -1;
 			y1add *= -1;
@@ -104,9 +108,9 @@ public class TurretBlock extends Block{
 			x1add *= -1;
 		}
 		coneX1 = (float)(x + x1add + (Math.cos(( fireAngle + fireArcAngle)*Math.PI/180)) * fireRange/2);
-		coneY1 = (float)(y + y1add + (Math.sin(( fireAngle + fireArcAngle)*Math.PI/180)) * fireRange/2);
-		coneX2 = (float)(x + x2add + (Math.cos(( fireAngle - fireArcAngle)*Math.PI/180)) * fireRange/2);
-		coneY2 = (float)(y + y2add + (Math.sin(( fireAngle - fireArcAngle)*Math.PI/180)) * fireRange/2);
+		coneY1 = (float)(y + y1add + (Math.sin((fireAngle + fireArcAngle) * Math.PI / 180)) * fireRange/2);
+		coneX2 = (float)(x + x2add + (Math.cos((fireAngle - fireArcAngle) * Math.PI / 180)) * fireRange/2);
+		coneY2 = (float)(y + y2add + (Math.sin((fireAngle - fireArcAngle) * Math.PI / 180)) * fireRange/2);
 	}
 
 	@Override
