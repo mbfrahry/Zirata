@@ -17,6 +17,8 @@ import com.badlogic.androidgames.framework.math.OverlapTester;
 import com.badlogic.androidgames.framework.math.Rectangle;
 import com.badlogic.androidgames.framework.math.Vector2;
 
+import th.zirata.Help.EndLevelScreen;
+
 public class GameScreen extends GLScreen {
     static final int GAME_READY = 0;    
     static final int GAME_RUNNING = 1;
@@ -200,13 +202,13 @@ public class GameScreen extends GLScreen {
         	Settings.numEnemies += 10;
         }
         Settings.save(game.getFileIO());
-        game.setScreen(new BuildScreen(game));
+		game.setScreen(new EndLevelScreen(game, true));
 	}
 	
 	private void updateGameOver() {
 
 	    PlayerSave.load(game.getFileIO());
-	    game.setScreen(new MainMenuScreen(game));
+	    game.setScreen(new EndLevelScreen(game, false));
 	}
 
 	@Override
