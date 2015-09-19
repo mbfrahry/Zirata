@@ -29,16 +29,20 @@ public class EndLevelScreen extends GLScreen {
     Rectangle backBounds;
     Vector2 touchPoint;
     String result;
+    int spaceBucksEarned;
+    float enemiesKilled;
 
-    public EndLevelScreen(Game game, boolean win){
+    public EndLevelScreen(Game game, boolean win, int spaceBucksEarned, float enemiesKilled){
         super(game);
         guiCam = new Camera2D(glGraphics, 320, 480);
         batcher = new SpriteBatcher(glGraphics, 100);
         selectBounds = new Rectangle(0, 0, 50, 50);
 
-        backBounds = new Rectangle(60, 270, 200, 60);
+        backBounds = new Rectangle(60, 120, 200, 60);
         touchPoint = new Vector2();
         result = win ? "Onward!" : "Try Again!";
+        this.spaceBucksEarned = spaceBucksEarned;
+        this.enemiesKilled = enemiesKilled;
     }
 
     @Override
@@ -80,8 +84,10 @@ public class EndLevelScreen extends GLScreen {
 
         batcher.beginBatch(Assets.mainMenuTextures);
 
-        batcher.drawSprite(160, 300, 200, 60, Assets.textureRegions.get("Rectangle"));
-        Assets.font.drawText(batcher, result, 80, 300);
+        batcher.drawSprite(160, 150, 200, 60, Assets.textureRegions.get("Rectangle"));
+        Assets.font.drawText(batcher, result, 80, 150);
+        Assets.font.drawText(batcher, (int) enemiesKilled + " Enemies Slain" , 5, 300);
+        Assets.font.drawText(batcher, spaceBucksEarned + " SpaceBucks Earned", 5, 250);
 
         batcher.endBatch();
 

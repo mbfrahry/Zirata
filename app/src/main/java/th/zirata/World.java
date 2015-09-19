@@ -40,6 +40,8 @@ public class World {
 	public boolean moveRight;
 	public boolean moveLeft;
 
+	public int spaceBucksEarned;
+
 	public World(){
 		this.player = new Player();
 		enemies = new ArrayList<Enemy>();
@@ -190,6 +192,7 @@ public class World {
 	private void createCurrency(){
 		if(rand.nextFloat() < .25){
 			Settings.spaceBucks += 1;
+			spaceBucksEarned += 1;
 		}
 	}
 	
