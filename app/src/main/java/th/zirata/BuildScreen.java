@@ -55,7 +55,7 @@ public class BuildScreen extends GLScreen{
 		closeBlockMenuBounds = new Rectangle(260, 200, 64, 64);
 		blockBankTurretBounds  = new Rectangle(0, 160, 80, 50);
 		blockBankArmorBounds  = new Rectangle(80, 160, 80, 50);
-		blockBankEnergyBounds  = new Rectangle(160, 160, 80, 50);
+		blockBankEnergyBounds = new Rectangle(160, 160, 80, 50);
 		blockBankMultiplierBounds  = new Rectangle(240, 160, 80, 50);
 
 		selectedBankBlock = null;
@@ -66,9 +66,6 @@ public class BuildScreen extends GLScreen{
 
 		potentialBlocks = new ArrayList<Block>();
 		getPotentialBlocks();
-		//printBlocks();
-		//TODO: Take this out
-		Settings.spaceBucks = 100;
 		showBlockBank = false;
 		blockBankOption = BLOCK_BANK_TURRET;
 		ownedBlocksByType = getBlocksFromType(TurretBlock.class);
@@ -298,8 +295,11 @@ public class BuildScreen extends GLScreen{
 		for(int i = 0; i < upgradeableAttributes.length; i++) {
 			attrBlockBounds =  new Rectangle(0, 190 + i * 40, 110, 40);
 			if (OverlapTester.pointInRectangle(attrBlockBounds, touchPoint)) {
-				selectedActiveBlock.updateAttribute(i, upgradeValues[i]);
-				PlayerSave.save(game.getFileIO());
+				if(Settings.spaceBucks >= selectedActiveBlock.getAttributeLevel(i) + 1) {
+					Settings.spaceBucks -= selectedActiveBlock.getAttributeLevel(i)+1;
+					selectedActiveBlock.updateAttribute(i, upgradeValues[i]);
+					PlayerSave.save(game.getFileIO());
+				}
 			}
 		}
 	}
@@ -474,6 +474,51 @@ public class BuildScreen extends GLScreen{
 
 	}
 
+	public void drawBlockUpgrades(){
+		batcher.beginBatch(Assets.mainMenuTextures);
+
+		float x = 55;
+		float y = 220;
+
+		//batcher.drawSprite(x, y, 100, 150, Assets.textureRegions.get("Rectangle"));
+		String[] upgradeableAttributes = selectedActiveBlock.getUpgradableAttributes();
+		float[] attributeValues = selectedActiveBlock.getAttributeVals();
+		float[] upgradeValues = selectedActiveBlock.getUpgradeValues();
+		for (int i = 0; i < upgradeableAttributes.length; i++) {
+			float nextVal = attributeValues[i] + upgradeValues[i];
+			batcher.drawSprite(x, y + i * 40, 110, 40, Assets.textureRegions.get("Rectangle"));
+			Assets.font.drawText(batcher, upgradeableAttributes[i], x - 45, y + 10 + i * 40, 10, 10);
+			//UpgradeCost
+			Assets.font.drawText(batcher, selectedActiveBlock.getAttributeLevel(i)+1 + "", x + 37,  y-5 + i *40, 10, 10);
+			Assets.font.drawText(batcher, constructAttributeLevel(selectedActiveBlock.getAttributeLevel(i)), x-45, y-5 + i *40, 10, 10);
+			//Assets.font.drawText(batcher, "Current: " + attributeValues[i], 15, 100 + i * 80);
+			//Assets.font.drawText(batcher, "Next: " + nextVal , 15, 75 + i*80);
+		}
+
+		batcher.drawSprite(x, y + 40*upgradeableAttributes.length - 10, 110, 25, Assets.textureRegions.get("Rectangle"));
+		String text = "Upgrade";
+//			TODO: Get Matthew to help with batcher here so it draws the right stuff
+//		    if (selectedActiveBlock.getAttributeLevel(0) < selectedActiveBlock.maxAttributeNum){
+//				float percentage = selectedActiveBlock.getAttributeLevel(0)/(float)selectedActiveBlock.maxAttributeNum;
+//				batcher.drawSprite(x, y + 40*upgradeableAttributes.length - 10, (int)percentage*100, 50, Assets.textureRegions.get("GreenBullet"));
+//				text = "Upgrades";
+//			}
+//			else{
+//				batcher.drawSprite(x, y + 40*upgradeableAttributes.length - 10, 100, 50, Assets.textureRegions.get("Bullet"));
+//				text = "Fuse!";
+//			}
+		Assets.font.drawText(batcher, text, x - 35, y - 10 + upgradeableAttributes.length * 40, 10, 10);
+		batcher.endBatch();
+
+		batcher.beginBatch(Assets.blockTextures);
+		x = 55;
+		y = 220;
+		for (int i = 0; i < upgradeableAttributes.length; i++) {
+			batcher.drawSprite(x + 48,  y-5 + i *40, 10, 10, Assets.textureRegions.get("BaseBlock"));
+		}
+		batcher.endBatch();
+	}
+
 	public Vector2 getRotationVector(float fireAngle){
 		Vector2 rotate;
 		if (fireAngle == 0){
@@ -491,40 +536,7 @@ public class BuildScreen extends GLScreen{
 		return rotate;
 	}
 
-	public void drawBlockUpgrades(){
-			batcher.beginBatch(Assets.mainMenuTextures);
 
-			float x = 55;
-			float y = 220;
-
-			//batcher.drawSprite(x, y, 100, 150, Assets.textureRegions.get("Rectangle"));
-			String[] upgradeableAttributes = selectedActiveBlock.getUpgradableAttributes();
-			float[] attributeValues = selectedActiveBlock.getAttributeVals();
-			float[] upgradeValues = selectedActiveBlock.getUpgradeValues();
-			for (int i = 0; i < upgradeableAttributes.length; i++) {
-				float nextVal = attributeValues[i] + upgradeValues[i];
-				batcher.drawSprite(x, y + i * 40, 110, 40, Assets.textureRegions.get("Rectangle"));
-				Assets.font.drawText(batcher, upgradeableAttributes[i], x - 45, y + 10 + i * 40, 10, 10);
-				Assets.font.drawText(batcher, constructAttributeLevel(selectedActiveBlock.getAttributeLevel(i)), x-45, y-5 + i *40, 10, 10);
-				//Assets.font.drawText(batcher, "Current: " + attributeValues[i], 15, 100 + i * 80);
-				//Assets.font.drawText(batcher, "Next: " + nextVal , 15, 75 + i*80);
-			}
-
-		    batcher.drawSprite(x, y + 40*upgradeableAttributes.length - 10, 110, 25, Assets.textureRegions.get("Rectangle"));
-			String text = "Upgrade";
-//			TODO: Get Matthew to help with batcher here so it draws the right stuff
-//		    if (selectedActiveBlock.getAttributeLevel(0) < selectedActiveBlock.maxAttributeNum){
-//				float percentage = selectedActiveBlock.getAttributeLevel(0)/(float)selectedActiveBlock.maxAttributeNum;
-//				batcher.drawSprite(x, y + 40*upgradeableAttributes.length - 10, (int)percentage*100, 50, Assets.textureRegions.get("GreenBullet"));
-//				text = "Upgrades";
-//			}
-//			else{
-//				batcher.drawSprite(x, y + 40*upgradeableAttributes.length - 10, 100, 50, Assets.textureRegions.get("Bullet"));
-//				text = "Fuse!";
-//			}
-		    Assets.font.drawText(batcher, text, x - 35, y - 10 + upgradeableAttributes.length * 40, 10, 10);
-			batcher.endBatch();
-	}
 
 	public String constructAttributeLevel(int lvl){
 
