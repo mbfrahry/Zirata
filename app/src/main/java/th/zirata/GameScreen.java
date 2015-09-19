@@ -47,6 +47,7 @@ public class GameScreen extends GLScreen {
         batcher = new SpriteBatcher(glGraphics, 1000);
 
         PlayerSave.load(game.getFileIO());
+
         world = new World();
         renderer = new WorldRenderer(glGraphics, batcher, world);
         pauseBounds = new Rectangle(320- 64, 480- 64, 64, 64);

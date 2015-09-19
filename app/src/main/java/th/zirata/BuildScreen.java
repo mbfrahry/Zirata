@@ -2,6 +2,7 @@ package th.zirata;
 
 import android.util.Log;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,6 +109,7 @@ public class BuildScreen extends GLScreen{
 						if (OverlapTester.pointInRectangle(forwardBounds, touchPoint)) {
 							Settings.save(game.getFileIO());
 							PlayerSave.save(game.getFileIO());
+							setTurretDirections();
 							game.setScreen(new GameScreen(game));
 							return;
 						}
@@ -684,7 +686,15 @@ public class BuildScreen extends GLScreen{
 			return;
 		}
 	}
-	
+
+	public void setTurretDirections(){
+		ArrayList<Block> tBlocks = getBlocksFromType(TurretBlock.class);
+		for(Block currBlock : tBlocks){
+			TurretBlock tBlock = (TurretBlock)currBlock;
+			tBlock.setBeginningLastTouch();
+		}
+	}
+
 	@Override
 	public void pause() {
 		Settings.save(game.getFileIO());

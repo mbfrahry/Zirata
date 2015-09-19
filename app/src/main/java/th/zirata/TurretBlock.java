@@ -226,6 +226,24 @@ public class TurretBlock extends Block{
 		return (int) Math.abs((delta/upgradeValueArray[attributeIndex]));
 	}
 
+	public void setBeginningLastTouch(){
+		int xDiff = 0;
+		int yDiff = 0;
+		if(fireAngle == 0){
+			xDiff += 12;
+		}
+		else if(fireAngle == 90){
+			yDiff += 12;
+		}
+		else if(fireAngle == 180){
+			xDiff -= 12;
+		}
+		else{
+			yDiff -= 12;
+		}
+		lastTouch.set(position.x + xDiff, position.y + yDiff);
+	}
+
 	public void multiply(float multiplier){
 		this.bulletDamage *= multiplier;
 	}

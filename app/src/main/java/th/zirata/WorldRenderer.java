@@ -26,6 +26,7 @@ public class WorldRenderer {
 		this.world = world;
         this.cam = new Camera2D(glGraphics, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
 		this.batcher = batcher;
+		setTurretDirections();
 	}
 	
 	public  void render(){
@@ -51,7 +52,26 @@ public class WorldRenderer {
 		renderEnemyBullets();
 		renderText();
 	}
-	
+
+	public void setTurretDirections(){
+		ArrayList<Block> tBlocks = getBlocksFromType(TurretBlock.class);
+		for(Block currBlock : tBlocks){
+			TurretBlock tBlock = (TurretBlock)currBlock;
+			tBlock.setBeginningLastTouch();
+		}
+	}
+
+	public ArrayList<Block> getBlocksFromType(Class clazz){
+		ArrayList<Block> blocksRequested = new ArrayList<Block>();
+		for(int i = 0; i < PlayerSave.bankedBlocks.size(); i++){
+			Block currBlock = PlayerSave.bankedBlocks.get(i);
+			if(currBlock.getClass() == clazz){
+				blocksRequested.add(currBlock);
+			}
+		}
+		return blocksRequested;
+	}
+
 	private void renderPlayer(){
 
 		if(world.player.playerBlocks.size() > 0){
