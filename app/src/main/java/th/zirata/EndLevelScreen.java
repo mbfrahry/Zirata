@@ -1,4 +1,4 @@
-package th.zirata.Help;
+package th.zirata;
 
 import com.badlogic.androidgames.framework.Game;
 import com.badlogic.androidgames.framework.Input;
@@ -34,9 +34,9 @@ public class EndLevelScreen extends GLScreen {
         super(game);
         guiCam = new Camera2D(glGraphics, 320, 480);
         batcher = new SpriteBatcher(glGraphics, 100);
-        selectBounds = new Rectangle(160, 300, 200, 60);
+        selectBounds = new Rectangle(0, 0, 50, 50);
 
-        backBounds = new Rectangle(160, 300, 60, 60);
+        backBounds = new Rectangle(60, 270, 200, 60);
         touchPoint = new Vector2();
         result = win ? "Onward!" : "Try Again!";
     }
