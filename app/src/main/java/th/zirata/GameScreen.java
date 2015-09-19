@@ -201,13 +201,13 @@ public class GameScreen extends GLScreen {
         	Settings.numEnemies += 10;
         }
         Settings.save(game.getFileIO());
-		game.setScreen(new EndLevelScreen(game, true, world.spaceBucksEarned, world.enemyNum));
+		game.setScreen(new EndLevelScreen(game, true, world.spaceBucksEarned, world.enemiesKilled));
 	}
 	
 	private void updateGameOver() {
 
 	    PlayerSave.load(game.getFileIO());
-	    game.setScreen(new EndLevelScreen(game, false, world.spaceBucksEarned, world.enemyNum));
+	    game.setScreen(new EndLevelScreen(game, false, world.spaceBucksEarned, world.enemiesKilled));
 	}
 
 	@Override

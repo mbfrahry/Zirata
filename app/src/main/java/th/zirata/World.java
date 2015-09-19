@@ -41,6 +41,7 @@ public class World {
 	public boolean moveLeft;
 
 	public int spaceBucksEarned;
+	public int enemiesKilled;
 
 	public World(){
 		this.player = new Player();
@@ -59,6 +60,9 @@ public class World {
 		worldAngle = 0;
 		moveRight = false;
 		moveLeft = false;
+
+		spaceBucksEarned = 0;
+		enemiesKilled = 0;
 	}
 	
 	public void update(float deltaTime){
@@ -161,6 +165,7 @@ public class World {
 			
 			if(enemy.checkDead()){
 				enemies.remove(i);
+				enemiesKilled += 1;
 				createCurrency();
 			}
 		}
