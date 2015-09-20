@@ -114,10 +114,6 @@ public class BuildScreen extends GLScreen{
 							return;
 						}
 
-						if (OverlapTester.pointInRectangle(blockMenuBounds, touchPoint)) {
-							showBlockBank = false;
-							return;
-						}
 
 						Rectangle pBlockBounds;
 						for (int j = 0; j < potentialBlocks.size(); j++) {
@@ -171,7 +167,12 @@ public class BuildScreen extends GLScreen{
 					} else {
 						checkBankBlocks(touchPoint);
 						checkUpgradeBounds(touchPoint);
+						if(touchPoint.x > 120 && touchPoint.y > 200){
+							showBlockBank = false;
+							return;
+						}
 					}
+
 
 				}
 
@@ -373,8 +374,9 @@ public class BuildScreen extends GLScreen{
 
 	private void drawBlockBank(){
 		batcher.beginBatch(Assets.mainMenuTextures);
-		batcher.drawSprite(290, 225, -60, 60, 90, Assets.textureRegions.get("Arrow"));
-		Assets.font.drawText(batcher, "Close", 245, 265);
+		batcher.drawSprite(290, 215, 60, 30, Assets.textureRegions.get("DarkGrayRectangle"));
+		//Assets.font.drawText(batcher, "Close", 245, 265);
+		Assets.font.drawText(batcher, "X", 290, 215);
 
 		batcher.drawSprite(160, 100, 320, 200, Assets.textureRegions.get("Rectangle"));
 
