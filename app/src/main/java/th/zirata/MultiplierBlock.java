@@ -109,6 +109,7 @@ public class MultiplierBlock extends Block{
     @Override
     public void updateAttribute(int attributeIndex, float upgradeNum) {
         if(attributeIndex == 0){
+            this.maxHealth += upgradeNum;
             this.health += upgradeNum;
         }
         if(attributeIndex == 1){

@@ -62,6 +62,7 @@ public class ArmorBlock extends Block{
 	public void updateAttribute(int attributeIndex, float upgradeNum) {
 		if(attributeIndex == 0){
 			this.health += upgradeNum;
+			this.maxHealth += upgradeNum;
 		}
 	}
 
@@ -70,7 +71,7 @@ public class ArmorBlock extends Block{
 		float defaultVal = defaultValueArray[attributeIndex];
 		float currVal = 0;
 		if(attributeIndex == 0){
-			currVal = this.health;
+			currVal = this.maxHealth;
 		}
 		float delta = currVal - defaultVal;
 		return (int) Math.abs((delta/upgradeValueArray[attributeIndex]));

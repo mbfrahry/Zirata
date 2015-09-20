@@ -49,7 +49,7 @@ public class MainMenuScreen extends GLScreen{
 				guiCam.touchToWorld(touchPoint);
 				
 				if(OverlapTester.pointInRectangle(playBounds, touchPoint)){
-					game.setScreen(new BuildScreen(game));
+					game.setScreen(new MapScreen(game));
 					return;
 				}
 

@@ -74,6 +74,7 @@ public class EnergyBlock extends Block{
     @Override
     public void updateAttribute(int attributeIndex, float upgradeNum) {
         if(attributeIndex == 0){
+            this.maxHealth += upgradeNum;
             this.health += upgradeNum;
         }
         else if (attributeIndex == 1){

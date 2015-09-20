@@ -51,7 +51,7 @@ public class TurretBlock extends Block{
 			this.bulletDamage = (int)info[5];
 		}
 		if(info.length >= 7) {
-			this.fireRate = (int)info[6];
+			this.fireRate = (float)info[6];
 		}
 		if(info.length >= 8){
 			this.fireRange = (int)info[7];
@@ -193,6 +193,7 @@ public class TurretBlock extends Block{
 
 	public void updateAttribute(int attributeIndex, float upgradeNum) {
 		if(attributeIndex == 0){
+			this.maxHealth += upgradeNum;
 			this.health += upgradeNum;
 		}
 		if(attributeIndex == 1 ){
@@ -222,7 +223,7 @@ public class TurretBlock extends Block{
 		if(attributeIndex == 3){
 			currVal = this.fireRange;
 		}
-		float delta = currVal - defaultVal;
+		float delta = currVal - defaultVal + 0.01f;
 		return (int) Math.abs((delta/upgradeValueArray[attributeIndex]));
 	}
 
