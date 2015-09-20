@@ -1,11 +1,9 @@
 package th.zirata;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
-
-import android.util.Log;
 
 import com.badlogic.androidgames.framework.Game;
 import com.badlogic.androidgames.framework.Input.TouchEvent;
@@ -37,8 +35,9 @@ public class GameScreen extends GLScreen {
     World world;
     WorldRenderer renderer;
     FPSCounter fpsCounter;
-    int[] blockNum = {-1, -1, -1, -1, -1};
-    
+    //int[] blockNum = {-1, -1, -1, -1, -1};
+    HashMap<Integer,Vector2> touchDowns;
+
     public GameScreen(Game game) {
         super(game);
         state = GAME_READY;
@@ -55,7 +54,8 @@ public class GameScreen extends GLScreen {
         quitBounds = new Rectangle(320- 64, 480- 64, 64, 64);
 		powerBounds = new Rectangle(260, 0, 50, 50);
         fpsCounter = new FPSCounter();
-        
+		touchDowns = new HashMap<Integer, Vector2>();
+
     }
 
 	@Override
@@ -94,16 +94,7 @@ public class GameScreen extends GLScreen {
 
 			if (event.type == TouchEvent.TOUCH_DOWN) {
 
-				if (touchPoint.y < 50) {
-					if (touchPoint.x < 50) {
-						world.moveRight = true;
-						world.moveLeft = false;
-					}
-					if (touchPoint.x > 50 && touchPoint.x < 100) {
-						world.moveLeft = true;
-						world.moveRight = false;
-					}
-				}
+				updateRotation(event);
 				if (OverlapTester.pointInRectangle(powerBounds, touchPoint)){
 					world.player.power = false;
 					return;
@@ -139,18 +130,28 @@ public class GameScreen extends GLScreen {
 				}
 				if (touchPoint.y < 50) {
 					if (touchPoint.x < 100) {
+						touchDowns.remove(event.pointer);
 						world.moveLeft = false;
 						world.moveRight = false;
+						touchDowns.remove(event.pointer);
 					}
 				}
 
+			}
+			if(event.type == TouchEvent.TOUCH_DRAGGED){
+				updateRotation(event);
+				if ((touchPoint.y > 50 || touchPoint.x > 100) && touchDowns.keySet().contains(event.pointer)) {
+					world.moveLeft = false;
+					world.moveRight = false;
+					touchDowns.remove(event.pointer);
+				}
 			}
 		}
 
 
 
 		world.update(deltaTime);
-		if (world.state == world.WORLD_STATE_LEVEL_END) {
+		if (world.state == World.WORLD_STATE_LEVEL_END) {
 			state = GAME_LEVEL_END;
 		}
 		if (world.state == World.WORLD_STATE_GAME_OVER) {
@@ -159,7 +160,20 @@ public class GameScreen extends GLScreen {
 		}
 	}
 
-
+	private void updateRotation(TouchEvent event){
+		if (touchPoint.y < 50) {
+			if (touchPoint.x < 50) {
+				touchDowns.put(event.pointer, new Vector2(touchPoint.x,touchPoint.y));
+				world.moveRight = true;
+				world.moveLeft = false;
+			}
+			if (touchPoint.x > 50 && touchPoint.x < 100) {
+				touchDowns.put(event.pointer, new Vector2(touchPoint.x,touchPoint.y));
+				world.moveLeft = true;
+				world.moveRight = false;
+			}
+		}
+	}
 
 	private void updatePaused() {
 		List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
