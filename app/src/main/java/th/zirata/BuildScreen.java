@@ -498,17 +498,20 @@ public class BuildScreen extends GLScreen{
 		}
 
 		batcher.drawSprite(x, y + 40*upgradeableAttributes.length - 10, 110, 25, Assets.textureRegions.get("Rectangle"));
-		String text = "Upgrade";
-//			TODO: Get Matthew to help with batcher here so it draws the right stuff
-//		    if (selectedActiveBlock.getAttributeLevel(0) < selectedActiveBlock.maxAttributeNum){
-//				float percentage = selectedActiveBlock.getAttributeLevel(0)/(float)selectedActiveBlock.maxAttributeNum;
-//				batcher.drawSprite(x, y + 40*upgradeableAttributes.length - 10, (int)percentage*100, 50, Assets.textureRegions.get("GreenBullet"));
-//				text = "Upgrades";
-//			}
-//			else{
-//				batcher.drawSprite(x, y + 40*upgradeableAttributes.length - 10, 100, 50, Assets.textureRegions.get("Bullet"));
-//				text = "Fuse!";
-//			}
+		batcher.endBatch();
+		String text;
+		batcher.beginBatch(Assets.blockTextures);
+		if (selectedActiveBlock.getAttributeLevel(0) < selectedActiveBlock.maxAttributeNum){
+			float percentage = selectedActiveBlock.getAttributeLevel(0)/(float)selectedActiveBlock.maxAttributeNum;
+			batcher.drawSprite(x*percentage, y + 40*upgradeableAttributes.length - 10, 176*percentage, 38, Assets.textureRegions.get("GreenBullet"));
+			text = "Upgrades";
+		}
+		else{
+			batcher.drawSprite(x, y + 40*upgradeableAttributes.length - 10, 176, 38, Assets.textureRegions.get("Bullet"));
+			text = "Fuse!";
+		}
+		batcher.endBatch();
+		batcher.beginBatch(Assets.mainMenuTextures);
 		Assets.font.drawText(batcher, text, x - 35, y - 10 + upgradeableAttributes.length * 40, 10, 10);
 		batcher.endBatch();
 

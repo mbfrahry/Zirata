@@ -36,7 +36,7 @@ public abstract class Block extends DynamicGameObject {
 
 		attributes = new ArrayList<String>();
 		attributes.add("health");
-		maxAttributeNum = 10;
+		maxAttributeNum = 5;
 	}
 
 	public abstract void action(World world);
