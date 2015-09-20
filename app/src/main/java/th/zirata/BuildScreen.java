@@ -1,8 +1,5 @@
 package th.zirata;
 
-import android.util.Log;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +44,8 @@ public class BuildScreen extends GLScreen{
 
 	boolean draggingBankBlock;
 
+	boolean devMode;
+
 	public BuildScreen(Game game) {
         super(game);
         guiCam = new Camera2D(glGraphics, 320, 480);
@@ -74,6 +73,7 @@ public class BuildScreen extends GLScreen{
 
 		minHeldTime = 0.5f;
 		heldTime = 0;
+		devMode = true;
     }
 
 	public BuildScreen(Game game, boolean showBlockBank, Block activeBlock){
@@ -94,6 +94,12 @@ public class BuildScreen extends GLScreen{
 
 				if (event.type == TouchEvent.TOUCH_UP) {
 
+
+					if (devMode){
+						if (OverlapTester.pointInRectangle(new Rectangle(0, 400, 64, 64), touchPoint)) {
+							Settings.spaceBucks += 100;
+						}
+					}
 
 					if (selectedBankBlock != null && selectedActiveBlock == null) {
 						selectedBankBlock = null;
@@ -503,8 +509,8 @@ public class BuildScreen extends GLScreen{
 		batcher.endBatch();
 		String text;
 		batcher.beginBatch(Assets.blockTextures);
-		if (selectedActiveBlock.getAttributeLevel(0) < selectedActiveBlock.maxAttributeNum){
-			float percentage = selectedActiveBlock.getAttributeLevel(0)/(float)selectedActiveBlock.maxAttributeNum;
+		if (selectedActiveBlock.getExperienceLevel(upgradeableAttributes.length) < selectedActiveBlock.getMaxAttributeNum()){
+			float percentage = selectedActiveBlock.getExperienceLevel(upgradeableAttributes.length)/(float)selectedActiveBlock.getMaxAttributeNum();
 			batcher.drawSprite(x*percentage, y + 40*upgradeableAttributes.length - 10, 176*percentage, 38, Assets.textureRegions.get("GreenBullet"));
 			text = "Upgrades";
 		}
@@ -620,7 +626,7 @@ public class BuildScreen extends GLScreen{
 				continue;
 			}
 			Block currBlock = PlayerSave.activeBlocks.get(i);
-			Integer toRemove = -1;
+			Integer toRemove;
 			if(block.position.y + 25 == currBlock.position.y && block.position.x == currBlock.position.x){
 				toRemove = 0;
 			}
@@ -676,19 +682,15 @@ public class BuildScreen extends GLScreen{
 	public void resetBlockBank(){
 		if ( blockBankOption == BLOCK_BANK_TURRET) {
 			ownedBlocksByType = getBlocksFromType(TurretBlock.class);
-			return;
 		}
 		else if (blockBankOption == BLOCK_BANK_ARMOR) {
 			ownedBlocksByType = getBlocksFromType(ArmorBlock.class);
-			return;
 		}
 		else if ( blockBankOption == BLOCK_BANK_ENERGY) {
 			ownedBlocksByType = getBlocksFromType(EnergyBlock.class);
-			return;
 		}
 		else if ( blockBankOption == BLOCK_BANK_MULTIPLIER) {
 			ownedBlocksByType = getBlocksFromType(MultiplierBlock.class);
-			return;
 		}
 	}
 

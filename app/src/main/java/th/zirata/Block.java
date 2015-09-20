@@ -16,13 +16,11 @@ public abstract class Block extends DynamicGameObject {
 	int health;
 	int maxHealth;
 	int energyCost;
+	int blockLevel;
 	Vector2 lastTouch;
 	boolean active;
 
 	int constructorArgLength;
-
-	ArrayList<String> attributes;
-	int maxAttributeNum;
 
 	public Block(float x, float y, int health, int energyCost){
 		super(x, y, BLOCK_WIDTH, BLOCK_HEIGHT);
@@ -33,10 +31,7 @@ public abstract class Block extends DynamicGameObject {
 		active = false;
 
 		constructorArgLength = 4;
-
-		attributes = new ArrayList<String>();
-		attributes.add("health");
-		maxAttributeNum = 5;
+		blockLevel = 1;
 	}
 
 	public abstract void action(World world);
@@ -54,6 +49,26 @@ public abstract class Block extends DynamicGameObject {
 	public abstract void updateAttribute(int attributeIndex, float upgradeNum);
 
 	public abstract int getAttributeLevel(int attributeIndex);
+
+	public int getExperienceLevel(int attNum){
+        int sum = 0;
+		for (int i = 0; i < attNum; i ++){
+			sum += getAttributeLevel(i);
+		}
+		if(blockLevel > 1){
+			return (int)(sum - 5*Math.pow(2,blockLevel-1));
+		}
+		else{
+			return sum;
+		}
+		/*
+	0 5 10 20
+		 */
+	}
+
+	public int getMaxAttributeNum(){
+		return (int)(5*Math.pow(2,blockLevel-1));
+	}
 
 	public boolean checkDeath(){
 		if(health <= 0){
