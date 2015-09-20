@@ -121,6 +121,7 @@ public class GameScreen extends GLScreen {
 					}
 				}
 				if (OverlapTester.pointInRectangle(quitBounds, touchPoint)) {
+					world.clearBullets();
 					game.setScreen(new MainMenuScreen(game));
 					return;
 				}
@@ -215,12 +216,13 @@ public class GameScreen extends GLScreen {
         else{
         	Settings.numEnemies += 10;
         }
+		world.clearBullets();
         Settings.save(game.getFileIO());
 		game.setScreen(new EndLevelScreen(game, true, world.spaceBucksEarned, world.enemiesKilled));
 	}
 	
 	private void updateGameOver() {
-
+		world.clearBullets();
 	    PlayerSave.load(game.getFileIO());
 	    game.setScreen(new EndLevelScreen(game, false, world.spaceBucksEarned, world.enemiesKilled));
 	}

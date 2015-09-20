@@ -295,4 +295,16 @@ public class World {
             state = WORLD_STATE_GAME_OVER;
         }
     }
+
+	public void clearBullets(){
+		PLAYER_BULLETS.clear();
+		playerBullets.clear();
+		for(int i = 0; i < player.playerBlocks.size(); i++){
+			Block currBlock = player.playerBlocks.get(i);
+			if(currBlock.getClass() == TurretBlock.class){
+				TurretBlock tBlock = (TurretBlock) currBlock;
+				tBlock.bullets.clear();
+			}
+		}
+	}
 }

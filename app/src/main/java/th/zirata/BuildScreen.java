@@ -108,7 +108,7 @@ public class BuildScreen extends GLScreen{
 
 					if (!showBlockBank) {
 						if (OverlapTester.pointInRectangle(backBounds, touchPoint)) {
-							game.setScreen(new MainMenuScreen(game));
+							game.setScreen(new MapScreen(game));
 							return;
 						}
 
