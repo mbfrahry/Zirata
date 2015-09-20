@@ -499,7 +499,7 @@ public class BuildScreen extends GLScreen{
 			batcher.drawSprite(x, y + i * 40, 110, 40, Assets.textureRegions.get("Rectangle"));
 			Assets.font.drawText(batcher, upgradeableAttributes[i], x - 45, y + 10 + i * 40, 10, 10);
 			//UpgradeCost
-			Assets.font.drawText(batcher, selectedActiveBlock.getAttributeLevel(i)+1 + "", x + 37,  y-5 + i *40, 10, 10);
+			Assets.font.drawTextRightJustified(batcher, selectedActiveBlock.getAttributeLevel(i)+1 + "", x + 37,  y-5 + i *40, 10, 10);
 			Assets.font.drawText(batcher, constructAttributeLevel(selectedActiveBlock.getAttributeLevel(i)), x-45, y-5 + i *40, 10, 10);
 			//Assets.font.drawText(batcher, "Current: " + attributeValues[i], 15, 100 + i * 80);
 			//Assets.font.drawText(batcher, "Next: " + nextVal , 15, 75 + i*80);

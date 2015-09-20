@@ -56,7 +56,7 @@ public abstract class Block extends DynamicGameObject {
 			sum += getAttributeLevel(i);
 		}
 		if(blockLevel > 1){
-			return (int)(sum - 5*Math.pow(2,blockLevel-1));
+			return sum - getMaxAttributeNum();
 		}
 		else{
 			return sum;
