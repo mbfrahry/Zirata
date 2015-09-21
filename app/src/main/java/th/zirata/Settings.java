@@ -18,6 +18,8 @@ public class Settings {
 	public static int nextBlockCost = 0;
 	public static int enemyHealth = 10;
 	public static int numEnemies = 10;
+	public static int currLevel = 1;
+	public static int maxLevel = 1;
 	
 	public static void load(FileIO files){
 		BufferedReader in = null;
@@ -28,6 +30,8 @@ public class Settings {
 			nextBlockCost = Integer.parseInt(in.readLine());
 			enemyHealth = Integer.parseInt(in.readLine());
 			numEnemies = Integer.parseInt(in.readLine());
+			currLevel = Integer.parseInt(in.readLine());
+			maxLevel = Integer.parseInt(in.readLine());
 		}catch(IOException e){
 			
 		}catch(NumberFormatException e){
@@ -52,6 +56,8 @@ public class Settings {
 			out.write(nextBlockCost + "\n");
 			out.write(enemyHealth + "\n");
 			out.write(numEnemies + "\n");
+			out.write(currLevel + "\n");
+			out.write(maxLevel + "\n");
 		}catch(IOException e){
 
 		}finally{
@@ -69,6 +75,8 @@ public class Settings {
 		nextBlockCost = 0;
 		enemyHealth = 10;
 		numEnemies = 10;
+		currLevel = 1;
+		maxLevel = 1;
 	}
 
 }

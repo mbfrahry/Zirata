@@ -2,6 +2,7 @@ package th.zirata;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -217,6 +218,10 @@ public class GameScreen extends GLScreen {
         	Settings.numEnemies += 10;
         }
 		world.clearBullets();
+		if(Settings.currLevel == Settings.maxLevel && Settings.maxLevel < 5){
+			Settings.maxLevel +=1;
+			Settings.currLevel = Settings.maxLevel;
+		}
         Settings.save(game.getFileIO());
 		game.setScreen(new EndLevelScreen(game, true, world.spaceBucksEarned, world.enemiesKilled));
 	}

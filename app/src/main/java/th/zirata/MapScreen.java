@@ -46,9 +46,10 @@ public class MapScreen  extends GLScreen {
                 touchPoint.set(event.x, event.y);
                 guiCam.touchToWorld(touchPoint);
 
-                for(int j = 0 ; j < levelBounds.size(); j++){
+                for(int j = 0 ; j < Settings.maxLevel; j++){
                     Rectangle currLevel = levelBounds.get(j);
                     if(OverlapTester.pointInRectangle(currLevel, touchPoint)){
+                        Settings.currLevel = j+1;
                         game.setScreen(new BuildScreen(game));
                         return;
                     }
@@ -72,7 +73,7 @@ public class MapScreen  extends GLScreen {
         gl.glEnable(GL10.GL_BLEND);
         gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 
-        for(int i = 0; i < levelBounds.size(); i++) {
+        for(int i = 0; i < Settings.maxLevel; i++) {
             Rectangle currLevel = levelBounds.get(i);
             batcher.beginBatch(Assets.blockTextures);
             batcher.drawSprite(currLevel.lowerLeft.x + 35, currLevel.lowerLeft.y + 25, 40, 40, 45, Assets.textureRegions.get("BaseBlock"));

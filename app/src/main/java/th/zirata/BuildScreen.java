@@ -365,6 +365,7 @@ public class BuildScreen extends GLScreen{
 		batcher.drawSprite(30, 30, -60, 60, Assets.textureRegions.get("Arrow"));
 		Assets.font.drawText(batcher, "SpaceBucks: " + Settings.spaceBucks + " ", 16, 480 - 20);
 		Assets.font.drawText(batcher, "Next Block Cost: " + Settings.nextBlockCost, 16, 480 - 40);
+		Assets.font.drawText(batcher, "Level: " + Settings.currLevel, 100, 30);
 
 		batcher.endBatch();
 
