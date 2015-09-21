@@ -17,13 +17,17 @@ import java.util.HashMap;
  */
 public class EnemySettings {
 
-    public HashMap<String, int[]> enemiesInLevel;
+    public static HashMap<String, double[]> enemiesInLevel = new HashMap<String, double[]>();
+
+//    public EnemySettings(){
+//        enemiesInLevel = new HashMap<String, int[]>();
+//    }
 
     public static void load(FileIO files){
         JsonReader reader = null;
         try {
             reader = new JsonReader(new InputStreamReader(files.readAsset("EnemiesInLevel"), "UTF-8"));
-            readEnemiesArray(reader);
+            readEnemy(reader);
         }catch(IOException e){
 
         }finally{
@@ -52,6 +56,12 @@ public class EnemySettings {
             reader.beginObject();
             String enemyNumName = reader.nextName();
             int enemyNum = reader.nextInt();
+            String enemyLevel = reader.nextName();
+            int enemyLevelnum = reader.nextInt();
+            String turretChance = reader.nextName();
+            double turretChanceNum = reader.nextDouble();
+            double[] levelData = {enemyNum, enemyLevelnum, turretChanceNum};
+            enemiesInLevel.put(name, levelData);
             reader.endObject();
 
         }
