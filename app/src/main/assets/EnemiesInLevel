@@ -1,0 +1,28 @@
+{
+  "level1": {
+    "enemyNumber": 10,
+    "enemyLevel": 1,
+    "turretChance": 0
+  },
+  "level2": {
+    "enemyNumber": 20,
+    "enemyLevel": 1,
+    "turretChance": 0.25
+  },
+  "level3": {
+    "enemyNumber": 10,
+    "enemyLevel": 2,
+    "turretChance": 0
+  },
+  "level4": {
+    "enemyNumber": 20,
+    "enemyLevel": 2,
+    "turretChance": 0.25
+  },
+  "level5": {
+    "enemyNumber": 500,
+    "enemyLevel": 1,
+    "turretChance": 0
+  }
+  
+}

@@ -218,7 +218,7 @@ public class GameScreen extends GLScreen {
         	Settings.numEnemies += 10;
         }
 		world.clearBullets();
-		if(Settings.currLevel == Settings.maxLevel && Settings.maxLevel < 5){
+		if(Settings.currLevel == Settings.maxLevel && Settings.maxLevel < Settings.totalLevels){
 			Settings.maxLevel +=1;
 			Settings.currLevel = Settings.maxLevel;
 		}

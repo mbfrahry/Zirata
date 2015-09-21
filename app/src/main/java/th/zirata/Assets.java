@@ -54,6 +54,7 @@ public class Assets {
 
 		Settings.load(game.getFileIO());
 		PlayerSave.load(game.getFileIO());
+		EnemySettings.load(game.getFileIO());
 	}
 
 	private static void addTextures(FileIO files, Texture texture, String filename){

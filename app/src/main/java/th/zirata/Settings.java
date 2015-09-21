@@ -20,6 +20,7 @@ public class Settings {
 	public static int numEnemies = 10;
 	public static int currLevel = 1;
 	public static int maxLevel = 1;
+	public static int totalLevels = 5;
 	
 	public static void load(FileIO files){
 		BufferedReader in = null;
