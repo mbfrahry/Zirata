@@ -202,14 +202,14 @@ public class WorldRenderer {
 		Vector2 rotate = new Vector2();
 		if (world.moveLeft){
 			rotate.set(1,1);
-			batcher.drawSprite(60, 30, 15, 145, rotate.sub(new Vector2(0,0)).angle()-90, Assets.textureRegions.get("GreenBullet"));
+			batcher.drawSprite(85, 45, 15, 130, rotate.sub(new Vector2(0,0)).angle()-90, Assets.textureRegions.get("GreenBullet"));
 		}
 		else if(world.moveRight){
 			rotate.set(-1,1);
-			batcher.drawSprite(30, 30, 15, 145, rotate.sub(new Vector2(0,0)).angle()-90, Assets.textureRegions.get("GreenBullet"));
+			batcher.drawSprite(35, 45, 15, 130, rotate.sub(new Vector2(0,0)).angle()-90, Assets.textureRegions.get("GreenBullet"));
 		}
 		else{
-			batcher.drawSprite(45, 30, 15, 145, Assets.textureRegions.get("GreenBullet"));
+			batcher.drawSprite(60, 55, 15, 130, Assets.textureRegions.get("GreenBullet"));
 		}
 
 		batcher.endBatch();

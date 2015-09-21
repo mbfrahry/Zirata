@@ -60,7 +60,7 @@ public class Font {
 	}
 
 	public void drawTextCentered(SpriteBatcher batcher, String text, float x, float y, float glyphWidth, float glyphHeight){
-		int len = text.length();
+		int len = text.length()-1;
 		x -= len*glyphWidth/2;
 		drawText(batcher, text, x, y, glyphWidth, glyphHeight);
 	}
