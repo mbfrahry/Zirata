@@ -86,7 +86,7 @@ public class EndLevelScreen extends GLScreen {
 
         batcher.drawSprite(160, 150, 200, 60, Assets.textureRegions.get("Rectangle"));
         Assets.font.drawText(batcher, result, 80, 150);
-        Assets.font.drawText(batcher, (int) enemiesKilled + " Enemies Slain" , 5, 300);
+        Assets.font.drawTextCentered(batcher, (int) enemiesKilled + " Enemies Slain" , 160, 300, 20, 20);
         Assets.font.drawText(batcher, spaceBucksEarned + " SpaceBucks Earned", 5, 250);
 
         batcher.endBatch();
