@@ -4,11 +4,8 @@ import java.util.ArrayList;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import android.util.Log;
-
 import com.badlogic.androidgames.framework.gl.Camera2D;
 import com.badlogic.androidgames.framework.gl.SpriteBatcher;
-import com.badlogic.androidgames.framework.impl.AndroidGraphics;
 import com.badlogic.androidgames.framework.impl.GLGraphics;
 import com.badlogic.androidgames.framework.math.Vector2;
 
@@ -205,14 +202,14 @@ public class WorldRenderer {
 		Vector2 rotate = new Vector2();
 		if (world.moveLeft){
 			rotate.set(1,1);
-			batcher.drawSprite(60, 30, 5, 70, rotate.sub(new Vector2(0,0)).angle()-90, Assets.textureRegions.get("GreenBullet"));
+			batcher.drawSprite(60, 30, 15, 90, rotate.sub(new Vector2(0,0)).angle()-90, Assets.textureRegions.get("GreenBullet"));
 		}
 		else if(world.moveRight){
 			rotate.set(-1,1);
-			batcher.drawSprite(30, 30, 5, 70, rotate.sub(new Vector2(0,0)).angle()-90, Assets.textureRegions.get("GreenBullet"));
+			batcher.drawSprite(30, 30, 15, 90, rotate.sub(new Vector2(0,0)).angle()-90, Assets.textureRegions.get("GreenBullet"));
 		}
 		else{
-			batcher.drawSprite(45, 30, 5, 70, Assets.textureRegions.get("GreenBullet"));
+			batcher.drawSprite(45, 30, 15, 90, Assets.textureRegions.get("GreenBullet"));
 		}
 
 		batcher.endBatch();
