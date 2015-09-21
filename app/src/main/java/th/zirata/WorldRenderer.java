@@ -197,9 +197,24 @@ public class WorldRenderer {
 		batcher.beginBatch(Assets.mainMenuTextures);
 		Assets.font.drawText(batcher, "Energy: " + world.player.energy + " ", 16, 480 - 20);
 
-		batcher.drawSprite(30, 30, -60, 60, Assets.textureRegions.get("Arrow"));
-		batcher.drawSprite(60, 30, 60, 60, Assets.textureRegions.get("Arrow"));
+		//batcher.drawSprite(30, 30, -60, 60, Assets.textureRegions.get("Arrow"));
+		//batcher.drawSprite(60, 30, 60, 60, Assets.textureRegions.get("Arrow"));
 		batcher.drawSprite(285, 30, 60, 60, Assets.textureRegions.get("PowerButton"));
+		batcher.endBatch();
+		batcher.beginBatch(Assets.blockTextures);
+		Vector2 rotate = new Vector2();
+		if (world.moveLeft){
+			rotate.set(1,1);
+			batcher.drawSprite(60, 30, 5, 70, rotate.sub(new Vector2(0,0)).angle()-90, Assets.textureRegions.get("GreenBullet"));
+		}
+		else if(world.moveRight){
+			rotate.set(-1,1);
+			batcher.drawSprite(30, 30, 5, 70, rotate.sub(new Vector2(0,0)).angle()-90, Assets.textureRegions.get("GreenBullet"));
+		}
+		else{
+			batcher.drawSprite(45, 30, 5, 70, Assets.textureRegions.get("GreenBullet"));
+		}
+
 		batcher.endBatch();
 	}
 }
