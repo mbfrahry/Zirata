@@ -25,6 +25,7 @@ public class World {
 	
 	public Player player;
 	public final ArrayList<Enemy> enemies;
+	public final ArrayList<Enemy> testEnemies;
 	public final ArrayList<Bullet> enemyBullets;
 	public final ArrayList<Bullet> playerBullets;
 
@@ -45,6 +46,7 @@ public class World {
 
 	public World(){
 		this.player = new Player();
+		testEnemies = EnemySettings.getEnemies(Settings.currLevel);
 		enemies = new ArrayList<Enemy>();
 		enemyBullets = new ArrayList<Bullet>();
 		playerBullets = new ArrayList<Bullet>();
@@ -140,10 +142,6 @@ public class World {
 				timeToNextEnemy -= 0.5;
 			}
 			
-			if(enemyNum >= Settings.numEnemies){
-				state = WORLD_STATE_LAST_ENEMY;
-			}
-			
 			lastEnemyTime = 0;
 		}
 		
@@ -202,15 +200,13 @@ public class World {
 	}
 	
 	private void generateEnemy(){
-		int enemyType;
-		if(rand.nextFloat() > .25){
-			enemyType = 1;
+
+		if(testEnemies.size() > 0){
+			enemies.add(testEnemies.remove(0));
 		}
 		else{
-			enemyType = 2;
+			state = WORLD_STATE_LAST_ENEMY;
 		}
-		enemies.add(new Enemy(enemyType));
-		enemyNum += 1;
 	}
 	
 	private void checkEnemyBullets(){

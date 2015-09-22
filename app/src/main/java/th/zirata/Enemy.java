@@ -7,19 +7,21 @@ public class Enemy{
 
 	public ArrayList<Block> enemyBlocks;
 	Random rand;
+	int enemyLevel;
 	int enemyType;
 	
-	public Enemy(int enemyType){
+	public Enemy(int enemyType, int enemyLevel){
 		enemyBlocks = new ArrayList<Block>();
 		rand = new Random();
 		this.enemyType = enemyType;
+		this.enemyLevel = enemyLevel;
 		editBlockAttributes();
 	}
 
 	public void editBlockAttributes(){
 		float num = rand.nextFloat();
 		
-		int health = Settings.enemyHealth;
+		int health = 10;
 		float x;
 		float y;
 		float multiplier = 1;
@@ -52,10 +54,11 @@ public class Enemy{
 		generateBlock(enemyType, health, x, y, (float)xVelocity, (float)yVelocity);
 
 		if(enemyType == 1){
-			//TurretBlock special actions
+			//ArmorBlock special actions
+
 		}
 		else if(enemyType == 2){
-			//ArmorBlock special actions
+			//TurretBlock special actions
 		}
 	}
 	
@@ -64,10 +67,10 @@ public class Enemy{
 	public void generateBlock(int enemyType, int health, float x, float y, float xVelocity, float yVelocity){
 		Block newEnemyBlock = null;
 		if(enemyType == 1){
-			newEnemyBlock = new ArmorBlock(x, y, health);
+			newEnemyBlock = new ArmorBlock(x, y, health * enemyLevel);
 		}
 		else if(enemyType == 2){
-			newEnemyBlock = new EnemyTurretBlock(x, y, health);
+			newEnemyBlock = new EnemyTurretBlock(x, y, health * enemyLevel, 3*enemyLevel);
 		}
 		newEnemyBlock.velocity.add(xVelocity, yVelocity);
 		enemyBlocks.add(newEnemyBlock);
