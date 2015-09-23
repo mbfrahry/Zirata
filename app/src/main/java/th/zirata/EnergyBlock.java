@@ -20,25 +20,25 @@ public class EnergyBlock extends Block{
 
 
     public EnergyBlock(Vector2 position){
-        this(position.x, position.y, 10, 0, 10);
+        this(position.x, position.y, 10, 0, 1, 10);
     }
 
     public EnergyBlock(double[] info){
-        this((float)info[0], (float)info[1], (int)info[2], (int)info[3], 10);
+        this((float)info[0], (float)info[1], (int)info[2], (int)info[3], (int)info[4], 10);
 
         if(info.length >= 5){
-            this.energy = (int)info[4];
+            this.energy = (int)info[5];
         }
 
     }
 
 
 
-    public EnergyBlock(float x, float y, int health, int energyCost, int energy){
-        super(x, y, health, energyCost);
+    public EnergyBlock(float x, float y, int health, int energyCost, int blockLevel, int energy){
+        super(x, y, health, energyCost, blockLevel);
 
         //Change this value when constructor arguments changes;
-        this.constructorArgLength = 5;
+        this.constructorArgLength = 6;
 
         this.energy = energy;
     }
@@ -112,15 +112,24 @@ public class EnergyBlock extends Block{
 
     @Override
     public void fuseWith(Block b) {
-        //Need to add upgraded stats to this block
-        // Get level of each attribute of b, add level*upgrade amount to it
-        //increment block level
-
-        EnergyBlock eBlock = (EnergyBlock) b;
-        health += eBlock.getAttributeLevel(0)*upgradeValueArray[0];
-        energy += eBlock.getAttributeLevel(1)*upgradeValueArray[1];
-
+        for(int i = 0; i < 2; i++){
+            fuseLevels(i, b.getAttributeLevel(i));
+        }
         blockLevel ++;
+    }
+
+    public void fuseLevels(int attIndex, int levelsAdded){
+        while (!checkMaxAttributeLevel(attIndex) && levelsAdded > 0){
+            if(attIndex == 0){
+                health += upgradeValueArray[attIndex];
+            }
+            else if(attIndex == 1){
+                energy += upgradeValueArray[attIndex];
+            }
+            levelsAdded --;
+        }
+        health += levelsAdded*upgradeValueArray[0];
+        maxHealth = health;
     }
 
 }

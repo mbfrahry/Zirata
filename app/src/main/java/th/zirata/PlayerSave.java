@@ -27,7 +27,7 @@ public class PlayerSave {
 	public static ArrayList<Block> activeBlocks = new ArrayList<Block>(){{
 		add(new BlankBlock(new Vector2(160, 240)));
 	}};
-	public static String file = ".ship26";
+	public static String file = ".ship28";
 
 
 
@@ -192,6 +192,7 @@ public class PlayerSave {
 		writer.value(block.position.y);
 		writer.value(block.maxHealth);
 		writer.value(block.energyCost);
+		writer.value(block.blockLevel);
 		block.writeExtraInfo(writer);
 		writer.endArray();
 	}

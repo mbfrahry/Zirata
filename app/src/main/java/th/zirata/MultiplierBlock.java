@@ -30,16 +30,16 @@ public class MultiplierBlock extends Block{
     public static final int MULTIPLIER_COOLING = 2;
 
     public MultiplierBlock(Vector2 position){
-        this(position.x, position.y, 10, 0, 1.5f, 5, 10);
+        this(position.x, position.y, 10, 0, 1, 1.5f, 5, 10);
     }
 
     public MultiplierBlock(double[] info){
-        this((float)info[0], (float)info[1], (int)info[2],(int)info[3], (float)info[4], (float)info[5], (float)info[6]);
+        this((float)info[0], (float)info[1], (int)info[2],(int)info[3], (int)info[4], (float)info[5], (float)info[6], (float)info[7]);
     }
 
-    public MultiplierBlock(float x, float y, int health, int energyCost, float multiplier,  float multiplierTime, float cooldown){
-        super(x, y, health, energyCost);
-        this.constructorArgLength = 7;
+    public MultiplierBlock(float x, float y, int health, int energyCost, int blockLevel, float multiplier,  float multiplierTime, float cooldown){
+        super(x, y, health, energyCost, blockLevel);
+        this.constructorArgLength = 8;
 
         this.multiplier = multiplier;
         this.cooldown = cooldown;
@@ -157,12 +157,29 @@ public class MultiplierBlock extends Block{
 
     @Override
     public void fuseWith(Block b) {
-        MultiplierBlock mBlock = (MultiplierBlock) b;
-        health += mBlock.getAttributeLevel(0)*upgradeValueArray[0];
-        cooldown += mBlock.getAttributeLevel(1)*upgradeValueArray[1];
-        multiplierTime += mBlock.getAttributeLevel(2)*upgradeValueArray[2];
-        multiplier += mBlock.getAttributeLevel(3)*upgradeValueArray[3];
-
+        for(int i = 0; i < 4; i++){
+            fuseLevels(i, b.getAttributeLevel(i));
+        }
         blockLevel ++;
+    }
+
+    public void fuseLevels(int attIndex, int levelsAdded){
+        while (!checkMaxAttributeLevel(attIndex) && levelsAdded > 0){
+            if(attIndex == 0){
+                health += upgradeValueArray[attIndex];
+            }
+            else if(attIndex == 1){
+                cooldown += upgradeValueArray[attIndex];
+            }
+            else if(attIndex == 2){
+                multiplierTime += upgradeValueArray[attIndex];
+            }
+            else if(attIndex == 3){
+                multiplier += upgradeValueArray[attIndex];
+            }
+            levelsAdded --;
+        }
+        health += levelsAdded*upgradeValueArray[0];
+        maxHealth = health;
     }
 }

@@ -18,15 +18,15 @@ public class ArmorBlock extends Block{
 	int constructorArgLength = 4;
 
 	public ArmorBlock(Vector2 position){
-		this(position.x, position.y, 20);
+		this(position.x, position.y, 20, 1);
 	}
 
 	public ArmorBlock(double[] info){
-		this((float) info[0], (float) info[1], (int) info[2]);
+		this((float) info[0], (float) info[1], (int) info[2], (int) info[4]);
 	}
 
-	public ArmorBlock(float x, float y, int health){
-		super(x, y, health, 0);
+	public ArmorBlock(float x, float y, int health, int blockLevel){
+		super(x, y, health, 0, blockLevel);
 	}
 
 	@Override
@@ -92,9 +92,20 @@ public class ArmorBlock extends Block{
 
 	@Override
 	public void fuseWith(Block b) {
-		ArmorBlock aBlock = (ArmorBlock) b;
-		health += aBlock.getAttributeLevel(0)*upgradeValueArray[0];
-
+		for(int i = 0; i < 1; i++){
+			fuseLevels(i, b.getAttributeLevel(i));
+		}
 		blockLevel ++;
+	}
+
+	public void fuseLevels(int attIndex, int levelsAdded){
+		while (!checkMaxAttributeLevel(attIndex) && levelsAdded > 0){
+			if(attIndex == 0){
+				health += upgradeValueArray[attIndex];
+			}
+			levelsAdded --;
+		}
+		health += levelsAdded*upgradeValueArray[0];
+		maxHealth = health;
 	}
 }

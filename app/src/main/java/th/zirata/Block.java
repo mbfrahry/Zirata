@@ -22,7 +22,7 @@ public abstract class Block extends DynamicGameObject {
 
 	int constructorArgLength;
 
-	public Block(float x, float y, int health, int energyCost){
+	public Block(float x, float y, int health, int energyCost, int blockLevel){
 		super(x, y, BLOCK_WIDTH, BLOCK_HEIGHT);
 		this.health = health;
 		this.maxHealth = health;
@@ -30,8 +30,8 @@ public abstract class Block extends DynamicGameObject {
 		lastTouch = new Vector2(x, y + BLOCK_HEIGHT/2);
 		active = false;
 
-		constructorArgLength = 4;
-		blockLevel = 1;
+		constructorArgLength = 5;
+		this.blockLevel = blockLevel;
 	}
 
 	public abstract void action(World world);
@@ -59,18 +59,22 @@ public abstract class Block extends DynamicGameObject {
 			sum += getAttributeLevel(i);
 		}
 		if(blockLevel > 1){
-			return sum - getMaxAttributeNum();
+			sum -= getMaxAttributeNum();
 		}
-		else{
-			return sum;
-		}
+		return sum;
 		/*
 	0 5 10 20
 		 */
 	}
 
 	public int getMaxAttributeNum(){
-		return (int)(5*Math.pow(2,blockLevel-1));
+		if(blockLevel == 1){
+			return 5;
+		}
+		else{
+			return (int)(5*Math.pow(2,2*blockLevel-3));
+		}
+
 	}
 
 	public boolean checkDeath(){
@@ -112,4 +116,6 @@ public abstract class Block extends DynamicGameObject {
 	}
 
 	public abstract void fuseWith(Block b);
+
+	public abstract void fuseLevels(int attIndex, int levelsAdded);
 }

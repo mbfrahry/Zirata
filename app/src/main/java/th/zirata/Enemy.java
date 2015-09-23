@@ -67,7 +67,7 @@ public class Enemy{
 	public void generateBlock(int enemyType, int health, float x, float y, float xVelocity, float yVelocity){
 		Block newEnemyBlock = null;
 		if(enemyType == 1){
-			newEnemyBlock = new ArmorBlock(x, y, health * enemyLevel);
+			newEnemyBlock = new ArmorBlock(x, y, health * enemyLevel, enemyLevel);
 		}
 		else if(enemyType == 2){
 			newEnemyBlock = new EnemyTurretBlock(x, y, health * enemyLevel, 3*enemyLevel);

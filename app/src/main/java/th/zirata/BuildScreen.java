@@ -33,6 +33,10 @@ public class BuildScreen extends GLScreen{
 	Block selectedBankBlock;
 	Block selectedActiveBlock;
 
+	boolean showSubmenu;
+	boolean showUpgrades;
+	boolean showFuse;
+
 	boolean showBlockBank;
 	int blockBankOption;
 	public static final int BLOCK_BANK_TURRET = 0;
@@ -68,6 +72,9 @@ public class BuildScreen extends GLScreen{
 		potentialBlocks = new ArrayList<Block>();
 		getPotentialBlocks();
 		showBlockBank = false;
+		showSubmenu = true;
+		showUpgrades = false;
+		showFuse = false;
 		blockBankOption = BLOCK_BANK_TURRET;
 		ownedBlocksByType = getBlocksFromType(TurretBlock.class);
 		draggingBankBlock = false;
@@ -81,6 +88,14 @@ public class BuildScreen extends GLScreen{
 		this(game);
 		this.showBlockBank = showBlockBank;
 		this.selectedActiveBlock = activeBlock;
+		if(testShowFuse()){
+			showFuse = true;
+			showUpgrades = false;
+		}
+		else{
+			showUpgrades = true;
+			showFuse = false;
+		}
 	}
 
 	@Override
@@ -137,6 +152,8 @@ public class BuildScreen extends GLScreen{
 									Settings.save(game.getFileIO());
 									showBlockBank = true;
 									selectedActiveBlock = currBlock;
+									showUpgrades = true;
+									showFuse = false;
 								}
 								return;
 							}
@@ -147,6 +164,15 @@ public class BuildScreen extends GLScreen{
 							pBlockBounds = new Rectangle(currBlock.position.x - 12, currBlock.position.y - 12, 25, 25);
 							if (OverlapTester.pointInRectangle(pBlockBounds, touchPoint) ){//&& currBlock.getClass() != BlankBlock.class) {
 								selectedActiveBlock = currBlock;
+								if(testShowFuse()){
+									showFuse = true;
+									showUpgrades = false;
+								}
+								else{
+									showUpgrades = true;
+									showFuse = false;
+								}
+
 								showBlockBank = true;
 								if (selectedActiveBlock.getClass() == TurretBlock.class || selectedActiveBlock.getClass() == BlankBlock.class) {
 									blockBankOption = BLOCK_BANK_TURRET;
@@ -173,7 +199,12 @@ public class BuildScreen extends GLScreen{
 						}
 					} else {
 						checkBankBlocks(touchPoint);
-						checkUpgradeBounds(touchPoint);
+						if(showUpgrades && showSubmenu){
+							checkUpgradeBounds(touchPoint);
+						}
+						else if(showFuse && showSubmenu){
+							checkFuseBounds();
+						}
 						if(touchPoint.x > 120 && touchPoint.y > 200){
 							showBlockBank = false;
 							return;
@@ -251,6 +282,14 @@ public class BuildScreen extends GLScreen{
 					selectedBankBlock = null;
 				}
 				showBlockBank = true;
+				if(testShowFuse()){
+					showFuse = true;
+					showUpgrades = false;
+				}
+				else{
+					showUpgrades = true;
+					showFuse = false;
+				}
 			}
 		}
 		//Checks if add block was pressed
@@ -273,16 +312,16 @@ public class BuildScreen extends GLScreen{
 		if (bankBlockBounds.lowerLeft.y > 15 && OverlapTester.pointInRectangle(bankBlockBounds, touchPoint)){
 			Block block = null;
 			if(blockBankOption  == BLOCK_BANK_TURRET){
-				block = new TurretBlock(-100, -100, 10, 3, 0);
+				block = new TurretBlock(-100, -100, 10, 3, 1, 0);
 			}
 			if(blockBankOption  == BLOCK_BANK_ARMOR){
-				block = new ArmorBlock(-100, -100, 20);
+				block = new ArmorBlock(-100, -100, 20, 1);
 			}
 			if(blockBankOption  == BLOCK_BANK_ENERGY){
-				block = new EnergyBlock(-100, -100, 10, 0, 10);
+				block = new EnergyBlock(-100, -100, 10, 0, 1, 10);
 			}
 			if(blockBankOption  == BLOCK_BANK_MULTIPLIER){
-				block = new MultiplierBlock(-100, -100, 10, 0, 1.5f, 5, 10);
+				block = new MultiplierBlock(-100, -100, 10, 0, 1, 1.5f, 5, 10);
 			}
 			PlayerSave.activeBlocks.remove(selectedActiveBlock);
 			block.position.x = selectedActiveBlock.position.x;
@@ -290,6 +329,8 @@ public class BuildScreen extends GLScreen{
 			selectedActiveBlock = block;
 			PlayerSave.activeBlocks.add(block);
 			PlayerSave.bankedBlocks.add(block);
+			showUpgrades = true;
+			showFuse = false;
 			ownedBlocksByType = getBlocksFromType(block.getClass());
 			if (block.getClass() == TurretBlock.class) {
 				game.setScreen(new BlockDirectionScreen(game, block.position, PlayerSave.activeBlocks.indexOf(block)));
@@ -309,8 +350,46 @@ public class BuildScreen extends GLScreen{
 					if (Settings.spaceBucks >= selectedActiveBlock.getAttributeLevel(i) + 1) {
 						Settings.spaceBucks -= selectedActiveBlock.getAttributeLevel(i) + 1;
 						selectedActiveBlock.updateAttribute(i, upgradeValues[i]);
+						if(testShowFuse()){
+							showFuse = true;
+							showUpgrades = false;
+						}
 						PlayerSave.save(game.getFileIO());
 					}
+				}
+			}
+		}
+	}
+
+	public void checkFuseBounds(){
+		ArrayList<Block> compatibleFusionBlocks = getCompatibleFusionBlocks();
+		Rectangle fuseBounds = new Rectangle(0, 198, 110, 110);
+		int fuseX = 26;
+		int fuseY = 285;
+		if (OverlapTester.pointInRectangle(fuseBounds, touchPoint)){
+			for (int i = 0; i < compatibleFusionBlocks.size(); i++){
+				Rectangle currCoords = new Rectangle(fuseX-12, fuseY-12, 25, 25);
+				Block currBlock = compatibleFusionBlocks.get(i);
+				if(OverlapTester.pointInRectangle(currCoords, touchPoint)){
+					//Fuse blocks together and delete selected block
+					if(PlayerSave.activeBlocks.contains(currBlock)){
+						//No can do bro-ha
+					}
+					else{
+						selectedActiveBlock.fuseWith(currBlock);
+						PlayerSave.bankedBlocks.remove(currBlock);
+						ownedBlocksByType = getBlocksFromType(selectedActiveBlock.getClass());
+						showUpgrades = true;
+						showFuse = false;
+					}
+
+
+					return;
+				}
+				fuseX += 30;
+				if(fuseX > 90){
+					fuseX = 26;
+					fuseY -= 30;
 				}
 			}
 		}
@@ -375,10 +454,10 @@ public class BuildScreen extends GLScreen{
 		if(showBlockBank){
 			drawBlockBank();
 			if(selectedActiveBlock != null && selectedActiveBlock.getClass() != BlankBlock.class){
-				if(selectedActiveBlock.getMaxAttributeNum() <= selectedActiveBlock.getExperienceLevel(selectedActiveBlock.getUpgradableAttributes().length)){
+				if(showFuse && showSubmenu){
 					drawFuseMenu();
 				}
-				else{
+				else if (showUpgrades && showSubmenu) {
 					drawBlockUpgrades();
 				}
 
@@ -523,7 +602,7 @@ public class BuildScreen extends GLScreen{
 		batcher.endBatch();
 		String text;
 		batcher.beginBatch(Assets.blockTextures);
-		if (selectedActiveBlock.getExperienceLevel(upgradeableAttributes.length) < selectedActiveBlock.getMaxAttributeNum()){
+		if (showUpgrades){
 			float percentage = selectedActiveBlock.getExperienceLevel(upgradeableAttributes.length)/(float)selectedActiveBlock.getMaxAttributeNum();
 			batcher.drawSprite(x*percentage, y + 40*upgradeableAttributes.length - 10, 176*percentage, 38, Assets.textureRegions.get("GreenBullet"));
 			text = "Upgrades";
@@ -574,6 +653,9 @@ public class BuildScreen extends GLScreen{
 			batcher.beginBatch(Assets.blockTextures);
 			for (int i = 0; i < compatibleFusionBlocks.size(); i++){
 				Block currBlock = compatibleFusionBlocks.get(i);
+				if(PlayerSave.activeBlocks.contains(currBlock)){
+					batcher.drawSprite(fuseX, fuseY, 50, 50, Assets.textureRegions.get("Bullet"));
+				}
 				if(currBlock.getClass().equals(TurretBlock.class)) {
 					TurretBlock tBlock = (TurretBlock)currBlock ;
 					Vector2 rotate = getRotationVector(tBlock.fireAngle);
@@ -782,6 +864,10 @@ public class BuildScreen extends GLScreen{
 		else if ( blockBankOption == BLOCK_BANK_MULTIPLIER) {
 			ownedBlocksByType = getBlocksFromType(MultiplierBlock.class);
 		}
+	}
+
+	public boolean testShowFuse(){
+		return selectedActiveBlock.getMaxAttributeNum() <= selectedActiveBlock.getExperienceLevel(selectedActiveBlock.getUpgradableAttributes().length);
 	}
 
 	public void setTurretDirections(){

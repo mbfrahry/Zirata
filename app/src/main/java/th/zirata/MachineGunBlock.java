@@ -28,7 +28,7 @@ public class MachineGunBlock extends Block {
 	}
 
 	public MachineGunBlock(float x, float y, int health, int energyCost){
-		super(x, y, health, energyCost);
+		super(x, y, health, energyCost, 1);
 		bullets = new ArrayList<Bullet>();
 		maxBullets = 10;
 		numBullets = 0;
@@ -108,7 +108,12 @@ public class MachineGunBlock extends Block {
 	public void fuseWith(Block b) {
 
 	}
-	
+
+	@Override
+	public void fuseLevels(int attIndex, int levelsAdded) {
+
+	}
+
 	public boolean checkMaxAttributeLevel(int attributeIndex){
 		return true;
 	}

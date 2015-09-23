@@ -14,7 +14,7 @@ public class BlankBlock extends Block {
     public float[] maxValueLevelArray = {-1};
 
     public BlankBlock(Vector2 postion){
-        super(postion.x, postion.y, 10, 0);
+        super(postion.x, postion.y, 10, 0, 1);
     }
 
     @Override
@@ -62,6 +62,11 @@ public class BlankBlock extends Block {
 
     @Override
     public void fuseWith(Block b) {
+
+    }
+
+    @Override
+    public void fuseLevels(int attIndex, int levelsAdded) {
 
     }
 }

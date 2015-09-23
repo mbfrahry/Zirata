@@ -39,32 +39,32 @@ public class TurretBlock extends Block{
 	public float[] maxValueLevelArray = {9999, 9999, 20, 9999};
 
 	public TurretBlock(Vector2 position, float fireAngle){
-        this(position.x, position.y, 10, 3, fireAngle);
+        this(position.x, position.y, 10, 3, 1, fireAngle);
 	}
 
 	public TurretBlock(double[] info){
-		this((float) info[0], (float) info[1], (int) info[2], (int) info[3], 0);
+		this((float) info[0], (float) info[1], (int) info[2], (int) info[3], (int) info[4], 0);
 
-		if(info.length >= 5){
-			this.fireAngle = (int)info[4];
-		}
 		if(info.length >= 6){
-			this.bulletDamage = (int)info[5];
+			this.fireAngle = (int)info[5];
 		}
-		if(info.length >= 7) {
-			this.fireRate = (float)info[6];
+		if(info.length >= 7){
+			this.bulletDamage = (int)info[6];
 		}
-		if(info.length >= 8){
-			this.fireRange = (int)info[7];
+		if(info.length >= 8) {
+			this.fireRate = (float)info[7];
+		}
+		if(info.length >= 9){
+			this.fireRange = (int)info[8];
 		}
 
 		calcCone(position.x, position.y);
 
 	}
 
-	public TurretBlock(float x, float y, int health, int energyCost, float fireAngle){
-		super(x, y, health, energyCost);
-		this.constructorArgLength = 8;
+	public TurretBlock(float x, float y, int health, int energyCost, int blockLevel, float fireAngle){
+		super(x, y, health, energyCost, blockLevel);
+		this.constructorArgLength = 9;
 		bullets = new ArrayList<Bullet>();
 		maxBullets = 1;
 		numBullets = 0;
@@ -259,14 +259,43 @@ public class TurretBlock extends Block{
 		this.bulletDamage *= multiplier;
 	}
 
+//	@Override
+//	public void fuseWith(Block b) {
+//		TurretBlock tBlock = (TurretBlock) b;
+//		health += tBlock.getAttributeLevel(0)*upgradeValueArray[0];
+//		maxHealth = health;
+//		bulletDamage += tBlock.getAttributeLevel(1)*upgradeValueArray[1];
+//		fireRate += tBlock.getAttributeLevel(2)*upgradeValueArray[2];
+//		fireRange += tBlock.getAttributeLevel(3)*upgradeValueArray[3];
+//
+//		blockLevel ++;
+//	}
+
 	@Override
 	public void fuseWith(Block b) {
-		TurretBlock tBlock = (TurretBlock) b;
-		health += tBlock.getAttributeLevel(0)*upgradeValueArray[0];
-		bulletDamage += tBlock.getAttributeLevel(1)*upgradeValueArray[1];
-		fireRate += tBlock.getAttributeLevel(2)*upgradeValueArray[2];
-		fireRange += tBlock.getAttributeLevel(3)*upgradeValueArray[3];
-
+		for(int i = 0; i < 4; i++){
+			fuseLevels(i, b.getAttributeLevel(i));
+		}
 		blockLevel ++;
+	}
+
+	public void fuseLevels(int attIndex, int levelsAdded){
+		while (!checkMaxAttributeLevel(attIndex) && levelsAdded > 0){
+			if(attIndex == 0){
+				health += upgradeValueArray[attIndex];
+			}
+			else if(attIndex == 1){
+				bulletDamage += upgradeValueArray[attIndex];
+			}
+			else if(attIndex == 2){
+				fireRate += upgradeValueArray[attIndex];
+			}
+			else if(attIndex == 3){
+				fireRange += upgradeValueArray[attIndex];
+			}
+			levelsAdded --;
+		}
+		health += levelsAdded*upgradeValueArray[0];
+		maxHealth = health;
 	}
 }
