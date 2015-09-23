@@ -46,9 +46,12 @@ public abstract class Block extends DynamicGameObject {
 
 	public abstract float[] getUpgradeValues();
 
+
 	public abstract void updateAttribute(int attributeIndex, float upgradeNum);
 
 	public abstract int getAttributeLevel(int attributeIndex);
+
+	public abstract boolean checkMaxAttributeLevel(int attributeIndex);
 
 	public int getExperienceLevel(int attNum){
         int sum = 0;

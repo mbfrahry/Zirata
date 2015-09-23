@@ -12,9 +12,10 @@ import java.util.ArrayList;
  */
 public class MultiplierBlock extends Block{
 
-    public static String[] UpgradeAttributes = new String[]{"Health", "Cooldown", "Up Time", "Multiplier"};
+    public static String[] UpgradeAttributes = new String[]{"Health", "Cooldown", "Up Time", "Multiply"};
     public float[] defaultValueArray = {10, 10, 5, 1.5f};
     public float[] upgradeValueArray = {5, -1, 1, .1f};
+    public float[] maxValueLevelArray = {9999, 5, 15, 9999};
 
     float multiplier;
     float cooldown;
@@ -142,6 +143,13 @@ public class MultiplierBlock extends Block{
         return (int) Math.abs((delta/upgradeValueArray[attributeIndex]));
     }
 
+    public boolean checkMaxAttributeLevel(int attributeIndex){
+        int currLevel = getAttributeLevel(attributeIndex);
+        if(currLevel < maxValueLevelArray[attributeIndex]){
+            return false;
+        }
+        return true;
+    }
 
     public void multiply(float multiplier){
 

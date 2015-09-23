@@ -36,6 +36,7 @@ public class TurretBlock extends Block{
 	public static String[] UpgradeAttributes = new String[]{"Health", "Damage", "Fire Rate", "Range"};
 	public float[] defaultValueArray = {10, 10, 3, 150};
 	public float[] upgradeValueArray = {5, 5, -0.1f, 5};
+	public float[] maxValueLevelArray = {9999, 9999, 20, 9999};
 
 	public TurretBlock(Vector2 position, float fireAngle){
         this(position.x, position.y, 10, 3, fireAngle);
@@ -243,6 +244,15 @@ public class TurretBlock extends Block{
 			yDiff -= 12;
 		}
 		lastTouch.set(position.x + xDiff, position.y + yDiff);
+	}
+
+
+	public boolean checkMaxAttributeLevel(int attributeIndex){
+		int currLevel = getAttributeLevel(attributeIndex);
+		if(currLevel < maxValueLevelArray[attributeIndex]){
+			return false;
+		}
+		return true;
 	}
 
 	public void multiply(float multiplier){

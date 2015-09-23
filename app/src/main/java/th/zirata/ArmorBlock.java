@@ -13,6 +13,7 @@ public class ArmorBlock extends Block{
 	public static String[] UpgradeAttributes = new String[]{"Health"};
 	public float[] defaultValueArray = {20};
 	public float[] upgradeValueArray = {20};
+	public float[] maxValueLevelArray = {9999};
 
 	int constructorArgLength = 4;
 
@@ -64,6 +65,14 @@ public class ArmorBlock extends Block{
 			this.health += upgradeNum;
 			this.maxHealth += upgradeNum;
 		}
+	}
+
+	public boolean checkMaxAttributeLevel(int attributeIndex){
+		int currLevel = getAttributeLevel(attributeIndex);
+		if(currLevel < maxValueLevelArray[attributeIndex]){
+			return false;
+		}
+		return true;
 	}
 
 	@Override

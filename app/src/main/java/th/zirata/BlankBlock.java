@@ -11,6 +11,8 @@ import java.io.IOException;
  */
 public class BlankBlock extends Block {
 
+    public float[] maxValueLevelArray = {-1};
+
     public BlankBlock(Vector2 postion){
         super(postion.x, postion.y, 10, 0);
     }
@@ -52,5 +54,9 @@ public class BlankBlock extends Block {
 
     public int getAttributeLevel(int attributeIndex) {
         return 0;
+    }
+
+    public boolean checkMaxAttributeLevel(int attributeIndex){
+        return true;
     }
 }

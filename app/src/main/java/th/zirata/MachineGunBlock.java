@@ -103,4 +103,8 @@ public class MachineGunBlock extends Block {
 	public int getAttributeLevel(int attributeIndex) {
 		return 0;
 	}
+
+	public boolean checkMaxAttributeLevel(int attributeIndex){
+		return true;
+	}
 }

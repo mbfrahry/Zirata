@@ -14,6 +14,7 @@ public class EnergyBlock extends Block{
     public static String[] UpgradeAttributes = new String[]{"Health", "Energy"};
     public float[] defaultValueArray = {10, 10};
     public float[] upgradeValueArray = {5, 1};
+    public float[] maxValueLevelArray = {9999, 9999};
 
     public int energy;
 
@@ -93,6 +94,14 @@ public class EnergyBlock extends Block{
         }
         float delta = currVal - defaultVal;
         return (int) Math.abs((delta/upgradeValueArray[attributeIndex]));
+    }
+
+    public boolean checkMaxAttributeLevel(int attributeIndex){
+        int currLevel = getAttributeLevel(attributeIndex);
+        if(currLevel < maxValueLevelArray[attributeIndex]){
+            return false;
+        }
+        return true;
     }
 
 

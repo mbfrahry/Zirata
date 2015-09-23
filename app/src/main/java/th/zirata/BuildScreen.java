@@ -304,10 +304,12 @@ public class BuildScreen extends GLScreen{
 		for(int i = 0; i < upgradeableAttributes.length; i++) {
 			attrBlockBounds =  new Rectangle(0, 190 + i * 40, 110, 40);
 			if (OverlapTester.pointInRectangle(attrBlockBounds, touchPoint)) {
-				if(Settings.spaceBucks >= selectedActiveBlock.getAttributeLevel(i) + 1) {
-					Settings.spaceBucks -= selectedActiveBlock.getAttributeLevel(i)+1;
-					selectedActiveBlock.updateAttribute(i, upgradeValues[i]);
-					PlayerSave.save(game.getFileIO());
+				if(!selectedActiveBlock.checkMaxAttributeLevel(i)) {
+					if (Settings.spaceBucks >= selectedActiveBlock.getAttributeLevel(i) + 1) {
+						Settings.spaceBucks -= selectedActiveBlock.getAttributeLevel(i) + 1;
+						selectedActiveBlock.updateAttribute(i, upgradeValues[i]);
+						PlayerSave.save(game.getFileIO());
+					}
 				}
 			}
 		}
@@ -500,8 +502,12 @@ public class BuildScreen extends GLScreen{
 			batcher.drawSprite(x, y + i * 40, 110, 40, Assets.textureRegions.get("Rectangle"));
 			Assets.font.drawText(batcher, upgradeableAttributes[i], x - 45, y + 10 + i * 40, 10, 10);
 			//UpgradeCost
-			Assets.font.drawTextRightJustified(batcher, selectedActiveBlock.getAttributeLevel(i)+1 + "", x + 37,  y-5 + i *40, 10, 10);
-			Assets.font.drawText(batcher, constructAttributeLevel(selectedActiveBlock.getAttributeLevel(i)), x-45, y-5 + i *40, 10, 10);
+			if(!selectedActiveBlock.checkMaxAttributeLevel(i)) {
+				Assets.font.drawTextRightJustified(batcher, selectedActiveBlock.getAttributeLevel(i) + 1 + "", x + 37, y - 5 + i * 40, 10, 10);
+				Assets.font.drawText(batcher, constructAttributeLevel(selectedActiveBlock.getAttributeLevel(i)), x - 45, y - 5 + i * 40, 10, 10);
+
+				batcher.drawSprite(x + 48, y + 10 + i * 40, 10, 10, Assets.textureRegions.get("addIcon"));
+			}
 			//Assets.font.drawText(batcher, "Current: " + attributeValues[i], 15, 100 + i * 80);
 			//Assets.font.drawText(batcher, "Next: " + nextVal , 15, 75 + i*80);
 		}
@@ -520,17 +526,25 @@ public class BuildScreen extends GLScreen{
 			text = "Fuse!";
 		}
 		batcher.endBatch();
+
 		batcher.beginBatch(Assets.mainMenuTextures);
 		Assets.font.drawText(batcher, text, x - 35, y - 10 + upgradeableAttributes.length * 40, 10, 10);
 		batcher.endBatch();
 
-		batcher.beginBatch(Assets.blockTextures);
 		x = 55;
 		y = 220;
 		for (int i = 0; i < upgradeableAttributes.length; i++) {
-			batcher.drawSprite(x + 48,  y-5 + i *40, 10, 10, Assets.textureRegions.get("BaseBlock"));
+			if (!selectedActiveBlock.checkMaxAttributeLevel(i)) {
+				batcher.beginBatch(Assets.blockTextures);
+				batcher.drawSprite(x + 48, y - 5 + i * 40, 10, 10, Assets.textureRegions.get("BaseBlock"));
+				batcher.endBatch();
+			}
+			else{
+				batcher.beginBatch(Assets.mainMenuTextures);
+				Assets.font.drawText(batcher, "MAX LEVEL!", x - 45, y - 5 + i * 40, 10, 10);
+				batcher.endBatch();
+			}
 		}
-		batcher.endBatch();
 	}
 
 	public Vector2 getRotationVector(float fireAngle){
