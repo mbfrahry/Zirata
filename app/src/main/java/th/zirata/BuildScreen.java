@@ -1,5 +1,6 @@
 package th.zirata;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -374,7 +375,13 @@ public class BuildScreen extends GLScreen{
 		if(showBlockBank){
 			drawBlockBank();
 			if(selectedActiveBlock != null && selectedActiveBlock.getClass() != BlankBlock.class){
-				drawBlockUpgrades();
+				if(selectedActiveBlock.getMaxAttributeNum() <= selectedActiveBlock.getExperienceLevel(selectedActiveBlock.getUpgradableAttributes().length)){
+					drawFuseMenu();
+				}
+				else{
+					drawBlockUpgrades();
+				}
+
 			}
 		}
 		gl.glDisable(GL10.GL_BLEND);
@@ -512,7 +519,7 @@ public class BuildScreen extends GLScreen{
 			//Assets.font.drawText(batcher, "Next: " + nextVal , 15, 75 + i*80);
 		}
 
-		batcher.drawSprite(x, y + 40*upgradeableAttributes.length - 10, 110, 25, Assets.textureRegions.get("Rectangle"));
+		batcher.drawSprite(x, y + 40 * upgradeableAttributes.length - 10, 110, 25, Assets.textureRegions.get("Rectangle"));
 		batcher.endBatch();
 		String text;
 		batcher.beginBatch(Assets.blockTextures);
@@ -545,6 +552,59 @@ public class BuildScreen extends GLScreen{
 				batcher.endBatch();
 			}
 		}
+	}
+
+	public void drawFuseMenu(){
+		batcher.beginBatch(Assets.mainMenuTextures);
+		batcher.drawSprite(55, 318, 110, 25, Assets.textureRegions.get("Rectangle"));
+		batcher.drawSprite(55, 253, 110, 110, Assets.textureRegions.get("Rectangle"));
+		batcher.endBatch();
+		batcher.beginBatch(Assets.blockTextures);
+		batcher.drawSprite(55, 318, 176, 38, Assets.textureRegions.get("Bullet"));
+		batcher.endBatch();
+		batcher.beginBatch(Assets.mainMenuTextures);
+		Assets.font.drawTextCentered(batcher, "Fuse!", 55, 320, 10, 10);
+		batcher.endBatch();
+
+		int fuseX = 26;
+		int fuseY = 285;
+
+		ArrayList<Block> compatibleFusionBlocks = getCompatibleFusionBlocks();
+		if(compatibleFusionBlocks.size() > 0){
+			batcher.beginBatch(Assets.blockTextures);
+			for (int i = 0; i < compatibleFusionBlocks.size(); i++){
+				Block currBlock = compatibleFusionBlocks.get(i);
+				if(currBlock.getClass().equals(TurretBlock.class)) {
+					TurretBlock tBlock = (TurretBlock)currBlock ;
+					Vector2 rotate = getRotationVector(tBlock.fireAngle);
+
+					batcher.drawSprite(fuseX, fuseY, 24, 24, Assets.textureRegions.get("TurretBase"));
+					batcher.drawSprite(fuseX, fuseY, 24, 24, rotate.sub(new Vector2(0,0)).angle()-90, Assets.textureRegions.get("TurretTop"));
+
+				}
+				else if(currBlock.getClass().equals(ArmorBlock.class)){
+					batcher.drawSprite(fuseX, fuseY, 24, 24, Assets.textureRegions.get("ArmorBlock"));
+				}
+				else if(currBlock.getClass().equals(EnergyBlock.class)){
+					batcher.drawSprite(fuseX, fuseY, 24, 24, Assets.textureRegions.get("EnergyBlock"));
+				}
+				else if(currBlock.getClass().equals(MultiplierBlock.class)){
+					batcher.drawSprite(fuseX, fuseY, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
+				}
+				fuseX += 30;
+				if(fuseX > 90){
+					fuseX = 26;
+					fuseY -= 30;
+				}
+			}
+			batcher.endBatch();
+		}
+		else{
+			//There were no matches, tell them to level stuff up?
+		}
+
+
+
 	}
 
 	public Vector2 getRotationVector(float fireAngle){
@@ -692,6 +752,21 @@ public class BuildScreen extends GLScreen{
 			}
 		}
 		return blocksRequested;
+	}
+
+	public ArrayList<Block> getCompatibleFusionBlocks(){
+		ArrayList<Block> blocksOfType = getBlocksFromType(selectedActiveBlock.getClass());
+		ArrayList<Block> compatibleBlocks = new ArrayList<Block>();
+		for (int i = 0; i < blocksOfType.size(); i++){
+			Block currBlock = blocksOfType.get(i);
+			if(selectedActiveBlock.equals(currBlock)){
+				continue;
+			}
+			if(selectedActiveBlock.blockLevel == currBlock.blockLevel && currBlock.getExperienceLevel(currBlock.getUpgradableAttributes().length) >= currBlock.getMaxAttributeNum()){
+				compatibleBlocks.add(currBlock);
+			}
+		}
+		return compatibleBlocks;
 	}
 
 	public void resetBlockBank(){

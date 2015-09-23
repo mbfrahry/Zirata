@@ -110,4 +110,17 @@ public class EnergyBlock extends Block{
         this.energy *= multiplier;
     }
 
+    @Override
+    public void fuseWith(Block b) {
+        //Need to add upgraded stats to this block
+        // Get level of each attribute of b, add level*upgrade amount to it
+        //increment block level
+
+        EnergyBlock eBlock = (EnergyBlock) b;
+        health += eBlock.getAttributeLevel(0)*upgradeValueArray[0];
+        energy += eBlock.getAttributeLevel(1)*upgradeValueArray[1];
+
+        blockLevel ++;
+    }
+
 }

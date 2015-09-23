@@ -154,4 +154,15 @@ public class MultiplierBlock extends Block{
     public void multiply(float multiplier){
 
     }
+
+    @Override
+    public void fuseWith(Block b) {
+        MultiplierBlock mBlock = (MultiplierBlock) b;
+        health += mBlock.getAttributeLevel(0)*upgradeValueArray[0];
+        cooldown += mBlock.getAttributeLevel(1)*upgradeValueArray[1];
+        multiplierTime += mBlock.getAttributeLevel(2)*upgradeValueArray[2];
+        multiplier += mBlock.getAttributeLevel(3)*upgradeValueArray[3];
+
+        blockLevel ++;
+    }
 }

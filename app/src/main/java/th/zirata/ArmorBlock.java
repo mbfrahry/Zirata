@@ -89,4 +89,12 @@ public class ArmorBlock extends Block{
 	public void multiply(float multiplier){
 		this.health *= multiplier;
 	}
+
+	@Override
+	public void fuseWith(Block b) {
+		ArmorBlock aBlock = (ArmorBlock) b;
+		health += aBlock.getAttributeLevel(0)*upgradeValueArray[0];
+
+		blockLevel ++;
+	}
 }

@@ -104,6 +104,11 @@ public class MachineGunBlock extends Block {
 		return 0;
 	}
 
+	@Override
+	public void fuseWith(Block b) {
+
+	}
+	
 	public boolean checkMaxAttributeLevel(int attributeIndex){
 		return true;
 	}

@@ -59,4 +59,9 @@ public class BlankBlock extends Block {
     public boolean checkMaxAttributeLevel(int attributeIndex){
         return true;
     }
+
+    @Override
+    public void fuseWith(Block b) {
+
+    }
 }

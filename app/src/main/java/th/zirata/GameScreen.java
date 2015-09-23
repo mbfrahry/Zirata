@@ -130,7 +130,7 @@ public class GameScreen extends GLScreen {
 					world.player.power = true;
 					return;
 				}
-				if (touchPoint.y < 50) {
+				if (touchPoint.y < 130) {
 					if (touchPoint.x < 120) {
 						touchDowns.remove(event.pointer);
 						world.moveLeft = false;
@@ -142,7 +142,7 @@ public class GameScreen extends GLScreen {
 			}
 			if(event.type == TouchEvent.TOUCH_DRAGGED){
 				updateRotation(event);
-				if ((touchPoint.y > 50 || touchPoint.x > 120) && touchDowns.keySet().contains(event.pointer)) {
+				if ((touchPoint.y > 130 || touchPoint.x > 120) && touchDowns.keySet().contains(event.pointer)) {
 					world.moveLeft = false;
 					world.moveRight = false;
 					touchDowns.remove(event.pointer);
@@ -163,7 +163,7 @@ public class GameScreen extends GLScreen {
 	}
 
 	private void updateRotation(TouchEvent event){
-		if (touchPoint.y < 50) {
+		if (touchPoint.y < 130) {
 			if (touchPoint.x < 60) {
 				touchDowns.put(event.pointer, new Vector2(touchPoint.x,touchPoint.y));
 				world.moveRight = true;

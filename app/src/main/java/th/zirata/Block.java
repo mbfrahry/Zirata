@@ -109,6 +109,7 @@ public abstract class Block extends DynamicGameObject {
 	}
 
 	public void multiply(float multiplier){
-
 	}
+
+	public abstract void fuseWith(Block b);
 }

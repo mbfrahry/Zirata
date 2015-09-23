@@ -258,4 +258,15 @@ public class TurretBlock extends Block{
 	public void multiply(float multiplier){
 		this.bulletDamage *= multiplier;
 	}
+
+	@Override
+	public void fuseWith(Block b) {
+		TurretBlock tBlock = (TurretBlock) b;
+		health += tBlock.getAttributeLevel(0)*upgradeValueArray[0];
+		bulletDamage += tBlock.getAttributeLevel(1)*upgradeValueArray[1];
+		fireRate += tBlock.getAttributeLevel(2)*upgradeValueArray[2];
+		fireRange += tBlock.getAttributeLevel(3)*upgradeValueArray[3];
+
+		blockLevel ++;
+	}
 }
