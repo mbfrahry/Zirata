@@ -4,10 +4,13 @@ import com.badlogic.androidgames.framework.Game;
 import com.badlogic.androidgames.framework.Input;
 import com.badlogic.androidgames.framework.gl.Camera2D;
 import com.badlogic.androidgames.framework.gl.SpriteBatcher;
+import com.badlogic.androidgames.framework.impl.GLGame;
 import com.badlogic.androidgames.framework.impl.GLScreen;
 import com.badlogic.androidgames.framework.math.OverlapTester;
 import com.badlogic.androidgames.framework.math.Rectangle;
 import com.badlogic.androidgames.framework.math.Vector2;
+import com.revmob.RevMob;
+import com.revmob.RevMobAdsListener;
 
 import java.util.List;
 
@@ -26,8 +29,10 @@ public class MainHelpScreen extends GLScreen {
     Rectangle selectBounds;
     Rectangle backBounds;
     Vector2 touchPoint;
+    public RevMob revmob;
+    public RevMobAdsListener revmobListener;
 
-    public MainHelpScreen(Game game){
+    public MainHelpScreen(Game game, RevMob revmob, RevMobAdsListener revmobListener){
         super(game);
         guiCam = new Camera2D(glGraphics, 320, 480);
         batcher = new SpriteBatcher(glGraphics, 100);
@@ -35,6 +40,8 @@ public class MainHelpScreen extends GLScreen {
 
         backBounds = new Rectangle(0, 0, 64, 64);
         touchPoint = new Vector2();
+        this.revmob = revmob;
+        this.revmobListener = revmobListener;
     }
 
     @Override
@@ -50,7 +57,8 @@ public class MainHelpScreen extends GLScreen {
 
             if (event.type == Input.TouchEvent.TOUCH_UP) {
                 if (OverlapTester.pointInRectangle(backBounds, touchPoint)) {
-                    game.setScreen(new MainMenuScreen(game));
+                    revmob.showFullscreen((GLGame) game, revmobListener);
+                    //game.setScreen(new MainMenuScreen(game));
                     return;
                 }
 
@@ -77,7 +85,6 @@ public class MainHelpScreen extends GLScreen {
         batcher.beginBatch(Assets.mainMenuTextures);
         batcher.drawSprite(30, 30, -60, 60, Assets.textureRegions.get("Arrow"));
         batcher.endBatch();
-
         gl.glDisable(GL10.GL_BLEND);
     }
 

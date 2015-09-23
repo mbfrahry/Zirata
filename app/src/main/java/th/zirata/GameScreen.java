@@ -194,6 +194,7 @@ public class GameScreen extends GLScreen {
 	        }
 	        
 	        if(OverlapTester.pointInRectangle(quitBounds, touchPoint)) {
+
 	            game.setScreen(new MainMenuScreen(game));
 	            return;
 	        

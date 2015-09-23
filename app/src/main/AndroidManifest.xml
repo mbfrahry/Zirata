@@ -3,6 +3,15 @@
       package="th.zirata"
       android:versionCode="1"
       android:versionName="1.0">
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-sdk android:minSdkVersion="11" />
+
+    <!-- Required -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Strongly recommended (for better segmentation) -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <application android:icon="@drawable/icon" android:label="Zirata">
         <activity android:name=".Zirata"
                   android:label="Zirata"
@@ -14,9 +23,15 @@
             </intent-filter>
         </activity>
 
+        <!-- Declare RevMob activity -->
+        <activity android:name="com.revmob.FullscreenActivity"
+            android:theme="@android:style/Theme.Translucent"
+            android:configChanges="keyboardHidden|orientation">
+        </activity>
+
+        <!-- RevMob Media ID -->
+        <meta-data android:name="com.revmob.app.id" android:value="560212a548821a914b806fc4"/>
+
     </application>
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-sdk android:minSdkVersion="11" />
 
 </manifest> 

@@ -39,7 +39,7 @@ public abstract class GLGame extends Activity implements Game, Renderer {
 	Object stateChanged = new Object();
 	long startTime = System.nanoTime();
 	WakeLock wakeLock;
-	
+
 	
 	public void onCreate(Bundle savedInstanceState){
 		super .onCreate(savedInstanceState);
@@ -48,14 +48,13 @@ public abstract class GLGame extends Activity implements Game, Renderer {
 		glView = new GLSurfaceView(this);
 		glView.setRenderer(this);
 		setContentView(glView);
-		
+
 		glGraphics = new GLGraphics(glView);
 		fileIO = new AndroidFileIO(getAssets());
 		audio = new AndroidAudio(this);
 		input = new AndroidInput(this, glView, 1, 1);
 		PowerManager powerManager = (PowerManager)getSystemService(Context.POWER_SERVICE);
 		wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "GLGame");
-		
 	}
 	
 	public void onResume(){
@@ -165,4 +164,6 @@ public abstract class GLGame extends Activity implements Game, Renderer {
 	public Screen getCurrentScreen(){
 		return screen;
 	}
+
+
 }

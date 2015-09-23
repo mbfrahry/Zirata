@@ -1,5 +1,7 @@
 package th.zirata;
 
+import android.app.Activity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,8 @@ import com.badlogic.androidgames.framework.impl.GLScreen;
 import com.badlogic.androidgames.framework.math.OverlapTester;
 import com.badlogic.androidgames.framework.math.Rectangle;
 import com.badlogic.androidgames.framework.math.Vector2;
+import com.revmob.RevMob;
+import com.revmob.RevMobAdsListener;
 
 import th.zirata.Help.MainHelpScreen;
 
@@ -25,7 +29,7 @@ public class MainMenuScreen extends GLScreen{
 	Rectangle resetBounds;
 	Rectangle helpBounds;
 	Vector2 touchPoint;
-	
+
 	public MainMenuScreen(Game game){
 		super(game);
 		guiCam = new Camera2D(glGraphics, 320, 480);
@@ -49,12 +53,14 @@ public class MainMenuScreen extends GLScreen{
 				guiCam.touchToWorld(touchPoint);
 				
 				if(OverlapTester.pointInRectangle(playBounds, touchPoint)){
+
 					game.setScreen(new MapScreen(game));
 					return;
 				}
 
 				if(OverlapTester.pointInRectangle(helpBounds, touchPoint)){
-					game.setScreen(new MainHelpScreen(game));
+					//TODO take this comment out
+					//game.setScreen(new MainHelpScreen(game));
 					return;
 				}
 
