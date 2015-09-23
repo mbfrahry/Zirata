@@ -224,8 +224,8 @@ public class TurretBlock extends Block{
 		if(attributeIndex == 3){
 			currVal = this.fireRange;
 		}
-		float delta = currVal - defaultVal + 0.01f;
-		return (int) Math.abs((delta/upgradeValueArray[attributeIndex]));
+		float delta = currVal - defaultVal;
+		return (int) (Math.abs((delta/upgradeValueArray[attributeIndex]))+.1f);
 	}
 
 	public void setBeginningLastTouch(){
