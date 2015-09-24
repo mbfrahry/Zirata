@@ -1,18 +1,10 @@
 Started
   Tutorials/Help Page 
   Make ship building less clunky
+  Better UI/Intuitivness
 
 Needs to be done 
 
-  Clear .ship file appropriately
-  Better UI/Intuitivness
-  
-  Decide how to do levels
-    Arcadey
-    Or map
-    
-  Fusion of blocks
-  
   Block upgrade paths
   
   Different blocks
@@ -30,7 +22,6 @@ Needs to be done
   
   Bugs:
     Bullets go past cone range
-    Energy goes negative when energy block is lost
   
   Max was here.
 
