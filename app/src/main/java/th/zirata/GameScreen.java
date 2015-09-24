@@ -36,7 +36,6 @@ public class GameScreen extends GLScreen {
     World world;
     WorldRenderer renderer;
     FPSCounter fpsCounter;
-    //int[] blockNum = {-1, -1, -1, -1, -1};
     HashMap<Integer,Vector2> touchDowns;
 
     public GameScreen(Game game) {
@@ -51,8 +50,8 @@ public class GameScreen extends GLScreen {
         world = new World();
         renderer = new WorldRenderer(glGraphics, batcher, world);
         pauseBounds = new Rectangle(320- 64, 480- 64, 64, 64);
-        resumeBounds = new Rectangle(160 - 96, 240, 192, 36);
-        quitBounds = new Rectangle(320- 64, 480- 64, 64, 64);
+        resumeBounds = new Rectangle(0, 220, 320, 50);
+        quitBounds = new Rectangle(0, 175, 320, 50);
 		powerBounds = new Rectangle(260, 0, 50, 50);
         fpsCounter = new FPSCounter();
 		touchDowns = new HashMap<Integer, Vector2>();
@@ -121,9 +120,14 @@ public class GameScreen extends GLScreen {
 						return;
 					}
 				}
+				/*
 				if (OverlapTester.pointInRectangle(quitBounds, touchPoint)) {
 					world.clearBullets();
 					game.setScreen(new MainMenuScreen(game));
+					return;
+				}*/
+				if (OverlapTester.pointInRectangle(pauseBounds, touchPoint)) {
+					state = GAME_PAUSED;
 					return;
 				}
 				if (OverlapTester.pointInRectangle(powerBounds, touchPoint)){
@@ -278,7 +282,12 @@ public class GameScreen extends GLScreen {
 	}
 	
 	private void presentPaused() {
-
+		batcher.beginBatch(Assets.mainMenuTextures);
+		batcher.drawSprite(160, 250, 320, 50, Assets.textureRegions.get("Rectangle"));
+		batcher.drawSprite(160, 200, 320, 50, Assets.textureRegions.get("Rectangle"));
+		Assets.font.drawTextCentered(batcher, "Continue", 160, 250, 32, 32);
+		Assets.font.drawTextCentered(batcher, "Quit", 160, 200, 32, 32);
+		batcher.endBatch();
 	}
 
 	private void presentLevelEnd(){

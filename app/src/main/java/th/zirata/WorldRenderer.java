@@ -212,6 +212,9 @@ public class WorldRenderer {
 			batcher.drawSprite(60, 55, 15, 130, Assets.textureRegions.get("GreenBullet"));
 		}
 
+		batcher.drawSprite(280, 450, 5, 35, Assets.textureRegions.get("BaseBlock"));
+		batcher.drawSprite(290, 450, 5, 35, Assets.textureRegions.get("BaseBlock"));
+
 		batcher.endBatch();
 	}
 }
