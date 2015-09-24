@@ -281,12 +281,12 @@ public class BuildScreen extends GLScreen{
 					selectedBankBlock.position.y = tempY;
 				}
 				resetBlockBank();
-				if (selectedBankBlock.getClass() == TurretBlock.class) {
-					game.setScreen(new BlockDirectionScreen(game, selectedBankBlock.position, PlayerSave.activeBlocks.indexOf(selectedBankBlock)));
-				} else {
+//				if (selectedBankBlock.getClass() == TurretBlock.class) {
+//					//game.setScreen(new BlockDirectionScreen(game, selectedBankBlock.position, PlayerSave.activeBlocks.indexOf(selectedBankBlock)));
+//				} else {
 					selectedActiveBlock = selectedBankBlock;
 					selectedBankBlock = null;
-				}
+	//			}
 				showBlockBank = true;
 				if(testShowFuse()){
 					showFuse = true;
@@ -339,7 +339,7 @@ public class BuildScreen extends GLScreen{
 			showFuse = false;
 			ownedBlocksByType = getBlocksFromType(block.getClass());
 			if (block.getClass() == TurretBlock.class) {
-				game.setScreen(new BlockDirectionScreen(game, block.position, PlayerSave.activeBlocks.indexOf(block)));
+				//game.setScreen(new BlockDirectionScreen(game, block.position, PlayerSave.activeBlocks.indexOf(block)));
 			}
 		}
 
@@ -349,8 +349,19 @@ public class BuildScreen extends GLScreen{
 		String[] upgradeableAttributes = selectedActiveBlock.getUpgradableAttributes();
 		float[] upgradeValues = selectedActiveBlock.getUpgradeValues();
 		Rectangle attrBlockBounds;
+		int yStart = 190;
+		if (selectedActiveBlock.getClass().equals(TurretBlock.class)){
+			yStart += 34;
+			attrBlockBounds =  new Rectangle(0, 190, 110, 37);
+			if(OverlapTester.pointInRectangle(attrBlockBounds, touchPoint)){
+				TurretBlock tBlock = (TurretBlock)selectedActiveBlock;
+				tBlock.fireAngle += 270;
+				tBlock.fireAngle %= 360;
+				PlayerSave.save(game.getFileIO());
+			}
+		}
 		for(int i = 0; i < upgradeableAttributes.length; i++) {
-			attrBlockBounds =  new Rectangle(0, 190 + i * 40, 110, 40);
+			attrBlockBounds =  new Rectangle(0, yStart + i * 40, 110, 40);
 			if (OverlapTester.pointInRectangle(attrBlockBounds, touchPoint)) {
 				if(!selectedActiveBlock.checkMaxAttributeLevel(i)) {
 					if (Settings.spaceBucks >= selectedActiveBlock.getAttributeLevel(i) + 1) {
@@ -369,9 +380,19 @@ public class BuildScreen extends GLScreen{
 
 	public void checkFuseBounds(){
 		ArrayList<Block> compatibleFusionBlocks = getCompatibleFusionBlocks();
-		Rectangle fuseBounds = new Rectangle(0, 198, 110, 110);
+		Rectangle fuseBounds = new Rectangle(0, 242, 110, 110);
 		int fuseX = 26;
 		int fuseY = 285;
+		if (selectedActiveBlock.getClass().equals(TurretBlock.class)) {
+			fuseY += 34;
+			Rectangle rotateBounds = new Rectangle(0, 190, 110, 37);
+			if (OverlapTester.pointInRectangle(rotateBounds, touchPoint)) {
+				TurretBlock tBlock = (TurretBlock) selectedActiveBlock;
+				tBlock.fireAngle += 270;
+				tBlock.fireAngle %= 360;
+				PlayerSave.save(game.getFileIO());
+			}
+		}
 		if (OverlapTester.pointInRectangle(fuseBounds, touchPoint)){
 			for (int i = 0; i < compatibleFusionBlocks.size(); i++){
 				Rectangle currCoords = new Rectangle(fuseX-12, fuseY-12, 25, 25);
@@ -616,6 +637,13 @@ public class BuildScreen extends GLScreen{
 		String[] upgradeableAttributes = selectedActiveBlock.getUpgradableAttributes();
 		float[] attributeValues = selectedActiveBlock.getAttributeVals();
 		float[] upgradeValues = selectedActiveBlock.getUpgradeValues();
+		if(selectedActiveBlock.getClass().equals(TurretBlock.class)){
+
+			batcher.drawSprite(x, 217 , 110, 35, Assets.textureRegions.get("Rectangle"));
+			Assets.font.drawTextCentered(batcher, "Rotate", x, 217, 10, 10);
+
+			y+=34;
+		}
 		for (int i = 0; i < upgradeableAttributes.length; i++) {
 			float nextVal = attributeValues[i] + upgradeValues[i];
 			batcher.drawSprite(x, y + i * 40, 110, 40, Assets.textureRegions.get("Rectangle"));
@@ -652,6 +680,9 @@ public class BuildScreen extends GLScreen{
 
 		x = 55;
 		y = 220;
+		if(selectedActiveBlock.getClass().equals(TurretBlock.class)){
+			y+=34;
+		}
 		for (int i = 0; i < upgradeableAttributes.length; i++) {
 			if (!selectedActiveBlock.checkMaxAttributeLevel(i)) {
 				batcher.beginBatch(Assets.blockTextures);
@@ -668,18 +699,26 @@ public class BuildScreen extends GLScreen{
 
 	public void drawFuseMenu(){
 		batcher.beginBatch(Assets.mainMenuTextures);
-		batcher.drawSprite(55, 318, 110, 25, Assets.textureRegions.get("Rectangle"));
-		batcher.drawSprite(55, 253, 110, 110, Assets.textureRegions.get("Rectangle"));
-		batcher.endBatch();
-		batcher.beginBatch(Assets.blockTextures);
-		batcher.drawSprite(55, 318, 176, 38, Assets.textureRegions.get("Bullet"));
-		batcher.endBatch();
-		batcher.beginBatch(Assets.mainMenuTextures);
-		Assets.font.drawTextCentered(batcher, "Fuse!", 55, 320, 10, 10);
-		batcher.endBatch();
-
+		int yAdd = 0;
 		int fuseX = 26;
 		int fuseY = 285;
+		if(selectedActiveBlock.getClass().equals(TurretBlock.class)){
+
+			batcher.drawSprite(55, 217, 110, 35, Assets.textureRegions.get("Rectangle"));
+			Assets.font.drawTextCentered(batcher, "Rotate", 55, 217, 10, 10);
+
+			yAdd +=34;
+			fuseY += 34;
+		}
+		batcher.drawSprite(55, 318 + yAdd, 110, 25, Assets.textureRegions.get("Rectangle"));
+		batcher.drawSprite(55, 253 + yAdd, 110, 110, Assets.textureRegions.get("Rectangle"));
+		batcher.endBatch();
+		batcher.beginBatch(Assets.blockTextures);
+		batcher.drawSprite(55, 318 + yAdd, 176, 38, Assets.textureRegions.get("Bullet"));
+		batcher.endBatch();
+		batcher.beginBatch(Assets.mainMenuTextures);
+		Assets.font.drawTextCentered(batcher, "Fuse!", 55, 320 + yAdd, 10, 10);
+		batcher.endBatch();
 
 		ArrayList<Block> compatibleFusionBlocks = getCompatibleFusionBlocks();
 		if(compatibleFusionBlocks.size() > 0){
@@ -750,7 +789,7 @@ public class BuildScreen extends GLScreen{
 
 		String levelString = "";
 		if (lvl == 0){
-			levelString = "0";
+			levelString = "-";
 		}
 		else{
 			levelString += addChars(50, lvl, fifty);
