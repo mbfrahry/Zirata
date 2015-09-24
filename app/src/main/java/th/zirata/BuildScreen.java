@@ -378,7 +378,20 @@ public class BuildScreen extends GLScreen{
 					else{
 						selectedActiveBlock.fuseWith(currBlock);
 						PlayerSave.bankedBlocks.remove(currBlock);
-						ownedBlocksByType = getBlocksFromType(selectedActiveBlock.getClass());
+						Class c;
+						if(blockBankOption == BLOCK_BANK_TURRET){
+							c = TurretBlock.class;
+						}
+						else if (blockBankOption == BLOCK_BANK_ARMOR){
+							c = ArmorBlock.class;
+						}
+						else if (blockBankOption == BLOCK_BANK_ENERGY){
+							c = EnergyBlock.class;
+						}
+						else{
+							c = MultiplierBlock.class;
+						}
+						ownedBlocksByType = getBlocksFromType(c);
 						showUpgrades = true;
 						showFuse = false;
 					}
