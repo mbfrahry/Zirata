@@ -129,11 +129,17 @@ public class BuildScreen extends GLScreen{
 						}
 
 						if (OverlapTester.pointInRectangle(forwardBounds, touchPoint)) {
-							Settings.save(game.getFileIO());
-							PlayerSave.save(game.getFileIO());
-							setTurretDirections();
-							game.setScreen(new GameScreen(game));
-							return;
+							if(checkForBlankBlocks()){
+								//Can't continue
+							}
+							else{
+								Settings.save(game.getFileIO());
+								PlayerSave.save(game.getFileIO());
+								setTurretDirections();
+								game.setScreen(new GameScreen(game));
+								return;
+							}
+
 						}
 
 
@@ -451,17 +457,29 @@ public class BuildScreen extends GLScreen{
 
 		for(int i = 0; i < potentialBlocks.size(); i++){
 			Block currBlock = potentialBlocks.get(i);
-			batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24 , 24 , Assets.textureRegions.get("PotentialBlock"));
+			batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("PotentialBlock"));
 		}
 		batcher.endBatch();
 
 		batcher.beginBatch(Assets.mainMenuTextures);
 		batcher.drawSprite(290, 30, 60, 60, Assets.textureRegions.get("Arrow"));
 		batcher.drawSprite(30, 30, -60, 60, Assets.textureRegions.get("Arrow"));
-		Assets.font.drawText(batcher, "SpaceBucks: " + Settings.spaceBucks + " ", 16, 480 - 20);
-		Assets.font.drawText(batcher, "Next Block Cost: " + Settings.nextBlockCost, 16, 480 - 40);
-		Assets.font.drawTextCentered(batcher, "Level: " + Settings.currLevel, 160, 30, 16, 16);
+		Assets.font.drawTextCentered(batcher, "Prepare Your", 160, 460, 20, 23);
+		Assets.font.drawTextCentered(batcher, "Ship", 160, 438, 25, 28);
 
+		Assets.font.drawTextRightJustified(batcher, "Bank:", 229, 410, 12, 12);
+		Assets.font.drawTextRightJustified(batcher, Settings.spaceBucks + " ", 300, 410, 12, 12);
+		Assets.font.drawTextRightJustified(batcher, ":", 229, 390, 12, 12);
+		Assets.font.drawTextRightJustified(batcher, "-" + Settings.nextBlockCost + " ", 300, 390, 12, 12);
+		//Assets.font.drawText(batcher, "Next Block Cost: " + Settings.nextBlockCost, 16, 395);
+		//Assets.font.drawTextCentered(batcher, "Level: " + Settings.currLevel, 160, 30, 16, 16);
+
+		batcher.endBatch();
+
+		batcher.beginBatch(Assets.blockTextures);
+		batcher.drawSprite(305, 410, 12, 12, Assets.textureRegions.get("BaseBlock"));
+		batcher.drawSprite(305, 390, 12, 12, Assets.textureRegions.get("BaseBlock"));
+		batcher.drawSprite(216, 390, 12, 12, Assets.textureRegions.get("PotentialBlock"));
 		batcher.endBatch();
 
 		if(showBlockBank){
@@ -881,6 +899,19 @@ public class BuildScreen extends GLScreen{
 
 	public boolean testShowFuse(){
 		return selectedActiveBlock.getMaxAttributeNum() <= selectedActiveBlock.getExperienceLevel(selectedActiveBlock.getUpgradableAttributes().length);
+	}
+
+	public boolean checkForBlankBlocks(){
+		boolean hasBlank = false;
+
+		for (Block b : PlayerSave.activeBlocks){
+			if (b.getClass().equals(BlankBlock.class)){
+				hasBlank = true;
+				break;
+			}
+		}
+
+		return hasBlank;
 	}
 
 	public void setTurretDirections(){
