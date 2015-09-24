@@ -18,12 +18,12 @@ public class EnemyTurretBlock extends TurretBlock{
 		super.state = TURRET_WAITING;
 		this.bulletDamage = bulletDamage;
 	}
-	
+
 	public void resetBlock(){
 		super.state = TURRET_WAITING;
 		timeToFire = initialTimeToFire;
 	}
-	
+
 	public void update(float deltaTime){
 		super.update(deltaTime);
 		timeToFire -= deltaTime;

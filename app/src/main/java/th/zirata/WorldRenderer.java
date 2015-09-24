@@ -132,14 +132,18 @@ public class WorldRenderer {
 
 	private void renderEnemies(){
 		if(world.enemies.size() > 0){
+
 			try{
 				batcher.beginBatch(Assets.blockTextures);
 				for(int i = 0; i < world.enemies.size(); i++){
 					for(int j = 0; j < world.enemies.get(i).enemyBlocks.size(); j++){
 						Block currBlock = world.enemies.get(i).enemyBlocks.get(j);
 						if(currBlock.getClass().equals(EnemyTurretBlock.class)){
+							EnemyTurretBlock currEnemy = (EnemyTurretBlock) currBlock;
+							Vector2 rotate = new Vector2(160,240);
 							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretBase"));
-							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretTop"));
+							//TODO Make turrets actually point at the right spot
+							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, rotate.sub(currEnemy.position.x, currEnemy.position.y).angle(), Assets.textureRegions.get("TurretTop"));
 							EnemyTurretBlock tBlock = (EnemyTurretBlock)currBlock;
 							Bullet b;
 							for(int k = 0; k < tBlock.bullets.size(); k++){

@@ -1,6 +1,5 @@
 package th.zirata;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -318,7 +317,7 @@ public class BuildScreen extends GLScreen{
 		if (bankBlockBounds.lowerLeft.y > 15 && OverlapTester.pointInRectangle(bankBlockBounds, touchPoint)){
 			Block block = null;
 			if(blockBankOption  == BLOCK_BANK_TURRET){
-				block = new TurretBlock(-100, -100, 10, 3, 1, 0);
+				block = new TurretBlock(-100, -100, 10, 3, 1, 90);
 			}
 			if(blockBankOption  == BLOCK_BANK_ARMOR){
 				block = new ArmorBlock(-100, -100, 20, 1);
@@ -493,9 +492,12 @@ public class BuildScreen extends GLScreen{
 		Assets.font.drawTextRightJustified(batcher, "Bank:", 229, 410, 12, 12);
 		Assets.font.drawTextRightJustified(batcher, Settings.spaceBucks + " ", 300, 410, 12, 12);
 		Assets.font.drawTextRightJustified(batcher, ":", 229, 390, 12, 12);
-		Assets.font.drawTextRightJustified(batcher, "-" + Settings.nextBlockCost + " ", 300, 390, 12, 12);
-		//Assets.font.drawText(batcher, "Next Block Cost: " + Settings.nextBlockCost, 16, 395);
-		//Assets.font.drawTextCentered(batcher, "Level: " + Settings.currLevel, 160, 30, 16, 16);
+		String cost = Settings.nextBlockCost + " ";
+		if(Settings.nextBlockCost > 0){
+			cost = "-".concat(cost);
+		}
+		Assets.font.drawTextRightJustified(batcher, cost, 300, 390, 12, 12);
+		Assets.font.drawTextCentered(batcher, "Level: " + Settings.currLevel, 160, 30, 16, 16);
 
 		batcher.endBatch();
 
