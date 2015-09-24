@@ -70,7 +70,7 @@ public class Enemy{
 			newEnemyBlock = new ArmorBlock(x, y, health * enemyLevel, enemyLevel);
 		}
 		else if(enemyType == 2){
-			newEnemyBlock = new EnemyTurretBlock(x, y, health * enemyLevel, 3*enemyLevel);
+			newEnemyBlock = new EnemyTurretBlock(x, y, health * enemyLevel/2, 3*enemyLevel);
 		}
 		newEnemyBlock.velocity.add(xVelocity, yVelocity);
 		enemyBlocks.add(newEnemyBlock);

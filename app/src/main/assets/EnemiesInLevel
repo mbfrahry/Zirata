@@ -1,11 +1,11 @@
 {
   "level1": {
-    "enemyNumber": 10,
+    "enemyNumber": 5,
     "enemyLevel": 1,
     "turretChance": 0
   },
   "level2": {
-    "enemyNumber": 20,
+    "enemyNumber": 10,
     "enemyLevel": 1,
     "turretChance": 0.25
   },
@@ -21,7 +21,7 @@
   },
   "level5": {
     "enemyNumber": 500,
-    "enemyLevel": 1,
+    "enemyLevel": 5,
     "turretChance": 0
   }
   
