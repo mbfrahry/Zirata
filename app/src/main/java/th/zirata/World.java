@@ -116,7 +116,7 @@ public class World {
 	}
 
 	private double findSpeed(){
-		double rotateSpeed = .1 + .01*player.energy;
+		double rotateSpeed = .1 + .02*player.energy - .01*player.playerBlocks.size();
 		if(rotateSpeed > .6) {
 			rotateSpeed = .6;
 		}

@@ -61,7 +61,6 @@ public class Zirata extends GLGame {
 			}
 		};
 		revmob = RevMob.startWithListener(this, revmobListener);
-		revmob.showFullscreen(this, revmobListener);
 		//return new MainHelpScreen(this, revmob, revmobListener);
 		return new MainMenuScreen(this);
 	}
