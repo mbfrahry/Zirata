@@ -462,6 +462,8 @@ public class BuildScreen extends GLScreen{
 		batcher.endBatch();
 
 		batcher.beginBatch(Assets.mainMenuTextures);
+		batcher.drawSprite(250, 400, 165, 40, Assets.textureRegions.get("Rectangle"));
+		//batcher.drawSprite(290, 30, 60, 60, Assets.textureRegions.get("Rectangle"));
 		batcher.drawSprite(290, 30, 60, 60, Assets.textureRegions.get("Arrow"));
 		batcher.drawSprite(30, 30, -60, 60, Assets.textureRegions.get("Arrow"));
 		Assets.font.drawTextCentered(batcher, "Prepare Your", 160, 460, 20, 23);
