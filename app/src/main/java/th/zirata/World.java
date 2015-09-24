@@ -112,6 +112,19 @@ public class World {
 				currBlock.action(this);
 			}
 		}
+		while (player.energy < 0){
+			for(int i = 0; i< player.playerBlocks.size(); i++){
+				currBlock = player.playerBlocks.get(i);
+				if(currBlock.energyCost > 0 && currBlock.active){
+					currBlock.active = false;
+					player.poweredBlocks.remove(currBlock);
+					player.getEnergy();
+					if(player.energy >= 0 ){
+						return;
+					}
+				}
+			}
+		}
 		player.update(deltaTime);
 	}
 
