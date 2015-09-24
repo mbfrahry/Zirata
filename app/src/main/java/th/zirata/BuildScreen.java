@@ -58,10 +58,10 @@ public class BuildScreen extends GLScreen{
         forwardBounds = new Rectangle(320-64, 0, 64, 64);
 		blockMenuBounds = new Rectangle(130, 0, 64, 64);
 		closeBlockMenuBounds = new Rectangle(260, 200, 64, 64);
-		blockBankTurretBounds  = new Rectangle(0, 160, 80, 50);
-		blockBankArmorBounds  = new Rectangle(80, 160, 80, 50);
-		blockBankEnergyBounds = new Rectangle(160, 160, 80, 50);
-		blockBankMultiplierBounds  = new Rectangle(240, 160, 80, 50);
+		blockBankTurretBounds  = new Rectangle(0, 160, 80, 40);
+		blockBankArmorBounds  = new Rectangle(80, 160, 80, 40);
+		blockBankEnergyBounds = new Rectangle(160, 160, 80, 40);
+		blockBankMultiplierBounds  = new Rectangle(240, 160, 80, 40);
 
 		selectedBankBlock = null;
 		selectedActiveBlock = null;
