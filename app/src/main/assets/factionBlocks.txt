@@ -1,0 +1,2 @@
+greenTurretBase = 0 0 50 50
+greenTurretTop = 51 0 50 50

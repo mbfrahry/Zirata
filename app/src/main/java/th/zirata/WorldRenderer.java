@@ -134,25 +134,31 @@ public class WorldRenderer {
 		if(world.enemies.size() > 0){
 
 			try{
-				batcher.beginBatch(Assets.blockTextures);
 				for(int i = 0; i < world.enemies.size(); i++){
 					for(int j = 0; j < world.enemies.get(i).enemyBlocks.size(); j++){
 						Block currBlock = world.enemies.get(i).enemyBlocks.get(j);
 						if(currBlock.getClass().equals(EnemyTurretBlock.class)){
+							batcher.beginBatch(Assets.factionTextures);
 							EnemyTurretBlock currEnemy = (EnemyTurretBlock) currBlock;
 							Vector2 rotate = new Vector2(160,240);
-							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretBase"));
+							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.textureRegions.get("greenTurretBase"));
 							//TODO Make turrets actually point at the right spot
-							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, rotate.sub(currEnemy.position.x, currEnemy.position.y).angle(), Assets.textureRegions.get("TurretTop"));
+							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 36, 36, rotate.sub(currEnemy.position.x, currEnemy.position.y).angle(), Assets.textureRegions.get("greenTurretTop"));
+							batcher.endBatch();
 							EnemyTurretBlock tBlock = (EnemyTurretBlock)currBlock;
 							Bullet b;
 							for(int k = 0; k < tBlock.bullets.size(); k++){
+								batcher.beginBatch(Assets.blockTextures);
 								b = tBlock.bullets.get(k);
 								batcher.drawSprite(b.position.x, b.position.y, 5, 5, Assets.textureRegions.get("Bullet"));
+								batcher.endBatch();
 							}
+
 						}
 
 						else if(currBlock.getClass().equals(ArmorBlock.class)){
+
+							batcher.beginBatch(Assets.blockTextures);
 							if(currBlock.health <= currBlock.maxHealth && currBlock.health > currBlock.maxHealth*.7){
 								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.textureRegions.get("FullHealthArmorBlock"));
 							}
@@ -162,6 +168,7 @@ public class WorldRenderer {
 							else if(currBlock.health <= currBlock.maxHealth*.3 && currBlock.health > 0){
 								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.textureRegions.get("LowHealthArmorBlock"));
 							}
+							batcher.endBatch();
 						}
 
 						else if(currBlock.getClass().equals(EnergyBlock.class)){
@@ -173,7 +180,7 @@ public class WorldRenderer {
 						}
 					}
 				}
-				batcher.endBatch();
+
 			}
 			catch(Exception e){
 				//Enemy dies while trying to draw

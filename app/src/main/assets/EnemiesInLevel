@@ -7,7 +7,7 @@
   "level2": {
     "enemyNumber": 10,
     "enemyLevel": 1,
-    "turretChance": 0.25
+    "turretChance": 1.25
   },
   "level3": {
     "enemyNumber": 10,

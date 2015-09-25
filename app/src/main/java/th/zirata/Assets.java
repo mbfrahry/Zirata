@@ -20,6 +20,8 @@ public class Assets {
 	public static Texture blockTextures;
 	
 	public static Texture mainMenuTextures;
+
+	public static Texture factionTextures;
 //	public static TextureRegion playRegion;
 //	public static TextureRegion arrowRegion;
 //	public static TextureRegion helpRegion;
@@ -47,6 +49,9 @@ public class Assets {
 		mainMenuTextures = new Texture(game, "MenuItems.png");
 		addTextures(game.getFileIO(), mainMenuTextures, "MenuItems.txt");
 		font = new Font(mainMenuTextures, 0, 0, 16, 16, 20);
+
+		factionTextures = new Texture(game, "factionBlocks.png");
+		addTextures(game.getFileIO(), factionTextures, "factionBlocks.txt");
 
 		explosionSound = game.getAudio().newSound("Explosion.wav");
 		shootSound = game.getAudio().newSound("Shoot.wav");
