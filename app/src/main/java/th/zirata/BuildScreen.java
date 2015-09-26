@@ -22,12 +22,11 @@ public class BuildScreen extends GLScreen{
 	SpriteBatcher batcher;
 	Rectangle backBounds;
 	Rectangle forwardBounds;
-	Rectangle blockMenuBounds;
-	Rectangle closeBlockMenuBounds;
 	Rectangle blockBankTurretBounds;
 	Rectangle blockBankArmorBounds;
 	Rectangle blockBankEnergyBounds;
 	Rectangle blockBankMultiplierBounds;
+	Rectangle closeBankBounds;
 	Vector2 touchPoint;
 	ArrayList<Block> potentialBlocks;
 	ArrayList<Block> ownedBlocksByType;
@@ -57,13 +56,11 @@ public class BuildScreen extends GLScreen{
         guiCam = new Camera2D(glGraphics, 320, 480);
         backBounds = new Rectangle(0, 0, 64, 64);
         forwardBounds = new Rectangle(320-64, 0, 64, 64);
-		blockMenuBounds = new Rectangle(130, 0, 64, 64);
-		closeBlockMenuBounds = new Rectangle(260, 200, 64, 64);
 		blockBankTurretBounds  = new Rectangle(0, 160, 80, 40);
 		blockBankArmorBounds  = new Rectangle(80, 160, 80, 40);
 		blockBankEnergyBounds = new Rectangle(160, 160, 80, 40);
 		blockBankMultiplierBounds  = new Rectangle(240, 160, 80, 40);
-
+		closeBankBounds = new Rectangle(160, 160, 160, 240);
 		selectedBankBlock = null;
 		selectedActiveBlock = null;
 
@@ -159,6 +156,9 @@ public class BuildScreen extends GLScreen{
 									Settings.save(game.getFileIO());
 									showBlockBank = true;
 									selectedActiveBlock = currBlock;
+									guiCam.position = selectedActiveBlock.position;
+									guiCam.zoom = .5f;
+									resetBlockBankBounds();
 									showUpgrades = true;
 									showFuse = false;
 								}
@@ -173,6 +173,7 @@ public class BuildScreen extends GLScreen{
 								selectedActiveBlock = currBlock;
 								guiCam.position = selectedActiveBlock.position;
 								guiCam.zoom = .5f;
+								resetBlockBankBounds();
 								if(testShowFuse()){
 									showFuse = true;
 									showUpgrades = false;
@@ -214,7 +215,7 @@ public class BuildScreen extends GLScreen{
 						else if(showFuse && showSubmenu){
 							checkFuseBounds();
 						}
-						if(touchPoint.x > 120 && touchPoint.y > 200){
+						if(OverlapTester.pointInRectangle(closeBankBounds, touchPoint)){
 							guiCam.position.set(160, 240);
 							guiCam.zoom = 1;
 							showBlockBank = false;
@@ -232,12 +233,9 @@ public class BuildScreen extends GLScreen{
 	}
 
 
+
 	private void checkBankBlocks(Vector2 touchPoint){
-		if (OverlapTester.pointInRectangle(closeBlockMenuBounds, touchPoint)) {
-			showBlockBank = false;
-			return;
-		}
-		else if (OverlapTester.pointInRectangle(blockBankTurretBounds, touchPoint) && blockBankOption != BLOCK_BANK_TURRET) {
+		if (OverlapTester.pointInRectangle(blockBankTurretBounds, touchPoint) && blockBankOption != BLOCK_BANK_TURRET) {
 			blockBankOption = BLOCK_BANK_TURRET;
 			ownedBlocksByType = getBlocksFromType(TurretBlock.class);
 			return;
@@ -266,7 +264,7 @@ public class BuildScreen extends GLScreen{
 			int xval =(26 + j*30)%300;
 			int yval = 130 - 30*((26 + j*30)/300);
 
-			bankBlockBounds = new Rectangle(xval - 12, yval - 12, 25, 25);
+			bankBlockBounds = new Rectangle(guiCam, xval - 12, yval - 12, 25, 25);
 			if (OverlapTester.pointInRectangle(bankBlockBounds, touchPoint)) {
 				selectedBankBlock = currBlock;
 				if (selectedActiveBlock == selectedBankBlock) {
@@ -305,17 +303,17 @@ public class BuildScreen extends GLScreen{
 		}
 		//Checks if add block was pressed
 		if(bankBlockBounds == null){
-			bankBlockBounds = new Rectangle(26-12, 130-12, 25, 25);
+			bankBlockBounds = new Rectangle(guiCam, 26-12, 130-12, 25, 25);
 		}
 		else{
 			int xval =(26 + (ownedBlocksByType.size()-1)*30)%300;
 			int yval = 130 - 30*((26 + (ownedBlocksByType.size()-1)*30)/300);
 
-			bankBlockBounds = new Rectangle(xval -12, yval -12, 25, 25);
-			bankBlockBounds.lowerLeft.x +=30;
+			bankBlockBounds = new Rectangle(guiCam, xval -12, yval -12, 25, 25);
+			bankBlockBounds.lowerLeft.x += (30 * guiCam.zoom);
 			if(bankBlockBounds.lowerLeft.x >  300) {
-				bankBlockBounds.lowerLeft.x = 18;
-				bankBlockBounds.lowerLeft.y -= 30;
+				bankBlockBounds.lowerLeft.x = (18 * guiCam.zoom);
+				bankBlockBounds.lowerLeft.y -= (30 * guiCam.zoom);
 			}
 
 		}
@@ -343,9 +341,6 @@ public class BuildScreen extends GLScreen{
 			showUpgrades = true;
 			showFuse = false;
 			ownedBlocksByType = getBlocksFromType(block.getClass());
-			if (block.getClass() == TurretBlock.class) {
-				//game.setScreen(new BlockDirectionScreen(game, block.position, PlayerSave.activeBlocks.indexOf(block)));
-			}
 		}
 
 	}
@@ -357,7 +352,7 @@ public class BuildScreen extends GLScreen{
 		int yStart = 190;
 		if (selectedActiveBlock.getClass().equals(TurretBlock.class)){
 			yStart += 34;
-			attrBlockBounds =  new Rectangle(0, 190, 110, 37);
+			attrBlockBounds =  new Rectangle(guiCam, 0, 190, 110, 37);
 			if(OverlapTester.pointInRectangle(attrBlockBounds, touchPoint)){
 				TurretBlock tBlock = (TurretBlock)selectedActiveBlock;
 				tBlock.fireAngle += 270;
@@ -366,7 +361,7 @@ public class BuildScreen extends GLScreen{
 			}
 		}
 		for(int i = 0; i < upgradeableAttributes.length; i++) {
-			attrBlockBounds =  new Rectangle(0, yStart + i * 40, 110, 40);
+			attrBlockBounds =  new Rectangle(guiCam, 0, yStart + i * 40, 110, 40);
 			if (OverlapTester.pointInRectangle(attrBlockBounds, touchPoint)) {
 				if(!selectedActiveBlock.checkMaxAttributeLevel(i)) {
 					if (Settings.spaceBucks >= selectedActiveBlock.getAttributeLevel(i) + 1) {
@@ -381,6 +376,14 @@ public class BuildScreen extends GLScreen{
 				}
 			}
 		}
+	}
+
+	private void resetBlockBankBounds(){
+		blockBankTurretBounds  = new Rectangle(guiCam, 0, 160, 80, 40);
+		blockBankArmorBounds  = new Rectangle(guiCam, 80, 160, 80, 40);
+		blockBankEnergyBounds = new Rectangle(guiCam, 160, 160, 80, 40);
+		blockBankMultiplierBounds  = new Rectangle(guiCam, 240, 160, 80, 40);
+		closeBankBounds = new Rectangle(guiCam, 120, 200, 160, 240);
 	}
 
 	public void checkFuseBounds(){

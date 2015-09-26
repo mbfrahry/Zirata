@@ -1,5 +1,7 @@
 package com.badlogic.androidgames.framework.math;
 
+import com.badlogic.androidgames.framework.gl.Camera2D;
+
 public class OverlapTester {
 
 	public static boolean overlapCircles(Circle c1, Circle c2){
@@ -52,6 +54,13 @@ public class OverlapTester {
 		return r.lowerLeft.x <= p.x && r.lowerLeft.x + r.width >= p.x &&
 				r.lowerLeft.y <= p.y && r.lowerLeft.y + r.height >= p.y;
 	}
+
+	public static boolean pointInUIRectangle(Camera2D guiCam, Rectangle r, Vector2 p){
+		return r.lowerLeft.x <= p.x && r.lowerLeft.x + r.width >= p.x &&
+				r.lowerLeft.y <= p.y && r.lowerLeft.y + r.height >= p.y;
+	}
+
+
 	
 	public static boolean pointInRectangle(Rectangle r, float x, float y){
 		return r.lowerLeft.x <= x && r.lowerLeft.x + r.width >= x &&
