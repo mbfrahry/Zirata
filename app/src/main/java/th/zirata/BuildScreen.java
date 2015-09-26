@@ -645,43 +645,43 @@ public class BuildScreen extends GLScreen{
 		float[] upgradeValues = selectedActiveBlock.getUpgradeValues();
 		if(selectedActiveBlock.getClass().equals(TurretBlock.class)){
 
-			batcher.drawSprite(x, 217 , 110, 35, Assets.textureRegions.get("Rectangle"));
-			Assets.font.drawTextCentered(batcher, "Rotate", x, 217, 10, 10);
+			batcher.drawUISprite(guiCam, x, 217, 110, 35, Assets.textureRegions.get("Rectangle"));
+			Assets.font.drawUITextCentered(guiCam, batcher, "Rotate", x, 217, 10, 10);
 
 			y+=34;
 		}
 		for (int i = 0; i < upgradeableAttributes.length; i++) {
 			float nextVal = attributeValues[i] + upgradeValues[i];
-			batcher.drawSprite(x, y + i * 40, 110, 40, Assets.textureRegions.get("Rectangle"));
-			Assets.font.drawText(batcher, upgradeableAttributes[i], x - 45, y + 10 + i * 40, 10, 10);
+			batcher.drawUISprite(guiCam, x, y + i * 40, 110, 40, Assets.textureRegions.get("Rectangle"));
+			Assets.font.drawUIText(guiCam, batcher, upgradeableAttributes[i], x - 45, y + 10 + i * 40, 10, 10);
 			//UpgradeCost
 			if(!selectedActiveBlock.checkMaxAttributeLevel(i)) {
-				Assets.font.drawTextRightJustified(batcher, selectedActiveBlock.getAttributeLevel(i) + 1 + "", x + 37, y - 5 + i * 40, 10, 10);
-				Assets.font.drawText(batcher, constructAttributeLevel(selectedActiveBlock.getAttributeLevel(i)), x - 45, y - 5 + i * 40, 10, 10);
+				Assets.font.drawUITextRightJustified(guiCam, batcher, selectedActiveBlock.getAttributeLevel(i) + 1 + "", x + 37, y - 5 + i * 40, 10, 10);
+				Assets.font.drawUIText(guiCam, batcher, constructAttributeLevel(selectedActiveBlock.getAttributeLevel(i)), x - 45, y - 5 + i * 40, 10, 10);
 
-				batcher.drawSprite(x + 48, y + 10 + i * 40, 10, 10, Assets.textureRegions.get("addIcon"));
+				batcher.drawUISprite(guiCam, x + 48, y + 10 + i * 40, 10, 10, Assets.textureRegions.get("addIcon"));
 			}
 			//Assets.font.drawText(batcher, "Current: " + attributeValues[i], 15, 100 + i * 80);
 			//Assets.font.drawText(batcher, "Next: " + nextVal , 15, 75 + i*80);
 		}
 
-		batcher.drawSprite(x, y + 40 * upgradeableAttributes.length - 10, 110, 25, Assets.textureRegions.get("Rectangle"));
+		batcher.drawUISprite(guiCam, x, y + 40 * upgradeableAttributes.length - 10, 110, 25, Assets.textureRegions.get("Rectangle"));
 		batcher.endBatch();
 		String text;
 		batcher.beginBatch(Assets.blockTextures);
 		if (showUpgrades){
 			float percentage = selectedActiveBlock.getExperienceLevel(upgradeableAttributes.length)/(float)selectedActiveBlock.getMaxAttributeNum();
-			batcher.drawSprite(x*percentage, y + 40*upgradeableAttributes.length - 10, 176*percentage, 38, Assets.textureRegions.get("GreenBullet"));
+			batcher.drawUISprite(guiCam, x * percentage, y + 40 * upgradeableAttributes.length - 10, 176 * percentage, 38, Assets.textureRegions.get("GreenBullet"));
 			text = "Upgrades";
 		}
 		else{
-			batcher.drawSprite(x, y + 40*upgradeableAttributes.length - 10, 176, 38, Assets.textureRegions.get("Bullet"));
+			batcher.drawUISprite(guiCam, x, y + 40 * upgradeableAttributes.length - 10, 176, 38, Assets.textureRegions.get("Bullet"));
 			text = "Fuse!";
 		}
 		batcher.endBatch();
 
 		batcher.beginBatch(Assets.mainMenuTextures);
-		Assets.font.drawText(batcher, text, x - 35, y - 10 + upgradeableAttributes.length * 40, 10, 10);
+		Assets.font.drawUIText(guiCam, batcher, text, x - 35, y - 10 + upgradeableAttributes.length * 40, 10, 10);
 		batcher.endBatch();
 
 		x = 55;
@@ -692,12 +692,12 @@ public class BuildScreen extends GLScreen{
 		for (int i = 0; i < upgradeableAttributes.length; i++) {
 			if (!selectedActiveBlock.checkMaxAttributeLevel(i)) {
 				batcher.beginBatch(Assets.blockTextures);
-				batcher.drawSprite(x + 48, y - 5 + i * 40, 10, 10, Assets.textureRegions.get("BaseBlock"));
+				batcher.drawUISprite(guiCam, x + 48, y - 5 + i * 40, 10, 10, Assets.textureRegions.get("BaseBlock"));
 				batcher.endBatch();
 			}
 			else{
 				batcher.beginBatch(Assets.mainMenuTextures);
-				Assets.font.drawText(batcher, "MAX LEVEL!", x - 45, y - 5 + i * 40, 10, 10);
+				Assets.font.drawUIText(guiCam, batcher, "MAX LEVEL!", x - 45, y - 5 + i * 40, 10, 10);
 				batcher.endBatch();
 			}
 		}

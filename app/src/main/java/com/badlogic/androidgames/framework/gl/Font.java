@@ -63,14 +63,6 @@ public class Font {
 		}
 	}
 
-
-
-
-
-
-
-
-
 	public void drawTextRightJustified(SpriteBatcher batcher, String text, float x, float y, float glyphWidth, float glyphHeight){
 		int len = text.length();
 		for(int i = len-1; i >= 0; i--){
@@ -83,7 +75,33 @@ public class Font {
 		}
 	}
 
+	public void drawUITextRightJustified(Camera2D guiCam, SpriteBatcher batcher, String text, float x, float y, float glyphWidth, float glyphHeight){
+		x = guiCam.position.x + ((x -160)*guiCam.zoom );
+		y = guiCam.position.y + ((y -240)*guiCam.zoom );
+		glyphWidth *= guiCam.zoom;
+		glyphHeight *= guiCam.zoom;
+		int len = text.length();
+		for(int i = len-1; i >= 0; i--){
+			int c = text.charAt(i) - ' ';
+			if (c < 0 || c > glyphs.length -1)
+				continue;
+			TextureRegion glyph = glyphs[c];
+			batcher.drawSprite(x, y, glyphWidth, glyphHeight, glyph);
+			x -= glyphWidth;
+		}
+	}
+
 	public void drawTextCentered(SpriteBatcher batcher, String text, float x, float y, float glyphWidth, float glyphHeight){
+		int len = text.length()-1;
+		x -= len*glyphWidth/2;
+		drawText(batcher, text, x, y, glyphWidth, glyphHeight);
+	}
+
+	public void drawUITextCentered(Camera2D guiCam, SpriteBatcher batcher, String text, float x, float y, float glyphWidth, float glyphHeight){
+		x = guiCam.position.x + ((x -160)*guiCam.zoom );
+		y = guiCam.position.y + ((y -240)*guiCam.zoom );
+		glyphWidth *= guiCam.zoom;
+		glyphHeight *= guiCam.zoom;
 		int len = text.length()-1;
 		x -= len*glyphWidth/2;
 		drawText(batcher, text, x, y, glyphWidth, glyphHeight);
