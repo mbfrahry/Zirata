@@ -716,14 +716,14 @@ public class BuildScreen extends GLScreen{
 			yAdd +=34;
 			fuseY += 34;
 		}
-		batcher.drawSprite(55, 318 + yAdd, 110, 25, Assets.textureRegions.get("Rectangle"));
-		batcher.drawSprite(55, 253 + yAdd, 110, 110, Assets.textureRegions.get("Rectangle"));
+		batcher.drawUISprite(guiCam, 55, 318 + yAdd, 110, 25, Assets.textureRegions.get("Rectangle"));
+		batcher.drawUISprite(guiCam, 55, 253 + yAdd, 110, 110, Assets.textureRegions.get("Rectangle"));
 		batcher.endBatch();
 		batcher.beginBatch(Assets.blockTextures);
-		batcher.drawSprite(55, 318 + yAdd, 176, 38, Assets.textureRegions.get("Bullet"));
+		batcher.drawUISprite(guiCam, 55, 318 + yAdd, 176, 38, Assets.textureRegions.get("Bullet"));
 		batcher.endBatch();
 		batcher.beginBatch(Assets.mainMenuTextures);
-		Assets.font.drawTextCentered(batcher, "Fuse!", 55, 320 + yAdd, 10, 10);
+		Assets.font.drawUITextCentered(guiCam, batcher, "Fuse!", 55, 320 + yAdd, 10, 10);
 		batcher.endBatch();
 
 		ArrayList<Block> compatibleFusionBlocks = getCompatibleFusionBlocks();
@@ -732,24 +732,24 @@ public class BuildScreen extends GLScreen{
 			for (int i = 0; i < compatibleFusionBlocks.size(); i++){
 				Block currBlock = compatibleFusionBlocks.get(i);
 				if(PlayerSave.activeBlocks.contains(currBlock)){
-					batcher.drawSprite(fuseX, fuseY, 50, 50, Assets.textureRegions.get("Bullet"));
+					batcher.drawUISprite(guiCam, fuseX, fuseY, 50, 50, Assets.textureRegions.get("Bullet"));
 				}
 				if(currBlock.getClass().equals(TurretBlock.class)) {
 					TurretBlock tBlock = (TurretBlock)currBlock ;
 					Vector2 rotate = getRotationVector(tBlock.fireAngle);
 
-					batcher.drawSprite(fuseX, fuseY, 24, 24, Assets.textureRegions.get("TurretBase"));
-					batcher.drawSprite(fuseX, fuseY, 24, 24, rotate.sub(new Vector2(0,0)).angle()-90, Assets.textureRegions.get("TurretTop"));
+					batcher.drawUISprite(guiCam, fuseX, fuseY, 24, 24, Assets.textureRegions.get("TurretBase"));
+					batcher.drawUISprite(guiCam, fuseX, fuseY, 24, 24, rotate.sub(new Vector2(0, 0)).angle() - 90, Assets.textureRegions.get("TurretTop"));
 
 				}
 				else if(currBlock.getClass().equals(ArmorBlock.class)){
-					batcher.drawSprite(fuseX, fuseY, 24, 24, Assets.textureRegions.get("ArmorBlock"));
+					batcher.drawUISprite(guiCam, fuseX, fuseY, 24, 24, Assets.textureRegions.get("ArmorBlock"));
 				}
 				else if(currBlock.getClass().equals(EnergyBlock.class)){
-					batcher.drawSprite(fuseX, fuseY, 24, 24, Assets.textureRegions.get("EnergyBlock"));
+					batcher.drawUISprite(guiCam, fuseX, fuseY, 24, 24, Assets.textureRegions.get("EnergyBlock"));
 				}
 				else if(currBlock.getClass().equals(MultiplierBlock.class)){
-					batcher.drawSprite(fuseX, fuseY, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
+					batcher.drawUISprite(guiCam, fuseX, fuseY, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
 				}
 				fuseX += 30;
 				if(fuseX > 90){
