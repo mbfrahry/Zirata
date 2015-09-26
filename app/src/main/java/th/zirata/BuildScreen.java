@@ -1,5 +1,7 @@
 package th.zirata;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -169,6 +171,8 @@ public class BuildScreen extends GLScreen{
 							pBlockBounds = new Rectangle(currBlock.position.x - 12, currBlock.position.y - 12, 25, 25);
 							if (OverlapTester.pointInRectangle(pBlockBounds, touchPoint) ){//&& currBlock.getClass() != BlankBlock.class) {
 								selectedActiveBlock = currBlock;
+								guiCam.position = selectedActiveBlock.position;
+								guiCam.zoom = .5f;
 								if(testShowFuse()){
 									showFuse = true;
 									showUpgrades = false;
@@ -211,6 +215,8 @@ public class BuildScreen extends GLScreen{
 							checkFuseBounds();
 						}
 						if(touchPoint.x > 120 && touchPoint.y > 200){
+							guiCam.position.set(160, 240);
+							guiCam.zoom = 1;
 							showBlockBank = false;
 							return;
 						}
@@ -525,38 +531,37 @@ public class BuildScreen extends GLScreen{
 
 	private void drawBlockBank(){
 		batcher.beginBatch(Assets.mainMenuTextures);
-		batcher.drawSprite(290, 215, 60, 30, Assets.textureRegions.get("DarkGrayRectangle"));
-		//Assets.font.drawText(batcher, "Close", 245, 265);
-		Assets.font.drawText(batcher, "X", 290, 215);
 
-		batcher.drawSprite(160, 100, 320, 200, Assets.textureRegions.get("Rectangle"));
+		batcher.drawUISprite(guiCam, 290, 215, 60, 30, Assets.textureRegions.get("DarkGrayRectangle"));
+		Assets.font.drawUIText(guiCam, batcher, "X", 290, 215, 24, 24);
 
-		batcher.drawSprite(40, 175, 80, 50, Assets.textureRegions.get("Rectangle"));
-		batcher.drawSprite(120, 175, 80, 50, Assets.textureRegions.get("Rectangle"));
-		batcher.drawSprite(200, 175, 80, 50, Assets.textureRegions.get("Rectangle"));
-		batcher.drawSprite(280, 175, 80, 50, Assets.textureRegions.get("Rectangle"));
+		batcher.drawUISprite(guiCam, 160, 100, 320, 200, Assets.textureRegions.get("Rectangle"));
+		batcher.drawUISprite(guiCam, 40, 175, 80, 50, Assets.textureRegions.get("Rectangle"));
+		batcher.drawUISprite(guiCam, 120, 175, 80, 50, Assets.textureRegions.get("Rectangle"));
+		batcher.drawUISprite(guiCam, 200, 175, 80, 50, Assets.textureRegions.get("Rectangle"));
+		batcher.drawUISprite(guiCam, 280, 175, 80, 50, Assets.textureRegions.get("Rectangle"));
 		if(blockBankOption == BLOCK_BANK_TURRET){
-			batcher.drawSprite(40, 175, 80, 50, Assets.textureRegions.get("DarkGrayRectangle"));
+			batcher.drawUISprite(guiCam, 40, 175, 80, 50, Assets.textureRegions.get("DarkGrayRectangle"));
 		}
 		else if (blockBankOption == BLOCK_BANK_ARMOR){
-			batcher.drawSprite(120, 175, 80, 50, Assets.textureRegions.get("DarkGrayRectangle"));
+			batcher.drawUISprite(guiCam, 120, 175, 80, 50, Assets.textureRegions.get("DarkGrayRectangle"));
 		}
 		else if (blockBankOption == BLOCK_BANK_ENERGY){
-			batcher.drawSprite(200, 175, 80, 50, Assets.textureRegions.get("DarkGrayRectangle"));
+			batcher.drawUISprite(guiCam, 200, 175, 80, 50, Assets.textureRegions.get("DarkGrayRectangle"));
 		}
 		else if (blockBankOption == BLOCK_BANK_MULTIPLIER){
-			batcher.drawSprite(280, 175, 80, 50, Assets.textureRegions.get("DarkGrayRectangle"));
+			batcher.drawUISprite(guiCam, 280, 175, 80, 50, Assets.textureRegions.get("DarkGrayRectangle"));
 		}
 
 
 		batcher.endBatch();
 
 		batcher.beginBatch(Assets.blockTextures);
-		batcher.drawSprite(40, 175, 24, 24, Assets.textureRegions.get("TurretBase"));
-		batcher.drawSprite(40, 175, 24, 24, Assets.textureRegions.get("TurretTop"));
-		batcher.drawSprite(120, 175, 24, 24, Assets.textureRegions.get("ArmorBlock"));
-		batcher.drawSprite(200, 175, 24, 24, Assets.textureRegions.get("EnergyBlock"));
-		batcher.drawSprite(280, 175, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
+		batcher.drawUISprite(guiCam, 40, 175, 24, 24, Assets.textureRegions.get("TurretBase"));
+		batcher.drawUISprite(guiCam, 40, 175, 24, 24, Assets.textureRegions.get("TurretTop"));
+		batcher.drawUISprite(guiCam, 120, 175, 24, 24, Assets.textureRegions.get("ArmorBlock"));
+		batcher.drawUISprite(guiCam, 200, 175, 24, 24, Assets.textureRegions.get("EnergyBlock"));
+		batcher.drawUISprite(guiCam, 280, 175, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
 
 		int storeX = 26;
 		int storeY = 130;
@@ -567,47 +572,46 @@ public class BuildScreen extends GLScreen{
 				currBlock.position.y = storeY;
 				if(blockBankOption == BLOCK_BANK_TURRET) {
 					if(PlayerSave.activeBlocks.contains(currBlock)){
-						batcher.drawSprite(currBlock.position.x -3, currBlock.position.y -3, 27, 27, Assets.textureRegions.get("Bullet"));
+						batcher.drawUISprite(guiCam, currBlock.position.x - 3, currBlock.position.y - 3, 27, 27, Assets.textureRegions.get("Bullet"));
 					}
 					TurretBlock tBlock = (TurretBlock) currBlock;
 					Vector2 rotate = getRotationVector(tBlock.fireAngle);
-					batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretBase"));
-					batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, rotate.sub(new Vector2(0,0)).angle()-90, Assets.textureRegions.get("TurretTop"));
-
+					batcher.drawUISprite(guiCam, currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretBase"));
+					batcher.drawUISprite(guiCam, currBlock.position.x, currBlock.position.y, 24, 24, rotate.sub(new Vector2(0, 0)).angle() - 90, Assets.textureRegions.get("TurretTop"));
 				}
 				else if(blockBankOption == BLOCK_BANK_ARMOR){
-					batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("ArmorBlock"));
+					batcher.drawUISprite(guiCam, currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("ArmorBlock"));
 				}
 				else if(blockBankOption == BLOCK_BANK_ENERGY){
-					batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("EnergyBlock"));
+					batcher.drawUISprite(guiCam, currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("EnergyBlock"));
 				}
 				else if(blockBankOption == BLOCK_BANK_MULTIPLIER){
-					batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
+					batcher.drawUISprite(guiCam, currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
 				}
 			}
 			else{
 				if (currBlock == selectedActiveBlock){
-					batcher.drawSprite(storeX, storeY, 50, 50, Assets.textureRegions.get("GreenBullet"));
+					batcher.drawUISprite(guiCam, storeX, storeY, 50, 50, Assets.textureRegions.get("GreenBullet"));
 				}
 				else {
-					batcher.drawSprite(storeX, storeY, 50, 50, Assets.textureRegions.get("Bullet"));
+					batcher.drawUISprite(guiCam, storeX, storeY, 50, 50, Assets.textureRegions.get("Bullet"));
 				}
 				if(blockBankOption == BLOCK_BANK_TURRET) {
 					TurretBlock tBlock = (TurretBlock) currBlock;
 					Vector2 rotate = getRotationVector(tBlock.fireAngle);
 
-					batcher.drawSprite(storeX, storeY, 24, 24, Assets.textureRegions.get("TurretBase"));
-					batcher.drawSprite(storeX, storeY, 24, 24, rotate.sub(new Vector2(0,0)).angle()-90, Assets.textureRegions.get("TurretTop"));
+					batcher.drawUISprite(guiCam, storeX, storeY, 24, 24, Assets.textureRegions.get("TurretBase"));
+					batcher.drawUISprite(guiCam, storeX, storeY, 24, 24, rotate.sub(new Vector2(0, 0)).angle() - 90, Assets.textureRegions.get("TurretTop"));
 
 				}
 				else if(blockBankOption == BLOCK_BANK_ARMOR){
-					batcher.drawSprite(storeX, storeY, 24, 24, Assets.textureRegions.get("ArmorBlock"));
+					batcher.drawUISprite(guiCam, storeX, storeY, 24, 24, Assets.textureRegions.get("ArmorBlock"));
 				}
 				else if(blockBankOption == BLOCK_BANK_ENERGY){
-					batcher.drawSprite(storeX, storeY, 24, 24, Assets.textureRegions.get("EnergyBlock"));
+					batcher.drawUISprite(guiCam, storeX, storeY, 24, 24, Assets.textureRegions.get("EnergyBlock"));
 				}
 				else if(blockBankOption == BLOCK_BANK_MULTIPLIER){
-					batcher.drawSprite(storeX, storeY, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
+					batcher.drawUISprite(guiCam, storeX, storeY, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
 				}
 			}
 
@@ -623,7 +627,7 @@ public class BuildScreen extends GLScreen{
 
 		if(storeY > 15) {
 			batcher.beginBatch(Assets.mainMenuTextures);
-			batcher.drawSprite(storeX, storeY, 24, 24, Assets.textureRegions.get("addIcon"));
+			batcher.drawUISprite(guiCam, storeX, storeY, 24, 24, Assets.textureRegions.get("addIcon"));
 			batcher.endBatch();
 		}
 

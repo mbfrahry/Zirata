@@ -102,6 +102,7 @@ public class Assets {
 		backgroundTextures.reload();
 		blockTextures.reload();
 		mainMenuTextures.reload();
+		factionTextures.reload(); 
 	}
 
 	public static void playSound(Sound sound) {

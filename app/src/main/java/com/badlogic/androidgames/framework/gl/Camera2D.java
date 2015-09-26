@@ -7,7 +7,7 @@ import com.badlogic.androidgames.framework.math.Vector2;
 
 public class Camera2D {
 
-	public final Vector2 position;
+	public Vector2 position;
 	public float zoom;
 	public final float frustumWidth;
 	public final float frustumHeight;
