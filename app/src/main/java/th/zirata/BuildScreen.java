@@ -261,8 +261,8 @@ public class BuildScreen extends GLScreen{
 
 			Block currBlock = ownedBlocksByType.get(j);
 
-			int xval =(26 + j*30)%300;
-			int yval = 130 - 30*((26 + j*30)/300);
+			int xval =(26 + j*30)%240;
+			int yval = 130 - 30*((26 + j*30)/240);
 
 			bankBlockBounds = new Rectangle(guiCam, xval - 12, yval - 12, 25, 25);
 			if (OverlapTester.pointInRectangle(bankBlockBounds, touchPoint)) {
@@ -302,23 +302,24 @@ public class BuildScreen extends GLScreen{
 			}
 		}
 		//Checks if add block was pressed
-		if(bankBlockBounds == null){
-			bankBlockBounds = new Rectangle(guiCam, 26-12, 130-12, 25, 25);
-		}
-		else{
-			int xval =(26 + (ownedBlocksByType.size()-1)*30)%300;
-			int yval = 130 - 30*((26 + (ownedBlocksByType.size()-1)*30)/300);
-
-			bankBlockBounds = new Rectangle(guiCam, xval -12, yval -12, 25, 25);
-			bankBlockBounds.lowerLeft.x += (30 * guiCam.zoom);
-			if(bankBlockBounds.lowerLeft.x >  300) {
-				bankBlockBounds.lowerLeft.x = (18 * guiCam.zoom);
-				bankBlockBounds.lowerLeft.y -= (30 * guiCam.zoom);
-			}
-
-		}
-
-		if (bankBlockBounds.lowerLeft.y > 15 && OverlapTester.pointInRectangle(bankBlockBounds, touchPoint)){
+//		if(bankBlockBounds == null){
+//			bankBlockBounds = new Rectangle(guiCam, 26-12, 130-12, 25, 25);
+//		}
+//		else{
+//			int xval =(26 + (ownedBlocksByType.size()-1)*30)%300;
+//			int yval = 130 - 30*((26 + (ownedBlocksByType.size()-1)*30)/300);
+//
+//			//batcher.drawUISprite(guiCam, 285, 80, 50, 150, Assets.textureRegions.get("addIcon"));
+//			bankBlockBounds = new Rectangle(guiCam, xval -12, yval -12, 25, 25);
+//			bankBlockBounds.lowerLeft.x += (30 * guiCam.zoom);
+//			if(bankBlockBounds.lowerLeft.x >  150) {
+//				bankBlockBounds.lowerLeft.x = (18 * guiCam.zoom);
+//				bankBlockBounds.lowerLeft.y -= (30 * guiCam.zoom);
+//			}
+//
+//		}
+        Rectangle addBlockBounds = new Rectangle(guiCam, 260, 5, 50, 150);
+		if (ownedBlocksByType.size() < 32 && OverlapTester.pointInRectangle(addBlockBounds, touchPoint)){
 			Block block = null;
 			if(blockBankOption  == BLOCK_BANK_TURRET){
 				block = new TurretBlock(-100, -100, 10, 3, 1, 90);
@@ -620,7 +621,7 @@ public class BuildScreen extends GLScreen{
 
 
 			storeX += 30;
-			if(storeX >  300){
+			if(storeX >  240){
 				storeX = 26;
 				storeY -= 30;
 			}
@@ -628,11 +629,11 @@ public class BuildScreen extends GLScreen{
 
 		batcher.endBatch();
 
-		if(storeY > 15) {
+		//if(storeY > 15) {
 			batcher.beginBatch(Assets.mainMenuTextures);
-			batcher.drawUISprite(guiCam, storeX, storeY, 24, 24, Assets.textureRegions.get("addIcon"));
+			batcher.drawUISprite(guiCam, 285, 80, 50, 150, Assets.textureRegions.get("addIcon"));
 			batcher.endBatch();
-		}
+		//}
 
 	}
 
@@ -713,8 +714,8 @@ public class BuildScreen extends GLScreen{
 		int fuseY = 285;
 		if(selectedActiveBlock.getClass().equals(TurretBlock.class)){
 
-			batcher.drawSprite(55, 217, 110, 35, Assets.textureRegions.get("Rectangle"));
-			Assets.font.drawTextCentered(batcher, "Rotate", 55, 217, 10, 10);
+			batcher.drawUISprite(guiCam, 55, 217, 110, 35, Assets.textureRegions.get("Rectangle"));
+			Assets.font.drawUITextCentered(guiCam, batcher, "Rotate", 55, 217, 10, 10);
 
 			yAdd +=34;
 			fuseY += 34;
