@@ -127,4 +127,43 @@ public class SpriteBatcher {
 	}
 
 
+	public void drawUISprite(Camera2D guiCam, float x, float y, float width, float height, TextureRegion region){
+		//Translate everything to camera coordinates:
+		x = guiCam.position.x + ((x -160)*guiCam.zoom );
+		y = guiCam.position.y + ((y -240)*guiCam.zoom );
+		width *= guiCam.zoom;
+		height *= guiCam.zoom;
+		float halfWidth = width /2;
+		float halfHeight = height /2;
+		float x1 = x- halfWidth;
+		float y1 = y - halfHeight;
+		float x2 = x + halfWidth;
+		float y2 = y + halfHeight;
+
+		verticesBuffer[bufferIndex++] = x1;
+		verticesBuffer[bufferIndex++] = y1;
+		verticesBuffer[bufferIndex++] = region.u1;
+		verticesBuffer[bufferIndex++] = region.v2;
+
+		verticesBuffer[bufferIndex++] = x2;
+		verticesBuffer[bufferIndex++] = y1;
+		verticesBuffer[bufferIndex++] = region.u2;
+		verticesBuffer[bufferIndex++] = region.v2;
+
+		verticesBuffer[bufferIndex++] = x2;
+		verticesBuffer[bufferIndex++] = y2;
+		verticesBuffer[bufferIndex++] = region.u2;
+		verticesBuffer[bufferIndex++] = region.v1;
+
+		verticesBuffer[bufferIndex++] = x1;
+		verticesBuffer[bufferIndex++] = y2;
+		verticesBuffer[bufferIndex++] = region.u1;
+		verticesBuffer[bufferIndex++] = region.v1;
+
+		numSprites++;
+	}
+
+
+
+
 }
