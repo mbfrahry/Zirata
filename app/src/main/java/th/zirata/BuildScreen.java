@@ -229,6 +229,7 @@ public class BuildScreen extends GLScreen{
 			}
 
 		}
+		guiCam.update(deltaTime);
 		
 	}
 
@@ -283,7 +284,6 @@ public class BuildScreen extends GLScreen{
 					selectedActiveBlock.position.y = selectedBankBlock.position.y;
 					selectedBankBlock.position.x = tempX;
 					selectedBankBlock.position.y = tempY;
-
 				}
 
 				resetBlockBank();
@@ -616,11 +616,9 @@ public class BuildScreen extends GLScreen{
 
 		batcher.endBatch();
 
-		//if(storeY > 15) {
-			batcher.beginBatch(Assets.mainMenuTextures);
-			batcher.drawUISprite(guiCam, 285, 80, 50, 150, Assets.textureRegions.get("addIcon"));
-			batcher.endBatch();
-		//}
+		batcher.beginBatch(Assets.mainMenuTextures);
+		batcher.drawUISprite(guiCam, 285, 80, 50, 150, Assets.textureRegions.get("addIcon"));
+		batcher.endBatch();
 
 	}
 
@@ -630,7 +628,6 @@ public class BuildScreen extends GLScreen{
 		float x = 55;
 		float y = 220;
 
-		//batcher.drawSprite(x, y, 100, 150, Assets.textureRegions.get("Rectangle"));
 		String[] upgradeableAttributes = selectedActiveBlock.getUpgradableAttributes();
 		float[] attributeValues = selectedActiveBlock.getAttributeVals();
 		float[] upgradeValues = selectedActiveBlock.getUpgradeValues();
@@ -652,8 +649,6 @@ public class BuildScreen extends GLScreen{
 
 				batcher.drawUISprite(guiCam, x + 48, y + 10 + i * 40, 10, 10, Assets.textureRegions.get("addIcon"));
 			}
-			//Assets.font.drawText(batcher, "Current: " + attributeValues[i], 15, 100 + i * 80);
-			//Assets.font.drawText(batcher, "Next: " + nextVal , 15, 75 + i*80);
 		}
 
 		batcher.drawUISprite(guiCam, x, y + 40 * upgradeableAttributes.length - 10, 110, 25, Assets.textureRegions.get("Rectangle"));

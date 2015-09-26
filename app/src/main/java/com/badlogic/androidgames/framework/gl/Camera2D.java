@@ -8,6 +8,7 @@ import com.badlogic.androidgames.framework.math.Vector2;
 public class Camera2D {
 
 	public Vector2 position;
+	public Vector2 finalPosition;
 	public float zoom;
 	public final float frustumWidth;
 	public final float frustumHeight;
@@ -17,6 +18,7 @@ public class Camera2D {
 		this.glGraphics = glGraphics;
 		this.frustumWidth = frustumWidth;
 		this.frustumHeight = frustumHeight;
+		this.position = new Vector2(frustumWidth/2, frustumHeight/2);
 		this.position = new Vector2(frustumWidth/2, frustumHeight/2);
 		this.zoom = 1.0f;
 	}
@@ -39,6 +41,12 @@ public class Camera2D {
 		touch.x = (touch.x / (float) glGraphics.getWidth()) * frustumWidth * zoom;
 		touch.y = (1 - touch.y / (float) glGraphics.getHeight()) * frustumHeight *zoom;
 		touch.add(position).sub(frustumWidth *zoom / 2, frustumHeight * zoom/ 2);
+	}
+
+	public void update(float deltaTime){
+		if(!position.equals(finalPosition)){
+
+		}
 	}
 	
 	
