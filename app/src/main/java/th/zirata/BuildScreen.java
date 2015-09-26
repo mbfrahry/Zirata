@@ -275,6 +275,7 @@ public class BuildScreen extends GLScreen{
 					selectedBankBlock.position.x = selectedActiveBlock.position.x;
 					selectedBankBlock.position.y = selectedActiveBlock.position.y;
 					PlayerSave.activeBlocks.add(selectedBankBlock);
+
 				} else {
 					float tempX = selectedActiveBlock.position.x;
 					float tempY = selectedActiveBlock.position.y;
@@ -282,14 +283,14 @@ public class BuildScreen extends GLScreen{
 					selectedActiveBlock.position.y = selectedBankBlock.position.y;
 					selectedBankBlock.position.x = tempX;
 					selectedBankBlock.position.y = tempY;
+
 				}
+
 				resetBlockBank();
-//				if (selectedBankBlock.getClass() == TurretBlock.class) {
-//					//game.setScreen(new BlockDirectionScreen(game, selectedBankBlock.position, PlayerSave.activeBlocks.indexOf(selectedBankBlock)));
-//				} else {
-					selectedActiveBlock = selectedBankBlock;
-					selectedBankBlock = null;
-	//			}
+				selectedActiveBlock = selectedBankBlock;
+				guiCam.position = selectedActiveBlock.position;
+				guiCam.zoom = .5f;
+				selectedBankBlock = null;
 				showBlockBank = true;
 				if(testShowFuse()){
 					showFuse = true;
