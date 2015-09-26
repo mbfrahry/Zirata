@@ -47,6 +47,30 @@ public class Font {
 		}
 	}
 
+	public void drawUIText(Camera2D guiCam, SpriteBatcher batcher, String text, float x, float y, float glyphWidth, float glyphHeight){
+		x = guiCam.position.x + ((x -160)*guiCam.zoom );
+		y = guiCam.position.y + ((y -240)*guiCam.zoom );
+		glyphWidth *= guiCam.zoom;
+		glyphHeight *= guiCam.zoom;
+		int len = text.length();
+		for(int i = 0; i < len; i++){
+			int c = text.charAt(i) - ' ';
+			if (c < 0 || c > glyphs.length -1)
+				continue;
+			TextureRegion glyph = glyphs[c];
+			batcher.drawSprite(x, y, glyphWidth, glyphHeight, glyph);
+			x += glyphWidth;
+		}
+	}
+
+
+
+
+
+
+
+
+
 	public void drawTextRightJustified(SpriteBatcher batcher, String text, float x, float y, float glyphWidth, float glyphHeight){
 		int len = text.length();
 		for(int i = len-1; i >= 0; i--){
