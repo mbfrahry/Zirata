@@ -156,7 +156,7 @@ public class BuildScreen extends GLScreen{
 									Settings.save(game.getFileIO());
 									showBlockBank = true;
 									selectedActiveBlock = currBlock;
-									guiCam.position = selectedActiveBlock.position;
+									guiCam.position.set(selectedActiveBlock.position.x, selectedActiveBlock.position.y);
 									guiCam.zoom = .5f;
 									resetBlockBankBounds();
 									showUpgrades = true;
@@ -171,7 +171,7 @@ public class BuildScreen extends GLScreen{
 							pBlockBounds = new Rectangle(currBlock.position.x - 12, currBlock.position.y - 12, 25, 25);
 							if (OverlapTester.pointInRectangle(pBlockBounds, touchPoint) ){//&& currBlock.getClass() != BlankBlock.class) {
 								selectedActiveBlock = currBlock;
-								guiCam.position = selectedActiveBlock.position;
+								guiCam.position.set(selectedActiveBlock.position.x, selectedActiveBlock.position.y);
 								guiCam.zoom = .5f;
 								resetBlockBankBounds();
 								if(testShowFuse()){
@@ -288,7 +288,7 @@ public class BuildScreen extends GLScreen{
 
 				resetBlockBank();
 				selectedActiveBlock = selectedBankBlock;
-				guiCam.position = selectedActiveBlock.position;
+				guiCam.position.set(selectedActiveBlock.position.x, selectedActiveBlock.position.y);
 				guiCam.zoom = .5f;
 				selectedBankBlock = null;
 				showBlockBank = true;
@@ -321,7 +321,7 @@ public class BuildScreen extends GLScreen{
 			block.position.x = selectedActiveBlock.position.x;
 			block.position.y = selectedActiveBlock.position.y;
 			selectedActiveBlock = block;
-			guiCam.position = selectedActiveBlock.position;
+			guiCam.position.set(selectedActiveBlock.position.x, selectedActiveBlock.position.y);
 			guiCam.zoom = .5f;
 			PlayerSave.activeBlocks.add(block);
 			PlayerSave.bankedBlocks.add(block);
@@ -376,12 +376,12 @@ public class BuildScreen extends GLScreen{
 
 	public void checkFuseBounds(){
 		ArrayList<Block> compatibleFusionBlocks = getCompatibleFusionBlocks();
-		Rectangle fuseBounds = new Rectangle(0, 242, 110, 110);
+		Rectangle fuseBounds = new Rectangle(guiCam, 0, 242, 110, 110);
 		int fuseX = 26;
 		int fuseY = 285;
 		if (selectedActiveBlock.getClass().equals(TurretBlock.class)) {
 			fuseY += 34;
-			Rectangle rotateBounds = new Rectangle(0, 190, 110, 37);
+			Rectangle rotateBounds = new Rectangle(guiCam, 0, 190, 110, 37);
 			if (OverlapTester.pointInRectangle(rotateBounds, touchPoint)) {
 				TurretBlock tBlock = (TurretBlock) selectedActiveBlock;
 				tBlock.fireAngle += 270;
@@ -391,7 +391,7 @@ public class BuildScreen extends GLScreen{
 		}
 		if (OverlapTester.pointInRectangle(fuseBounds, touchPoint)){
 			for (int i = 0; i < compatibleFusionBlocks.size(); i++){
-				Rectangle currCoords = new Rectangle(fuseX-12, fuseY-12, 25, 25);
+				Rectangle currCoords = new Rectangle(guiCam, fuseX-12, fuseY-12, 25, 25);
 				Block currBlock = compatibleFusionBlocks.get(i);
 				if(OverlapTester.pointInRectangle(currCoords, touchPoint)){
 					//Fuse blocks together and delete selected block
@@ -479,29 +479,29 @@ public class BuildScreen extends GLScreen{
 		batcher.endBatch();
 
 		batcher.beginBatch(Assets.mainMenuTextures);
-		batcher.drawSprite(245, 400, 150, 40, Assets.textureRegions.get("Rectangle"));
+		batcher.drawUISprite(guiCam, 245, 400, 150, 40, Assets.textureRegions.get("Rectangle"));
 		//batcher.drawSprite(290, 30, 60, 60, Assets.textureRegions.get("Rectangle"));
-		batcher.drawSprite(290, 30, 60, 60, Assets.textureRegions.get("Arrow"));
-		batcher.drawSprite(30, 30, -60, 60, Assets.textureRegions.get("Arrow"));
-		Assets.font.drawTextCentered(batcher, "Prepare Your", 160, 460, 20, 23);
-		Assets.font.drawTextCentered(batcher, "Ship", 160, 438, 25, 28);
+		batcher.drawUISprite(guiCam, 290, 30, 60, 60, Assets.textureRegions.get("Arrow"));
+		batcher.drawUISprite(guiCam, 30, 30, -60, 60, Assets.textureRegions.get("Arrow"));
+		Assets.font.drawUITextCentered(guiCam, batcher, "Prepare Your", 160, 460, 20, 23);
+		Assets.font.drawUITextCentered(guiCam, batcher, "Ship", 160, 438, 25, 28);
 
-		Assets.font.drawTextRightJustified(batcher, "Bank:", 229, 410, 12, 12);
-		Assets.font.drawTextRightJustified(batcher, Settings.spaceBucks + " ", 300, 410, 12, 12);
-		Assets.font.drawTextRightJustified(batcher, ":", 229, 390, 12, 12);
+		Assets.font.drawUITextRightJustified(guiCam, batcher, "Bank:", 229, 410, 12, 12);
+		Assets.font.drawUITextRightJustified(guiCam, batcher, Settings.spaceBucks + " ", 300, 410, 12, 12);
+		Assets.font.drawUITextRightJustified(guiCam, batcher, ":", 229, 390, 12, 12);
 		String cost = Settings.nextBlockCost + " ";
 		if(Settings.nextBlockCost > 0){
 			cost = "-".concat(cost);
 		}
-		Assets.font.drawTextRightJustified(batcher, cost, 300, 390, 12, 12);
-		Assets.font.drawTextCentered(batcher, "Level: " + Settings.currLevel, 160, 30, 16, 16);
+		Assets.font.drawUITextRightJustified(guiCam, batcher, cost, 300, 390, 12, 12);
+		Assets.font.drawUITextCentered(guiCam, batcher, "Level: " + Settings.currLevel, 160, 30, 16, 16);
 
 		batcher.endBatch();
 
 		batcher.beginBatch(Assets.blockTextures);
-		batcher.drawSprite(305, 410, 12, 12, Assets.textureRegions.get("BaseBlock"));
-		batcher.drawSprite(305, 390, 12, 12, Assets.textureRegions.get("BaseBlock"));
-		batcher.drawSprite(216, 390, 12, 12, Assets.textureRegions.get("PotentialBlock"));
+		batcher.drawUISprite(guiCam, 305, 410, 12, 12, Assets.textureRegions.get("BaseBlock"));
+		batcher.drawUISprite(guiCam, 305, 390, 12, 12, Assets.textureRegions.get("BaseBlock"));
+		batcher.drawUISprite(guiCam, 216, 390, 12, 12, Assets.textureRegions.get("PotentialBlock"));
 		batcher.endBatch();
 
 		if(showBlockBank){
