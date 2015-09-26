@@ -301,23 +301,6 @@ public class BuildScreen extends GLScreen{
 				}
 			}
 		}
-		//Checks if add block was pressed
-//		if(bankBlockBounds == null){
-//			bankBlockBounds = new Rectangle(guiCam, 26-12, 130-12, 25, 25);
-//		}
-//		else{
-//			int xval =(26 + (ownedBlocksByType.size()-1)*30)%300;
-//			int yval = 130 - 30*((26 + (ownedBlocksByType.size()-1)*30)/300);
-//
-//			//batcher.drawUISprite(guiCam, 285, 80, 50, 150, Assets.textureRegions.get("addIcon"));
-//			bankBlockBounds = new Rectangle(guiCam, xval -12, yval -12, 25, 25);
-//			bankBlockBounds.lowerLeft.x += (30 * guiCam.zoom);
-//			if(bankBlockBounds.lowerLeft.x >  150) {
-//				bankBlockBounds.lowerLeft.x = (18 * guiCam.zoom);
-//				bankBlockBounds.lowerLeft.y -= (30 * guiCam.zoom);
-//			}
-//
-//		}
         Rectangle addBlockBounds = new Rectangle(guiCam, 260, 5, 50, 150);
 		if (ownedBlocksByType.size() < 32 && OverlapTester.pointInRectangle(addBlockBounds, touchPoint)){
 			Block block = null;
@@ -337,11 +320,14 @@ public class BuildScreen extends GLScreen{
 			block.position.x = selectedActiveBlock.position.x;
 			block.position.y = selectedActiveBlock.position.y;
 			selectedActiveBlock = block;
+			guiCam.position = selectedActiveBlock.position;
+			guiCam.zoom = .5f;
 			PlayerSave.activeBlocks.add(block);
 			PlayerSave.bankedBlocks.add(block);
 			showUpgrades = true;
 			showFuse = false;
 			ownedBlocksByType = getBlocksFromType(block.getClass());
+
 		}
 
 	}
