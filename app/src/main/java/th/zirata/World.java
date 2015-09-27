@@ -69,9 +69,21 @@ public class World {
 		player.getEnergy();
 		player.turnOnTurrets();
 		backgrounds = new ArrayList<Background>();
-		backgrounds.add(new Background(160, 240, 320, 480, new Vector2(0,-3), "Background"));
-		backgrounds.add(new Background(160, 240, 320, 480, new Vector2(0,-10), "NearStar"));
-		backgrounds.add(new Background(160, 240, 320, 480, new Vector2(0,-3), "FarStar"));
+		backgrounds.add(new Background(0, 0, 320, 480, new Vector2(0, -3), "Background"));
+		backgrounds.add(new Background(0, 0, 320, 480, new Vector2(0, -10), "NearStar"));
+		backgrounds.add(new Background(0, 0, 320, 480, new Vector2(0,-3), "FarStar"));
+
+		backgrounds.add(new Background(0, 480, 320, 480, new Vector2(0,-3), "Background"));
+		backgrounds.add(new Background(0, 480, 320, 480, new Vector2(0,-10), "NearStar"));
+		backgrounds.add(new Background(0, 480, 320, 480, new Vector2(0,-3), "FarStar"));
+
+		backgrounds.add(new Background(320, 0, 320, 480, new Vector2(0,-3), "Background"));
+		backgrounds.add(new Background(320, 0, 320, 480, new Vector2(0,-10), "NearStar"));
+		backgrounds.add(new Background(320, 0, 320, 480, new Vector2(0,-3), "FarStar"));
+
+		backgrounds.add(new Background(320, 480, 320, 480, new Vector2(0,-3), "Background"));
+		backgrounds.add(new Background(320, 480, 320, 480, new Vector2(0,-10), "NearStar"));
+		backgrounds.add(new Background(320, 480, 320, 480, new Vector2(0,-3), "FarStar"));
 	}
 	
 	public void update(float deltaTime){
@@ -163,7 +175,7 @@ public class World {
 	private void updateEnemies(float deltaTime){
 		lastEnemyTime += deltaTime;
 		if(lastEnemyTime > timeToNextEnemy && state != WORLD_STATE_LAST_ENEMY){
-			generateEnemy();
+//			generateEnemy();
 			
 			if(enemyNum % 4 == 0 && timeToNextEnemy > 2){
 				timeToNextEnemy -= 0.5;

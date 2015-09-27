@@ -58,7 +58,7 @@ public class BuildScreen extends GLScreen{
         super(game);
         guiCam = new Camera2D(glGraphics, 320, 480);
         backBounds = new Rectangle(0, 0, 64, 64);
-        forwardBounds = new Rectangle(320-120, 0, 60, 120);
+        forwardBounds = new Rectangle(320-120, 0, 120, 60);
 		blockBankTurretBounds  = new Rectangle(0, 160, 80, 40);
 		blockBankArmorBounds  = new Rectangle(80, 160, 80, 40);
 		blockBankEnergyBounds = new Rectangle(160, 160, 80, 40);
