@@ -12,6 +12,8 @@ public class Camera2D {
 	public Vector2 velocity;
 	public int frameCounter;
 	public float zoom;
+	public float finalZoom;
+	public float zDiff;
 	public final float frustumWidth;
 	public final float frustumHeight;
 	final GLGraphics glGraphics;
@@ -24,8 +26,10 @@ public class Camera2D {
 		this.position = new Vector2(frustumWidth/2, frustumHeight/2);
 		this.finalPosition = new Vector2(position.x, position.y);
 		this.zoom = 1.0f;
+		this.finalZoom = zoom;
 		velocity = new Vector2(0,0);
 		frameCounter = 0;
+		zDiff = 0;
 	}
 	
 	public void setViewportAndMatrices(){
@@ -48,11 +52,14 @@ public class Camera2D {
 		touch.add(position).sub(frustumWidth * zoom / 2, frustumHeight * zoom / 2);
 	}
 
-	public void panToPosition(float targX, float targY){
+	public void panToPosition(float targX, float targY, float newZoom){
 		double xDiff = position.x - targX;
 		double yDiff = position.y - targY;
+
 		finalPosition.set(targX, targY);
+		finalZoom = newZoom;
 		frameCounter = 10;
+		zDiff = (zoom - newZoom)/frameCounter;
 		velocity.set((float)-xDiff/frameCounter, (float)-yDiff/frameCounter);
 //		double multiplier = 1;
 //		if((xDiff >= 0 && yDiff > 0) || (xDiff <= 0 && yDiff > 0)){
@@ -68,9 +75,11 @@ public class Camera2D {
 	public void update(float deltaTime){
 		if(frameCounter > 0){
 			position.add(velocity.x, velocity.y);
+			zoom -= zDiff;
 			frameCounter--;
 			if(frameCounter == 0){
 				position.set(finalPosition.x, finalPosition.y);
+				zoom = finalZoom;
 			}
 		}
 	}

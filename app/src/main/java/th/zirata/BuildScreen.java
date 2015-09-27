@@ -156,8 +156,7 @@ public class BuildScreen extends GLScreen{
 									Settings.save(game.getFileIO());
 									showBlockBank = true;
 									selectedActiveBlock = currBlock;
-									guiCam.panToPosition(selectedActiveBlock.position.x, selectedActiveBlock.position.y);
-									guiCam.zoom = .5f;
+									guiCam.panToPosition(selectedActiveBlock.position.x, selectedActiveBlock.position.y, .5f);
 									resetBlockBankBounds();
 									showUpgrades = true;
 									showFuse = false;
@@ -171,8 +170,7 @@ public class BuildScreen extends GLScreen{
 							pBlockBounds = new Rectangle(currBlock.position.x - 12, currBlock.position.y - 12, 25, 25);
 							if (OverlapTester.pointInRectangle(pBlockBounds, touchPoint) ){//&& currBlock.getClass() != BlankBlock.class) {
 								selectedActiveBlock = currBlock;
-								guiCam.panToPosition(selectedActiveBlock.position.x, selectedActiveBlock.position.y);
-								guiCam.zoom = .5f;
+								guiCam.panToPosition(selectedActiveBlock.position.x, selectedActiveBlock.position.y, .5f);
 								resetBlockBankBounds();
 								if(testShowFuse()){
 									showFuse = true;
@@ -216,7 +214,7 @@ public class BuildScreen extends GLScreen{
 							checkFuseBounds();
 						}
 						if(OverlapTester.pointInRectangle(closeBankBounds, touchPoint)){
-							guiCam.panToPosition(160, 240);
+							guiCam.panToPosition(160, 240, 1);
 							guiCam.zoom = 1;
 							showBlockBank = false;
 							return;
@@ -288,8 +286,7 @@ public class BuildScreen extends GLScreen{
 
 				resetBlockBank();
 				selectedActiveBlock = selectedBankBlock;
-				guiCam.panToPosition(selectedActiveBlock.position.x, selectedActiveBlock.position.y);
-				guiCam.zoom = .5f;
+				guiCam.panToPosition(selectedActiveBlock.position.x, selectedActiveBlock.position.y, .5f);
 				selectedBankBlock = null;
 				showBlockBank = true;
 				if(testShowFuse()){
@@ -321,8 +318,7 @@ public class BuildScreen extends GLScreen{
 			block.position.x = selectedActiveBlock.position.x;
 			block.position.y = selectedActiveBlock.position.y;
 			selectedActiveBlock = block;
-			guiCam.panToPosition(selectedActiveBlock.position.x, selectedActiveBlock.position.y);
-			guiCam.zoom = .5f;
+			guiCam.panToPosition(selectedActiveBlock.position.x, selectedActiveBlock.position.y, .5f);
 			PlayerSave.activeBlocks.add(block);
 			PlayerSave.bankedBlocks.add(block);
 			showUpgrades = true;
