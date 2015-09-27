@@ -60,7 +60,7 @@ public class Camera2D {
 
 		finalPosition.set(targX, targY);
 		finalZoom = newZoom;
-		frameCounter = 10;
+		frameCounter = 7;
 		zDiff = (zoom - newZoom)/frameCounter;
 		velocity.set((float)-xDiff/frameCounter, (float)-yDiff/frameCounter);
 //		double multiplier = 1;
