@@ -1,5 +1,7 @@
 package com.badlogic.androidgames.framework.gl;
 
+import android.util.Log;
+
 import javax.microedition.khronos.opengles.GL10;
 
 import com.badlogic.androidgames.framework.impl.GLGraphics;
@@ -76,6 +78,7 @@ public class Camera2D {
 		if(frameCounter > 0){
 			position.add(velocity.x, velocity.y);
 			zoom -= zDiff;
+			Log.d("Zoom", zoom + "");
 			frameCounter--;
 			if(frameCounter == 0){
 				position.set(finalPosition.x, finalPosition.y);

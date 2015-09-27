@@ -60,7 +60,7 @@ public class BuildScreen extends GLScreen{
 		blockBankArmorBounds  = new Rectangle(80, 160, 80, 40);
 		blockBankEnergyBounds = new Rectangle(160, 160, 80, 40);
 		blockBankMultiplierBounds  = new Rectangle(240, 160, 80, 40);
-		closeBankBounds = new Rectangle(160, 160, 160, 240);
+		closeBankBounds = new Rectangle(120, 200, 160, 240);
 		selectedBankBlock = null;
 		selectedActiveBlock = null;
 
@@ -227,6 +227,9 @@ public class BuildScreen extends GLScreen{
 
 		}
 		guiCam.update(deltaTime);
+		if(showBlockBank){
+			resetBlockBankBounds();
+		}
 		
 	}
 
