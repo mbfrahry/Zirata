@@ -24,8 +24,11 @@ public class BlockRenderer {
         else if(b.getClass().equals(ArmorBlock.class)){
             renderArmorBlock(batcher, x, y, width, height);
         }
-        else{
+        else if (b.getClass().equals(ArmorBlock.class)){
             renderMultiplierBlock(batcher, x, y, width, height);
+        }
+        else{
+            renderBaseBlock(batcher, x, y, width, height);
         }
     }
 
