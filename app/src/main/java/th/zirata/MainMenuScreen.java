@@ -92,7 +92,6 @@ public class MainMenuScreen extends GLScreen{
 		
 		batcher.beginBatch(Assets.mainMenuTextures);
 		batcher.drawSprite(160, 200, 128, 74, Assets.textureRegions.get("Play"));
-		batcher.drawSprite(160, 125, 110, 55, Assets.textureRegions.get("Help"));
 		batcher.endBatch();
 		
 		gl.glDisable(GL10.GL_BLEND);

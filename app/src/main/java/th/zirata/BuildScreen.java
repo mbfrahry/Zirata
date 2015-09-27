@@ -462,28 +462,30 @@ public class BuildScreen extends GLScreen{
 		batcher.endBatch();
 
 		batcher.beginBatch(Assets.mainMenuTextures);
-		batcher.drawUISprite(guiCam, 245, 400, 150, 40, Assets.textureRegions.get("Rectangle"));
-		batcher.drawUISprite(guiCam, 290, 30, 60, 60, Assets.textureRegions.get("Arrow"));
-		batcher.drawUISprite(guiCam, 30, 30, -60, 60, Assets.textureRegions.get("Arrow"));
+		batcher.drawUISprite(guiCam, 245, 385, 150, 40, Assets.textureRegions.get("Rectangle"));
+		batcher.drawUISprite(guiCam, 260, 30, 120, 60, Assets.textureRegions.get("Rectangle"));
+		batcher.drawUISprite(guiCam, 40, 30, 80, 60, Assets.textureRegions.get("Rectangle"));
+		Assets.font.drawUITextCentered(guiCam, batcher, "Map", 40, 30, 15, 15);
+		Assets.font.drawUITextCentered(guiCam, batcher, "Launch", 260, 30, 15, 15);
 		Assets.font.drawUITextCentered(guiCam, batcher, "Prepare Your", 160, 460, 20, 23);
-		Assets.font.drawUITextCentered(guiCam, batcher, "Ship", 160, 438, 25, 28);
+		Assets.font.drawUITextCentered(guiCam, batcher, "Ship For", 160, 438, 25, 28);
+		Assets.font.drawUITextCentered(guiCam, batcher, "Level " + Settings.currLevel, 160, 416, 16, 16);
 
-		Assets.font.drawUITextRightJustified(guiCam, batcher, "Bank:", 229, 410, 12, 12);
-		Assets.font.drawUITextRightJustified(guiCam, batcher, Settings.spaceBucks + " ", 300, 410, 12, 12);
-		Assets.font.drawUITextRightJustified(guiCam, batcher, ":", 229, 390, 12, 12);
+		Assets.font.drawUITextRightJustified(guiCam, batcher, "Bank:", 229, 395, 12, 12);
+		Assets.font.drawUITextRightJustified(guiCam, batcher, Settings.spaceBucks + " ", 300, 395, 12, 12);
+		Assets.font.drawUITextRightJustified(guiCam, batcher, ":", 229, 375, 12, 12);
 		String cost = Settings.nextBlockCost + " ";
 		if(Settings.nextBlockCost > 0){
 			cost = "-".concat(cost);
 		}
-		Assets.font.drawUITextRightJustified(guiCam, batcher, cost, 300, 390, 12, 12);
-		Assets.font.drawUITextCentered(guiCam, batcher, "Level: " + Settings.currLevel, 160, 30, 16, 16);
+		Assets.font.drawUITextRightJustified(guiCam, batcher, cost, 300, 375, 12, 12);
 
 		batcher.endBatch();
 
 		batcher.beginBatch(Assets.blockTextures);
-		batcher.drawUISprite(guiCam, 305, 410, 12, 12, Assets.textureRegions.get("BaseBlock"));
-		batcher.drawUISprite(guiCam, 305, 390, 12, 12, Assets.textureRegions.get("BaseBlock"));
-		batcher.drawUISprite(guiCam, 216, 390, 12, 12, Assets.textureRegions.get("PotentialBlock"));
+		batcher.drawUISprite(guiCam, 305, 395, 12, 12, Assets.textureRegions.get("BaseBlock"));
+		batcher.drawUISprite(guiCam, 305, 375, 12, 12, Assets.textureRegions.get("BaseBlock"));
+		batcher.drawUISprite(guiCam, 216, 375, 12, 12, Assets.textureRegions.get("PotentialBlock"));
 		batcher.endBatch();
 
 		if(showBlockBank){
