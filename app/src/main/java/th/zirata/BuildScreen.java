@@ -58,7 +58,7 @@ public class BuildScreen extends GLScreen{
         super(game);
         guiCam = new Camera2D(glGraphics, 320, 480);
         backBounds = new Rectangle(0, 0, 64, 64);
-        forwardBounds = new Rectangle(320-64, 0, 64, 64);
+        forwardBounds = new Rectangle(320-120, 0, 60, 120);
 		blockBankTurretBounds  = new Rectangle(0, 160, 80, 40);
 		blockBankArmorBounds  = new Rectangle(80, 160, 80, 40);
 		blockBankEnergyBounds = new Rectangle(160, 160, 80, 40);
@@ -133,7 +133,10 @@ public class BuildScreen extends GLScreen{
 
 						if (OverlapTester.pointInRectangle(forwardBounds, touchPoint)) {
 							if(checkForBlankBlocks()){
-								//Can't continue
+								HashMap newSpriteExtra = createSpriteExtra("sprite", "Rectangle", 160f, 260f, 260f, 50f, 1f, 0f);
+								HashMap newTextExtra = createTextExtra("text", "Can't launch with blank blocks!", 160f, 260f, 8f, 8f, 1f, "white", "center");
+								UIExtras.add(newSpriteExtra);
+								UIExtras.add(newTextExtra);
 							}
 							else{
 								Settings.save(game.getFileIO());
@@ -165,6 +168,10 @@ public class BuildScreen extends GLScreen{
 									resetBlockBankBounds();
 									showUpgrades = true;
 									showFuse = false;
+								}
+								else{
+									HashMap newExtra = createTextExtra("text", "Bank", 217f, 395f, 12f, 12f, .25f, "red", "right");
+									UIExtras.add(newExtra);
 								}
 								return;
 							}
@@ -365,18 +372,8 @@ public class BuildScreen extends GLScreen{
 						PlayerSave.save(game.getFileIO());
 					}
 					else{
-						HashMap event = new HashMap();
-						event.put("type", "text");
-						event.put("content", "bank");
-						event.put("x", 217f);
-						event.put("y", 395f);
-						event.put("width", 12f);
-						event.put("height", 12f);
-						event.put("timeToDisplay", .25f);
-						event.put("color", "red");
-						event.put("justification", "right");
-						UIExtras.add(event);
-						//Assets.redFont.drawUITextRightJustified(guiCam, batcher, "Bank:", 229, 395, 12, 12);
+						HashMap newExtra = createTextExtra("text", "Bank", 217f, 395f, 12f, 12f, .25f, "red", "right");
+						UIExtras.add(newExtra);
 					}
 				}
 			}
@@ -413,7 +410,10 @@ public class BuildScreen extends GLScreen{
 				if(OverlapTester.pointInRectangle(currCoords, touchPoint)){
 					//Fuse blocks together and delete selected block
 					if(PlayerSave.activeBlocks.contains(currBlock)){
-						//No can do bro-ha
+						HashMap newSpriteExtra = createSpriteExtra("sprite", "Rectangle", 160f, 260f, 295f, 50f, 1f, 0f);
+						HashMap newTextExtra = createTextExtra("text", "Can't fuse with blocks on the ship!", 160f, 260f, 8f, 8f, 1f, "white", "center");
+						UIExtras.add(newSpriteExtra);
+						UIExtras.add(newTextExtra);
 					}
 					else{
 						selectedActiveBlock.fuseWith(currBlock);
@@ -478,9 +478,9 @@ public class BuildScreen extends GLScreen{
 		batcher.drawUISprite(guiCam, 40, 30, 80, 60, Assets.textureRegions.get("Rectangle"));
 		Assets.font.drawUITextCentered(guiCam, batcher, "Map", 40, 30, 15, 15);
 		Assets.font.drawUITextCentered(guiCam, batcher, "Launch", 260, 30, 15, 15);
-		Assets.font.drawUITextCentered(guiCam, batcher, "Prepare Your", 160, 460, 20, 23);
-		Assets.font.drawUITextCentered(guiCam, batcher, "Ship For", 160, 438, 20, 23);
-		Assets.font.drawUITextCentered(guiCam, batcher, "Level " + Settings.currLevel, 160, 416, 16, 16);
+		Assets.font.drawTextCentered(batcher, "Prepare Your", 160, 460, 20, 23);
+		Assets.font.drawTextCentered(batcher, "Ship For", 160, 438, 20, 23);
+		Assets.font.drawTextCentered(batcher, "Level " + Settings.currLevel, 160, 416, 16, 16);
 
 		Assets.font.drawUITextRightJustified(guiCam, batcher, "Bank:", 229, 395, 12, 12);
 		Assets.font.drawUITextRightJustified(guiCam, batcher, Settings.spaceBucks + " ", 300, 395, 12, 12);
@@ -536,33 +536,11 @@ public class BuildScreen extends GLScreen{
 			HashMap currEvent = UIExtras.get(i);
 
 			if (currEvent.get("type").equals("text")){
-				Font currFont;
-				if(currEvent.get("color").equals("red")){
-					currFont = Assets.redFont;
-				}
-				else{
-					currFont = Assets.font;
-				}
-				String justification = (String)currEvent.get("justification");
-				String currContent = (String)currEvent.get("content");
-				float currX = (Float)currEvent.get("x");
-				float currY = (Float)currEvent.get("y");
-				float currWidth = (Float)currEvent.get("width");
-				float currHeight = (Float)currEvent.get("height");
-				if(justification.equals("right")){
-					currFont.drawUITextRightJustified(guiCam, batcher, currContent, currX, currY, currWidth, currHeight);
-				}
-				else if(justification.equals("center")){
-					Assets.font.drawUITextCentered(guiCam, batcher, currContent, currX, currY, currWidth, currHeight);
-				}
-				else{
-					Assets.font.drawUITextCentered(guiCam, batcher, currContent, currX, currY, currWidth, currHeight);
-				}
+				drawTextExtra(currEvent);
 			}
 			else{
-				//This is for sprites, haven't gotten there yet
+				drawSpriteExtra(currEvent);
 			}
-
 
 			float time = (Float)currEvent.get("timeToDisplay");
 			if(time - deltaTime < 0){
@@ -578,6 +556,68 @@ public class BuildScreen extends GLScreen{
 		for(int i = toDelete.size()-1; i >= 0; i--){
 			UIExtras.remove((int) toDelete.get(i));
 		}
+	}
+
+	public HashMap createTextExtra(String type, String content, float x, float y, float width, float height, float timeToDisplay, String color, String justification){
+		HashMap event = new HashMap();
+		event.put("type", type);
+		event.put("content", content);
+		event.put("x", x);
+		event.put("y", y);
+		event.put("width", width);
+		event.put("height", height);
+		event.put("timeToDisplay", timeToDisplay);
+		event.put("color", color);
+		event.put("justification", justification);
+		return event;
+	}
+
+	public void drawTextExtra(HashMap currEvent){
+		Font currFont;
+		if(currEvent.get("color").equals("red")){
+			currFont = Assets.redFont;
+		}
+		else{
+			currFont = Assets.font;
+		}
+		String justification = (String)currEvent.get("justification");
+		String currContent = (String)currEvent.get("content");
+		float currX = (Float)currEvent.get("x");
+		float currY = (Float)currEvent.get("y");
+		float currWidth = (Float)currEvent.get("width");
+		float currHeight = (Float)currEvent.get("height");
+		if(justification.equals("right")){
+			currFont.drawUITextRightJustified(guiCam, batcher, currContent, currX, currY, currWidth, currHeight);
+		}
+		else if(justification.equals("center")){
+			Assets.font.drawUITextCentered(guiCam, batcher, currContent, currX, currY, currWidth, currHeight);
+		}
+		else{
+			Assets.font.drawUITextCentered(guiCam, batcher, currContent, currX, currY, currWidth, currHeight);
+		}
+	}
+
+	public HashMap createSpriteExtra(String type, String content, float x, float y, float width, float height, float timeToDisplay, float angle){
+		HashMap event = new HashMap();
+		event.put("type", type);
+		event.put("content", content);
+		event.put("x", x);
+		event.put("y", y);
+		event.put("width", width);
+		event.put("height", height);
+		event.put("timeToDisplay", timeToDisplay);
+		event.put("angle", angle);
+		return event;
+	}
+
+	public void drawSpriteExtra(HashMap currEvent){
+		String currContent = (String)currEvent.get("content");
+		float currX = (Float)currEvent.get("x");
+		float currY = (Float)currEvent.get("y");
+		float currWidth = (Float)currEvent.get("width");
+		float currHeight = (Float)currEvent.get("height");
+		float currAngle = (Float)currEvent.get("angle");
+		batcher.drawUISprite(guiCam, currX, currY, currWidth, currHeight, currAngle, Assets.textureRegions.get(currContent));
 	}
 
 	private void drawBlockBank(){
@@ -730,7 +770,9 @@ public class BuildScreen extends GLScreen{
 			}
 		}
 		else{
-			//There were no matches, tell them to level stuff up?
+			Assets.font.drawUITextCentered(guiCam, batcher, "Nothing to", 55, 263 + yAdd, 7, 7);
+			Assets.font.drawUITextCentered(guiCam, batcher, "fuse, Upgrade", 55, 253 + yAdd, 7, 7);
+			Assets.font.drawUITextCentered(guiCam, batcher, "other blocks.", 55, 243 + yAdd, 7, 7);
 		}
 
 
@@ -928,13 +970,10 @@ public class BuildScreen extends GLScreen{
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
 		
 	}
 }
