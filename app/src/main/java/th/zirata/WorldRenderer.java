@@ -30,12 +30,20 @@ public class WorldRenderer {
 	
 	public  void render(){
 		cam.setViewportAndMatrices();
+
+		GL10 gl = glGraphics.getGL();
+		gl.glEnable(GL10.GL_BLEND);
+		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
+
+		batcher.beginBatch(Assets.imageTextures);
 		renderBackground();
 		renderObjects();
+		batcher.endBatch();
+
+		gl.glDisable(GL10.GL_BLEND);
 	}
 
 	public void renderBackground(){
-		batcher.beginBatch(Assets.backgroundTextures);
 		for(int i = 0; i < world.backgrounds.size(); i++){
 			Background currBackground = world.backgrounds.get(i);
 			if(currBackground.type.equals("Background")) {
@@ -49,13 +57,9 @@ public class WorldRenderer {
 				batcher.drawSprite(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("NearStarBG"));
 			}
 		}
-		batcher.endBatch();
 	}
 	
 	public void renderObjects(){
-		GL10 gl = glGraphics.getGL();
-		gl.glEnable(GL10.GL_BLEND);
-		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 		renderPlayer();
 		renderEnemies();
 		renderEnemyBullets();
@@ -84,7 +88,6 @@ public class WorldRenderer {
 	private void renderPlayer(){
 
 		if(world.player.playerBlocks.size() > 0){
-			batcher.beginBatch(Assets.blockTextures);
 
 			for(int i = 0; i < world.player.playerBlocks.size(); i++){
 				Block currBlock = world.player.playerBlocks.get(i);
@@ -96,7 +99,6 @@ public class WorldRenderer {
 				batcher.drawSprite(b.position.x, b.position.y, 5, 5, Assets.textureRegions.get("Bullet"));
 			}
 		}
-	    batcher.endBatch();
 	}
 
 	private void renderEnemies(){
@@ -107,27 +109,24 @@ public class WorldRenderer {
 					for(int j = 0; j < world.enemies.get(i).enemyBlocks.size(); j++){
 						Block currBlock = world.enemies.get(i).enemyBlocks.get(j);
 						if(currBlock.getClass().equals(EnemyTurretBlock.class)){
-							batcher.beginBatch(Assets.factionTextures);
 							EnemyTurretBlock currEnemy = (EnemyTurretBlock) currBlock;
 							Vector2 rotate = new Vector2(160,240);
 							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.textureRegions.get("greenTurretBase"));
 							//TODO Make turrets actually point at the right spot
 							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 36, 36, rotate.sub(currEnemy.position.x, currEnemy.position.y).angle(), Assets.textureRegions.get("greenTurretTop"));
-							batcher.endBatch();
+
 							EnemyTurretBlock tBlock = (EnemyTurretBlock)currBlock;
 							Bullet b;
 							for(int k = 0; k < tBlock.bullets.size(); k++){
-								batcher.beginBatch(Assets.blockTextures);
 								b = tBlock.bullets.get(k);
 								batcher.drawSprite(b.position.x, b.position.y, 5, 5, Assets.textureRegions.get("Bullet"));
-								batcher.endBatch();
+
 							}
 
 						}
 
 						else if(currBlock.getClass().equals(ArmorBlock.class)){
 
-							batcher.beginBatch(Assets.blockTextures);
 							if(currBlock.health <= currBlock.maxHealth && currBlock.health > currBlock.maxHealth*.7){
 								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.textureRegions.get("FullHealthArmorBlock"));
 							}
@@ -137,7 +136,6 @@ public class WorldRenderer {
 							else if(currBlock.health <= currBlock.maxHealth*.3 && currBlock.health > 0){
 								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.textureRegions.get("LowHealthArmorBlock"));
 							}
-							batcher.endBatch();
 						}
 
 						else if(currBlock.getClass().equals(EnergyBlock.class)){
@@ -159,24 +157,19 @@ public class WorldRenderer {
 
 	private void renderEnemyBullets(){
 		if(world.enemyBullets.size() > 0){
-			batcher.beginBatch(Assets.blockTextures);
 			Bullet b;
 			for(int i = 0; i < world.enemyBullets.size(); i++){
 				b = world.enemyBullets.get(i);
 				batcher.drawSprite(b.position.x, b.position.y, 5, 5, Assets.textureRegions.get("Bullet"));
 
 			}
-			batcher.endBatch();
 		}
 	}
 
 	private void renderText(){
-		batcher.beginBatch(Assets.mainMenuTextures);
 		Assets.font.drawText(batcher, "Energy: " + world.player.energy + " ", 16, 480 - 20);
 
 		batcher.drawSprite(285, 30, 60, 60, Assets.textureRegions.get("PowerButton"));
-		batcher.endBatch();
-		batcher.beginBatch(Assets.blockTextures);
 		Vector2 rotate = new Vector2();
 		if (world.moveLeft){
 			rotate.set(1,1);
@@ -193,6 +186,5 @@ public class WorldRenderer {
 		batcher.drawSprite(280, 450, 5, 35, Assets.textureRegions.get("BaseBlock"));
 		batcher.drawSprite(290, 450, 5, 35, Assets.textureRegions.get("BaseBlock"));
 
-		batcher.endBatch();
 	}
 }

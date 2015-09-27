@@ -16,12 +16,14 @@ import java.util.HashMap;
 public class Assets {
 
 	public static Texture backgroundTextures;
-	
+
 	public static Texture blockTextures;
-	
+
 	public static Texture mainMenuTextures;
 
 	public static Texture factionTextures;
+
+	public static Texture imageTextures;
 //	public static TextureRegion playRegion;
 //	public static TextureRegion arrowRegion;
 //	public static TextureRegion helpRegion;
@@ -37,23 +39,27 @@ public class Assets {
 
 	public static HashMap<String, TextureRegion> textureRegions;
 
-	
+
 	public static void load(GLGame game){
 		textureRegions = new HashMap<String, TextureRegion>();
 
 		backgroundTextures = new Texture(game, "Backgrounds.png");
-		addTextures(game.getFileIO(), backgroundTextures, "Backgrounds.txt");
+		//addTextures(game.getFileIO(), backgroundTextures, "Backgrounds.txt");
 
 		blockTextures = new Texture(game, "Blocks.png");
-		addTextures(game.getFileIO(), blockTextures, "Blocks.txt");
+		//addTextures(game.getFileIO(), blockTextures, "Blocks.txt");
 
 		mainMenuTextures = new Texture(game, "MenuItems.png");
-		addTextures(game.getFileIO(), mainMenuTextures, "MenuItems.txt");
-		font = new Font(mainMenuTextures, 0, 0, 16, 16, 20);
-		redFont = new Font(mainMenuTextures, 0, 121, 16, 16, 20);
+		//addTextures(game.getFileIO(), mainMenuTextures, "MenuItems.txt");
+
 
 		factionTextures = new Texture(game, "factionBlocks.png");
-		addTextures(game.getFileIO(), factionTextures, "factionBlocks.txt");
+		//addTextures(game.getFileIO(), factionTextures, "factionBlocks.txt");
+
+		imageTextures = new Texture(game, "Images.png");
+		addTextures(game.getFileIO(), imageTextures, "Images.txt");
+		font = new Font(imageTextures, 0, 2001, 16, 16, 20);
+		redFont = new Font(imageTextures, 257, 2001, 16, 16, 20);
 
 		explosionSound = game.getAudio().newSound("Explosion.wav");
 		shootSound = game.getAudio().newSound("Shoot.wav");
@@ -104,7 +110,7 @@ public class Assets {
 		backgroundTextures.reload();
 		blockTextures.reload();
 		mainMenuTextures.reload();
-		factionTextures.reload(); 
+		factionTextures.reload();
 	}
 
 	public static void playSound(Sound sound) {

@@ -40,18 +40,18 @@ public class MainMenuScreen extends GLScreen{
 		soundBounds = new Rectangle(0, 0, 50, 50);
 		touchPoint = new Vector2();
 	}
-	
+
 	public void update(float deltaTime){
 		List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
 		game.getInput().getKeyEvents();
-		
+
 		int len = touchEvents.size();
 		for(int i = 0; i < len; i++){
 			TouchEvent event = touchEvents.get(i);
 			if(event.type == TouchEvent.TOUCH_UP){
 				touchPoint.set(event.x, event.y);
 				guiCam.touchToWorld(touchPoint);
-				
+
 				if(OverlapTester.pointInRectangle(playBounds, touchPoint)){
 
 					game.setScreen(new MapScreen(game));
@@ -70,43 +70,43 @@ public class MainMenuScreen extends GLScreen{
 					Settings.save(game.getFileIO());
 					return;
 				}
-				
+
 			}
 		}
 	}
-	
+
 	public void present(float deltaTime){
 		GL10 gl = glGraphics.getGL();
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		guiCam.setViewportAndMatrices();
-		
+
 		gl.glEnable(GL10.GL_TEXTURE_2D);
-		batcher.beginBatch(Assets.backgroundTextures);
+
+		gl.glEnable(GL10.GL_BLEND);
+		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
+
+		batcher.beginBatch(Assets.imageTextures);
 		batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("Background"));
 		batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("NearStarBG"));
 		batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("StarBG"));
-		batcher.endBatch();
-		
-		gl.glEnable(GL10.GL_BLEND);
-		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
-		
-		batcher.beginBatch(Assets.mainMenuTextures);
+
 		batcher.drawSprite(160, 200, 128, 74, Assets.textureRegions.get("Play"));
+
 		batcher.endBatch();
-		
+
 		gl.glDisable(GL10.GL_BLEND);
-	
+
 	}
-	
+
 	public void pause(){
 		Settings.save(game.getFileIO());
 	}
-	
+
 	public void resume(){
-		
+
 	}
-	
+
 	public void dispose(){
-		
+
 	}
 }

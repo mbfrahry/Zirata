@@ -282,7 +282,7 @@ public class GameScreen extends GLScreen {
 	}
 	
 	private void presentPaused() {
-		batcher.beginBatch(Assets.mainMenuTextures);
+		batcher.beginBatch(Assets.imageTextures);
 		batcher.drawSprite(160, 250, 320, 50, Assets.textureRegions.get("Rectangle"));
 		batcher.drawSprite(160, 200, 320, 50, Assets.textureRegions.get("Rectangle"));
 		Assets.font.drawTextCentered(batcher, "Continue", 160, 250, 32, 32);

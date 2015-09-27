@@ -455,17 +455,14 @@ public class BuildScreen extends GLScreen{
 		guiCam.setViewportAndMatrices();
 		gl.glEnable(GL10.GL_TEXTURE_2D);
 
-		batcher.beginBatch(Assets.backgroundTextures);
-		batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("Background"));
-		batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("NearStarBG"));
-		batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("StarBG"));
-		batcher.endBatch();
-
 		gl.glEnable(GL10.GL_BLEND);
 		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 
+		batcher.beginBatch(Assets.imageTextures);
+		batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("Background"));
+		batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("NearStarBG"));
+		batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("StarBG"));
 
-		batcher.beginBatch(Assets.blockTextures);
 		for(int i = 0; i < PlayerSave.activeBlocks.size(); i++){
 			Block currBlock = PlayerSave.activeBlocks.get(i);
 			blockRenderer.renderSimpleBlock(currBlock, batcher, currBlock.position.x , currBlock.position.y, 24, 24);
@@ -475,9 +472,7 @@ public class BuildScreen extends GLScreen{
 			Block currBlock = potentialBlocks.get(i);
 			batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("PotentialBlock"));
 		}
-		batcher.endBatch();
 
-		batcher.beginBatch(Assets.mainMenuTextures);
 		batcher.drawUISprite(guiCam, 245, 385, 150, 40, Assets.textureRegions.get("Rectangle"));
 		batcher.drawUISprite(guiCam, 260, 30, 120, 60, Assets.textureRegions.get("Rectangle"));
 		batcher.drawUISprite(guiCam, 40, 30, 80, 60, Assets.textureRegions.get("Rectangle"));
@@ -496,13 +491,10 @@ public class BuildScreen extends GLScreen{
 		}
 		Assets.font.drawUITextRightJustified(guiCam, batcher, cost, 300, 375, 12, 12);
 
-		batcher.endBatch();
 
-		batcher.beginBatch(Assets.blockTextures);
 		batcher.drawUISprite(guiCam, 305, 395, 12, 12, Assets.textureRegions.get("BaseBlock"));
 		batcher.drawUISprite(guiCam, 305, 375, 12, 12, Assets.textureRegions.get("BaseBlock"));
 		batcher.drawUISprite(guiCam, 216, 375, 12, 12, Assets.textureRegions.get("PotentialBlock"));
-		batcher.endBatch();
 
 		if(showBlockBank){
 			drawBlockBank();
@@ -517,6 +509,8 @@ public class BuildScreen extends GLScreen{
 			}
 		}
 		drawUIExtras(deltaTime);
+
+		batcher.endBatch();
 		gl.glDisable(GL10.GL_BLEND);
 
 	}
@@ -542,7 +536,6 @@ public class BuildScreen extends GLScreen{
 			HashMap currEvent = UIExtras.get(i);
 
 			if (currEvent.get("type").equals("text")){
-				batcher.beginBatch(Assets.mainMenuTextures);
 				Font currFont;
 				if(currEvent.get("color").equals("red")){
 					currFont = Assets.redFont;
@@ -565,7 +558,6 @@ public class BuildScreen extends GLScreen{
 				else{
 					Assets.font.drawUITextCentered(guiCam, batcher, currContent, currX, currY, currWidth, currHeight);
 				}
-				batcher.endBatch();
 			}
 			else{
 				//This is for sprites, haven't gotten there yet
@@ -589,7 +581,6 @@ public class BuildScreen extends GLScreen{
 	}
 
 	private void drawBlockBank(){
-		batcher.beginBatch(Assets.mainMenuTextures);
 
 		batcher.drawUISprite(guiCam, 290, 215, 60, 30, Assets.textureRegions.get("DarkGrayRectangle"));
 		Assets.font.drawUIText(guiCam, batcher, "X", 290, 215, 24, 24);
@@ -613,9 +604,6 @@ public class BuildScreen extends GLScreen{
 		}
 
 
-		batcher.endBatch();
-
-		batcher.beginBatch(Assets.blockTextures);
 		batcher.drawUISprite(guiCam, 40, 175, 24, 24, Assets.textureRegions.get("TurretBase"));
 		batcher.drawUISprite(guiCam, 40, 175, 24, 24, Assets.textureRegions.get("TurretTop"));
 		batcher.drawUISprite(guiCam, 120, 175, 24, 24, Assets.textureRegions.get("ArmorBlock"));
@@ -649,17 +637,12 @@ public class BuildScreen extends GLScreen{
 			}
 		}
 
-		batcher.endBatch();
 
-		batcher.beginBatch(Assets.mainMenuTextures);
 		batcher.drawUISprite(guiCam, 285, 80, 50, 150, Assets.textureRegions.get("addIcon"));
-		batcher.endBatch();
 
 	}
 
 	public void drawBlockUpgrades(){
-		batcher.beginBatch(Assets.mainMenuTextures);
-
 		float x = 55;
 		float y = 220;
 
@@ -687,9 +670,7 @@ public class BuildScreen extends GLScreen{
 		}
 
 		batcher.drawUISprite(guiCam, x, y + 40 * upgradeableAttributes.length - 10, 110, 25, Assets.textureRegions.get("Rectangle"));
-		batcher.endBatch();
 		String text;
-		batcher.beginBatch(Assets.blockTextures);
 		if (showUpgrades){
 			float percentage = selectedActiveBlock.getExperienceLevel(upgradeableAttributes.length)/(float)selectedActiveBlock.getMaxAttributeNum();
 			batcher.drawUISprite(guiCam, x * percentage, y + 40 * upgradeableAttributes.length - 10, 176 * percentage, 38, Assets.textureRegions.get("GreenBullet"));
@@ -699,12 +680,8 @@ public class BuildScreen extends GLScreen{
 			batcher.drawUISprite(guiCam, x, y + 40 * upgradeableAttributes.length - 10, 176, 38, Assets.textureRegions.get("Bullet"));
 			text = "Fuse!";
 		}
-		batcher.endBatch();
 
-		batcher.beginBatch(Assets.mainMenuTextures);
 		Assets.font.drawUIText(guiCam, batcher, text, x - 35, y - 10 + upgradeableAttributes.length * 40, 10, 10);
-		batcher.endBatch();
-
 		x = 55;
 		y = 220;
 		if(selectedActiveBlock.getClass().equals(TurretBlock.class)){
@@ -712,20 +689,15 @@ public class BuildScreen extends GLScreen{
 		}
 		for (int i = 0; i < upgradeableAttributes.length; i++) {
 			if (!selectedActiveBlock.checkMaxAttributeLevel(i)) {
-				batcher.beginBatch(Assets.blockTextures);
 				batcher.drawUISprite(guiCam, x + 48, y - 5 + i * 40, 10, 10, Assets.textureRegions.get("BaseBlock"));
-				batcher.endBatch();
 			}
 			else{
-				batcher.beginBatch(Assets.mainMenuTextures);
 				Assets.font.drawUIText(guiCam, batcher, "MAX LEVEL!", x - 45, y - 5 + i * 40, 10, 10);
-				batcher.endBatch();
 			}
 		}
 	}
 
 	public void drawFuseMenu(){
-		batcher.beginBatch(Assets.mainMenuTextures);
 		int yAdd = 0;
 		int fuseX = 26;
 		int fuseY = 285;
@@ -739,17 +711,11 @@ public class BuildScreen extends GLScreen{
 		}
 		batcher.drawUISprite(guiCam, 55, 318 + yAdd, 110, 25, Assets.textureRegions.get("Rectangle"));
 		batcher.drawUISprite(guiCam, 55, 253 + yAdd, 110, 110, Assets.textureRegions.get("Rectangle"));
-		batcher.endBatch();
-		batcher.beginBatch(Assets.blockTextures);
 		batcher.drawUISprite(guiCam, 55, 318 + yAdd, 176, 38, Assets.textureRegions.get("Bullet"));
-		batcher.endBatch();
-		batcher.beginBatch(Assets.mainMenuTextures);
 		Assets.font.drawUITextCentered(guiCam, batcher, "Fuse!", 55, 320 + yAdd, 10, 10);
-		batcher.endBatch();
 
 		ArrayList<Block> compatibleFusionBlocks = getCompatibleFusionBlocks();
 		if(compatibleFusionBlocks.size() > 0){
-			batcher.beginBatch(Assets.blockTextures);
 			for (int i = 0; i < compatibleFusionBlocks.size(); i++){
 				Block currBlock = compatibleFusionBlocks.get(i);
 				if(PlayerSave.activeBlocks.contains(currBlock)){
@@ -762,7 +728,6 @@ public class BuildScreen extends GLScreen{
 					fuseY -= 30;
 				}
 			}
-			batcher.endBatch();
 		}
 		else{
 			//There were no matches, tell them to level stuff up?
