@@ -9,6 +9,7 @@ public class Camera2D {
 
 	public Vector2 position;
 	public Vector2 finalPosition;
+	public Vector2 velocity;
 	public float zoom;
 	public final float frustumWidth;
 	public final float frustumHeight;
@@ -20,7 +21,9 @@ public class Camera2D {
 		this.frustumHeight = frustumHeight;
 		this.position = new Vector2(frustumWidth/2, frustumHeight/2);
 		this.position = new Vector2(frustumWidth/2, frustumHeight/2);
+		this.finalPosition = new Vector2(position.x, position.y);
 		this.zoom = 1.0f;
+		velocity = new Vector2(5,5);
 	}
 	
 	public void setViewportAndMatrices(){
@@ -40,14 +43,42 @@ public class Camera2D {
 	public void touchToWorld(Vector2 touch){
 		touch.x = (touch.x / (float) glGraphics.getWidth()) * frustumWidth * zoom;
 		touch.y = (1 - touch.y / (float) glGraphics.getHeight()) * frustumHeight *zoom;
-		touch.add(position).sub(frustumWidth *zoom / 2, frustumHeight * zoom/ 2);
+		touch.add(position).sub(frustumWidth * zoom / 2, frustumHeight * zoom / 2);
+	}
+
+	public void panToPosition(float targX, float targY){
+		double xDiff = position.x - targX + 12;
+		double yDiff = position.y - targY + 12;
+		finalPosition.set(targX, targY);
+		double angle = Math.atan(xDiff / yDiff);
+		double xVelocity = 0;
+		double yVelocity = 0;
+		double multiplier = 1;
+		if((xDiff >= 0 && yDiff > 0) || (xDiff <= 0 && yDiff > 0)){
+			multiplier = -1;
+		}
+		yVelocity = multiplier*Math.cos(angle);
+		xVelocity = multiplier*Math.sin(angle);
+		velocity.add((float) xVelocity * 50, (float) yVelocity * 50);
 	}
 
 	public void update(float deltaTime){
-		if(!position.equals(finalPosition)){
-
+		if(moveCamera()){
+			position.add(velocity.x * deltaTime, velocity.y * deltaTime);
+		}
+		else{
+			velocity.set(0,0);
 		}
 	}
 	
-	
+	public boolean moveCamera(){
+		boolean shouldMove = true;
+
+		if (Math.abs((double)(position.x - finalPosition.x)) <= 12 && Math.abs((double)(position.y - finalPosition.y)) <= 12){
+			shouldMove = false;
+		}
+
+		return shouldMove;
+	}
+
 }
