@@ -69,7 +69,7 @@ public class World {
 		player.getEnergy();
 		player.turnOnTurrets();
 		backgrounds = new ArrayList<Background>();
-		backgrounds.add(new Background(160, 240, 320, 480, new Vector2(0,-6), "Background"));
+		backgrounds.add(new Background(160, 240, 320, 480, new Vector2(0,-10), "Background"));
 		backgrounds.add(new Background(160, 240, 320, 480, new Vector2(0,-10), "NearStar"));
 		backgrounds.add(new Background(160, 240, 320, 480, new Vector2(0,-3), "FarStar"));
 	}

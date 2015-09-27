@@ -78,14 +78,19 @@ public class MapScreen  extends GLScreen {
         gl.glEnable(GL10.GL_BLEND);
         gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 
-        for(int i = 0; i < Settings.maxLevel; i++) {
+        for(int i = 0; i < levelBounds.size(); i++) {
             Rectangle currLevel = levelBounds.get(i);
             batcher.beginBatch(Assets.blockTextures);
-            batcher.drawSprite(currLevel.lowerLeft.x + 35, currLevel.lowerLeft.y + 25, 40, 40, 45, Assets.textureRegions.get("BaseBlock"));
+            if(i < Settings.maxLevel) {
+                batcher.drawSprite(currLevel.lowerLeft.x + 35, currLevel.lowerLeft.y + 25, 40, 40, 45, Assets.textureRegions.get("BaseBlock"));
+            }
+            else{
+                batcher.drawSprite(currLevel.lowerLeft.x + 35, currLevel.lowerLeft.y + 25, 40, 40, 45, Assets.textureRegions.get("PotentialBlock"));
+            }
             batcher.endBatch();
 
             batcher.beginBatch(Assets.mainMenuTextures);
-            Assets.font.drawText(batcher, i+1 + "", currLevel.lowerLeft.x + 10, currLevel.lowerLeft.y + 45);
+            Assets.font.drawText(batcher, i + 1 + "", currLevel.lowerLeft.x + 10, currLevel.lowerLeft.y + 45);
             batcher.endBatch();
         }
 
