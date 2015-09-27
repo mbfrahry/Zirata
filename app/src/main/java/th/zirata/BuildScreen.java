@@ -3,6 +3,7 @@ package th.zirata;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
@@ -10,6 +11,7 @@ import javax.microedition.khronos.opengles.GL10;
 import com.badlogic.androidgames.framework.Game;
 import com.badlogic.androidgames.framework.Input.TouchEvent;
 import com.badlogic.androidgames.framework.gl.Camera2D;
+import com.badlogic.androidgames.framework.gl.Font;
 import com.badlogic.androidgames.framework.gl.SpriteBatcher;
 import com.badlogic.androidgames.framework.impl.GLScreen;
 import com.badlogic.androidgames.framework.math.OverlapTester;
@@ -48,7 +50,7 @@ public class BuildScreen extends GLScreen{
 	public float minHeldTime;
 	public float heldTime;
 
-	boolean draggingBankBlock;
+	public ArrayList<HashMap> UIExtras;
 
 	boolean devMode;
 
@@ -77,11 +79,11 @@ public class BuildScreen extends GLScreen{
 		showFuse = false;
 		blockBankOption = BLOCK_BANK_TURRET;
 		ownedBlocksByType = getBlocksFromType(TurretBlock.class);
-		draggingBankBlock = false;
 
 		minHeldTime = 0.5f;
 		heldTime = 0;
 		devMode = true;
+		UIExtras = new ArrayList<HashMap>();
     }
 
 	public BuildScreen(Game game, boolean showBlockBank, Block activeBlock){
@@ -362,6 +364,20 @@ public class BuildScreen extends GLScreen{
 						}
 						PlayerSave.save(game.getFileIO());
 					}
+					else{
+						HashMap event = new HashMap();
+						event.put("type", "text");
+						event.put("content", "bank");
+						event.put("x", 217f);
+						event.put("y", 395f);
+						event.put("width", 12f);
+						event.put("height", 12f);
+						event.put("timeToDisplay", .25f);
+						event.put("color", "red");
+						event.put("justification", "right");
+						UIExtras.add(event);
+						//Assets.redFont.drawUITextRightJustified(guiCam, batcher, "Bank:", 229, 395, 12, 12);
+					}
 				}
 			}
 		}
@@ -468,7 +484,7 @@ public class BuildScreen extends GLScreen{
 		Assets.font.drawUITextCentered(guiCam, batcher, "Map", 40, 30, 15, 15);
 		Assets.font.drawUITextCentered(guiCam, batcher, "Launch", 260, 30, 15, 15);
 		Assets.font.drawUITextCentered(guiCam, batcher, "Prepare Your", 160, 460, 20, 23);
-		Assets.font.drawUITextCentered(guiCam, batcher, "Ship For", 160, 438, 25, 28);
+		Assets.font.drawUITextCentered(guiCam, batcher, "Ship For", 160, 438, 20, 23);
 		Assets.font.drawUITextCentered(guiCam, batcher, "Level " + Settings.currLevel, 160, 416, 16, 16);
 
 		Assets.font.drawUITextRightJustified(guiCam, batcher, "Bank:", 229, 395, 12, 12);
@@ -500,8 +516,76 @@ public class BuildScreen extends GLScreen{
 
 			}
 		}
+		drawUIExtras(deltaTime);
 		gl.glDisable(GL10.GL_BLEND);
 
+	}
+
+	private void drawUIExtras(float deltaTime){
+		/*UI Extra format
+		string type: <sprite,text>
+		string content: <spriteName, textToShow>
+		float x: <position x>
+		float y: <position y>
+		float width: <width>
+		float height: <height>
+		float timeToDisplay: <timeToDisplay>
+		if type == text
+		    string color: <red, white>
+            string justification: <left,right,center>
+		if type == sprite
+		    float angle: <rotationAngle>
+		 */
+		ArrayList<Integer> toDelete = new ArrayList<Integer>();
+
+		for(int i = 0; i < UIExtras.size(); i++){
+			HashMap currEvent = UIExtras.get(i);
+
+			if (currEvent.get("type").equals("text")){
+				batcher.beginBatch(Assets.mainMenuTextures);
+				Font currFont;
+				if(currEvent.get("color").equals("red")){
+					currFont = Assets.redFont;
+				}
+				else{
+					currFont = Assets.font;
+				}
+				String justification = (String)currEvent.get("justification");
+				String currContent = (String)currEvent.get("content");
+				float currX = (Float)currEvent.get("x");
+				float currY = (Float)currEvent.get("y");
+				float currWidth = (Float)currEvent.get("width");
+				float currHeight = (Float)currEvent.get("height");
+				if(justification.equals("right")){
+					currFont.drawUITextRightJustified(guiCam, batcher, currContent, currX, currY, currWidth, currHeight);
+				}
+				else if(justification.equals("center")){
+					Assets.font.drawUITextCentered(guiCam, batcher, currContent, currX, currY, currWidth, currHeight);
+				}
+				else{
+					Assets.font.drawUITextCentered(guiCam, batcher, currContent, currX, currY, currWidth, currHeight);
+				}
+				batcher.endBatch();
+			}
+			else{
+				//This is for sprites, haven't gotten there yet
+			}
+
+
+			float time = (Float)currEvent.get("timeToDisplay");
+			if(time - deltaTime < 0){
+				toDelete.add(i);
+			}
+			else{
+				time -= deltaTime;
+				currEvent.put("timeToDisplay", time);
+			}
+		}
+
+		//Might be buggy....
+		for(int i = toDelete.size()-1; i >= 0; i--){
+			UIExtras.remove((int) toDelete.get(i));
+		}
 	}
 
 	private void drawBlockBank(){
@@ -687,9 +771,6 @@ public class BuildScreen extends GLScreen{
 
 
 	}
-
-
-
 
 	public String constructAttributeLevel(int lvl){
 

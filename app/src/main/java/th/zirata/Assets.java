@@ -30,6 +30,7 @@ public class Assets {
 //	public static TextureRegion addIcon;
 
 	public static Font font;
+	public static Font redFont;
 
 	public static Sound explosionSound;
 	public static Sound shootSound;
@@ -49,6 +50,7 @@ public class Assets {
 		mainMenuTextures = new Texture(game, "MenuItems.png");
 		addTextures(game.getFileIO(), mainMenuTextures, "MenuItems.txt");
 		font = new Font(mainMenuTextures, 0, 0, 16, 16, 20);
+		redFont = new Font(mainMenuTextures, 0, 121, 16, 16, 20);
 
 		factionTextures = new Texture(game, "factionBlocks.png");
 		addTextures(game.getFileIO(), factionTextures, "factionBlocks.txt");
