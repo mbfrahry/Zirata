@@ -11,6 +11,7 @@ import com.badlogic.androidgames.framework.math.Vector2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -78,19 +79,22 @@ public class MapScreen  extends GLScreen {
         gl.glEnable(GL10.GL_BLEND);
         gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 
-        for(int i = 0; i < levelBounds.size(); i++) {
+        for(int i = 0; i < Settings.maxLevel; i++) {
             Rectangle currLevel = levelBounds.get(i);
             batcher.beginBatch(Assets.blockTextures);
-            if(i < Settings.maxLevel) {
-                batcher.drawSprite(currLevel.lowerLeft.x + 35, currLevel.lowerLeft.y + 25, 40, 40, 45, Assets.textureRegions.get("BaseBlock"));
-            }
-            else{
-                batcher.drawSprite(currLevel.lowerLeft.x + 35, currLevel.lowerLeft.y + 25, 40, 40, 45, Assets.textureRegions.get("PotentialBlock"));
-            }
+            batcher.drawSprite(currLevel.lowerLeft.x + 35, currLevel.lowerLeft.y + 25, 40, 40, 45, Assets.textureRegions.get("BaseBlock"));
             batcher.endBatch();
 
             batcher.beginBatch(Assets.mainMenuTextures);
             Assets.font.drawText(batcher, i + 1 + "", currLevel.lowerLeft.x + 10, currLevel.lowerLeft.y + 45);
+            batcher.endBatch();
+        }
+        if(Settings.maxLevel < levelBounds.size()){
+            batcher.beginBatch(Assets.blockTextures);
+            batcher.drawSprite(levelBounds.get(Settings.maxLevel ).lowerLeft.x + 35, levelBounds.get(Settings.maxLevel).lowerLeft.y + 25, 40, 40, 45, Assets.textureRegions.get("PotentialBlock"));
+            batcher.endBatch();
+            batcher.beginBatch(Assets.mainMenuTextures);
+            Assets.font.drawText(batcher, Settings.maxLevel + 1 + "", levelBounds.get(Settings.maxLevel).lowerLeft.x + 10, levelBounds.get(Settings.maxLevel).lowerLeft.y + 45);
             batcher.endBatch();
         }
 
