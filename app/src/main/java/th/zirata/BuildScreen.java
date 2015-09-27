@@ -452,28 +452,7 @@ public class BuildScreen extends GLScreen{
 		batcher.beginBatch(Assets.blockTextures);
 		for(int i = 0; i < PlayerSave.activeBlocks.size(); i++){
 			Block currBlock = PlayerSave.activeBlocks.get(i);
-			float angle = 0;
-			if(currBlock.getClass().equals(TurretBlock.class)){
-                TurretBlock tBlock = (TurretBlock) currBlock;
-				Vector2 rotate = getRotationVector(tBlock.fireAngle);
-				angle = rotate.sub(new Vector2(0,0)).angle()-90;
-				//blockRenderer.renderBlock(tBlock, batcher, currBlock.position.x  , currBlock.position.y, 24, 24, );
-				//batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretBase"));
-				//batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, rotate.sub(new Vector2(0,0)).angle()-90, Assets.textureRegions.get("TurretTop"));
-			}
-			blockRenderer.renderBlock(currBlock, batcher, currBlock.position.x , currBlock.position.y, 24, 24, angle);
-//			else if(currBlock.getClass().equals(ArmorBlock.class)){
-//				batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.textureRegions.get("ArmorBlock"));
-//			}
-//			else if (currBlock.getClass().equals(MultiplierBlock.class)){
-//				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
-//			}
-//			else if (currBlock.getClass().equals(EnergyBlock.class)){
-//				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("EnergyBlock"));
-//			}
-//			else{
-//				batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.textureRegions.get("BaseBlock"));
-//			}
+			blockRenderer.renderSimpleBlock(currBlock, batcher, currBlock.position.x , currBlock.position.y, 24, 24);
 		}
 
 		for(int i = 0; i < potentialBlocks.size(); i++){
@@ -484,7 +463,6 @@ public class BuildScreen extends GLScreen{
 
 		batcher.beginBatch(Assets.mainMenuTextures);
 		batcher.drawUISprite(guiCam, 245, 400, 150, 40, Assets.textureRegions.get("Rectangle"));
-		//batcher.drawSprite(290, 30, 60, 60, Assets.textureRegions.get("Rectangle"));
 		batcher.drawUISprite(guiCam, 290, 30, 60, 60, Assets.textureRegions.get("Arrow"));
 		batcher.drawUISprite(guiCam, 30, 30, -60, 60, Assets.textureRegions.get("Arrow"));
 		Assets.font.drawUITextCentered(guiCam, batcher, "Prepare Your", 160, 460, 20, 23);
@@ -565,24 +543,7 @@ public class BuildScreen extends GLScreen{
 			if(!PlayerSave.activeBlocks.contains(currBlock)){
 				currBlock.position.x = storeX;
 				currBlock.position.y = storeY;
-				if(blockBankOption == BLOCK_BANK_TURRET) {
-					if(PlayerSave.activeBlocks.contains(currBlock)){
-						batcher.drawUISprite(guiCam, currBlock.position.x - 3, currBlock.position.y - 3, 27, 27, Assets.textureRegions.get("Bullet"));
-					}
-					TurretBlock tBlock = (TurretBlock) currBlock;
-					Vector2 rotate = getRotationVector(tBlock.fireAngle);
-					batcher.drawUISprite(guiCam, currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretBase"));
-					batcher.drawUISprite(guiCam, currBlock.position.x, currBlock.position.y, 24, 24, rotate.sub(new Vector2(0, 0)).angle() - 90, Assets.textureRegions.get("TurretTop"));
-				}
-				else if(blockBankOption == BLOCK_BANK_ARMOR){
-					batcher.drawUISprite(guiCam, currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("ArmorBlock"));
-				}
-				else if(blockBankOption == BLOCK_BANK_ENERGY){
-					batcher.drawUISprite(guiCam, currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("EnergyBlock"));
-				}
-				else if(blockBankOption == BLOCK_BANK_MULTIPLIER){
-					batcher.drawUISprite(guiCam, currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
-				}
+				blockRenderer.renderSimpleUIBlock(guiCam, currBlock, batcher, currBlock.position.x , currBlock.position.y, 24, 24);
 			}
 			else{
 				if (currBlock == selectedActiveBlock){
@@ -591,23 +552,7 @@ public class BuildScreen extends GLScreen{
 				else {
 					batcher.drawUISprite(guiCam, storeX, storeY, 50, 50, Assets.textureRegions.get("Bullet"));
 				}
-				if(blockBankOption == BLOCK_BANK_TURRET) {
-					TurretBlock tBlock = (TurretBlock) currBlock;
-					Vector2 rotate = getRotationVector(tBlock.fireAngle);
-
-					batcher.drawUISprite(guiCam, storeX, storeY, 24, 24, Assets.textureRegions.get("TurretBase"));
-					batcher.drawUISprite(guiCam, storeX, storeY, 24, 24, rotate.sub(new Vector2(0, 0)).angle() - 90, Assets.textureRegions.get("TurretTop"));
-
-				}
-				else if(blockBankOption == BLOCK_BANK_ARMOR){
-					batcher.drawUISprite(guiCam, storeX, storeY, 24, 24, Assets.textureRegions.get("ArmorBlock"));
-				}
-				else if(blockBankOption == BLOCK_BANK_ENERGY){
-					batcher.drawUISprite(guiCam, storeX, storeY, 24, 24, Assets.textureRegions.get("EnergyBlock"));
-				}
-				else if(blockBankOption == BLOCK_BANK_MULTIPLIER){
-					batcher.drawUISprite(guiCam, storeX, storeY, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
-				}
+				blockRenderer.renderSimpleUIBlock(guiCam, currBlock, batcher, storeX, storeY, 24, 24);
 			}
 
 
@@ -635,7 +580,7 @@ public class BuildScreen extends GLScreen{
 		String[] upgradeableAttributes = selectedActiveBlock.getUpgradableAttributes();
 		float[] attributeValues = selectedActiveBlock.getAttributeVals();
 		float[] upgradeValues = selectedActiveBlock.getUpgradeValues();
-		if(selectedActiveBlock.getClass().equals(TurretBlock.class)){
+		if (selectedActiveBlock.getClass().equals(TurretBlock.class)){
 
 			batcher.drawUISprite(guiCam, x, 217, 110, 35, Assets.textureRegions.get("Rectangle"));
 			Assets.font.drawUITextCentered(guiCam, batcher, "Rotate", x, 217, 10, 10);
@@ -724,23 +669,7 @@ public class BuildScreen extends GLScreen{
 				if(PlayerSave.activeBlocks.contains(currBlock)){
 					batcher.drawUISprite(guiCam, fuseX, fuseY, 50, 50, Assets.textureRegions.get("Bullet"));
 				}
-				if(currBlock.getClass().equals(TurretBlock.class)) {
-					TurretBlock tBlock = (TurretBlock)currBlock ;
-					Vector2 rotate = getRotationVector(tBlock.fireAngle);
-
-					batcher.drawUISprite(guiCam, fuseX, fuseY, 24, 24, Assets.textureRegions.get("TurretBase"));
-					batcher.drawUISprite(guiCam, fuseX, fuseY, 24, 24, rotate.sub(new Vector2(0, 0)).angle() - 90, Assets.textureRegions.get("TurretTop"));
-
-				}
-				else if(currBlock.getClass().equals(ArmorBlock.class)){
-					batcher.drawUISprite(guiCam, fuseX, fuseY, 24, 24, Assets.textureRegions.get("ArmorBlock"));
-				}
-				else if(currBlock.getClass().equals(EnergyBlock.class)){
-					batcher.drawUISprite(guiCam, fuseX, fuseY, 24, 24, Assets.textureRegions.get("EnergyBlock"));
-				}
-				else if(currBlock.getClass().equals(MultiplierBlock.class)){
-					batcher.drawUISprite(guiCam, fuseX, fuseY, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
-				}
+				blockRenderer.renderSimpleUIBlock(guiCam, currBlock, batcher, fuseX, fuseY, 24, 24);
 				fuseX += 30;
 				if(fuseX > 90){
 					fuseX = 26;
@@ -757,22 +686,6 @@ public class BuildScreen extends GLScreen{
 
 	}
 
-	public Vector2 getRotationVector(float fireAngle){
-		Vector2 rotate;
-		if (fireAngle == 0){
-			rotate = new Vector2(1,0);
-		}
-		else if (fireAngle == 90){
-			rotate = new Vector2(0,1);
-		}
-		else if (fireAngle == 180){
-			rotate = new Vector2(-1,0);
-		}
-		else{
-			rotate = new Vector2(0,-1);
-		}
-		return rotate;
-	}
 
 
 

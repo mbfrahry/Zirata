@@ -17,6 +17,7 @@ public class WorldRenderer {
 	World world;
 	Camera2D cam;
 	SpriteBatcher batcher;
+	BlockRenderer blockRenderer;
 	
 	public WorldRenderer(GLGraphics glGraphics, SpriteBatcher batcher, World world){
 		this.glGraphics = glGraphics;
@@ -24,6 +25,7 @@ public class WorldRenderer {
         this.cam = new Camera2D(glGraphics, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
 		this.batcher = batcher;
 		setTurretDirections();
+		blockRenderer = new BlockRenderer();
 	}
 	
 	public  void render(){
@@ -76,50 +78,7 @@ public class WorldRenderer {
 
 			for(int i = 0; i < world.player.playerBlocks.size(); i++){
 				Block currBlock = world.player.playerBlocks.get(i);
-				if(currBlock.getClass().equals(TurretBlock.class)){
-					TurretBlock tBlock = (TurretBlock)currBlock;
-					Vector2 rotate = new Vector2(currBlock.lastTouch);
-					batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretBase"));
-					batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, rotate.sub(currBlock.position).angle()-90, Assets.textureRegions.get("TurretTop"));
-
-					if(tBlock.active){
-						batcher.drawSprite(currBlock.position.x - 8 + 3, currBlock.position.y - 8, 5, 5, Assets.textureRegions.get("GreenBullet"));
-						//There is a bug here with drawing the fire arcs. They need to respect the upgraded range. Added a temporary fix because we can't figure out the real problem
-						batcher.drawSprite(tBlock.coneX1, tBlock.coneY1, tBlock.fireRange + tBlock.getAttributeLevel(3)*3.5f, 1, (tBlock.fireAngle + tBlock.fireArcAngle), Assets.textureRegions.get("Bullet"));
-						batcher.drawSprite(tBlock.coneX2, tBlock.coneY2, tBlock.fireRange + tBlock.getAttributeLevel(3)*3.5f, 1, (tBlock.fireAngle - tBlock.fireArcAngle), Assets.textureRegions.get("Bullet"));
-					}
-					else{
-						batcher.drawSprite(currBlock.position.x - 8 + 3, currBlock.position.y - 8, 5, 5, Assets.textureRegions.get("Bullet"));
-					}
-
-				}
-
-				else if(currBlock.getClass().equals(ArmorBlock.class)){
-					batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.textureRegions.get("ArmorBlock"));
-				}
-				
-				else if(currBlock.getClass().equals(MultiplierBlock.class)){
-					MultiplierBlock mBlock = (MultiplierBlock)currBlock;
-					batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
-					if(mBlock.state == MultiplierBlock.MULTIPLIER_READY){
-						batcher.drawSprite(currBlock.position.x , currBlock.position.y + 2, 10, 10, Assets.textureRegions.get("Bullet"));
-					}
-					else if(mBlock.state == MultiplierBlock.MULTIPLIER_MULTIPLYING){
-						batcher.drawSprite(currBlock.position.x, currBlock.position.y +2, 10, 10, Assets.textureRegions.get("GreenBullet"));
-					}
-					else if(mBlock.state == MultiplierBlock.MULTIPLIER_COOLING){
-						batcher.drawSprite(currBlock.position.x, currBlock.position.y + 2, 10, 10, Assets.textureRegions.get("YellowBullet"));
-					}
-
-				}
-
-				else if(currBlock.getClass().equals(EnergyBlock.class)){
-					batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.textureRegions.get("EnergyBlock"));
-				}
-
-				else{
-					batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.textureRegions.get("BaseBlock"));
-				}
+				blockRenderer.renderGameBlock(currBlock, batcher);
 			}
 			Bullet b;
 			for(int i = 0; i < World.PLAYER_BULLETS.size(); i++){
