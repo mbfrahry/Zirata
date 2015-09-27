@@ -36,7 +36,7 @@ public class GameScreen extends GLScreen {
     World world;
     WorldRenderer renderer;
     FPSCounter fpsCounter;
-    HashMap<Integer,Vector2> touchDowns;
+    HashMap<Integer,Vector2> steerTouches;
 
     public GameScreen(Game game) {
         super(game);
@@ -54,7 +54,7 @@ public class GameScreen extends GLScreen {
         quitBounds = new Rectangle(0, 175, 320, 50);
 		powerBounds = new Rectangle(260, 0, 50, 50);
         fpsCounter = new FPSCounter();
-		touchDowns = new HashMap<Integer, Vector2>();
+		steerTouches = new HashMap<Integer, Vector2>();
 
     }
 
@@ -136,20 +136,20 @@ public class GameScreen extends GLScreen {
 				}
 				if (touchPoint.y < 130) {
 					if (touchPoint.x < 120) {
-						touchDowns.remove(event.pointer);
+						steerTouches.remove(event.pointer);
 						world.moveLeft = false;
 						world.moveRight = false;
-						touchDowns.remove(event.pointer);
+						steerTouches.remove(event.pointer);
 					}
 				}
 
 			}
 			if(event.type == TouchEvent.TOUCH_DRAGGED){
 				updateRotation(event);
-				if ((touchPoint.y > 130 || touchPoint.x > 120) && touchDowns.keySet().contains(event.pointer)) {
+				if ((touchPoint.y > 130 || touchPoint.x > 120) && steerTouches.keySet().contains(event.pointer)) {
 					world.moveLeft = false;
 					world.moveRight = false;
-					touchDowns.remove(event.pointer);
+					steerTouches.remove(event.pointer);
 				}
 			}
 		}
@@ -169,12 +169,12 @@ public class GameScreen extends GLScreen {
 	private void updateRotation(TouchEvent event){
 		if (touchPoint.y < 130) {
 			if (touchPoint.x < 60) {
-				touchDowns.put(event.pointer, new Vector2(touchPoint.x,touchPoint.y));
+				steerTouches.put(event.pointer, new Vector2(touchPoint.x,touchPoint.y));
 				world.moveRight = true;
 				world.moveLeft = false;
 			}
 			if (touchPoint.x > 60 && touchPoint.x < 120) {
-				touchDowns.put(event.pointer, new Vector2(touchPoint.x,touchPoint.y));
+				steerTouches.put(event.pointer, new Vector2(touchPoint.x,touchPoint.y));
 				world.moveLeft = true;
 				world.moveRight = false;
 			}

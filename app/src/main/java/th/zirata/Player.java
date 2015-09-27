@@ -60,4 +60,19 @@ public class Player {
 		}
 		checkPower();
 	}
+
+	public void turnOnTurrets(){
+		int energySum = 0;
+		for (int i = 0; i < playerBlocks.size(); i++){
+			Block currBlock = playerBlocks.get(i);
+			if (currBlock.getClass().equals(TurretBlock.class)){
+				if (energySum + currBlock.energyCost <= energy){
+					currBlock.active = true;
+					poweredBlocks.add(currBlock);
+					energySum += currBlock.energyCost;
+				}
+			}
+
+		}
+	}
 }

@@ -20,6 +20,7 @@ public class BuildScreen extends GLScreen{
 
 	Camera2D guiCam;
 	SpriteBatcher batcher;
+	BlockRenderer blockRenderer;
 	Rectangle backBounds;
 	Rectangle forwardBounds;
 	Rectangle blockBankTurretBounds;
@@ -66,6 +67,7 @@ public class BuildScreen extends GLScreen{
 
 		touchPoint = new Vector2();
 		batcher = new SpriteBatcher(glGraphics, 500);
+		blockRenderer = new BlockRenderer();
 
 		potentialBlocks = new ArrayList<Block>();
 		getPotentialBlocks();
@@ -86,6 +88,7 @@ public class BuildScreen extends GLScreen{
 		this(game);
 		this.showBlockBank = showBlockBank;
 		this.selectedActiveBlock = activeBlock;
+		blockRenderer = new BlockRenderer();
 		if(testShowFuse()){
 			showFuse = true;
 			showUpgrades = false;
@@ -449,25 +452,28 @@ public class BuildScreen extends GLScreen{
 		batcher.beginBatch(Assets.blockTextures);
 		for(int i = 0; i < PlayerSave.activeBlocks.size(); i++){
 			Block currBlock = PlayerSave.activeBlocks.get(i);
+			float angle = 0;
 			if(currBlock.getClass().equals(TurretBlock.class)){
                 TurretBlock tBlock = (TurretBlock) currBlock;
 				Vector2 rotate = getRotationVector(tBlock.fireAngle);
-				batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretBase"));
-				batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, rotate.sub(new Vector2(0,0)).angle()-90, Assets.textureRegions.get("TurretTop"));
+				angle = rotate.sub(new Vector2(0,0)).angle()-90;
+				//blockRenderer.renderBlock(tBlock, batcher, currBlock.position.x  , currBlock.position.y, 24, 24, );
+				//batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretBase"));
+				//batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, rotate.sub(new Vector2(0,0)).angle()-90, Assets.textureRegions.get("TurretTop"));
 			}
-
-			else if(currBlock.getClass().equals(ArmorBlock.class)){
-				batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.textureRegions.get("ArmorBlock"));
-			}
-			else if (currBlock.getClass().equals(MultiplierBlock.class)){
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
-			}
-			else if (currBlock.getClass().equals(EnergyBlock.class)){
-				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("EnergyBlock"));
-			}
-			else{
-				batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.textureRegions.get("BaseBlock"));
-			}
+			blockRenderer.renderBlock(currBlock, batcher, currBlock.position.x , currBlock.position.y, 24, 24, angle);
+//			else if(currBlock.getClass().equals(ArmorBlock.class)){
+//				batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.textureRegions.get("ArmorBlock"));
+//			}
+//			else if (currBlock.getClass().equals(MultiplierBlock.class)){
+//				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
+//			}
+//			else if (currBlock.getClass().equals(EnergyBlock.class)){
+//				batcher.drawSprite(currBlock.position.x, currBlock.position.y, 24, 24, Assets.textureRegions.get("EnergyBlock"));
+//			}
+//			else{
+//				batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.textureRegions.get("BaseBlock"));
+//			}
 		}
 
 		for(int i = 0; i < potentialBlocks.size(); i++){

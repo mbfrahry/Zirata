@@ -65,6 +65,8 @@ public class World {
 
 		spaceBucksEarned = 0;
 		enemiesKilled = 0;
+		player.getEnergy();
+		player.turnOnTurrets();
 	}
 	
 	public void update(float deltaTime){

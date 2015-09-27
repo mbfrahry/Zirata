@@ -277,6 +277,7 @@ public class TurretBlock extends Block{
 			fuseLevels(i, b.getAttributeLevel(i));
 		}
 		blockLevel ++;
+		energyCost *= 2;
 	}
 
 	public void fuseLevels(int attIndex, int levelsAdded){
