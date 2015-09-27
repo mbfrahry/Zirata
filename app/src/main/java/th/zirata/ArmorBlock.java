@@ -36,7 +36,6 @@ public class ArmorBlock extends Block{
 
 	@Override
 	public void update(float deltaTime) {
-		position.add(velocity.x * deltaTime, velocity.y * deltaTime);
 	}
 
 	@Override
