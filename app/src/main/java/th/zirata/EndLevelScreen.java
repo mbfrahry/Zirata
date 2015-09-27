@@ -73,16 +73,14 @@ public class EndLevelScreen extends GLScreen {
         guiCam.setViewportAndMatrices();
 
         gl.glEnable(GL10.GL_TEXTURE_2D);
-        batcher.beginBatch(Assets.backgroundTextures);
-        batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("Background"));
-        batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("NearStarBG"));
-        batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("StarBG"));
-        batcher.endBatch();
 
         gl.glEnable(GL10.GL_BLEND);
         gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 
-        batcher.beginBatch(Assets.mainMenuTextures);
+        batcher.beginBatch(Assets.imageTextures);
+        batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("Background"));
+        batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("NearStarBG"));
+        batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("StarBG"));
 
         batcher.drawSprite(160, 150, 200, 60, Assets.textureRegions.get("Rectangle"));
         Assets.font.drawTextCentered(batcher, result, 160, 150, 15, 15);
