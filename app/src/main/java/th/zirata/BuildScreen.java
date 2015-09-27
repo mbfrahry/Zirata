@@ -215,7 +215,6 @@ public class BuildScreen extends GLScreen{
 						}
 						if(OverlapTester.pointInRectangle(closeBankBounds, touchPoint)){
 							guiCam.panToPosition(160, 240, 1);
-							guiCam.zoom = 1;
 							showBlockBank = false;
 							return;
 						}
