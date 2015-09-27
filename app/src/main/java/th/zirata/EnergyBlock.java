@@ -50,7 +50,7 @@ public class EnergyBlock extends Block{
 
     @Override
     public void update(float deltaTime) {
-
+        position.add(velocity.x * deltaTime, velocity.y * deltaTime);
     }
 
     public void writeExtraInfo(JsonWriter writer) throws IOException {

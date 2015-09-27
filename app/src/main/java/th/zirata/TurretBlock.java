@@ -157,6 +157,7 @@ public class TurretBlock extends Block{
 	}
 
 	public void update(float deltaTime){
+		position.add(velocity.x * deltaTime, velocity.y * deltaTime);
 		if(state == TURRET_RELOADING){
 			currTime+= deltaTime;
 			if(currTime >= fireRate){

@@ -64,6 +64,7 @@ public class MultiplierBlock extends Block{
     }
 
     public void update(float deltaTime){
+        position.add(velocity.x * deltaTime, velocity.y * deltaTime);
         if(state == MULTIPLIER_MULTIPLYING){
            multiplierActiveTime += deltaTime;
             if(multiplierActiveTime > multiplierTime){

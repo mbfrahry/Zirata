@@ -36,9 +36,12 @@ public class WorldRenderer {
 
 	public void renderBackground(){
 		batcher.beginBatch(Assets.backgroundTextures);
-		batcher.drawSprite(160, 240, 320, 480, world.worldAngle, Assets.textureRegions.get("Background"));
-		batcher.drawSprite(160, 240, 320, 480, world.worldAngle, Assets.textureRegions.get("NearStarBG"));
-		batcher.drawSprite(160, 240, 320, 480, world.worldAngle, Assets.textureRegions.get("StarBG"));
+		for(int i = 0; i < world.backgrounds.size(); i++){
+			Background currBackground = world.backgrounds.get(i);
+			batcher.drawSprite(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("Background"));
+			batcher.drawSprite(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("NearStarBG"));
+			batcher.drawSprite(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("StarBG"));
+		}
 		batcher.endBatch();
 	}
 	
@@ -164,8 +167,6 @@ public class WorldRenderer {
 		batcher.beginBatch(Assets.mainMenuTextures);
 		Assets.font.drawText(batcher, "Energy: " + world.player.energy + " ", 16, 480 - 20);
 
-		//batcher.drawSprite(30, 30, -60, 60, Assets.textureRegions.get("Arrow"));
-		//batcher.drawSprite(60, 30, 60, 60, Assets.textureRegions.get("Arrow"));
 		batcher.drawSprite(285, 30, 60, 60, Assets.textureRegions.get("PowerButton"));
 		batcher.endBatch();
 		batcher.beginBatch(Assets.blockTextures);

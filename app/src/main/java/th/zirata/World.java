@@ -28,6 +28,7 @@ public class World {
 	public final ArrayList<Enemy> testEnemies;
 	public final ArrayList<Bullet> enemyBullets;
 	public final ArrayList<Bullet> playerBullets;
+	public ArrayList<Background> backgrounds;
 
 	public float lastEnemyTime;
 	public float timeToNextEnemy;
@@ -67,10 +68,13 @@ public class World {
 		enemiesKilled = 0;
 		player.getEnergy();
 		player.turnOnTurrets();
+		backgrounds = new ArrayList<Background>();
+		backgrounds.add(new Background(160, 240, 320, 480));
 	}
 	
 	public void update(float deltaTime){
 		updateWorld(deltaTime);
+		updateBackgrounds(deltaTime);
 		updatePlayer(deltaTime);
 		updatePlayerBullets(deltaTime);
 		updateEnemies(deltaTime);
@@ -100,6 +104,12 @@ public class World {
 			enemyAngle = POS_SIN_ANGLE;
 		}
 
+	}
+
+	private void updateBackgrounds(float deltaTime){
+		for(int i = 0; i < backgrounds.size(); i++){
+			backgrounds.get(i).update(deltaTime);
+		}
 	}
 
 	private void updatePlayer(float deltaTime){

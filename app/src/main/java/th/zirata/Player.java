@@ -1,5 +1,7 @@
 package th.zirata;
 
+import com.badlogic.androidgames.framework.math.Vector2;
+
 import java.util.ArrayList;
 
 public class Player {
@@ -8,6 +10,7 @@ public class Player {
     public int energy;
 	public boolean power;
 	ArrayList<Block> poweredBlocks;
+	Vector2 velocity;
 
 	public Player(){
 		for(Block b : PlayerSave.activeBlocks){
