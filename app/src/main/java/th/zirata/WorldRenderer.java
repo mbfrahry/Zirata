@@ -47,14 +47,14 @@ public class WorldRenderer {
 		for(int i = 0; i < world.backgrounds.size(); i++){
 			Background currBackground = world.backgrounds.get(i);
 			if(currBackground.type.equals("Background")) {
-				batcher.drawSprite(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("Background"));
+				batcher.drawSpriteWithCenter(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("Background"));
 			}
 
 			else if(currBackground.type.equals("FarStar")) {
-				batcher.drawSprite(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("StarBG"));
+				batcher.drawSpriteWithCenter(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("StarBG"));
 			}
 			else if(currBackground.type.equals("NearStar")) {
-				batcher.drawSprite(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("NearStarBG"));
+				batcher.drawSpriteWithCenter(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("NearStarBG"));
 			}
 		}
 	}
