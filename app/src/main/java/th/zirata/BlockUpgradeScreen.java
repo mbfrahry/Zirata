@@ -60,7 +60,7 @@ public class BlockUpgradeScreen extends GLScreen{
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		guiCam.setViewportAndMatrices();
 		
-		batcher.beginBatch(Assets.backgroundTextures);
+		//batcher.beginBatch(Assets.backgroundTextures);
 		batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("Background"));
 		batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("NearStarBG"));
 		batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("StarBG"));
@@ -70,12 +70,12 @@ public class BlockUpgradeScreen extends GLScreen{
 		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 
 
-		batcher.beginBatch(Assets.mainMenuTextures);
+	//	batcher.beginBatch(Assets.mainMenuTextures);
 		batcher.drawSprite(30, 30, -60, 60, Assets.textureRegions.get("Arrow"));
 		Assets.font.drawText(batcher, "Make block betta", 16, 480 - 20);
 		batcher.endBatch();
 
-		batcher.beginBatch(Assets.blockTextures);
+	//	batcher.beginBatch(Assets.blockTextures);
 		int x = 160;
 		int y = 430;
 		if(block.getClass().equals(TurretBlock.class)){
@@ -108,7 +108,7 @@ public class BlockUpgradeScreen extends GLScreen{
 	}
 
 	private void drawAttributeButtons(){
-		batcher.beginBatch(Assets.mainMenuTextures);
+		//batcher.beginBatch(Assets.mainMenuTextures);
 		String[] upgradeableAttributes = block.getUpgradableAttributes();
 		float[] attributeValues = block.getAttributeVals();
 		float[] upgradeValues = block.getUpgradeValues();

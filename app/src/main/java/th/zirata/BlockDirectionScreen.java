@@ -87,22 +87,22 @@ public class BlockDirectionScreen extends GLScreen{
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         guiCam.setViewportAndMatrices();
 
-        batcher.beginBatch(Assets.backgroundTextures);
+        //batcher.beginBatch(Assets.backgroundTextures);
         batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("Background"));
         batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("NearStarBG"));
         batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("StarBG"));
-        batcher.endBatch();
+       // batcher.endBatch();
 
         gl.glEnable(GL10.GL_BLEND);
         gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 
 
-        batcher.beginBatch(Assets.blockTextures);
+       // batcher.beginBatch(Assets.blockTextures);
         batcher.drawSprite(150, 250, 50, 50, Assets.textureRegions.get("TurretTop"));
         batcher.drawSprite(150, 250, 50, 50, Assets.textureRegions.get("TurretBase"));
-        batcher.endBatch();
+        //batcher.endBatch();
 
-        batcher.beginBatch(Assets.mainMenuTextures);
+       // batcher.beginBatch(Assets.mainMenuTextures);
         //right
         batcher.drawSprite(210, 250, 60, 60, Assets.textureRegions.get("Arrow"));
         //left

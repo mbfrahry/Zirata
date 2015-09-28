@@ -15,21 +15,7 @@ import java.util.HashMap;
 
 public class Assets {
 
-	public static Texture backgroundTextures;
-
-	public static Texture blockTextures;
-
-	public static Texture mainMenuTextures;
-
-	public static Texture factionTextures;
-
 	public static Texture imageTextures;
-//	public static TextureRegion playRegion;
-//	public static TextureRegion arrowRegion;
-//	public static TextureRegion helpRegion;
-//	public static TextureRegion rectangleRegion;
-//	public static TextureRegion darkGrayRectangleRegion;
-//	public static TextureRegion addIcon;
 
 	public static Font font;
 	public static Font redFont;
@@ -42,19 +28,6 @@ public class Assets {
 
 	public static void load(GLGame game){
 		textureRegions = new HashMap<String, TextureRegion>();
-
-		backgroundTextures = new Texture(game, "Backgrounds.png");
-		//addTextures(game.getFileIO(), backgroundTextures, "Backgrounds.txt");
-
-		blockTextures = new Texture(game, "Blocks.png");
-		//addTextures(game.getFileIO(), blockTextures, "Blocks.txt");
-
-		mainMenuTextures = new Texture(game, "MenuItems.png");
-		//addTextures(game.getFileIO(), mainMenuTextures, "MenuItems.txt");
-
-
-		factionTextures = new Texture(game, "factionBlocks.png");
-		//addTextures(game.getFileIO(), factionTextures, "factionBlocks.txt");
 
 		imageTextures = new Texture(game, "Images.png");
 		addTextures(game.getFileIO(), imageTextures, "Images.txt");
@@ -107,10 +80,7 @@ public class Assets {
 	}
 
 	public static void reload(){
-		backgroundTextures.reload();
-		blockTextures.reload();
-		mainMenuTextures.reload();
-		factionTextures.reload();
+		imageTextures.reload();
 	}
 
 	public static void playSound(Sound sound) {

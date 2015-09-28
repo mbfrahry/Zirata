@@ -69,7 +69,7 @@ public class World {
 		player.getEnergy();
 		player.turnOnTurrets();
 		backgrounds = new ArrayList<Background>();
-		backgrounds.add(new Background(0, 0, 320, 480, new Vector2(0, -3), "Background"));
+		backgrounds.add(new Background(0, 0, 300, 480, new Vector2(0, -3), "Background"));
 		backgrounds.add(new Background(0, 0, 320, 480, new Vector2(0, -10), "NearStar"));
 		backgrounds.add(new Background(0, 0, 320, 480, new Vector2(0,-3), "FarStar"));
 
@@ -109,12 +109,10 @@ public class World {
 		POS_COS_ANGLE = (float)Math.cos(Math.toRadians(angleDiff));
 		if(moveRight){
 			worldAngle -= angleDiff;
-
 			enemyAngle = NEG_SIN_ANGLE;
 		}
 		if(moveLeft){
 			worldAngle += angleDiff;
-
 			enemyAngle = POS_SIN_ANGLE;
 		}
 
@@ -122,6 +120,10 @@ public class World {
 
 	private void updateBackgrounds(float deltaTime){
 		for(int i = 0; i < backgrounds.size(); i++){
+			Background currBackground = backgrounds.get(i);
+			if(moveLeft || moveRight) {
+				currBackground.rotate(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
+			}
 			backgrounds.get(i).update(deltaTime);
 		}
 	}
@@ -175,7 +177,7 @@ public class World {
 	private void updateEnemies(float deltaTime){
 		lastEnemyTime += deltaTime;
 		if(lastEnemyTime > timeToNextEnemy && state != WORLD_STATE_LAST_ENEMY){
-//			generateEnemy();
+			generateEnemy();
 			
 			if(enemyNum % 4 == 0 && timeToNextEnemy > 2){
 				timeToNextEnemy -= 0.5;
