@@ -29,4 +29,16 @@ public class DynamicGameObject extends GameObject {
         velocity.x = ( x * cosMath - y * sinMath);
         velocity.y = (x * sinMath + y * cosMath);
     }
+
+    public void rotateConstantVelocity(float sinMath, float cosMath, Vector2 midPoint){
+        float x = position.x;
+        float y = position.y;
+        x -= midPoint.x;
+        y -= midPoint.y;
+        position.x =  ( x * cosMath + y * -sinMath);
+        position.y = (x * sinMath + y * cosMath);
+        position.x += midPoint.x;
+        position.y += midPoint.y;
+
+    }
 }

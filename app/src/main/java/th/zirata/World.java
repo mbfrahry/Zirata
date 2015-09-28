@@ -122,7 +122,7 @@ public class World {
 		for(int i = 0; i < backgrounds.size(); i++){
 			Background currBackground = backgrounds.get(i);
 			if(moveLeft || moveRight) {
-				currBackground.rotate(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
+				currBackground.rotateConstantVelocity(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
 			}
 			backgrounds.get(i).update(deltaTime);
 		}
