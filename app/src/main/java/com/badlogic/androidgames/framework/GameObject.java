@@ -12,4 +12,9 @@ public class GameObject {
 		this.position = new Vector2(x,y);
 		this.bounds = new Rectangle(x-width/2, y-height/2, width, height);
 	}
+
+	public GameObject(float x, float y, float width, float height, float angle){
+		this.position = new Vector2(x,y);
+		this.bounds = new Rectangle(x-width/2, y-height/2, width, height, angle);
+	}
 }

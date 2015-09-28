@@ -13,6 +13,12 @@ public class DynamicGameObject extends GameObject {
         accel = new Vector2();
     }
 
+    public DynamicGameObject(float x, float y, float width, float height, float angle) {
+        super(x, y, width, height, angle);
+        velocity = new Vector2();
+        accel = new Vector2();
+    }
+
     public void rotate(float sinMath, float cosMath, Vector2 midPoint){
         float x = position.x;
         float y = position.y;

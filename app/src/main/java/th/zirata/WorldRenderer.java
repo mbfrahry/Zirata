@@ -46,16 +46,15 @@ public class WorldRenderer {
 	public void renderBackground(){
 		for(int i = 0; i < world.backgrounds.size(); i++){
 			Background currBackground = world.backgrounds.get(i);
-			if(currBackground.type.equals("Background")) {
-				batcher.drawSpriteWithCenter(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("Background"));
-			}
-
-			else if(currBackground.type.equals("FarStar")) {
-				batcher.drawSpriteWithCenter(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("StarBG"));
-			}
-			else if(currBackground.type.equals("NearStar")) {
-				batcher.drawSpriteWithCenter(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("NearStarBG"));
-			}
+			batcher.drawSpriteWithCenter(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("Background"));
+		}
+		for (int i = 0; i < world.farBackgrounds.size(); i++){
+			Background currBackground = world.farBackgrounds.get(i);
+			batcher.drawSpriteWithCenter(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("StarBG"));
+		}
+		for (int i = 0; i < world.nearBackgrounds.size(); i++){
+			Background currBackground = world.nearBackgrounds.get(i);
+			batcher.drawSpriteWithCenter(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("NearStarBG"));
 		}
 	}
 	
