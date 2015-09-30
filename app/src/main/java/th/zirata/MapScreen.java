@@ -53,8 +53,8 @@ public class MapScreen  extends GLScreen {
                     Rectangle currLevel = levelBounds.get(j);
                     if(OverlapTester.pointInRectangle(currLevel, touchPoint)){
                         Settings.currLevel = j+1;
-                        game.setScreen(new BuildScreen(game));
-                        //game.setScreen(new BuildScreenHelp(game));
+                        //game.setScreen(new BuildScreen(game));
+                        game.setScreen(new BuildScreenHelp(game));
                         return;
                     }
                 }

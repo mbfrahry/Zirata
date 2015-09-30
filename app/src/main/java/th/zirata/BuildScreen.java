@@ -558,6 +558,8 @@ public class BuildScreen extends GLScreen{
 		}
 	}
 
+	//TODO: createPopup() -- create text/sprite extra with just text
+
 	public HashMap createTextExtra(String type, String content, float x, float y, float width, float height, float timeToDisplay, String color, String justification){
 		HashMap event = new HashMap();
 		event.put("type", type);

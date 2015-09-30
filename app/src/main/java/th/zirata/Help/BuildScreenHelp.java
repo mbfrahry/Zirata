@@ -20,6 +20,11 @@ public class BuildScreenHelp extends BuildScreen {
     public BuildScreenHelp(Game game) {
         super(game);
         tutorialNum = 0;
+        String text = BuildHelpText.buildHelpText.get(tutorialNum);
+        HashMap newSpriteExtra = createSpriteExtra("sprite", "Rectangle", 160f, 400f, 260f, 50f, 999f, 0f);
+        HashMap newTextExtra = createTextExtra("text", text, 160f, 400f, 8f, 8f, 999f, "white", "center");
+        UIExtras.add(newSpriteExtra);
+        UIExtras.add(newTextExtra);
     }
 
 
@@ -34,8 +39,17 @@ public class BuildScreenHelp extends BuildScreen {
 
             if (event.type == Input.TouchEvent.TOUCH_UP) {
 
-                String text = BuildHelpText.buildHelpText.get(tutorialNum);
+
                 if(OverlapTester.pointInRectangle(BuildHelpText.buildHelpRect.get(tutorialNum), touchPoint)){
+                    String text = BuildHelpText.buildHelpText.get(tutorialNum);
+                    //Might need to change this..
+
+                    UIExtras.get(0).put("timeToDisplay", 0f);
+                    UIExtras.get(1).put("timeToDisplay", 0f);
+                    HashMap newSpriteExtra = createSpriteExtra("sprite", "Rectangle", 160f, 400f, 260f, 50f, 999f, 0f);
+                    HashMap newTextExtra = createTextExtra("text", text, 160f, 400f, 8f, 8f, 999f, "white", "center");
+                    UIExtras.add(newSpriteExtra);
+                    UIExtras.add(newTextExtra);
                     super.update(deltaTime);
                     tutorialNum +=1;
                 }
