@@ -111,9 +111,9 @@ public class WorldRenderer {
 						if(currBlock.getClass().equals(EnemyTurretBlock.class)){
 							EnemyTurretBlock currEnemy = (EnemyTurretBlock) currBlock;
 							Vector2 rotate = new Vector2(160,240);
-							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.textureRegions.get("greenTurretBase"));
+							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretBase"));
 							//TODO Make turrets actually point at the right spot
-							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 36, 36, rotate.sub(currEnemy.position.x, currEnemy.position.y).angle(), Assets.textureRegions.get("greenTurretTop"));
+							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, rotate.sub(currEnemy.position.x, currEnemy.position.y).angle(), Assets.textureRegions.get("TurretTop"));
 
 							EnemyTurretBlock tBlock = (EnemyTurretBlock)currBlock;
 							Bullet b;
