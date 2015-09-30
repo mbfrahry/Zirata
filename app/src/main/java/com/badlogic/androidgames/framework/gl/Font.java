@@ -118,4 +118,27 @@ public class Font {
 			y += glyphHeight;
 		}
 	}
+
+	public void drawLinedText(SpriteBatcher batcher, String text, float x, float y, float glyphWidth, float glyphHeight){
+		String[] words = text.split(" ");
+		int index = 0;
+		int wordCount = 0;
+		String nextString = "";
+		while (index < words.length){
+			while(wordCount < 4){
+				nextString += words[index];
+				wordCount ++;
+			}
+			drawTextCentered(batcher, nextString, x, y, glyphWidth, glyphHeight);
+			y += glyphHeight;
+			nextString = "";
+		}
+
+
+//		for (int i = 0; i < lines){
+//			String newPrint = words[0 + i] +
+//
+//			drawTextCentered(batcher);
+//		}
+	}
 }
