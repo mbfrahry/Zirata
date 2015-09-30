@@ -2,8 +2,12 @@ Started
   Tutorials/Help Page 
   Make ship building less clunky
   Better UI/Intuitivness
+  Moving background to simulate ship velocity
+  Paralax background
 
 Needs to be done 
+
+  Map exploration
 
   Block upgrade paths
   
@@ -16,10 +20,6 @@ Needs to be done
   Unique enemy movements
     -aka galaga movements
     
-  Moving background to simulate ship velocity
-  
-  Paralax background
-  
   Bugs:
     Bullets go past cone range
     Multiplied values persist if level ends while multiplier block is active
