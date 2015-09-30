@@ -125,13 +125,14 @@ public class Font {
 		int wordCount = 0;
 		String nextString = "";
 		while (index < words.length){
-			while(wordCount < 4){
-				nextString += words[index];
+			while(wordCount < 5 && index < words.length){
+				nextString += words[index] + " ";
 				wordCount ++;
 				index++;
 			}
 			drawTextCentered(batcher, nextString, x, y, glyphWidth, glyphHeight);
-			y += glyphHeight;
+			y -= glyphHeight;
+			wordCount = 0;
 			nextString = "";
 		}
 

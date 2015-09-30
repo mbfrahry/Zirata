@@ -600,6 +600,9 @@ public class BuildScreen extends GLScreen{
 		else if(justification.equals("center")){
 			Assets.font.drawUITextCentered(guiCam, batcher, currContent, currX, currY, currWidth, currHeight);
 		}
+		else if(justification.equals("lined")){
+			Assets.font.drawLinedText(batcher, currContent, currX, currY, currWidth, currHeight);
+		}
 		else{
 			Assets.font.drawUITextCentered(guiCam, batcher, currContent, currX, currY, currWidth, currHeight);
 		}
