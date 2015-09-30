@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.androidgames.framework.math.OverlapTester;
+import com.badlogic.androidgames.framework.math.Rectangle;
 import com.badlogic.androidgames.framework.math.Vector2;
 
 public class World {
@@ -29,6 +30,8 @@ public class World {
 	public final ArrayList<Bullet> enemyBullets;
 	public final ArrayList<Bullet> playerBullets;
 	public ArrayList<Background> backgrounds;
+	public ArrayList<Background> nearBackgrounds;
+	public ArrayList<Background> farBackgrounds;
 
 	public float lastEnemyTime;
 	public float timeToNextEnemy;
@@ -69,21 +72,23 @@ public class World {
 		player.getEnergy();
 		player.turnOnTurrets();
 		backgrounds = new ArrayList<Background>();
-		backgrounds.add(new Background(0, 0, 300, 480, new Vector2(0, -3), "Background"));
-		backgrounds.add(new Background(0, 0, 320, 480, new Vector2(0, -10), "NearStar"));
-		backgrounds.add(new Background(0, 0, 320, 480, new Vector2(0,-3), "FarStar"));
+		nearBackgrounds = new ArrayList<Background>();
+		farBackgrounds = new ArrayList<Background>();
+		backgrounds.add(new Background(0, 0, 320, 480, new Vector2(0, -3), "Background"));
+		nearBackgrounds.add(new Background(0, 0, 320, 480, new Vector2(0, -10), "NearStar"));
+		farBackgrounds.add(new Background(0, 0, 320, 480, new Vector2(0,-3), "FarStar"));
 
 		backgrounds.add(new Background(0, 480, 320, 480, new Vector2(0,-3), "Background"));
-		backgrounds.add(new Background(0, 480, 320, 480, new Vector2(0,-10), "NearStar"));
-		backgrounds.add(new Background(0, 480, 320, 480, new Vector2(0,-3), "FarStar"));
+		nearBackgrounds.add(new Background(0, 480, 320, 480, new Vector2(0,-10), "NearStar"));
+		farBackgrounds.add(new Background(0, 480, 320, 480, new Vector2(0,-3), "FarStar"));
 
 		backgrounds.add(new Background(320, 0, 320, 480, new Vector2(0,-3), "Background"));
-		backgrounds.add(new Background(320, 0, 320, 480, new Vector2(0,-10), "NearStar"));
-		backgrounds.add(new Background(320, 0, 320, 480, new Vector2(0,-3), "FarStar"));
+		nearBackgrounds.add(new Background(320, 0, 320, 480, new Vector2(0,-10), "NearStar"));
+		farBackgrounds.add(new Background(320, 0, 320, 480, new Vector2(0,-3), "FarStar"));
 
 		backgrounds.add(new Background(320, 480, 320, 480, new Vector2(0,-3), "Background"));
-		backgrounds.add(new Background(320, 480, 320, 480, new Vector2(0,-10), "NearStar"));
-		backgrounds.add(new Background(320, 480, 320, 480, new Vector2(0,-3), "FarStar"));
+		nearBackgrounds.add(new Background(320, 480, 320, 480, new Vector2(0,-10), "NearStar"));
+		farBackgrounds.add(new Background(320, 480, 320, 480, new Vector2(0,-3), "FarStar"));
 	}
 	
 	public void update(float deltaTime){
@@ -119,13 +124,34 @@ public class World {
 	}
 
 	private void updateBackgrounds(float deltaTime){
+		updateBackgroundList(deltaTime, backgrounds);
+		updateBackgroundList(deltaTime, farBackgrounds);
+		updateBackgroundList(deltaTime, nearBackgrounds);
+	}
+
+	private void updateBackgroundList(float deltaTime, ArrayList<Background> backgrounds){
+		ArrayList<Background> onScreen = new ArrayList<Background>();
+		ArrayList<Background> notOnScreen = new ArrayList<Background>();
+		Rectangle currView = new Rectangle(0, 0, 320, 480);
+		Background playerOnBackground = null;
 		for(int i = 0; i < backgrounds.size(); i++){
 			Background currBackground = backgrounds.get(i);
 			if(moveLeft || moveRight) {
-				currBackground.rotate(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
+				currBackground.rotateConstantVelocity(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
 			}
 			backgrounds.get(i).update(deltaTime);
+			Rectangle backgroundRect = currBackground.bounds;
+			if(OverlapTester.pointInRectangle(backgroundRect, 160, 240)){
+				playerOnBackground = currBackground;
+			}
+			if(OverlapTester.overlapRectangles(backgroundRect, currView)){
+				onScreen.add(currBackground);
+			}
+			else{
+				notOnScreen.add(currBackground);
+			}
 		}
+
 	}
 
 	private void updatePlayer(float deltaTime){

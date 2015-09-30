@@ -678,7 +678,7 @@ public class BuildScreen extends GLScreen{
 		}
 
 
-		batcher.drawUISprite(guiCam, 285, 80, 50, 150, Assets.textureRegions.get("addIcon"));
+		batcher.drawUISprite(guiCam, 285, 80, 50, 85, Assets.textureRegions.get("addIcon"));
 
 	}
 
