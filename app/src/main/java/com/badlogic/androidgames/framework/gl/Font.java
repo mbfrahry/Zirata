@@ -128,6 +128,7 @@ public class Font {
 			while(wordCount < 4){
 				nextString += words[index];
 				wordCount ++;
+				index++;
 			}
 			drawTextCentered(batcher, nextString, x, y, glyphWidth, glyphHeight);
 			y += glyphHeight;
