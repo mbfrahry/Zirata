@@ -21,8 +21,9 @@ import java.util.Random;
  */
 public class BuildHelpText {
 
-    public static LinkedList<String> buildHelpText = new LinkedList<String>();
-    public static LinkedList<Rectangle> buildHelpRect = new LinkedList<Rectangle>();
+    public static ArrayList<String> buildHelpText = new ArrayList<String>();
+    public static ArrayList<Rectangle> buildHelpRect = new ArrayList<Rectangle>();
+    public static ArrayList<Boolean> buildHelpAction = new ArrayList<Boolean>();
 
     public static void load(FileIO files){
         JsonReader reader = null;
@@ -61,6 +62,9 @@ public class BuildHelpText {
             String heightName = reader.nextName();
             int height = reader.nextInt();
             buildHelpRect.add(new Rectangle(x, y, width, height));
+            String actionName = reader.nextName();
+            boolean action = reader.nextBoolean();
+            buildHelpAction.add(action);
             reader.endObject();
 
         }

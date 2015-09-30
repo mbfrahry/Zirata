@@ -24,24 +24,24 @@ public class BuildScreen extends GLScreen{
 	public SpriteBatcher batcher;
 	BlockRenderer blockRenderer;
 	Rectangle backBounds;
-	Rectangle forwardBounds;
+	public Rectangle forwardBounds;
 	Rectangle blockBankTurretBounds;
 	Rectangle blockBankArmorBounds;
 	Rectangle blockBankEnergyBounds;
 	Rectangle blockBankMultiplierBounds;
-	Rectangle closeBankBounds;
+	public Rectangle closeBankBounds;
 	public Vector2 touchPoint;
-	ArrayList<Block> potentialBlocks;
-	ArrayList<Block> ownedBlocksByType;
-	Block selectedBankBlock;
-	Block selectedActiveBlock;
+	public ArrayList<Block> potentialBlocks;
+	public ArrayList<Block> ownedBlocksByType;
+	public Block selectedBankBlock;
+	public Block selectedActiveBlock;
 
-	boolean showSubmenu;
-	boolean showUpgrades;
-	boolean showFuse;
+	public boolean showSubmenu;
+	public boolean showUpgrades;
+	public boolean showFuse;
 
-	boolean showBlockBank;
-	int blockBankOption;
+	public boolean showBlockBank;
+	public int blockBankOption;
 	public static final int BLOCK_BANK_TURRET = 0;
 	public static final int BLOCK_BANK_ARMOR = 1;
 	public static final int BLOCK_BANK_ENERGY = 2;
@@ -242,12 +242,11 @@ public class BuildScreen extends GLScreen{
 		if(showBlockBank){
 			resetBlockBankBounds();
 		}
-		
 	}
 
 
 
-	private void checkBankBlocks(Vector2 touchPoint){
+	public void checkBankBlocks(Vector2 touchPoint){
 		if (OverlapTester.pointInRectangle(blockBankTurretBounds, touchPoint) && blockBankOption != BLOCK_BANK_TURRET) {
 			blockBankOption = BLOCK_BANK_TURRET;
 			ownedBlocksByType = getBlocksFromType(TurretBlock.class);
@@ -380,7 +379,7 @@ public class BuildScreen extends GLScreen{
 		}
 	}
 
-	private void resetBlockBankBounds(){
+	public void resetBlockBankBounds(){
 		blockBankTurretBounds  = new Rectangle(guiCam, 0, 160, 80, 40);
 		blockBankArmorBounds  = new Rectangle(guiCam, 80, 160, 80, 40);
 		blockBankEnergyBounds = new Rectangle(guiCam, 160, 160, 80, 40);
