@@ -86,13 +86,41 @@ public class MainMenuScreen extends GLScreen{
 		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 
 		batcher.beginBatch(Assets.imageTextures);
-		batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("Background"));
+		batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("background"));
 		batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("NearStarBG"));
 		batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("StarBG"));
 
 		batcher.drawSprite(160, 200, 128, 74, Assets.textureRegions.get("Play"));
 
+		batcher.drawSprite(80, 130, 24, 24, Assets.textureRegions.get("GreenBase1"));
+		batcher.drawSprite(80, 130, 24, 24, Assets.textureRegions.get("GreenTurret1"));
+		batcher.drawSprite(120, 130, 24, 24, Assets.textureRegions.get("GreenBase2"));
+		batcher.drawSprite(120, 130, 24, 24, Assets.textureRegions.get("GreenTurret2"));
+		batcher.drawSprite(160, 130, 24, 24, Assets.textureRegions.get("GreenBase3"));
+		batcher.drawSprite(160, 130, 24, 24, Assets.textureRegions.get("GreenTurret3"));
+
+		batcher.drawSprite(80, 100, 24, 24, Assets.textureRegions.get("PurpleBase1"));
+		batcher.drawSprite(80, 100, 24, 24, Assets.textureRegions.get("PurpleTurret1"));
+		batcher.drawSprite(120, 100, 24, 24, Assets.textureRegions.get("PurpleBase2"));
+		batcher.drawSprite(120, 100, 24, 24, Assets.textureRegions.get("PurpleTurret2"));
+		batcher.drawSprite(160, 100, 24, 24, Assets.textureRegions.get("PurpleBase3"));
+		batcher.drawSprite(160, 100, 24, 24, Assets.textureRegions.get("PurpleTurret3"));
+
+		batcher.drawSprite(200, 130, 24, 24, Assets.textureRegions.get("GreenBase1"));
+		batcher.drawSprite(200, 130, 36, 36, Assets.textureRegions.get("GreenTurret1"));
+		batcher.drawSprite(240, 130, 24, 24, Assets.textureRegions.get("GreenBase2"));
+		batcher.drawSprite(240, 130, 36, 36, Assets.textureRegions.get("GreenTurret2"));
+		batcher.drawSprite(280, 130, 24, 24, Assets.textureRegions.get("GreenBase3"));
+		batcher.drawSprite(280, 130, 36, 36, Assets.textureRegions.get("GreenTurret3"));
+
+		batcher.drawSprite(200, 100, 24, 24, Assets.textureRegions.get("PurpleBase1"));
+		batcher.drawSprite(200, 100, 36, 36, Assets.textureRegions.get("PurpleTurret1"));
+		batcher.drawSprite(240, 100, 24, 24, Assets.textureRegions.get("PurpleBase2"));
+		batcher.drawSprite(240, 100, 36, 36, Assets.textureRegions.get("PurpleTurret2"));
+		batcher.drawSprite(280, 100, 24, 24, Assets.textureRegions.get("PurpleBase3"));
+		batcher.drawSprite(280, 100, 24, 36, Assets.textureRegions.get("PurpleTurret3"));
 		batcher.endBatch();
+
 
 		gl.glDisable(GL10.GL_BLEND);
 

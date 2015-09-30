@@ -15,6 +15,8 @@ import java.util.Set;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import th.zirata.Help.BuildScreenHelp;
+
 
 public class MapScreen  extends GLScreen {
 
@@ -52,6 +54,7 @@ public class MapScreen  extends GLScreen {
                     if(OverlapTester.pointInRectangle(currLevel, touchPoint)){
                         Settings.currLevel = j+1;
                         game.setScreen(new BuildScreen(game));
+                        //game.setScreen(new BuildScreenHelp(game));
                         return;
                     }
                 }
@@ -70,7 +73,7 @@ public class MapScreen  extends GLScreen {
         gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 
         batcher.beginBatch(Assets.imageTextures);
-        batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("Background"));
+        batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("background"));
         batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("NearStarBG"));
         batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("StarBG"));
 
@@ -86,7 +89,7 @@ public class MapScreen  extends GLScreen {
 
         }
         if(Settings.maxLevel < levelBounds.size()){
-            batcher.drawSprite(levelBounds.get(Settings.maxLevel ).lowerLeft.x + 35, levelBounds.get(Settings.maxLevel).lowerLeft.y + 25, 40, 40, 45, Assets.textureRegions.get("PotentialBlock"));
+            batcher.drawSprite(levelBounds.get(Settings.maxLevel).lowerLeft.x + 35, levelBounds.get(Settings.maxLevel).lowerLeft.y + 25, 40, 40, 45, Assets.textureRegions.get("PotentialBlock"));
 
             Assets.font.drawText(batcher, Settings.maxLevel + 1 + "", levelBounds.get(Settings.maxLevel).lowerLeft.x + 10, levelBounds.get(Settings.maxLevel).lowerLeft.y + 45);
         }

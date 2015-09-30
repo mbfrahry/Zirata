@@ -1,0 +1,50 @@
+{
+  "0": {
+    "Text": "This is the build screen. Here you will design, craft, and finetune your ship into the powerhouse needed to defeat the forces of evil."
+  },
+  "1": {
+    "Text": "Let's start with the basics. As of right now, you only have one empty block. You can't go into battle with a blank block so let's go ahead and fill it. Click the blank block now."
+  },
+  "2": {
+    "Text": "This is your bank. Here will be all the blocks you have obtained/created. There are 4 types of blocks. Turret, Armor, Energy, and Multiplier."
+  },
+  "3": {
+    "Text": "Turret blocks fire at enemies within the turrets range. They require energy to turn on."
+  },
+  "4": {
+    "Text": "Armor blocks are going to be your main line of defense. They take the most beating out of any other block."
+  },
+  "5": {
+    "Text": "Energy blocks give you ship the power it needs to turn on your turrets and control your speed. The more energy you have the faster you can go."
+  },
+  "6": {
+    "Text": "Multiplier blocks affect the blocks around it by multiplying a specific value for a block. Turret damage, armor health, and energy are multiplied by a value if this block is next to it"
+  },
+  "7": {
+    "Text": "Let's start by adding a turret block. We are already on the turret tab so let's click the add button."
+  },
+  "8":{
+    "Text": "The block is automatically added to our ship and we can see what values can be upgrade on the left. You have enough blocks to upgrade the damage. Go ahead and do so."
+  },
+  "9": {
+    "Text": "Upgrade a block enough and you will be able to fuse it with another block to greatly increase the blocks stats."
+  },
+  "10": {
+    "Text": "We can't fire our turret without energy so go ahead and click outside the block bank."
+  },
+  "11": {
+    "Text": "If you have enough blocks, you can extend your ship by clicking any block outline on your ship. Let's go ahead and add a block below the turret block"
+  },
+  "12": {
+    "Text": "Now click the energy block tab."
+  },
+  "13": {
+    "Text": "And then the add button"
+  },
+  "14": {
+    "Text": "You can know fire your turret! Let's go ahead and click out of the block bank"
+  },
+  "15": {
+    "Text": "We are now ready to fight. Launch when you feel ready to take apart the minions of darkness."
+  }
+}

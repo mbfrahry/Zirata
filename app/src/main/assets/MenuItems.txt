@@ -1,9 +1,0 @@
-addIcon = 257 102 25 25
-Arrow = 322 26 30 30
-DarkGrayRectangle = 322 0 50 25
-font = 0 0 256 120
-Help = 257 0 64 37
-Play = 257 38 64 37
-PowerButton = 373 0 25 25
-Rectangle = 257 76 50 25
-redFont = 0 121 256 120

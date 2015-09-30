@@ -78,7 +78,7 @@ public class EndLevelScreen extends GLScreen {
         gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 
         batcher.beginBatch(Assets.imageTextures);
-        batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("Background"));
+        batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("background"));
         batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("NearStarBG"));
         batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("StarBG"));
 

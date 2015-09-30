@@ -1,3 +1,0 @@
-Background = 0 0 1333 2000
-NearStarBG = 1334 0 1333 2000
-StarBG = 2668 0 1333 2000

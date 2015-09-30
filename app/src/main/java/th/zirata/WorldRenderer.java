@@ -47,7 +47,7 @@ public class WorldRenderer {
 		for(int i = 0; i < world.backgrounds.size(); i++){
 			Background currBackground = world.backgrounds.get(i);
 			if(currBackground.type.equals("Background")) {
-				batcher.drawSpriteWithCenter(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("Background"));
+				batcher.drawSpriteWithCenter(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("background"));
 			}
 
 			else if(currBackground.type.equals("FarStar")) {
