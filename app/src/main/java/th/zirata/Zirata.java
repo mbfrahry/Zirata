@@ -80,5 +80,6 @@ public class Zirata extends GLGame {
 	
 	public void onPause(){
 		super.onPause();
+		Assets.menuMusic.pause();
 	}
 }

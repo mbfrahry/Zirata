@@ -99,7 +99,6 @@ public class EndLevelScreen extends GLScreen {
 
     @Override
     public void resume() {
-
     }
 
     @Override

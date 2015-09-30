@@ -131,7 +131,6 @@ public class MainMenuScreen extends GLScreen{
 	}
 
 	public void resume(){
-
 	}
 
 	public void dispose(){

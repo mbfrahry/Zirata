@@ -85,6 +85,7 @@ public class Assets {
 
 	public static void reload(){
 		imageTextures.reload();
+		menuMusic.play();
 	}
 
 	public static void playSound(Sound sound) {

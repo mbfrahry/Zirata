@@ -304,7 +304,7 @@ public class GameScreen extends GLScreen {
     }
 
     @Override
-    public void resume() {        
+    public void resume() {
     }
 
     @Override
