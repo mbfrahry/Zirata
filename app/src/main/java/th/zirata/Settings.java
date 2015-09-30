@@ -14,13 +14,14 @@ public class Settings {
 	
 	public static String file = ".zirata";
 	public static boolean soundEnabled = true;
-	public static int spaceBucks = 0;
+	public static int spaceBucks = 1;
 	public static int nextBlockCost = 0;
 	public static int enemyHealth = 10;
 	public static int numEnemies = 10;
 	public static int currLevel = 1;
 	public static int maxLevel = 1;
 	public static int totalLevels = 5;
+	public static boolean firstTime = true;
 	
 	public static void load(FileIO files){
 		BufferedReader in = null;
@@ -33,6 +34,7 @@ public class Settings {
 			numEnemies = Integer.parseInt(in.readLine());
 			currLevel = Integer.parseInt(in.readLine());
 			maxLevel = Integer.parseInt(in.readLine());
+			firstTime = Boolean.parseBoolean(in.readLine());
 		}catch(IOException e){
 			
 		}catch(NumberFormatException e){
@@ -59,6 +61,7 @@ public class Settings {
 			out.write(numEnemies + "\n");
 			out.write(currLevel + "\n");
 			out.write(maxLevel + "\n");
+			out.write(firstTime + "\n");
 		}catch(IOException e){
 
 		}finally{
@@ -72,12 +75,13 @@ public class Settings {
 	}
 	
 	public static void reset(){
-		spaceBucks = 0;
+		spaceBucks = 1;
 		nextBlockCost = 0;
 		enemyHealth = 10;
 		numEnemies = 10;
 		currLevel = 1;
 		maxLevel = 1;
+		firstTime = true;
 	}
 
 }

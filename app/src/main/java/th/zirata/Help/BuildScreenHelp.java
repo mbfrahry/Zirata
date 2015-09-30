@@ -84,9 +84,11 @@ public class BuildScreenHelp extends BuildScreen {
                     UIExtras.add(newSpriteExtra);
                     UIExtras.add(newTextExtra);
                 } else {
+
+                    setTurretDirections();
+                    Settings.firstTime = false;
                     Settings.save(game.getFileIO());
                     PlayerSave.save(game.getFileIO());
-                    setTurretDirections();
                     game.setScreen(new GameScreen(game));
                     return;
                 }
@@ -109,7 +111,6 @@ public class BuildScreenHelp extends BuildScreen {
                         Settings.save(game.getFileIO());
                         showBlockBank = true;
                         selectedActiveBlock = currBlock;
-                        guiCam.panToPosition(selectedActiveBlock.position.x, selectedActiveBlock.position.y, .5f);
                         resetBlockBankBounds();
                         showUpgrades = true;
                         showFuse = false;
@@ -126,7 +127,6 @@ public class BuildScreenHelp extends BuildScreen {
                 pBlockBounds = new Rectangle(currBlock.position.x - 12, currBlock.position.y - 12, 25, 25);
                 if (OverlapTester.pointInRectangle(pBlockBounds, touchPoint)) {//&& currBlock.getClass() != BlankBlock.class) {
                     selectedActiveBlock = currBlock;
-                    guiCam.panToPosition(selectedActiveBlock.position.x, selectedActiveBlock.position.y, .5f);
                     resetBlockBankBounds();
                     if (testShowFuse()) {
                         showFuse = true;

@@ -5,6 +5,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -299,7 +300,10 @@ public class BuildScreen extends GLScreen{
 
 				resetBlockBank();
 				selectedActiveBlock = selectedBankBlock;
-				guiCam.panToPosition(selectedActiveBlock.position.x, selectedActiveBlock.position.y, .5f);
+				//TODO Do this mo betta
+				if(!Settings.firstTime) {
+					guiCam.panToPosition(selectedActiveBlock.position.x, selectedActiveBlock.position.y, .5f);
+				}
 				selectedBankBlock = null;
 				showBlockBank = true;
 				if(testShowFuse()){
@@ -331,7 +335,10 @@ public class BuildScreen extends GLScreen{
 			block.position.x = selectedActiveBlock.position.x;
 			block.position.y = selectedActiveBlock.position.y;
 			selectedActiveBlock = block;
-			guiCam.panToPosition(selectedActiveBlock.position.x, selectedActiveBlock.position.y, .5f);
+			//TODO Do this mo betta
+			if(!Settings.firstTime) {
+				guiCam.panToPosition(selectedActiveBlock.position.x, selectedActiveBlock.position.y, .5f);
+			}
 			PlayerSave.activeBlocks.add(block);
 			PlayerSave.bankedBlocks.add(block);
 			showUpgrades = true;

@@ -66,7 +66,7 @@
   "8":{
     "Text": "The block is automatically added to our ship and we can see what values can be upgrade on the left. You have enough blocks to upgrade the damage. Go ahead and do so.",
     "X": 0,
-    "Y": 230,
+    "Y": 270,
     "Width": 110,
     "Height": 40,
     "Action": true
