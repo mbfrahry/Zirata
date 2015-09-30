@@ -1,50 +1,114 @@
 {
   "0": {
-    "Text": "This is the build screen. Here you will design, craft, and finetune your ship into the powerhouse needed to defeat the forces of evil."
+    "Text": "This is the build screen. Here you will design, craft, and finetune your ship into the powerhouse needed to defeat the forces of good/evil depending on how you view the world.",
+    "X": 0,
+    "Y": 0,
+    "Width": 320,
+    "Height": 480
   },
   "1": {
-    "Text": "Let's start with the basics. As of right now, you only have one empty block. You can't go into battle with a blank block so let's go ahead and fill it. Click the blank block now."
+    "Text": "Let's start with the basics. As of right now, you only have one empty block. You can't go into battle with a blank block so let's go ahead and fill it. Click the blank block now.",
+    "X": 148,
+    "Y": 228,
+    "Width": 25,
+    "Height": 25
   },
   "2": {
-    "Text": "This is your bank. Here will be all the blocks you have obtained/created. There are 4 types of blocks. Turret, Armor, Energy, and Multiplier."
+    "Text": "This is your bank. Here will be all the blocks you have obtained/created. There are 4 types of blocks. Turret, Armor, Energy, and Multiplier.",
+    "X": 0,
+    "Y": 0,
+    "Width": 320,
+    "Height": 480
   },
   "3": {
-    "Text": "Turret blocks fire at enemies within the turrets range. They require energy to turn on."
+    "Text": "Turret blocks fire at enemies within the turrets range. They require energy to turn on.",
+    "X": 0,
+    "Y": 0,
+    "Width": 320,
+    "Height": 480
   },
   "4": {
-    "Text": "Armor blocks are going to be your main line of defense. They take the most beating out of any other block."
+    "Text": "Armor blocks are going to be your main line of defense. They take the most beating out of any other block.",
+    "X": 0,
+    "Y": 0,
+    "Width": 320,
+    "Height": 480
   },
   "5": {
-    "Text": "Energy blocks give you ship the power it needs to turn on your turrets and control your speed. The more energy you have the faster you can go."
+    "Text": "Energy blocks give you ship the power it needs to turn on your turrets and control your speed. The more energy you have the faster you can go.",
+    "X": 0,
+    "Y": 0,
+    "Width": 320,
+    "Height": 480
   },
   "6": {
-    "Text": "Multiplier blocks affect the blocks around it by multiplying a specific value for a block. Turret damage, armor health, and energy are multiplied by a value if this block is next to it"
+    "Text": "Multiplier blocks affect the blocks around it by multiplying a specific value for a block. Turret damage, armor health, and energy are multiplied by a value if this block is next to it",
+    "X": 0,
+    "Y": 0,
+    "Width": 320,
+    "Height": 480
   },
   "7": {
-    "Text": "Let's start by adding a turret block. We are already on the turret tab so let's click the add button."
+    "Text": "Let's start by adding a turret block. We are already on the turret tab so let's click the add button.",
+    "X": 260,
+    "Y": 5,
+    "Width": 50,
+    "Height": 150
   },
   "8":{
-    "Text": "The block is automatically added to our ship and we can see what values can be upgrade on the left. You have enough blocks to upgrade the damage. Go ahead and do so."
+    "Text": "The block is automatically added to our ship and we can see what values can be upgrade on the left. You have enough blocks to upgrade the damage. Go ahead and do so.",
+    "X": 0,
+    "Y": 230,
+    "Width": 110,
+    "Height": 40
   },
   "9": {
-    "Text": "Upgrade a block enough and you will be able to fuse it with another block to greatly increase the blocks stats."
+    "Text": "Upgrade a block enough and you will be able to fuse it with another block to greatly increase the blocks stats.",
+    "X": 0,
+    "Y": 0,
+    "Width": 320,
+    "Height": 480
   },
   "10": {
-    "Text": "We can't fire our turret without energy so go ahead and click outside the block bank."
+    "Text": "We can't fire our turret without energy so go ahead and click outside the block bank.",
+    "X": 120,
+    "Y": 200,
+    "Width": 360,
+    "Height": 240
   },
   "11": {
-    "Text": "If you have enough blocks, you can extend your ship by clicking any block outline on your ship. Let's go ahead and add a block below the turret block"
+    "Text": "If you have enough blocks, you can extend your ship by clicking any block outline on your ship. Let's go ahead and add a block below the turret block",
+    "X": 148,
+    "Y": 198,
+    "Width": 25,
+    "Height": 25
   },
   "12": {
-    "Text": "Now click the energy block tab."
+    "Text": "Now click the energy block tab.",
+    "X": 160,
+    "Y": 160,
+    "Width": 80,
+    "Height": 40
   },
   "13": {
-    "Text": "And then the add button"
+    "Text": "And then the add button",
+    "X": 260,
+    "Y": 5,
+    "Width": 50,
+    "Height": 150
   },
   "14": {
-    "Text": "You can know fire your turret! Let's go ahead and click out of the block bank"
+    "Text": "You can know fire your turret! Let's go ahead and click out of the block bank",
+    "X": 120,
+    "Y": 200,
+    "Width": 360,
+    "Height": 240
   },
   "15": {
-    "Text": "We are now ready to fight. Launch when you feel ready to take apart the minions of darkness."
+    "Text": "We are now ready to fight. Launch when you feel ready to take apart the minions of darkness.",
+    "X": 200,
+    "Y": 0,
+    "Width": 120,
+    "Height": 60
   }
 }

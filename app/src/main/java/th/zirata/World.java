@@ -149,9 +149,9 @@ public class World {
 	}
 
 	private void updateBackgrounds(float deltaTime){
-		updateBackgroundList(deltaTime, backgrounds, "background", -3);
-		updateBackgroundList(deltaTime, farBackgrounds, "FarStar", -3);
-		updateBackgroundList(deltaTime, nearBackgrounds, "NearStar", -10);
+		updateBackgroundList(deltaTime, backgrounds, "background", -6);
+		updateBackgroundList(deltaTime, farBackgrounds, "FarStar", -6);
+		updateBackgroundList(deltaTime, nearBackgrounds, "NearStar", -20);
 	}
 
 	private void updateBackgroundList(float deltaTime, ArrayList<Background> backgrounds, String sprite, float velocity){
@@ -275,7 +275,7 @@ public class World {
 	private void updateEnemies(float deltaTime){
 		lastEnemyTime += deltaTime;
 		if(lastEnemyTime > timeToNextEnemy && state != WORLD_STATE_LAST_ENEMY){
-			//generateEnemy();
+			generateEnemy();
 			
 			if(enemyNum % 4 == 0 && timeToNextEnemy > 2){
 				timeToNextEnemy -= 0.5;

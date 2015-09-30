@@ -1,21 +1,25 @@
 package th.zirata.Help;
 
+import android.os.Build;
+
 import com.badlogic.androidgames.framework.Game;
 import com.badlogic.androidgames.framework.Input;
+import com.badlogic.androidgames.framework.math.OverlapTester;
 
 import java.util.HashMap;
 import java.util.List;
 
+import th.zirata.BuildHelpText;
 import th.zirata.BuildScreen;
 
-/**
- * Created by Matthew on 9/8/2015.
- */
+
 public class BuildScreenHelp extends BuildScreen {
 
 
+    int tutorialNum;
     public BuildScreenHelp(Game game) {
         super(game);
+        tutorialNum = 0;
     }
 
 
@@ -30,14 +34,14 @@ public class BuildScreenHelp extends BuildScreen {
 
             if (event.type == Input.TouchEvent.TOUCH_UP) {
 
-                //TODO Create a JSON structure for this stuff. And read it in.
-                HashMap newSpriteExtra = createSpriteExtra("sprite", "Rectangle", 160f, 260f, 260f, 50f, 1f, 0f);
-                HashMap newTextExtra = createTextExtra("text", "Can't launch with blank blocks!", 160f, 260f, 8f, 8f, 1f, "white", "center");
-                UIExtras.add(newSpriteExtra);
-                UIExtras.add(newTextExtra);
+                String text = BuildHelpText.buildHelpText.get(tutorialNum);
+                if(OverlapTester.pointInRectangle(BuildHelpText.buildHelpRect.get(tutorialNum), touchPoint)){
+                    super.update(deltaTime);
+                    tutorialNum +=1;
+                }
             }
         }
-        super.update(deltaTime);
+
     }
 
 }
