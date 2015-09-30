@@ -1,6 +1,7 @@
 package th.zirata;
 
 import android.preference.MultiSelectListPreference;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -32,6 +33,8 @@ public class World {
 	public ArrayList<Background> backgrounds;
 	public ArrayList<Background> nearBackgrounds;
 	public ArrayList<Background> farBackgrounds;
+	//public Background playerOnBackground;
+	public Vector2[] grid;
 
 	public float lastEnemyTime;
 	public float timeToNextEnemy;
@@ -74,21 +77,26 @@ public class World {
 		backgrounds = new ArrayList<Background>();
 		nearBackgrounds = new ArrayList<Background>();
 		farBackgrounds = new ArrayList<Background>();
-		backgrounds.add(new Background(0, 0, 320, 480, new Vector2(0, -3), "Background"));
-		nearBackgrounds.add(new Background(0, 0, 320, 480, new Vector2(0, -10), "NearStar"));
-		farBackgrounds.add(new Background(0, 0, 320, 480, new Vector2(0,-3), "FarStar"));
+		//playerOnBackground = new ;
+//		backgrounds.add(new Background(0, 0, 320, 480, new Vector2(0, -3), "Background"));
+//		nearBackgrounds.add(new Background(0, 0, 320, 480, new Vector2(0, -10), "NearStar"));
+//		farBackgrounds.add(new Background(0, 0, 320, 480, new Vector2(0,-3), "FarStar"));
+//
+//		backgrounds.add(new Background(0, 480, 320, 480, new Vector2(0,-3), "Background"));
+//		nearBackgrounds.add(new Background(0, 480, 320, 480, new Vector2(0,-10), "NearStar"));
+//		farBackgrounds.add(new Background(0, 480, 320, 480, new Vector2(0,-3), "FarStar"));
+//
+//		backgrounds.add(new Background(320, 0, 320, 480, new Vector2(0,-3), "Background"));
+//		nearBackgrounds.add(new Background(320, 0, 320, 480, new Vector2(0,-10), "NearStar"));
+//		farBackgrounds.add(new Background(320, 0, 320, 480, new Vector2(0,-3), "FarStar"));
+//
+//		backgrounds.add(new Background(320, 480, 320, 480, new Vector2(0,-3), "Background"));
+//		nearBackgrounds.add(new Background(320, 480, 320, 480, new Vector2(0,-10), "NearStar"));
+//		farBackgrounds.add(new Background(320, 480, 320, 480, new Vector2(0,-3), "FarStar"));
 
-		backgrounds.add(new Background(0, 480, 320, 480, new Vector2(0,-3), "Background"));
-		nearBackgrounds.add(new Background(0, 480, 320, 480, new Vector2(0,-10), "NearStar"));
-		farBackgrounds.add(new Background(0, 480, 320, 480, new Vector2(0,-3), "FarStar"));
-
-		backgrounds.add(new Background(320, 0, 320, 480, new Vector2(0,-3), "Background"));
-		nearBackgrounds.add(new Background(320, 0, 320, 480, new Vector2(0,-10), "NearStar"));
-		farBackgrounds.add(new Background(320, 0, 320, 480, new Vector2(0,-3), "FarStar"));
-
-		backgrounds.add(new Background(320, 480, 320, 480, new Vector2(0,-3), "Background"));
-		nearBackgrounds.add(new Background(320, 480, 320, 480, new Vector2(0,-10), "NearStar"));
-		farBackgrounds.add(new Background(320, 480, 320, 480, new Vector2(0,-3), "FarStar"));
+		grid = new Vector2[]{new Vector2(-1, 1), new Vector2(0, 1), new Vector2(1, 1),
+				             new Vector2(-1, 0),                   new Vector2(1, 0),
+				             new Vector2(-1, -1), new Vector2(0, -1), new Vector2(1, -1)};
 	}
 	
 	public void update(float deltaTime){
@@ -115,25 +123,43 @@ public class World {
 		if(moveRight){
 			worldAngle -= angleDiff;
 			enemyAngle = NEG_SIN_ANGLE;
+			updateBackgroundAngles((float)Math.cos(Math.toRadians(worldAngle)), (float)Math.sin(Math.toRadians(worldAngle)));
 		}
 		if(moveLeft){
 			worldAngle += angleDiff;
 			enemyAngle = POS_SIN_ANGLE;
+			updateBackgroundAngles((float)Math.cos(Math.toRadians(worldAngle)), (float)Math.sin(Math.toRadians(worldAngle)));
 		}
 
 	}
 
-	private void updateBackgrounds(float deltaTime){
-		updateBackgroundList(deltaTime, backgrounds);
-		updateBackgroundList(deltaTime, farBackgrounds);
-		updateBackgroundList(deltaTime, nearBackgrounds);
+	private void updateBackgroundAngles(float cosChange, float sinChange){
+		for(int i = 0; i < backgrounds.size(); i++){
+			backgrounds.get(i).bounds.rotationAngle.x = cosChange;
+			backgrounds.get(i).bounds.rotationAngle.y = sinChange;
+		}
+		for (int i = 0; i < farBackgrounds.size(); i++){
+			farBackgrounds.get(i).bounds.rotationAngle.x = cosChange;
+			farBackgrounds.get(i).bounds.rotationAngle.y = sinChange;
+		}
+		for (int i = 0; i < nearBackgrounds.size(); i++){
+			nearBackgrounds.get(i).bounds.rotationAngle.x = cosChange;
+			nearBackgrounds.get(i).bounds.rotationAngle.y = sinChange;
+		}
 	}
 
-	private void updateBackgroundList(float deltaTime, ArrayList<Background> backgrounds){
+	private void updateBackgrounds(float deltaTime){
+		updateBackgroundList(deltaTime, backgrounds, "background", -3);
+		updateBackgroundList(deltaTime, farBackgrounds, "FarStar", -3);
+		updateBackgroundList(deltaTime, nearBackgrounds, "NearStar", -10);
+	}
+
+	private void updateBackgroundList(float deltaTime, ArrayList<Background> backgrounds, String sprite, float velocity){
 		ArrayList<Background> onScreen = new ArrayList<Background>();
 		ArrayList<Background> notOnScreen = new ArrayList<Background>();
-		Rectangle currView = new Rectangle(0, 0, 320, 480);
 		Background playerOnBackground = null;
+		Rectangle currView = new Rectangle(0, 0, 340, 500);
+
 		for(int i = 0; i < backgrounds.size(); i++){
 			Background currBackground = backgrounds.get(i);
 			if(moveLeft || moveRight) {
@@ -141,17 +167,63 @@ public class World {
 			}
 			backgrounds.get(i).update(deltaTime);
 			Rectangle backgroundRect = currBackground.bounds;
-			if(OverlapTester.pointInRectangle(backgroundRect, 160, 240)){
+			if(OverlapTester.pointInRotatedRectangle(currBackground.bounds, new Vector2(160, 240))){
 				playerOnBackground = currBackground;
 			}
-			if(OverlapTester.overlapRectangles(backgroundRect, currView)){
+			if(OverlapTester.overlapPolygons(backgroundRect, currView)){
 				onScreen.add(currBackground);
 			}
 			else{
 				notOnScreen.add(currBackground);
 			}
 		}
+		Vector2 widthVector = new Vector2(320, 0);
+		Vector2 heightVector = new Vector2(0, 480);
 
+		if(playerOnBackground == null){
+			playerOnBackground = new Background(0, 0, 320, 480, new Vector2(0, velocity), sprite);
+			backgrounds.add(playerOnBackground);
+			onScreen.add(playerOnBackground);
+		}
+
+		playerOnBackground.bounds.rotateVector(widthVector);
+		playerOnBackground.bounds.rotateVector(heightVector);
+
+		for(int i = 0; i < grid.length; i++){
+			float widthAdd = grid[i].x*widthVector.x + grid[i].y*heightVector.x;
+			float heightAdd = grid[i].x*widthVector.y + grid[i].y*heightVector.y;
+			Vector2 currSpot = new Vector2(playerOnBackground.position.x + widthAdd, playerOnBackground.position.y + heightAdd);
+			Vector2 currLowerLeft = new Vector2(playerOnBackground.bounds.lowerLeft.x + widthAdd, playerOnBackground.bounds.lowerLeft.y + heightAdd);
+			Background covers = null;
+			//currGrid.add(currSpot);
+			for(int j = 0; j < onScreen.size(); j++){
+				if(OverlapTester.pointInRotatedRectangle(onScreen.get(j).bounds, currSpot)){
+					covers = onScreen.get(j);
+					break;
+				}
+			}
+			if (covers == null) {
+				//Pull one from notOnScreen if possible, otherwise create one
+				Background toMove;
+				if (notOnScreen.size() > 0) {
+					toMove = notOnScreen.get(0);
+					notOnScreen.remove(toMove);
+				}
+				else{
+					toMove = new Background(currSpot.x, currSpot.y, 320, 480, new Vector2(0, velocity), sprite);
+					toMove.bounds.rotationAngle.set(playerOnBackground.bounds.rotationAngle.x, playerOnBackground.bounds.rotationAngle.y);
+					backgrounds.add(toMove);
+				}
+				toMove.position.set(currSpot.x, currSpot.y);
+				toMove.bounds.lowerLeft.set(currLowerLeft.x, currLowerLeft.y);
+			}
+			else{
+				onScreen.remove(covers);
+			}
+		}
+		for(int i = 0; i < notOnScreen.size(); i++){
+			backgrounds.remove(notOnScreen.get(i));
+		}
 	}
 
 	private void updatePlayer(float deltaTime){
@@ -203,7 +275,7 @@ public class World {
 	private void updateEnemies(float deltaTime){
 		lastEnemyTime += deltaTime;
 		if(lastEnemyTime > timeToNextEnemy && state != WORLD_STATE_LAST_ENEMY){
-			generateEnemy();
+			//generateEnemy();
 			
 			if(enemyNum % 4 == 0 && timeToNextEnemy > 2){
 				timeToNextEnemy -= 0.5;

@@ -55,15 +55,58 @@ public class OverlapTester {
 				r.lowerLeft.y <= p.y && r.lowerLeft.y + r.height >= p.y;
 	}
 
+	public static boolean pointInRotatedRectangle(Rectangle r, Vector2 p){
+		//rotate height and width vectors
+		//dot them with the point, if > 1, no good, if sum > 2, no good
+		return r.pointInRotatedRectangle(p);
+	}
+
 	public static boolean pointInUIRectangle(Camera2D guiCam, Rectangle r, Vector2 p){
 		return r.lowerLeft.x <= p.x && r.lowerLeft.x + r.width >= p.x &&
 				r.lowerLeft.y <= p.y && r.lowerLeft.y + r.height >= p.y;
 	}
-
-
 	
 	public static boolean pointInRectangle(Rectangle r, float x, float y){
 		return r.lowerLeft.x <= x && r.lowerLeft.x + r.width >= x &&
 				r.lowerLeft.y <= y && r.lowerLeft.y + r.height >= y;
+	}
+
+	public static boolean overlapPolygons(Rectangle r1, Rectangle r2){
+		Vector2[] vertices1 = r1.getVertices();
+		Vector2[] vertices2 = r2.getVertices();
+		Vector2[] axes1 = r1.getAxes(vertices1);
+		Vector2[] axes2 = r2.getAxes(vertices2);
+
+// loop over the axes1
+		for (int i = 0; i < axes1.length; i++) {
+			Vector2 axis = axes1[i];
+			// project both shapes onto the axis
+			Vector2 p1 = r1.project(axis, vertices1);
+			Vector2 p2 = r2.project(axis, vertices2);
+			// do the projections overlap?
+			if (!overlap(p1, p2)) {
+				// then we can guarantee that the shapes do not overlap
+				return false;
+			}
+		}
+// loop over the axes2
+		for (int i = 0; i < axes2.length; i++) {
+			Vector2 axis = axes2[i];
+			// project both shapes onto the axis
+			Vector2 p1 = r1.project(axis, vertices1);
+			Vector2 p2 = r2.project(axis, vertices2);
+			// do the projections overlap?
+			if (!overlap(p1, p2)) {
+				// then we can guarantee that the shapes do not overlap
+				return false;
+			}
+		}
+// if we get here then we know that every axis had overlap on it
+// so we can guarantee an intersection
+		return true;
+	}
+
+	private static boolean overlap(Vector2 first, Vector2 second){
+		return !(first.x > second.y || second.x > first.y);
 	}
 }

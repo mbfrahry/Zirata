@@ -140,4 +140,8 @@ public class Vector2 {
 		}
 		return angle;
 	}
+
+	public float dot(Vector2 other){
+		return x*other.x + y*other.y;
+	}
 }

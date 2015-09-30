@@ -6,6 +6,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 import com.badlogic.androidgames.framework.gl.Camera2D;
 import com.badlogic.androidgames.framework.gl.SpriteBatcher;
+import com.badlogic.androidgames.framework.gl.Vertices;
 import com.badlogic.androidgames.framework.impl.GLGraphics;
 import com.badlogic.androidgames.framework.math.Vector2;
 
@@ -46,16 +47,15 @@ public class WorldRenderer {
 	public void renderBackground(){
 		for(int i = 0; i < world.backgrounds.size(); i++){
 			Background currBackground = world.backgrounds.get(i);
-			if(currBackground.type.equals("Background")) {
-				batcher.drawSpriteWithCenter(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("background"));
-			}
-
-			else if(currBackground.type.equals("FarStar")) {
-				batcher.drawSpriteWithCenter(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("StarBG"));
-			}
-			else if(currBackground.type.equals("NearStar")) {
-				batcher.drawSpriteWithCenter(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("NearStarBG"));
-			}
+			batcher.drawSprite(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("background"));
+		}
+		for (int i = 0; i < world.farBackgrounds.size(); i++){
+			Background currBackground = world.farBackgrounds.get(i);
+			batcher.drawSprite(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("StarBG"));
+		}
+		for (int i = 0; i < world.nearBackgrounds.size(); i++){
+			Background currBackground = world.nearBackgrounds.get(i);
+			batcher.drawSprite(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("NearStarBG"));
 		}
 	}
 	

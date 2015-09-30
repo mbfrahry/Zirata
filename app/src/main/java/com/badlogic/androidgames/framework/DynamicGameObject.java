@@ -13,7 +13,7 @@ public class DynamicGameObject extends GameObject {
         accel = new Vector2();
     }
 
-    public DynamicGameObject(float x, float y, float width, float height, float angle) {
+    public DynamicGameObject(float x, float y, float width, float height, Vector2 angle) {
         super(x, y, width, height, angle);
         velocity = new Vector2();
         accel = new Vector2();
@@ -22,12 +22,20 @@ public class DynamicGameObject extends GameObject {
     public void rotate(float sinMath, float cosMath, Vector2 midPoint){
         float x = position.x;
         float y = position.y;
+        float leftX = bounds.lowerLeft.x;
+        float leftY = bounds.lowerLeft.y;
+        leftX -= midPoint.x;
+        leftY -= midPoint.y;
         x -= midPoint.x;
         y -= midPoint.y;
         position.x =  ( x * cosMath + y * -sinMath);
         position.y = (x * sinMath + y * cosMath);
         position.x += midPoint.x;
         position.y += midPoint.y;
+        bounds.lowerLeft.x =  ( leftX * cosMath + leftY * -sinMath);
+        bounds.lowerLeft.y = (leftX * sinMath + leftY * cosMath);
+        bounds.lowerLeft.x += midPoint.x;
+        bounds.lowerLeft.y += midPoint.y;
 
 
         x = velocity.x;
@@ -39,12 +47,19 @@ public class DynamicGameObject extends GameObject {
     public void rotateConstantVelocity(float sinMath, float cosMath, Vector2 midPoint){
         float x = position.x;
         float y = position.y;
+        float leftX = bounds.lowerLeft.x;
+        float leftY = bounds.lowerLeft.y;
+        leftX -= midPoint.x;
+        leftY -= midPoint.y;
         x -= midPoint.x;
         y -= midPoint.y;
         position.x =  ( x * cosMath + y * -sinMath);
         position.y = (x * sinMath + y * cosMath);
         position.x += midPoint.x;
         position.y += midPoint.y;
-
+        bounds.lowerLeft.x =  ( leftX * cosMath + leftY * -sinMath);
+        bounds.lowerLeft.y = (leftX * sinMath + leftY * cosMath);
+        bounds.lowerLeft.x += midPoint.x;
+        bounds.lowerLeft.y += midPoint.y;
     }
 }

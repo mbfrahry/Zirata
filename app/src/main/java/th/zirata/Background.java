@@ -15,7 +15,7 @@ public class Background extends DynamicGameObject {
         this.type = type;
     }
 
-    public Background(float x, float y, float width, float height, Vector2 velocity, String type, float angle) {
+    public Background(float x, float y, float width, float height, Vector2 velocity, String type, Vector2 angle) {
         super(x, y, width, height, angle);
         this.velocity.set(velocity);
         this.type = type;
@@ -23,5 +23,6 @@ public class Background extends DynamicGameObject {
 
     public void update(float deltaTime){
         position.add(velocity.x * deltaTime, velocity.y * deltaTime);
+        bounds.lowerLeft.add(velocity.x * deltaTime, velocity.y * deltaTime);
     }
 }
