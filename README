@@ -20,11 +20,7 @@ Needs to be done
     
   Bugs:
     Bullets go past cone range
-    Multiplied values persist if level ends while multiplier block is active
-      Temp fix is to call PlayerSave.load at the end level screen
-    Player bullet
-      When a player turret dies after shooting, the bullets freezes and doesn't get deleted
-  
+    
   Max wasn't here.
 
 
