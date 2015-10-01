@@ -223,10 +223,14 @@ public class GameScreen extends GLScreen {
         	Settings.numEnemies += 10;
         }
 		world.clearBullets();
+
+		Settings.spaceBucks += Settings.currLevel*1.5;
+		world.spaceBucksEarned += Settings.currLevel*1.5;
 		if(Settings.currLevel == Settings.maxLevel && Settings.maxLevel < Settings.totalLevels){
 			Settings.maxLevel +=1;
 			Settings.currLevel = Settings.maxLevel;
 		}
+		PlayerSave.load(game.getFileIO());
         Settings.save(game.getFileIO());
 		game.setScreen(new EndLevelScreen(game, true, world.spaceBucksEarned, world.enemiesKilled));
 	}
