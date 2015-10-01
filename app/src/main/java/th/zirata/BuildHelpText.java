@@ -3,27 +3,24 @@ package th.zirata;
 import android.util.JsonReader;
 
 import com.badlogic.androidgames.framework.FileIO;
-import com.badlogic.androidgames.framework.gl.TextureRegion;
+import com.badlogic.androidgames.framework.GameObject;
 import com.badlogic.androidgames.framework.math.Rectangle;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.Random;
+
+import th.zirata.Help.TutorialStep;
 
 /**
  * Created by Matthew on 9/20/2015.
  */
 public class BuildHelpText {
 
-    public static ArrayList<String> buildHelpText = new ArrayList<String>();
-    public static ArrayList<Rectangle> buildHelpRect = new ArrayList<Rectangle>();
-    public static ArrayList<Boolean> buildHelpAction = new ArrayList<Boolean>();
+//    public static ArrayList<String> buildHelpText = new ArrayList<String>();
+//    public static ArrayList<Rectangle> buildHelpRect = new ArrayList<Rectangle>();
+//    public static ArrayList<Boolean> buildHelpAction = new ArrayList<Boolean>();
+    public static ArrayList<TutorialStep> tutorialSteps = new ArrayList<TutorialStep>();
 
     public static void load(FileIO files){
         JsonReader reader = null;
@@ -43,30 +40,71 @@ public class BuildHelpText {
     }
 
     public static void readBuildHelp(JsonReader reader) throws IOException{
-        String num = null;
+
+//        String num = null;
         reader.beginObject();
         while (reader.hasNext()) {
-            num = reader.nextName();
-
-
+            TutorialStep newTutStep = new TutorialStep();
+            reader.nextName();
             reader.beginObject();
-            String levelName = reader.nextName();
-            String level = reader.nextString();
-            buildHelpText.add(level);
-            String xName = reader.nextName();
-            int x = reader.nextInt();
-            String yName = reader.nextName();
-            int y = reader.nextInt();
-            String widthname = reader.nextName();
-            int width = reader.nextInt();
-            String heightName = reader.nextName();
-            int height = reader.nextInt();
-            buildHelpRect.add(new Rectangle(x, y, width, height));
-            String actionName = reader.nextName();
-            boolean action = reader.nextBoolean();
-            buildHelpAction.add(action);
+
+            //Define content and content location
+            reader.nextName();
+            String content = reader.nextString();
+            newTutStep.content = content;
+            reader.nextName();
+            reader.beginObject();
+            reader.nextName();
+            int contentX = reader.nextInt();
+            reader.nextName();
+            int contentY = reader.nextInt();
+            newTutStep.contentLocation.set(contentX, contentY);
             reader.endObject();
 
+            //Define touch point to continue
+            reader.nextName();
+            boolean action = reader.nextBoolean();
+            newTutStep.action = action;
+            reader.nextName();
+            reader.beginObject();
+            reader.nextName();
+            int touchX = reader.nextInt();
+            reader.nextName();
+            int touchY = reader.nextInt();
+            reader.nextName();
+            int touchWidth = reader.nextInt();
+            reader.nextName();
+            int touchHeight = reader.nextInt();
+            newTutStep.touch = new Rectangle(touchX, touchY, touchWidth, touchHeight);
+            reader.endObject();
+
+            //Define sprite if there is one
+            reader.nextName();
+            boolean hasSprite = reader.nextBoolean();
+            newTutStep.hasSprite = hasSprite;
+            if(hasSprite){
+                reader.nextName();
+                reader.beginObject();
+                reader.nextName();
+                int spriteX = reader.nextInt();
+                reader.nextName();
+                int spriteY = reader.nextInt();
+                reader.nextName();
+                int spriteWidth = reader.nextInt();
+                reader.nextName();
+                int spriteHeight = reader.nextInt();
+                reader.nextName();
+                int spriteAngle = reader.nextInt();
+                reader.nextName();
+                String spriteName = reader.nextString();
+                newTutStep.spriteInfo = new GameObject(spriteX, spriteY, spriteWidth, spriteHeight);
+                newTutStep.spriteName = spriteName;
+                newTutStep.spriteAngle = spriteAngle;
+
+                reader.endObject();
+            }
+            reader.endObject();
+            tutorialSteps.add(newTutStep);
         }
 
         reader.endObject();

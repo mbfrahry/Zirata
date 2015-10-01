@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import th.zirata.ArmorBlock;
+import th.zirata.Assets;
 import th.zirata.BlankBlock;
 import th.zirata.Block;
 import th.zirata.BuildHelpText;
@@ -27,23 +28,29 @@ import th.zirata.TurretBlock;
 
 public class BuildScreenHelp extends BuildScreen {
 
-
     int tutorialNum;
+    TutorialStep currStep;
+
     public BuildScreenHelp(Game game) {
         super(game);
         tutorialNum = 0;
-
+        currStep = BuildHelpText.tutorialSteps.get(tutorialNum);
     }
 
 
     public void update(float deltaTime){
-        if(UIExtras.size() < 2) {
-            String text = BuildHelpText.buildHelpText.get(tutorialNum);
-            generatePopup(text, 160, 380);
-//            HashMap newSpriteExtra = createSpriteExtra("sprite", "Rectangle", 160f, 400f, 260f, 50f, 999f, 0f);
-//            HashMap newTextExtra = createTextExtra("text", text, 160f, 400f, 8f, 8f, 999f, "white", "lined");
-//            UIExtras.add(newSpriteExtra);
-//            UIExtras.add(newTextExtra);
+        if(UIExtras.size() < 3) {
+            String text = currStep.content;
+            generatePopup(text, currStep.contentLocation.x, currStep.contentLocation.y, 999f);
+
+            if(currStep.hasSprite){
+                HashMap newSprite = createSpriteExtra("sprite", currStep.spriteName, currStep.spriteInfo.position.x, currStep.spriteInfo.position.y, currStep.spriteInfo.bounds.width, currStep.spriteInfo.bounds.height, 999, currStep.spriteAngle);
+                UIExtras.add(newSprite);
+            }
+
+        }
+        if(currStep.hasSprite){
+            batcher.drawSprite(currStep.spriteInfo.position.x, currStep.spriteInfo.position.y, 200, 200, Assets.textureRegions.get(currStep.spriteName));
         }
         List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
         int len = touchEvents.size();
@@ -56,13 +63,21 @@ public class BuildScreenHelp extends BuildScreen {
             if (event.type == Input.TouchEvent.TOUCH_UP) {
 
 
-                if(OverlapTester.pointInRectangle(BuildHelpText.buildHelpRect.get(tutorialNum), touchPoint)){
-                    UIExtras.get(0).put("timeToDisplay", 0f);
-                    UIExtras.get(1).put("timeToDisplay", 0f);
-                    if(BuildHelpText.buildHelpAction.get(tutorialNum)) {
+                if(OverlapTester.pointInRectangle(currStep.touch, touchPoint)){
+                    clearUIExtras();
+//                    UIExtras.get(0).put("timeToDisplay", 0f);
+//                    UIExtras.get(1).put("timeToDisplay", 0f);
+//                    if(currStep.hasSprite){
+//                        UIExtras.get(2).put("timeToDisplay", 0f);
+//                    }
+
+                    if(currStep.action) {
                         checkTouchEvent(deltaTime, touchPoint);
                     }
-                    tutorialNum +=1;
+                    if(tutorialNum < 15){
+                        tutorialNum +=1;
+                        currStep = BuildHelpText.tutorialSteps.get(tutorialNum);
+                    }
                 }
             }
         }

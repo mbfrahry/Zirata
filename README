@@ -5,6 +5,8 @@ Started
 
 Needs to be done 
 
+  Paginate fusion blocks?
+
   Aspiration: Map exploration
 
   Block upgrade paths
@@ -19,7 +21,7 @@ Needs to be done
     -aka galaga movements
     
   Bugs:
-    None - we so gud
+    Sometimes data doesn't seem to get cleared out when reset button is hit, this causes the tutorial to crash(no idea why yet...).
     
   Max wasn't here.
 

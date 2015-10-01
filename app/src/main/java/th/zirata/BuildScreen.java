@@ -564,11 +564,17 @@ public class BuildScreen extends GLScreen{
 		}
 	}
 
+	public synchronized void clearUIExtras(){
+		for(int i = 0; i < UIExtras.size(); i++){
+			UIExtras.get(i).put("timeToDisplay", 0f);
+		}
+	}
+
 	//TODO: createPopup() -- create text/sprite extra with just text
-	public void generatePopup(String content, float x, float y){
+	public void generatePopup(String content, float x, float y, float timeToDisplay){
 		int spaces = content.length() - content.replace(" ", "").length();
 
-		HashMap newSpriteExtra = createSpriteExtra("sprite", "DarkGrayRectangle", x, y, 300f, (float)(spaces/5 + 1.5)*9, 999f, 0f);
+		HashMap newSpriteExtra = createSpriteExtra("sprite", "DarkGrayRectangle", x, y, 300f, (float)(spaces/5 + 1.5)*9, timeToDisplay, 0f);
 		HashMap newTextExtra = createTextExtra("text", content, x, y + (spaces/5)*4, 8f, 8f, 999f, "white", "lined");
 		UIExtras.add(newSpriteExtra);
 		UIExtras.add(newTextExtra);

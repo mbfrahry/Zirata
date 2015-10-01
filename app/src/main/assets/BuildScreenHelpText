@@ -1,130 +1,314 @@
 {
   "0": {
     "Text": "This is the build screen. Here you will design, craft, and finetune your ship into the powerhouse needed to defeat the forces of good/evil depending on how you view the world.",
-    "X": 0,
-    "Y": 0,
-    "Width": 320,
-    "Height": 480,
-    "Action": false
+    "TextLocation":{
+      "X": 160,
+      "Y": 240
+    },
+    "Action": false,
+    "Touchpoint": {
+      "X": 0,
+      "Y": 0,
+      "Width": 320,
+      "Height": 480
+    },
+    "hasSprite": false
   },
   "1": {
     "Text": "Let's start with the basics. As of right now, you only have one empty block. You can't go into battle with a blank block so let's go ahead and fill it. Click the blank block now.",
-    "X": 148,
-    "Y": 228,
-    "Width": 25,
-    "Height": 25,
-    "Action": true
+    "TextLocation":{
+      "X": 160,
+      "Y": 350
+    },
+    "Action": true,
+    "Touchpoint": {
+      "X": 148,
+      "Y": 228,
+      "Width": 25,
+      "Height": 25
+    },
+    "hasSprite" : true,
+    "Sprite":{
+      "X": 160,
+      "Y": 275,
+      "Width": 50,
+      "Height": 50,
+      "SpriteAngle": 270,
+      "SpriteName": "Arrow"
+    }
   },
   "2": {
     "Text": "This is your bank. Here will be all the blocks you have created. There are 4 types of blocks. Turret, Armor, Energy, and Multiplier.",
-    "X": 0,
-    "Y": 0,
-    "Width": 320,
-    "Height": 480,
-    "Action": false
+    "TextLocation":{
+      "X": 160,
+      "Y": 230
+    },
+    "Action": false,
+    "Touchpoint": {
+      "X": 0,
+      "Y": 0,
+      "Width": 320,
+      "Height": 480
+    },
+    "hasSprite": false
   },
   "3": {
     "Text": "Turret blocks fire at enemies within the turrets range. They require energy to turn on.",
-    "X": 0,
-    "Y": 0,
-    "Width": 320,
-    "Height": 480,
-    "Action": false
+    "TextLocation":{
+      "X": 160,
+      "Y": 230
+    },
+    "Action": false,
+    "Touchpoint": {
+      "X": 0,
+      "Y": 0,
+      "Width": 320,
+      "Height": 480
+    },
+    "hasSprite": false
   },
   "4": {
     "Text": "Armor blocks are going to be your main line of defense. They take the most beating out of any other block.",
-    "X": 0,
-    "Y": 0,
-    "Width": 320,
-    "Height": 480,
-    "Action": false
+    "TextLocation":{
+      "X": 160,
+      "Y": 230
+    },
+    "Action": false,
+    "Touchpoint": {
+      "X": 0,
+      "Y": 0,
+      "Width": 320,
+      "Height": 480
+    },
+    "hasSprite": false
   },
   "5": {
-    "Text": "Energy blocks give your ship the power it needs to turn on your turrets and control your speed. The more energy you have the faster you can go.",
-    "X": 0,
-    "Y": 0,
-    "Width": 320,
-    "Height": 480,
-    "Action": false
+    "Text": "Energy blocks give your ship the power it needs to turn on your turrets and control your speed. The more energy you have the faster you can turn.",
+    "TextLocation":{
+      "X": 160,
+      "Y": 230
+    },
+    "Action": false,
+    "Touchpoint": {
+      "X": 0,
+      "Y": 0,
+      "Width": 320,
+      "Height": 480
+    },
+    "hasSprite": false
   },
   "6": {
-    "Text": "Multiplier blocks affect the blocks around it by multiplying a specific value for a block. Turret damage, armor health, and energy are multiplied by a value if this block is next to it",
-    "X": 0,
-    "Y": 0,
-    "Width": 320,
-    "Height": 480,
-    "Action": false
+    "Text": "Multiplier blocks affect the blocks around it by multiplying a specific value for each block. Turret damage, armor health, and energy are multiplied by a value if this block is next to it",
+    "TextLocation":{
+      "X": 160,
+      "Y": 230
+    },
+    "Action": false,
+    "Touchpoint": {
+      "X": 0,
+      "Y": 0,
+      "Width": 320,
+      "Height": 480
+    },
+    "hasSprite": false
   },
   "7": {
-    "Text": "Let's start by adding a turret block. We are already on the turret tab so let's click the add button.",
-    "X": 260,
-    "Y": 5,
-    "Width": 50,
-    "Height": 150,
-    "Action": true
+    "Text": "Click the add button to create a new turret block for your block bank.",
+    "TextLocation":{
+      "X": 160,
+      "Y": 190
+    },
+    "Action": true,
+    "Touchpoint": {
+      "X": 260,
+      "Y": 5,
+      "Width": 50,
+      "Height": 150
+    },
+    "hasSprite" : true,
+    "Sprite":{
+      "X": 290,
+      "Y": 140,
+      "Width": 50,
+      "Height": 50,
+      "SpriteAngle": 270,
+      "SpriteName": "Arrow"
+     }
   },
   "8":{
-    "Text": "The block is automatically added to our ship and we can see what values can be upgrade on the left. You have enough blocks to upgrade the damage. Go ahead and do so.",
-    "X": 0,
-    "Y": 270,
-    "Width": 110,
-    "Height": 40,
-    "Action": true
+    "Text": "The block is automatically added to our ship and we can see what values can be upgraded on the left. You have enough blocks to upgrade the damage!",
+    "TextLocation":{
+      "X": 160,
+      "Y": 345
+    },
+    "Action": true,
+    "Touchpoint": {
+      "X": 0,
+      "Y": 270,
+      "Width": 110,
+      "Height": 40
+    },
+    "hasSprite" : true,
+    "Sprite":{
+      "X": 135,
+      "Y": 290,
+      "Width": 50,
+      "Height": 50,
+      "SpriteAngle": 180,
+      "SpriteName": "Arrow"
+     }
   },
   "9": {
     "Text": "Upgrade a block enough and you will be able to fuse it with another block to greatly increase the blocks stats.",
-    "X": 0,
-    "Y": 0,
-    "Width": 320,
-    "Height": 480,
-    "Action": false
+    "TextLocation":{
+      "X": 160,
+      "Y": 380
+    },
+    "Action": false,
+    "Touchpoint": {
+      "X": 0,
+      "Y": 0,
+      "Width": 320,
+      "Height": 480
+    },
+    "hasSprite": false
   },
   "10": {
-    "Text": "We can't fire our turret without energy so go ahead and click outside the block bank.",
-    "X": 120,
-    "Y": 200,
-    "Width": 360,
-    "Height": 240,
-    "Action": true
+    "Text": "We can't fire our turret without energy, we will need to expand the ship. Click outside the block bank to close it.",
+    "TextLocation":{
+      "X": 160,
+      "Y": 380
+    },
+    "Action": true,
+    "Touchpoint": {
+      "X": 120,
+      "Y": 200,
+      "Width": 360,
+      "Height": 240
+    },
+    "hasSprite" : true,
+    "Sprite":{
+      "X": 200,
+      "Y": 250,
+      "Width": 50,
+      "Height": 50,
+      "SpriteAngle": 0,
+      "SpriteName": "Arrow"
+    }
   },
   "11": {
-    "Text": "If you have enough blocks, you can extend your ship by clicking any block outline on your ship. Let's go ahead and add a block below the turret block",
-    "X": 148,
-    "Y": 198,
-    "Width": 25,
-    "Height": 25,
-    "Action": true
+    "Text": "If you have enough blocks in the bank, you can extend your ship by clicking any block outline on your ship. Let's go ahead and add a block below the turret block",
+    "TextLocation":{
+      "X": 160,
+      "Y": 320
+    },
+    "Action": true,
+    "Touchpoint": {
+      "X": 148,
+      "Y": 198,
+      "Width": 25,
+      "Height": 25
+    },
+    "hasSprite" : true,
+    "Sprite":{
+      "X": 160,
+      "Y": 250,
+      "Width": 50,
+      "Height": 50,
+      "SpriteAngle": 270,
+      "SpriteName": "Arrow"
+    }
   },
   "12": {
-    "Text": "Now click the energy block tab.",
-    "X": 160,
-    "Y": 160,
-    "Width": 80,
-    "Height": 40,
-    "Action": true
+    "Text": "The blocks you have created are sorted by tabs, try clicking on the energy tab.",
+    "TextLocation":{
+      "X": 160,
+      "Y": 270
+    },
+    "Action": true,
+    "Touchpoint": {
+      "X": 160,
+      "Y": 160,
+      "Width": 80,
+      "Height": 40
+    },
+    "hasSprite" : true,
+    "Sprite":{
+      "X": 200,
+      "Y": 225,
+      "Width": 50,
+      "Height": 50,
+      "SpriteAngle": 270,
+      "SpriteName": "Arrow"
+    }
   },
   "13": {
-    "Text": "And then the add button",
-    "X": 260,
-    "Y": 5,
-    "Width": 50,
-    "Height": 150,
-    "Action": true
+    "Text": "Add an energy block.",
+    "TextLocation":{
+      "X": 160,
+      "Y": 175
+    },
+    "Action": true,
+    "Touchpoint": {
+      "X": 260,
+      "Y": 5,
+      "Width": 50,
+      "Height": 150
+    },
+    "hasSprite" : true,
+    "Sprite":{
+      "X": 290,
+      "Y": 140,
+      "Width": 50,
+      "Height": 50,
+      "SpriteAngle": 270,
+      "SpriteName": "Arrow"
+    }
   },
   "14": {
-    "Text": "You can know fire your turret! Let's go ahead and click out of the block bank",
-    "X": 120,
-    "Y": 200,
-    "Width": 360,
-    "Height": 240,
-    "Action": true
+    "Text": "You can know fire your turret, close the block bank and get ready!",
+    "TextLocation":{
+      "X": 160,
+      "Y": 380
+    },
+    "Action": true,
+    "Touchpoint": {
+      "X": 120,
+      "Y": 200,
+      "Width": 360,
+      "Height": 240
+    },
+    "hasSprite" : true,
+    "Sprite":{
+      "X": 200,
+      "Y": 250,
+      "Width": 50,
+      "Height": 50,
+      "SpriteAngle": 0,
+      "SpriteName": "Arrow"
+    }
   },
   "15": {
     "Text": "We are now ready to fight. Launch when you feel ready to take apart the minions of darkness.",
-    "X": 200,
-    "Y": 0,
-    "Width": 120,
-    "Height": 60,
-    "Action": true
+    "TextLocation":{
+      "X": 160,
+      "Y": 380
+    },
+    "Action": true,
+    "Touchpoint": {
+      "X": 200,
+      "Y": 0,
+      "Width": 120,
+      "Height": 60
+    },
+    "hasSprite" : true,
+    "Sprite":{
+      "X": 175,
+      "Y": 30,
+      "Width": 50,
+      "Height": 50,
+      "SpriteAngle": 0,
+      "SpriteName": "Arrow"
+    }
   }
 }
