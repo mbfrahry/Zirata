@@ -23,17 +23,16 @@ public class World {
 	public static float POS_SIN_ANGLE = (float)Math.sin(0.0035);
 	public static float NEG_SIN_ANGLE = (float) Math.sin(-0.0035);
 	public static float POS_COS_ANGLE = (float)Math.cos(0.0035);
-	public static final ArrayList<Bullet> PLAYER_BULLETS = new ArrayList<Bullet>();
 	
 	public Player player;
 	public final ArrayList<Enemy> enemies;
 	public final ArrayList<Enemy> testEnemies;
 	public final ArrayList<Bullet> enemyBullets;
-	public final ArrayList<Bullet> playerBullets;
+	public static ArrayList<Bullet> playerBullets;
 	public ArrayList<Background> backgrounds;
 	public ArrayList<Background> nearBackgrounds;
 	public ArrayList<Background> farBackgrounds;
-	//public Background playerOnBackground;
+	public Background playerOnBackground;
 	public Vector2[] grid;
 
 	public float lastEnemyTime;
@@ -265,9 +264,9 @@ public class World {
 
 
 	private void updatePlayerBullets(float deltaTime){
-		for(int i = 0; i < PLAYER_BULLETS.size(); i++) {
+		for(int i = 0; i < playerBullets.size(); i++) {
 			if (moveLeft || moveRight) {
-				PLAYER_BULLETS.get(i).rotate(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
+				playerBullets.get(i).rotate(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
 			}
 		}
 	}
@@ -361,10 +360,10 @@ public class World {
 
 
 	private void checkPlayerBullets(){
-		for(int i = 0; i < PLAYER_BULLETS.size(); i++) {
-			Bullet b = PLAYER_BULLETS.get(i);
+		for(int i = 0; i < playerBullets.size(); i++) {
+			Bullet b = playerBullets.get(i);
 			if (checkEnemyCollision(b)) {
-				PLAYER_BULLETS.remove(i);
+				playerBullets.remove(i);
 			}
 		}
 	}
@@ -432,7 +431,6 @@ public class World {
     }
 
 	public void clearBullets(){
-		PLAYER_BULLETS.clear();
 		playerBullets.clear();
 		for(int i = 0; i < player.playerBlocks.size(); i++){
 			Block currBlock = player.playerBlocks.get(i);

@@ -49,7 +49,7 @@ public class MachineGunBlock extends Block {
 
 	public void action(){
 		if(state == TURRET_READY && timeToNextBullet < 0){
-			World.PLAYER_BULLETS.add(new Bullet(position.x, position.y, lastTouch.x, lastTouch.y, bulletDamage));
+			World.playerBullets.add(new Bullet(position.x, position.y, lastTouch.x, lastTouch.y, bulletDamage));
 			numBullets++;
 			if(numBullets >= maxBullets){
 				state = TURRET_RELOADING;
@@ -68,10 +68,10 @@ public class MachineGunBlock extends Block {
 				numBullets = 0;
 			}
 		}
-		for(int i = 0; i < World.PLAYER_BULLETS.size(); i++){
-			World.PLAYER_BULLETS.get(i).update(deltaTime);
-			if(World.PLAYER_BULLETS.get(i).outOfBounds()){
-				World.PLAYER_BULLETS.remove(i);
+		for(int i = 0; i < World.playerBullets.size(); i++){
+			World.playerBullets.get(i).update(deltaTime);
+			if(World.playerBullets.get(i).outOfBounds()){
+				World.playerBullets.remove(i);
 			}
 		}
 	}

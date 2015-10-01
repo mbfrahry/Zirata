@@ -94,8 +94,8 @@ public class WorldRenderer {
 				blockRenderer.renderGameBlock(currBlock, batcher);
 			}
 			Bullet b;
-			for(int i = 0; i < World.PLAYER_BULLETS.size(); i++){
-				b = World.PLAYER_BULLETS.get(i);
+			for(int i = 0; i < World.playerBullets.size(); i++){
+				b = World.playerBullets.get(i);
 				batcher.drawSprite(b.position.x, b.position.y, 5, 5, Assets.textureRegions.get("Bullet"));
 			}
 		}
