@@ -12,12 +12,14 @@ public class Bullet extends DynamicGameObject{
 	public static final float BULLET_HEIGHT = 5;
 	Random rand;
 	int damage;
+	float range;
 	
-	public Bullet(float x, float y, float targX, float targY, int damage) {
+	public Bullet(float x, float y, float targX, float targY, int damage, float range) {
 		super(x, y, BULLET_WIDTH, BULLET_HEIGHT);
 		rand = new Random();
 		setVelocity(targX, targY);
 		this.damage = damage;
+		this.range = range;
 	}
 	
 	public void setVelocity(float targX, float targY){
@@ -38,6 +40,9 @@ public class Bullet extends DynamicGameObject{
 	public boolean outOfBounds(){
 		boolean toReturn = false;
 		if(position.x > 320 || position.x < 0 || position.y < 0 || position.y > 480){
+			toReturn = true;
+		}
+		else if(position.dist(origin) > range/1.5){
 			toReturn = true;
 		}
 		return toReturn;

@@ -49,7 +49,7 @@ public class MachineGunBlock extends Block {
 
 	public void action(){
 		if(state == TURRET_READY && timeToNextBullet < 0){
-			World.playerBullets.add(new Bullet(position.x, position.y, lastTouch.x, lastTouch.y, bulletDamage));
+			World.playerBullets.add(new Bullet(position.x, position.y, lastTouch.x, lastTouch.y, bulletDamage, 1f));
 			numBullets++;
 			if(numBullets >= maxBullets){
 				state = TURRET_RELOADING;

@@ -324,7 +324,7 @@ public class World {
 		if(tBlock.state == tBlock.TURRET_READY && tBlock.bullets.size() < 1){
 			if(player.playerBlocks.size() > 0){
 				Block randBlock = player.playerBlocks.get(Math.abs(rand.nextInt()) % player.playerBlocks.size());
-				enemyBullets.add(new Bullet(tBlock.position.x, tBlock.position.y,randBlock.position.x, randBlock.position.y, tBlock.bulletDamage));
+				enemyBullets.add(new Bullet(tBlock.position.x, tBlock.position.y,randBlock.position.x, randBlock.position.y, tBlock.bulletDamage, tBlock.fireRange));
 				tBlock.resetBlock();
 			}
 		}
@@ -350,7 +350,7 @@ public class World {
 	private void checkEnemyBullets(){
 		Bullet b;
 		for(int i = 0; i < enemyBullets.size(); i++){
-			
+
 			b = enemyBullets.get(i);
 			if(checkPlayerCollision(b)){
 				enemyBullets.remove(i);
@@ -365,6 +365,7 @@ public class World {
 			if (checkEnemyCollision(b)) {
 				playerBullets.remove(i);
 			}
+
 		}
 	}
 	
