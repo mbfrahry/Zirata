@@ -16,7 +16,7 @@
     "Action": true
   },
   "2": {
-    "Text": "This is your bank. Here will be all the blocks you have obtained/created. There are 4 types of blocks. Turret, Armor, Energy, and Multiplier.",
+    "Text": "This is your bank. Here will be all the blocks you have created. There are 4 types of blocks. Turret, Armor, Energy, and Multiplier.",
     "X": 0,
     "Y": 0,
     "Width": 320,
@@ -40,7 +40,7 @@
     "Action": false
   },
   "5": {
-    "Text": "Energy blocks give you ship the power it needs to turn on your turrets and control your speed. The more energy you have the faster you can go.",
+    "Text": "Energy blocks give your ship the power it needs to turn on your turrets and control your speed. The more energy you have the faster you can go.",
     "X": 0,
     "Y": 0,
     "Width": 320,

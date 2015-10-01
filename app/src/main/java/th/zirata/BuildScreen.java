@@ -565,6 +565,15 @@ public class BuildScreen extends GLScreen{
 	}
 
 	//TODO: createPopup() -- create text/sprite extra with just text
+	public void generatePopup(String content, float x, float y){
+		int spaces = content.length() - content.replace(" ", "").length();
+
+		HashMap newSpriteExtra = createSpriteExtra("sprite", "DarkGrayRectangle", x, y, 290f, (float)(spaces/5 + 1.5)*9, 999f, 0f);
+		HashMap newTextExtra = createTextExtra("text", content, x, y + (spaces/5)*4, 8f, 8f, 999f, "white", "lined");
+		UIExtras.add(newSpriteExtra);
+		UIExtras.add(newTextExtra);
+	}
+
 
 	public HashMap createTextExtra(String type, String content, float x, float y, float width, float height, float timeToDisplay, String color, String justification){
 		HashMap event = new HashMap();

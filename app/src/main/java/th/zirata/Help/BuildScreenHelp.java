@@ -39,10 +39,11 @@ public class BuildScreenHelp extends BuildScreen {
     public void update(float deltaTime){
         if(UIExtras.size() < 2) {
             String text = BuildHelpText.buildHelpText.get(tutorialNum);
-            HashMap newSpriteExtra = createSpriteExtra("sprite", "Rectangle", 160f, 400f, 260f, 50f, 999f, 0f);
-            HashMap newTextExtra = createTextExtra("text", text, 160f, 400f, 8f, 8f, 999f, "white", "lined");
-            UIExtras.add(newSpriteExtra);
-            UIExtras.add(newTextExtra);
+            generatePopup(text, 160, 380);
+//            HashMap newSpriteExtra = createSpriteExtra("sprite", "Rectangle", 160f, 400f, 260f, 50f, 999f, 0f);
+//            HashMap newTextExtra = createTextExtra("text", text, 160f, 400f, 8f, 8f, 999f, "white", "lined");
+//            UIExtras.add(newSpriteExtra);
+//            UIExtras.add(newTextExtra);
         }
         List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
         int len = touchEvents.size();
