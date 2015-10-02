@@ -1,6 +1,6 @@
 {
   "0": {
-    "Text": "This is the build screen. Here you will design, craft, and finetune your ship into the powerhouse needed to defeat the forces of good/evil depending on how you view the world.",
+    "Text": "This is the build screen. Here you will design, craft, and fine-tune your ship into the powerhouse needed to defeat the forces of good/evil depending on how you view the world.",
     "TextLocation":{
       "X": 160,
       "Y": 240
@@ -15,7 +15,7 @@
     "hasSprite": false
   },
   "1": {
-    "Text": "Let's start with the basics. As of right now, you only have one empty block. You can't go into battle with a blank block so let's go ahead and fill it. Click the blank block now.",
+    "Text": "Let's start with the basics. As of right now, you only have an empty block. You can't go into battle with any blank blocks, click on it to replace it with something more useful.",
     "TextLocation":{
       "X": 160,
       "Y": 350
@@ -38,7 +38,7 @@
     }
   },
   "2": {
-    "Text": "This is your bank. Here will be all the blocks you have created. There are 4 types of blocks. Turret, Armor, Energy, and Multiplier.",
+    "Text": "This is your block bank. All of the utility blocks you have created will be here. There are 4 types of blocks. Turret, Armor, Energy, and Multiplier.",
     "TextLocation":{
       "X": 160,
       "Y": 230
@@ -53,7 +53,7 @@
     "hasSprite": false
   },
   "3": {
-    "Text": "Turret blocks fire at enemies within the turrets range. They require energy to turn on.",
+    "Text": "Turret blocks fire at enemies within their range. They require energy to turn on.",
     "TextLocation":{
       "X": 160,
       "Y": 230
@@ -68,7 +68,7 @@
     "hasSprite": false
   },
   "4": {
-    "Text": "Armor blocks are going to be your main line of defense. They take the most beating out of any other block.",
+    "Text": "Armor blocks are going to be your main line of defense. They can take more of a beating than any other block.",
     "TextLocation":{
       "X": 160,
       "Y": 230
@@ -98,7 +98,7 @@
     "hasSprite": false
   },
   "6": {
-    "Text": "Multiplier blocks affect the blocks around it by multiplying a specific value for each block. Turret damage, armor health, and energy are multiplied by a value if this block is next to it",
+    "Text": "Multiplier blocks affect the blocks around them by amplifying a specific stat. Turret damage, armor health, and energy are multiplied if this block is near.",
     "TextLocation":{
       "X": 160,
       "Y": 230
@@ -136,7 +136,7 @@
      }
   },
   "8":{
-    "Text": "The block is automatically added to our ship and we can see what values can be upgraded on the left. You have enough blocks to upgrade the damage!",
+    "Text": "The block is automatically added to your ship and the values that can be upgraded are on the left. You have enough blocks in the bank to upgrade the damage!",
     "TextLocation":{
       "X": 160,
       "Y": 345
@@ -159,7 +159,7 @@
      }
   },
   "9": {
-    "Text": "Upgrade a block enough and you will be able to fuse it with another block to greatly increase the blocks stats.",
+    "Text": "Upgrade a block enough and you will be able to fuse it with another block to greatly increase the its stats.",
     "TextLocation":{
       "X": 160,
       "Y": 380
@@ -174,7 +174,7 @@
     "hasSprite": false
   },
   "10": {
-    "Text": "We can't fire our turret without energy, we will need to expand the ship. Click outside the block bank to close it.",
+    "Text": "You can't fire your turret without energy, you'll need to expand the ship. Click outside the block bank to close it.",
     "TextLocation":{
       "X": 160,
       "Y": 380
@@ -197,7 +197,7 @@
     }
   },
   "11": {
-    "Text": "If you have enough blocks in the bank, you can extend your ship by clicking any block outline on your ship. Let's go ahead and add a block below the turret block",
+    "Text": "If you have enough blocks in the bank, you can extend your ship. Add a block to your ship under the turret block by clicking the block outline below it.",
     "TextLocation":{
       "X": 160,
       "Y": 320
@@ -266,7 +266,7 @@
     }
   },
   "14": {
-    "Text": "You can know fire your turret, close the block bank and get ready!",
+    "Text": "You can now fire your turret, close the block bank and get ready!",
     "TextLocation":{
       "X": 160,
       "Y": 380
@@ -289,7 +289,7 @@
     }
   },
   "15": {
-    "Text": "We are now ready to fight. Launch when you feel ready to take apart the minions of darkness.",
+    "Text": "You are now ready to fight. Launch when you feel prepared to take apart the minions of darkness.",
     "TextLocation":{
       "X": 160,
       "Y": 380

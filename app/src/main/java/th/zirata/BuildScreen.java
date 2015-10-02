@@ -729,7 +729,7 @@ public class BuildScreen extends GLScreen{
 			//UpgradeCost
 			if(!selectedActiveBlock.checkMaxAttributeLevel(i)) {
 				Assets.font.drawUITextRightJustified(guiCam, batcher, selectedActiveBlock.getAttributeLevel(i) + 1 + "", x + 37, y - 5 + i * 40, 10, 10);
-				Assets.font.drawUIText(guiCam, batcher, constructAttributeLevel(selectedActiveBlock.getAttributeLevel(i)), x - 45, y - 5 + i * 40, 10, 10);
+				Assets.font.drawUIText(guiCam, batcher, "Lvl " + selectedActiveBlock.getAttributeLevel(i), x - 45, y - 5 + i * 40, 8, 8);
 
 				batcher.drawUISprite(guiCam, x + 48, y + 10 + i * 40, 10, 10, Assets.textureRegions.get("addIcon"));
 			}
