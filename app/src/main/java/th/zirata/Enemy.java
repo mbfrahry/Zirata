@@ -26,24 +26,24 @@ public class Enemy{
 		float y;
 		float multiplier = 1;
 		if(num <= 0.25f){
-			x = -15;
+			x = -50;
 			y = rand.nextFloat() * 480;
 		}
 		else if(num > 0.25f && num <= 0.5f ){
-			x = 330;
+			x = 510;
 			y = rand.nextFloat() * 480;
 			multiplier = -1;
 		}
 		else if(num > 0.5f && num <= 0.75f){
 			x = rand.nextFloat() * 320;
-			y = -10;
+			y = -50;
 			if(x > 160){
 				multiplier = -1;
 			}
 		}
 		else{
 			x = rand.nextFloat() * 320;
-			y = 490;
+			y = 510;
 			if(x > 160){
 				multiplier = -1;
 			}
@@ -89,6 +89,7 @@ public class Enemy{
 		if(enemyBlocks.size() == 0){
 			return true;
 		}
+
 		return false;
 	}
 	
