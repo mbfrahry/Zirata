@@ -374,6 +374,15 @@ public class World {
 		}
 		else{
 			state = WORLD_STATE_LAST_ENEMY;
+			if(enemyLevelSettings[3] >= 0) {
+				if(enemyLevelSettings[3] == 1) {
+					Enemy e = EnemySettings.getBoss("Hydra");
+					for (Block b : e.enemyBlocks) {
+						b.rotate(world_sin, world_cos, WORLD_MID_POINT);
+					}
+					enemies.add(e);
+				}
+			}
 		}
 	}
 	

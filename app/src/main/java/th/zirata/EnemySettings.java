@@ -19,6 +19,7 @@ import java.util.Random;
 public class EnemySettings {
 
     public static HashMap<String, double[]> enemiesInLevel = new HashMap<String, double[]>();
+    public static HashMap<String, double[]> bossInLevel = new HashMap<String, double[]>();
 
 //    public EnemySettings(){
 //        enemiesInLevel = new HashMap<String, int[]>();
@@ -61,8 +62,11 @@ public class EnemySettings {
             int enemyLevelnum = reader.nextInt();
             String turretChance = reader.nextName();
             double turretChanceNum = reader.nextDouble();
-            double[] levelData = {enemyNum, enemyLevelnum, turretChanceNum};
+            String bossNumName = reader.nextName();
+            int bossNum = reader.nextInt();
+            double[] levelData = {enemyNum, enemyLevelnum, turretChanceNum, bossNum};
             enemiesInLevel.put(name, levelData);
+
             reader.endObject();
 
         }
@@ -88,7 +92,7 @@ public class EnemySettings {
     public static Enemy getBoss(String type){
         Enemy enemy = null;
         if(type.equals("Hydra")){
-            enemy = new Hydra(100, 100, 1);
+            enemy = new Hydra(1);
         }
         return enemy;
     }

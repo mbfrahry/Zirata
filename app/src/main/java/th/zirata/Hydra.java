@@ -14,10 +14,10 @@ public class Hydra extends Enemy{
     int blockLevel;
     int[] blocksPerDirection;
 
-    public Hydra(int x, int y, int blockLevel){
+    public Hydra(int blockLevel){
         super(-1, blockLevel);
-        this.x = x;
-        this.y = y;
+        this.x = 100;
+        this.y = 100;
         this.blockLevel = blockLevel;
         blocksPerDirection = new int[] {1,1,1};
         createHydra();
