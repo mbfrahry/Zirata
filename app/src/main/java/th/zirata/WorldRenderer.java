@@ -111,7 +111,7 @@ public class WorldRenderer {
 						if(currBlock.getClass().equals(EnemyTurretBlock.class)){
 							EnemyTurretBlock currEnemy = (EnemyTurretBlock) currBlock;
 							Vector2 rotate = new Vector2(160,240);
-							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, Assets.textureRegions.get("TurretBase"));
+							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, world.worldAngle, Assets.textureRegions.get("TurretBase"));
 							//TODO Make turrets actually point at the right spot
 							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, rotate.sub(currEnemy.position.x, currEnemy.position.y).angle(), Assets.textureRegions.get("TurretTop"));
 
@@ -128,13 +128,13 @@ public class WorldRenderer {
 						else if(currBlock.getClass().equals(ArmorBlock.class)){
 
 							if(currBlock.health <= currBlock.maxHealth && currBlock.health > currBlock.maxHealth*.7){
-								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.textureRegions.get("FullHealthArmorBlock"));
+								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, world.worldAngle, Assets.textureRegions.get("FullHealthArmorBlock"));
 							}
 							else if(currBlock.health <= currBlock.maxHealth*.7 && currBlock.health > currBlock.maxHealth*.3){
-								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.textureRegions.get("MidHealthArmorBlock"));
+								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, world.worldAngle, Assets.textureRegions.get("MidHealthArmorBlock"));
 							}
 							else if(currBlock.health <= currBlock.maxHealth*.3 && currBlock.health > 0){
-								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, Assets.textureRegions.get("LowHealthArmorBlock"));
+								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, world.worldAngle, Assets.textureRegions.get("LowHealthArmorBlock"));
 							}
 						}
 
