@@ -61,19 +61,28 @@ public class Enemy{
 			//TurretBlock special actions
 		}
 	}
-	
 
-	
+
+
 	public void generateBlock(int enemyType, int health, float x, float y, float xVelocity, float yVelocity){
 		Block newEnemyBlock = null;
-		if(enemyType == 1){
-			newEnemyBlock = new ArmorBlock(x, y, health * enemyLevel, enemyLevel);
-		}
-		else if(enemyType == 2){
-			newEnemyBlock = new EnemyTurretBlock(x, y, health * enemyLevel/2, 3*enemyLevel);
-		}
+		/*
+		for(int i = 0; i < 2; i++) {
+			if (enemyType == 1) {
+				newEnemyBlock = new ArmorBlock(x, y + i * 25, health * enemyLevel, enemyLevel);
+			} else if (enemyType == 2) {
+				newEnemyBlock = new EnemyTurretBlock(x+ i * 25, y, health * enemyLevel / 2, 3 * enemyLevel);
+			}
+			newEnemyBlock.velocity.add(xVelocity, yVelocity);
+			enemyBlocks.add(newEnemyBlock);
+		}*/
+		newEnemyBlock = new ArmorBlock(x, y, health * enemyLevel, enemyLevel);
 		newEnemyBlock.velocity.add(xVelocity, yVelocity);
 		enemyBlocks.add(newEnemyBlock);
+		newEnemyBlock = new EnemyTurretBlock(x + 25, y, health * enemyLevel / 2, 3 * enemyLevel);
+		newEnemyBlock.velocity.add(xVelocity, yVelocity);
+		enemyBlocks.add(newEnemyBlock);
+
 	}
 	
 	public boolean checkDead(){
