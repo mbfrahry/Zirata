@@ -173,17 +173,18 @@ public class World {
 		Vector2 heightVector = new Vector2(0, 480);
 
 		ArrayList<Background> newBackgrounds = new ArrayList<Background>();
-		ArrayList<Background> bCopy= new ArrayList<Background>();
-		bCopy.addAll(backgrounds);
+		//ArrayList<Background> bCopy= new ArrayList<Background>();
+		//bCopy.addAll(backgrounds);
 		if(playerOnBackground == null){
 			playerOnBackground = new Background(0, 0, 320, 480, new Vector2(0, velocity), sprite);
-			newBackgrounds.add(playerOnBackground);
+
 			//onScreen.add(playerOnBackground);
 		}
 		else{
-			bCopy.remove(playerOnBackground);
-		}
+			//bCopy.remove(playerOnBackground);
 
+		}
+		newBackgrounds.add(playerOnBackground);
 
 		playerOnBackground.bounds.rotateVector(widthVector);
 		playerOnBackground.bounds.rotateVector(heightVector);
@@ -209,14 +210,24 @@ public class World {
 				newBackgrounds.add(toMove);
 			}
 			else{
-				bCopy.remove(covers);
+				//bCopy.remove(covers);
+				newBackgrounds.add(covers);
 			}
 		}
-		for(int i = 0; i < bCopy.size(); i++){
-			backgrounds.remove(bCopy.get(i));
+//		for(int i = 0; i < bCopy.size(); i++){
+//			backgrounds.remove(bCopy.get(i));
+//		}
+//		for(int i = 0; i < newBackgrounds.size(); i++){
+//			backgrounds.add(newBackgrounds.get(i));
+//		}
+		if(sprite.equals("background")){
+			this.backgrounds = newBackgrounds;
 		}
-		for(int i = 0; i < newBackgrounds.size(); i++){
-			backgrounds.add(newBackgrounds.get(i));
+		else if(sprite.equals("FarStar")){
+			this.farBackgrounds = newBackgrounds;
+		}
+		else{
+			this.nearBackgrounds = newBackgrounds;
 		}
 	}
 
