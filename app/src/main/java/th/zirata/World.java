@@ -109,12 +109,16 @@ public class World {
 		if(moveRight){
 			worldAngle -= angleDiff;
 			enemyAngle = NEG_SIN_ANGLE;
-			updateBackgroundAngles((float)Math.cos(Math.toRadians(worldAngle)), (float)Math.sin(Math.toRadians(worldAngle)));
+			world_cos = (float)Math.cos(Math.toRadians(worldAngle));
+			world_sin = (float)Math.sin(Math.toRadians(worldAngle));
+			updateBackgroundAngles(world_cos, world_sin);
 		}
 		if(moveLeft){
 			worldAngle += angleDiff;
 			enemyAngle = POS_SIN_ANGLE;
-			updateBackgroundAngles((float)Math.cos(Math.toRadians(worldAngle)), (float)Math.sin(Math.toRadians(worldAngle)));
+			world_cos = (float)Math.cos(Math.toRadians(worldAngle));
+			world_sin = (float)Math.sin(Math.toRadians(worldAngle));
+			updateBackgroundAngles(world_cos, world_sin);
 		}
 
 	}
@@ -332,8 +336,7 @@ public class World {
 			Enemy e = EnemySettings.getEnemy(Settings.currLevel);
 
 			for (Block b : e.enemyBlocks) {
-				b.position.rotate(worldAngle);
-				b.velocity.rotate(worldAngle);
+				b.rotate(world_sin, world_cos, WORLD_MID_POINT);
 			}
 
 			enemies.add(e);
