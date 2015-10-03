@@ -340,7 +340,13 @@ public class World {
 	private void generateEnemy(){
 
 		if(testEnemies.size() > 0){
-			enemies.add(testEnemies.remove(0));
+			Enemy e = testEnemies.remove(0);
+
+			for (Block b : e.enemyBlocks){
+				b.position.rotate(worldAngle);
+			}
+
+			enemies.add(e);
 		}
 		else{
 			state = WORLD_STATE_LAST_ENEMY;
