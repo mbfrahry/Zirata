@@ -93,8 +93,11 @@ public class GameScreen extends GLScreen {
 			guiCam.touchToWorld(touchPoint);
 
 			if (event.type == TouchEvent.TOUCH_DOWN) {
+				if ((touchPoint.y < 130 || touchPoint.x < 120) && steerTouches.size() == 0) {
+					steerTouches.put(event.pointer, new Vector2(touchPoint));
+					updateRotation(event);
+				}
 
-				updateRotation(event);
 				if (OverlapTester.pointInRectangle(powerBounds, touchPoint)){
 					world.player.power = false;
 					return;
@@ -139,7 +142,6 @@ public class GameScreen extends GLScreen {
 						steerTouches.remove(event.pointer);
 						world.moveLeft = false;
 						world.moveRight = false;
-						steerTouches.remove(event.pointer);
 					}
 				}
 
@@ -168,13 +170,11 @@ public class GameScreen extends GLScreen {
 
 	private void updateRotation(TouchEvent event){
 		if (touchPoint.y < 130) {
-			if (touchPoint.x < 60) {
-				steerTouches.put(event.pointer, new Vector2(touchPoint.x,touchPoint.y));
+			if (touchPoint.x < steerTouches.get(event.pointer).x) {
 				world.moveRight = true;
 				world.moveLeft = false;
 			}
-			if (touchPoint.x > 60 && touchPoint.x < 120) {
-				steerTouches.put(event.pointer, new Vector2(touchPoint.x,touchPoint.y));
+			if (touchPoint.x > steerTouches.get(event.pointer).x ) {
 				world.moveLeft = true;
 				world.moveRight = false;
 			}
