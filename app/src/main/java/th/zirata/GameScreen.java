@@ -100,24 +100,8 @@ public class GameScreen extends GLScreen {
 				if (OverlapTester.pointInRectangle(pBlockBounds, touchPoint)) {
 					touchedBlock = currBlock;
 					continue;
-//					if (!currBlock.active && currBlock.energyCost <= world.player.energy) {
-//						currBlock.active = true;
-//						if(currBlock.energyCost > 0) {
-//							world.player.poweredBlocks.add(currBlock);
-//						}
-//					} else {
-//						currBlock.active = false;
-//						world.player.poweredBlocks.remove(currBlock);
-//					}
-//					return;
 				}
 			}
-
-
-
-
-
-
 
 			if (event.type == TouchEvent.TOUCH_DOWN) {
 				if (OverlapTester.pointInRectangle(powerBounds, touchPoint)){
@@ -130,7 +114,7 @@ public class GameScreen extends GLScreen {
 				if (touchedBlock == null && steerTouches.size() == 0) {
 					steerTouches.put(event.pointer, new Vector2(touchPoint));
 				}
-				if(steerTouches.size() > 0){
+				if(steerTouches.size() > 0 && steerTouches.keySet().contains(event.pointer)){
 					updateRotation(event);
 				}
 
@@ -160,6 +144,9 @@ public class GameScreen extends GLScreen {
 				}*/
 				if (OverlapTester.pointInRectangle(pauseBounds, touchPoint) && !steerTouches.keySet().contains(event.pointer)) {
 					state = GAME_PAUSED;
+					steerTouches.clear();
+					world.moveLeft = false;
+					world.moveRight = false;
 					return;
 				}
 				if (OverlapTester.pointInRectangle(powerBounds, touchPoint) && !steerTouches.keySet().contains(event.pointer)){
@@ -173,7 +160,7 @@ public class GameScreen extends GLScreen {
 				}
 
 			}
-			if(event.type == TouchEvent.TOUCH_DRAGGED){
+			if(event.type == TouchEvent.TOUCH_DRAGGED && steerTouches.keySet().contains(event.pointer)){
 				if(steerTouches.size() > 0){
 					updateRotation(event);
 				}
