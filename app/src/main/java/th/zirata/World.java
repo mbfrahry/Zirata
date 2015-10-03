@@ -33,8 +33,8 @@ public class World {
 	public ArrayList<Background> backgrounds;
 	public ArrayList<Background> nearBackgrounds;
 	public ArrayList<Background> farBackgrounds;
-	public Background playerOnBackground;
 	public Vector2[] grid;
+	Rectangle currView;
 
 	public float lastEnemyTime;
 	public float timeToNextEnemy;
@@ -83,6 +83,7 @@ public class World {
 		grid = new Vector2[]{new Vector2(-1, 1), new Vector2(0, 1), new Vector2(1, 1),
 				             new Vector2(-1, 0),                   new Vector2(1, 0),
 				             new Vector2(-1, -1), new Vector2(0, -1), new Vector2(1, -1)};
+		currView = new Rectangle(0, 0, 340, 500);
 	}
 	
 	public void update(float deltaTime){
@@ -145,10 +146,11 @@ public class World {
 	}
 
 	private void updateBackgroundList(float deltaTime, ArrayList<Background> backgrounds, String sprite, float velocity){
-		ArrayList<Background> onScreen = new ArrayList<Background>();
-		ArrayList<Background> notOnScreen = new ArrayList<Background>();
+		//ArrayList<Background> onScreen = new ArrayList<Background>();
+		//ArrayList<Background> notOnScreen = new ArrayList<Background>();
 		Background playerOnBackground = null;
-		Rectangle currView = new Rectangle(0, 0, 340, 500);
+
+		//Rectangle currView = new Rectangle(0, 0, 340, 500);
 
 		for(int i = 0; i < backgrounds.size(); i++){
 			Background currBackground = backgrounds.get(i);
@@ -156,25 +158,32 @@ public class World {
 				currBackground.rotateConstantVelocity(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
 			}
 			backgrounds.get(i).update(deltaTime);
-			Rectangle backgroundRect = currBackground.bounds;
-			if(OverlapTester.pointInRotatedRectangle(currBackground.bounds, new Vector2(160, 240))){
+			//Rectangle backgroundRect = currBackground.bounds;
+			if(playerOnBackground == null && OverlapTester.pointInRotatedRectangle(currBackground.bounds, WORLD_MID_POINT)){
 				playerOnBackground = currBackground;
 			}
-			if(OverlapTester.overlapPolygons(backgroundRect, currView)){
-				onScreen.add(currBackground);
-			}
-			else{
-				notOnScreen.add(currBackground);
-			}
+//			if(OverlapTester.overlapPolygons(backgroundRect, currView)){
+//				onScreen.add(currBackground);
+//			}
+//			else{
+//				notOnScreen.add(currBackground);
+//			}
 		}
 		Vector2 widthVector = new Vector2(320, 0);
 		Vector2 heightVector = new Vector2(0, 480);
 
+		ArrayList<Background> newBackgrounds = new ArrayList<Background>();
+		ArrayList<Background> bCopy= new ArrayList<Background>();
+		bCopy.addAll(backgrounds);
 		if(playerOnBackground == null){
 			playerOnBackground = new Background(0, 0, 320, 480, new Vector2(0, velocity), sprite);
-			backgrounds.add(playerOnBackground);
-			onScreen.add(playerOnBackground);
+			newBackgrounds.add(playerOnBackground);
+			//onScreen.add(playerOnBackground);
 		}
+		else{
+			bCopy.remove(playerOnBackground);
+		}
+
 
 		playerOnBackground.bounds.rotateVector(widthVector);
 		playerOnBackground.bounds.rotateVector(heightVector);
@@ -186,33 +195,28 @@ public class World {
 			Vector2 currLowerLeft = new Vector2(playerOnBackground.bounds.lowerLeft.x + widthAdd, playerOnBackground.bounds.lowerLeft.y + heightAdd);
 			Background covers = null;
 			//currGrid.add(currSpot);
-			for(int j = 0; j < onScreen.size(); j++){
-				if(OverlapTester.pointInRotatedRectangle(onScreen.get(j).bounds, currSpot)){
-					covers = onScreen.get(j);
+			for(int j = 0; j < backgrounds.size(); j++){
+				if (Math.abs(currSpot.x-backgrounds.get(j).position.x) < 5 && Math.abs(currSpot.y - backgrounds.get(j).position.y) < 5){
+					covers = backgrounds.get(j);
 					break;
 				}
 			}
 			if (covers == null) {
-				//Pull one from notOnScreen if possible, otherwise create one
-				Background toMove;
-				if (notOnScreen.size() > 0) {
-					toMove = notOnScreen.get(0);
-					notOnScreen.remove(toMove);
-				}
-				else{
-					toMove = new Background(currSpot.x, currSpot.y, 320, 480, new Vector2(0, velocity), sprite);
-					toMove.bounds.rotationAngle.set(playerOnBackground.bounds.rotationAngle.x, playerOnBackground.bounds.rotationAngle.y);
-					backgrounds.add(toMove);
-				}
+				Background toMove = new Background(currSpot.x, currSpot.y, 320, 480, new Vector2(0, velocity), sprite);
+				toMove.bounds.rotationAngle.set(playerOnBackground.bounds.rotationAngle.x, playerOnBackground.bounds.rotationAngle.y);
 				toMove.position.set(currSpot.x, currSpot.y);
 				toMove.bounds.lowerLeft.set(currLowerLeft.x, currLowerLeft.y);
+				newBackgrounds.add(toMove);
 			}
 			else{
-				onScreen.remove(covers);
+				bCopy.remove(covers);
 			}
 		}
-		for(int i = 0; i < notOnScreen.size(); i++){
-			backgrounds.remove(notOnScreen.get(i));
+		for(int i = 0; i < bCopy.size(); i++){
+			backgrounds.remove(bCopy.get(i));
+		}
+		for(int i = 0; i < newBackgrounds.size(); i++){
+			backgrounds.add(newBackgrounds.get(i));
 		}
 	}
 
