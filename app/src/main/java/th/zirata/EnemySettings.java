@@ -85,29 +85,13 @@ public class EnemySettings {
         return new Enemy(enemyType, Settings.currLevel);
     }
 
-/*
-    public static ArrayList<Enemy> getEnemies(int level){
-        Random rand = new Random();
-        String levelName = "level"+level;
-        double[] enemyLevelSettings = enemiesInLevel.get(levelName);
-        int numEnemies = (int)enemyLevelSettings[0];
-        int enemyLevel = (int)enemyLevelSettings[1];
-        double turretChance = enemyLevelSettings[2];
-
-        ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-        for(int i =0; i < numEnemies; i++){
-            int enemyType;
-            if(rand.nextFloat() > turretChance){
-                enemyType = 1;
-            }
-            else{
-                enemyType = 2;
-            }
-            enemies.add(new Enemy(enemyType, enemyLevel));
+    public static Enemy getBoss(String type){
+        Enemy enemy = null;
+        if(type.equals("Hydra")){
+            enemy = new Hydra(100, 100, 1);
         }
+        return enemy;
+    }
 
-        return enemies;
-
-    }*/
 
 }

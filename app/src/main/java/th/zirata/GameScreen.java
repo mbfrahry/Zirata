@@ -80,6 +80,8 @@ public class GameScreen extends GLScreen {
 	        updateGameOver();
 	        break;
 	    }
+
+
 	}
 	
 	private void updateReady() {

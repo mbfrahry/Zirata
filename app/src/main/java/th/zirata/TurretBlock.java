@@ -116,9 +116,9 @@ public class TurretBlock extends Block{
 
 	@Override
 	public void action(World world) {
-		int closestEnemy = enemyInRange(world.enemies);
-		if(closestEnemy >= 0){
-			Block enemyBlock = world.enemies.get(closestEnemy).enemyBlocks.get(0);
+		int[] closestEnemy = enemyInRange(world.enemies);
+		if(closestEnemy[0] >= 0){
+			Block enemyBlock = world.enemies.get(closestEnemy[0]).enemyBlocks.get(closestEnemy[1]);
 			if(state == TURRET_READY ){
 				lastTouch.set(enemyBlock.position.x + 12, enemyBlock.position.y + 12);
 				World.playerBullets.add(new Bullet(position.x, position.y, enemyBlock.position.x + 12 , enemyBlock.position.y + 12, bulletDamage, fireRange ));
@@ -132,28 +132,33 @@ public class TurretBlock extends Block{
 
 	}
 
-	private int enemyInRange(ArrayList<Enemy> enemies){
+	private int[] enemyInRange(ArrayList<Enemy> enemies){
 		Enemy enemy;
 		for(int i = 0; i < enemies.size(); i++){
 			enemy = enemies.get(i);
-			if(position.dist(enemy.enemyBlocks.get(0).position) < fireRange - 35){
+			for(int j = 0; j < enemy.enemyBlocks.size(); j++) {
+				if (position.dist(enemy.enemyBlocks.get(j).position) < fireRange - 35) {
 
-				double angleBetween = position.angleBetween(enemy.enemyBlocks.get(0).position);
-				float posAngle = fireAngle + fireArcAngle;
-				float negAngle = fireAngle - fireArcAngle;
-				if (negAngle < 0){
-					negAngle += fireArcAngle;
-					posAngle += fireArcAngle;
-					angleBetween = (angleBetween + fireArcAngle)%360;
-				}
-				if(angleBetween <= posAngle){
-					if(angleBetween >= negAngle){
-						return i;
+					double angleBetween = position.angleBetween(enemy.enemyBlocks.get(j).position);
+					float posAngle = fireAngle + fireArcAngle;
+					float negAngle = fireAngle - fireArcAngle;
+					if (negAngle < 0) {
+						negAngle += fireArcAngle;
+						posAngle += fireArcAngle;
+						angleBetween = (angleBetween + fireArcAngle) % 360;
+					}
+					if (angleBetween <= posAngle) {
+						if (angleBetween >= negAngle) {
+							int[] enemyPosition = new int[2];
+							enemyPosition[0] = i;
+							enemyPosition[1] = j;
+							return new int[] {i,j};
+						}
 					}
 				}
 			}
 		}
-		return -1;
+		return new int[] {-1,-1};
 	}
 
 	public void update(float deltaTime){

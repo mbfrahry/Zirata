@@ -15,7 +15,6 @@ public class Enemy{
 		rand = new Random();
 		this.enemyType = enemyType;
 		this.enemyLevel = enemyLevel;
-		editBlockAttributes();
 	}
 
 	public void editBlockAttributes(){
@@ -66,22 +65,21 @@ public class Enemy{
 
 	public void generateBlock(int enemyType, int health, float x, float y, float xVelocity, float yVelocity){
 		Block newEnemyBlock = null;
+
+		if (enemyType == 1) {
+			newEnemyBlock = new ArmorBlock(x, y, health * enemyLevel, enemyLevel);
+		} else if (enemyType == 2) {
+			newEnemyBlock = new EnemyTurretBlock(x, y, health * enemyLevel / 2, 3 * enemyLevel);
+		}
+		newEnemyBlock.velocity.add(xVelocity, yVelocity);
+		enemyBlocks.add(newEnemyBlock);
 		/*
-		for(int i = 0; i < 2; i++) {
-			if (enemyType == 1) {
-				newEnemyBlock = new ArmorBlock(x, y + i * 25, health * enemyLevel, enemyLevel);
-			} else if (enemyType == 2) {
-				newEnemyBlock = new EnemyTurretBlock(x+ i * 25, y, health * enemyLevel / 2, 3 * enemyLevel);
-			}
-			newEnemyBlock.velocity.add(xVelocity, yVelocity);
-			enemyBlocks.add(newEnemyBlock);
-		}*/
 		newEnemyBlock = new ArmorBlock(x, y, health * enemyLevel, enemyLevel);
 		newEnemyBlock.velocity.add(xVelocity, yVelocity);
 		enemyBlocks.add(newEnemyBlock);
 		newEnemyBlock = new EnemyTurretBlock(x + 25, y, health * enemyLevel / 2, 3 * enemyLevel);
 		newEnemyBlock.velocity.add(xVelocity, yVelocity);
-		enemyBlocks.add(newEnemyBlock);
+		enemyBlocks.add(newEnemyBlock);*/
 
 	}
 	
@@ -93,7 +91,7 @@ public class Enemy{
 		return false;
 	}
 	
-	public void update(float deltaTime){
+	public void update(float deltaTime, World world){
 		for(int i = 0; i < enemyBlocks.size(); i++){
 			Block currBlock = enemyBlocks.get(i);
 			currBlock.position.add(currBlock.velocity.x * deltaTime, currBlock.velocity.y * deltaTime);

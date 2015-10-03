@@ -305,7 +305,12 @@ public class World {
 				Block currBlock = enemy.enemyBlocks.get(j);
 
 				if(moveLeft || moveRight) {
-					currBlock.rotate(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
+					if(enemy.getClass().equals(Hydra.class)){
+						currBlock.rotateConstantVelocity(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
+					}
+					else {
+						currBlock.rotate(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
+					}
 				}
 
 				if(currBlock.getClass().equals(EnemyTurretBlock.class)){
@@ -313,7 +318,7 @@ public class World {
 					generateEnemyBullet(tBlock);
 				}
 			}
-			enemy.update(deltaTime);
+			enemy.update(deltaTime, this);
 			
 			if(enemy.checkDead()){
 				enemies.remove(i);
@@ -359,11 +364,12 @@ public class World {
 		double[] enemyLevelSettings = EnemySettings.enemiesInLevel.get(levelName);
 		if((int)enemyLevelSettings[0] > enemyNum) {
 			Enemy e = EnemySettings.getEnemy(Settings.currLevel);
-
+			//Enemy e = EnemySettings.getBoss("Hydra");
+			e.editBlockAttributes();
 			for (Block b : e.enemyBlocks) {
 				b.rotate(world_sin, world_cos, WORLD_MID_POINT);
 			}
-
+			enemyNum += 1;
 			enemies.add(e);
 		}
 		else{
