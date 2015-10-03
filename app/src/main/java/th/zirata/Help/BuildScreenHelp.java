@@ -39,13 +39,14 @@ public class BuildScreenHelp extends BuildScreen {
 
 
     public void update(float deltaTime){
-        if(UIExtras.size() < 3) {
+        if(popupManager.getPopupsSize() < 3) {
             String text = currStep.content;
-            generatePopup(text, currStep.contentLocation.x, currStep.contentLocation.y, 999f);
+            popupManager.generatePopup(text, currStep.contentLocation.x, currStep.contentLocation.y, 999f);
 
             if(currStep.hasSprite){
-                HashMap newSprite = createSpriteExtra("sprite", currStep.spriteName, currStep.spriteInfo.position.x, currStep.spriteInfo.position.y, currStep.spriteInfo.bounds.width, currStep.spriteInfo.bounds.height, 999, currStep.spriteAngle);
-                UIExtras.add(newSprite);
+                popupManager.createSpriteExtra("sprite", currStep.spriteName, currStep.spriteInfo.position.x, currStep.spriteInfo.position.y, currStep.spriteInfo.bounds.width, currStep.spriteInfo.bounds.height, 999, currStep.spriteAngle);
+//                HashMap newSprite = createSpriteExtra("sprite", currStep.spriteName, currStep.spriteInfo.position.x, currStep.spriteInfo.position.y, currStep.spriteInfo.bounds.width, currStep.spriteInfo.bounds.height, 999, currStep.spriteAngle);
+//                UIExtras.add(newSprite);
             }
 
         }
@@ -64,7 +65,7 @@ public class BuildScreenHelp extends BuildScreen {
 
 
                 if(OverlapTester.pointInRectangle(currStep.touch, touchPoint)){
-                    clearUIExtras();
+                    popupManager.clearUIExtras();
 //                    UIExtras.get(0).put("timeToDisplay", 0f);
 //                    UIExtras.get(1).put("timeToDisplay", 0f);
 //                    if(currStep.hasSprite){
@@ -95,10 +96,12 @@ public class BuildScreenHelp extends BuildScreen {
 
             if (OverlapTester.pointInRectangle(forwardBounds, touchPoint)) {
                 if (checkForBlankBlocks()) {
-                    HashMap newSpriteExtra = createSpriteExtra("sprite", "Rectangle", 160f, 260f, 260f, 50f, 1f, 0f);
-                    HashMap newTextExtra = createTextExtra("text", "Can't launch with blank blocks!", 160f, 260f, 8f, 8f, 1f, "white", "center");
-                    UIExtras.add(newSpriteExtra);
-                    UIExtras.add(newTextExtra);
+                    popupManager.createSpriteExtra("sprite", "Rectangle", 160f, 260f, 260f, 50f, 1f, 0f);
+                    popupManager.createTextExtra("text", "Can't launch with blank blocks!", 160f, 260f, 8f, 8f, 1f, "white", "center");
+//                    HashMap newSpriteExtra = createSpriteExtra("sprite", "Rectangle", 160f, 260f, 260f, 50f, 1f, 0f);
+//                    HashMap newTextExtra = createTextExtra("text", "Can't launch with blank blocks!", 160f, 260f, 8f, 8f, 1f, "white", "center");
+//                    UIExtras.add(newSpriteExtra);
+//                    UIExtras.add(newTextExtra);
                 } else {
 
                     setTurretDirections();
@@ -131,8 +134,9 @@ public class BuildScreenHelp extends BuildScreen {
                         showUpgrades = true;
                         showFuse = false;
                     } else {
-                        HashMap newExtra = createTextExtra("text", "Bank", 217f, 395f, 12f, 12f, .25f, "red", "right");
-                        UIExtras.add(newExtra);
+                        popupManager.createTextExtra("text", "Bank", 217f, 395f, 12f, 12f, .25f, "red", "right");
+//                        HashMap newExtra = createTextExtra("text", "Bank", 217f, 395f, 12f, 12f, .25f, "red", "right");
+//                        UIExtras.add(newExtra);
                     }
                     return;
                 }

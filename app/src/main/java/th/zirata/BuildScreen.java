@@ -51,7 +51,8 @@ public class BuildScreen extends GLScreen{
 	public float minHeldTime;
 	public float heldTime;
 
-	public ArrayList<HashMap> UIExtras;
+	//public ArrayList<HashMap> UIExtras;
+    public PopupManager popupManager;
 
 	boolean devMode;
 
@@ -84,7 +85,8 @@ public class BuildScreen extends GLScreen{
 		minHeldTime = 0.5f;
 		heldTime = 0;
 		devMode = true;
-		UIExtras = new ArrayList<HashMap>();
+		//UIExtras = new ArrayList<HashMap>();
+		popupManager = new PopupManager(batcher, guiCam);
     }
 
 	public BuildScreen(Game game, boolean showBlockBank, Block activeBlock){
@@ -134,10 +136,12 @@ public class BuildScreen extends GLScreen{
 
 						if (OverlapTester.pointInRectangle(forwardBounds, touchPoint)) {
 							if(checkForBlankBlocks()){
-								HashMap newSpriteExtra = createSpriteExtra("sprite", "Rectangle", 160f, 260f, 260f, 50f, 1f, 0f);
-								HashMap newTextExtra = createTextExtra("text", "Can't launch with blank blocks!", 160f, 260f, 8f, 8f, 1f, "white", "center");
-								UIExtras.add(newSpriteExtra);
-								UIExtras.add(newTextExtra);
+								popupManager.createSpriteExtra("sprite", "Rectangle", 160f, 260f, 260f, 50f, 1f, 0f);
+								popupManager.createTextExtra("text", "Can't launch with blank blocks!", 160f, 260f, 8f, 8f, 1f, "white", "center");
+//								HashMap newSpriteExtra = createSpriteExtra("sprite", "Rectangle", 160f, 260f, 260f, 50f, 1f, 0f);
+//								HashMap newTextExtra = createTextExtra("text", "Can't launch with blank blocks!", 160f, 260f, 8f, 8f, 1f, "white", "center");
+//								UIExtras.add(newSpriteExtra);
+//								UIExtras.add(newTextExtra);
 							}
 							else{
 								Settings.save(game.getFileIO());
@@ -171,8 +175,9 @@ public class BuildScreen extends GLScreen{
 									showFuse = false;
 								}
 								else{
-									HashMap newExtra = createTextExtra("text", "Bank", 217f, 395f, 12f, 12f, .25f, "red", "right");
-									UIExtras.add(newExtra);
+									popupManager.createTextExtra("text", "Bank", 217f, 395f, 12f, 12f, .25f, "red", "right");
+//									HashMap newExtra = createTextExtra("text", "Bank", 217f, 395f, 12f, 12f, .25f, "red", "right");
+//									UIExtras.add(newExtra);
 								}
 								return;
 							}
@@ -378,8 +383,9 @@ public class BuildScreen extends GLScreen{
 						PlayerSave.save(game.getFileIO());
 					}
 					else{
-						HashMap newExtra = createTextExtra("text", "Bank", 217f, 395f, 12f, 12f, .25f, "red", "right");
-						UIExtras.add(newExtra);
+						popupManager.createTextExtra("text", "Bank", 217f, 395f, 12f, 12f, .25f, "red", "right");
+//						HashMap newExtra = createTextExtra("text", "Bank", 217f, 395f, 12f, 12f, .25f, "red", "right");
+//						UIExtras.add(newExtra);
 					}
 				}
 			}
@@ -416,10 +422,12 @@ public class BuildScreen extends GLScreen{
 				if(OverlapTester.pointInRectangle(currCoords, touchPoint)){
 					//Fuse blocks together and delete selected block
 					if(PlayerSave.activeBlocks.contains(currBlock)){
-						HashMap newSpriteExtra = createSpriteExtra("sprite", "Rectangle", 160f, 260f, 295f, 50f, 1f, 0f);
-						HashMap newTextExtra = createTextExtra("text", "Can't fuse with blocks on the ship!", 160f, 260f, 8f, 8f, 1f, "white", "center");
-						UIExtras.add(newSpriteExtra);
-						UIExtras.add(newTextExtra);
+						popupManager.createSpriteExtra("sprite", "Rectangle", 160f, 260f, 295f, 50f, 1f, 0f);
+						popupManager.createTextExtra("text", "Can't fuse with blocks on the ship!", 160f, 260f, 8f, 8f, 1f, "white", "center");
+//						HashMap newSpriteExtra = createSpriteExtra("sprite", "Rectangle", 160f, 260f, 295f, 50f, 1f, 0f);
+//						HashMap newTextExtra = createTextExtra("text", "Can't fuse with blocks on the ship!", 160f, 260f, 8f, 8f, 1f, "white", "center");
+//						UIExtras.add(newSpriteExtra);
+//						UIExtras.add(newTextExtra);
 					}
 					else{
 						selectedActiveBlock.fuseWith(currBlock);
@@ -514,137 +522,140 @@ public class BuildScreen extends GLScreen{
 
 			}
 		}
-		drawUIExtras(deltaTime);
+		popupManager.drawUIExtras(deltaTime);
 
 		batcher.endBatch();
 		gl.glDisable(GL10.GL_BLEND);
 
 	}
 
-	private void drawUIExtras(float deltaTime){
-		/*UI Extra format
-		string type: <sprite,text>
-		string content: <spriteName, textToShow>
-		float x: <position x>
-		float y: <position y>
-		float width: <width>
-		float height: <height>
-		float timeToDisplay: <timeToDisplay>
-		if type == text
-		    string color: <red, white>
-            string justification: <left,right,center>
-		if type == sprite
-		    float angle: <rotationAngle>
-		 */
-		ArrayList<Integer> toDelete = new ArrayList<Integer>();
+//	private void drawUIExtras(float deltaTime){
+//		/*UI Extra format
+//		string type: <sprite,text>
+//		string content: <spriteName, textToShow>
+//		float x: <position x>
+//		float y: <position y>
+//		float width: <width>
+//		float height: <height>
+//		float timeToDisplay: <timeToDisplay>
+//		if type == text
+//		    string color: <red, white>
+//            string justification: <left,right,center>
+//		if type == sprite
+//		    float angle: <rotationAngle>
+//		 */
+//		ArrayList<Integer> toDelete = new ArrayList<Integer>();
+//
+//		for(int i = 0; i < UIExtras.size(); i++){
+//			HashMap currEvent = UIExtras.get(i);
+//
+//			if (currEvent.get("type").equals("text")){
+//				drawTextExtra(currEvent);
+//			}
+//			else{
+//				drawSpriteExtra(currEvent);
+//			}
+//
+//			float time = (Float)currEvent.get("timeToDisplay");
+//			if(time - deltaTime < 0){
+//				toDelete.add(i);
+//			}
+//			else{
+//				time -= deltaTime;
+//				currEvent.put("timeToDisplay", time);
+//			}
+//		}
+//
+//		//Might be buggy....
+//		for(int i = toDelete.size()-1; i >= 0; i--){
+//			UIExtras.remove((int) toDelete.get(i));
+//		}
+//	}
 
-		for(int i = 0; i < UIExtras.size(); i++){
-			HashMap currEvent = UIExtras.get(i);
+//	public synchronized void clearUIExtras(){
+//		for(int i = 0; i < UIExtras.size(); i++){
+//			UIExtras.get(i).put("timeToDisplay", 0f);
+//		}
+//	}
 
-			if (currEvent.get("type").equals("text")){
-				drawTextExtra(currEvent);
-			}
-			else{
-				drawSpriteExtra(currEvent);
-			}
-
-			float time = (Float)currEvent.get("timeToDisplay");
-			if(time - deltaTime < 0){
-				toDelete.add(i);
-			}
-			else{
-				time -= deltaTime;
-				currEvent.put("timeToDisplay", time);
-			}
-		}
-
-		//Might be buggy....
-		for(int i = toDelete.size()-1; i >= 0; i--){
-			UIExtras.remove((int) toDelete.get(i));
-		}
-	}
-
-	public synchronized void clearUIExtras(){
-		for(int i = 0; i < UIExtras.size(); i++){
-			UIExtras.get(i).put("timeToDisplay", 0f);
-		}
-	}
-
-	//TODO: createPopup() -- create text/sprite extra with just text
-	public void generatePopup(String content, float x, float y, float timeToDisplay){
-		int spaces = content.length() - content.replace(" ", "").length();
-
-		HashMap newSpriteExtra = createSpriteExtra("sprite", "DarkGrayRectangle", x, y, 300f, (float)(spaces/5 + 1.5)*9, timeToDisplay, 0f);
-		HashMap newTextExtra = createTextExtra("text", content, x, y + (spaces/5)*4, 8f, 8f, 999f, "white", "lined");
-		UIExtras.add(newSpriteExtra);
-		UIExtras.add(newTextExtra);
-	}
+//	//TODO: createPopup() -- create text/sprite extra with just text
+//	public void generatePopup(String content, float x, float y, float timeToDisplay){
+//		int spaces = content.length() - content.replace(" ", "").length();
+//
+//		popupManager.createSpriteExtra("sprite", "DarkGrayRectangle", x, y, 300f, (float)(spaces/5 + 1.5)*9, timeToDisplay, 0f);
+//		popupManager.createTextExtra("text", content, x, y + (spaces/5)*4, 8f, 8f, 999f, "white", "lined");
+//
+////		HashMap newSpriteExtra = createSpriteExtra("sprite", "DarkGrayRectangle", x, y, 300f, (float)(spaces/5 + 1.5)*9, timeToDisplay, 0f);
+////		HashMap newTextExtra = createTextExtra("text", content, x, y + (spaces/5)*4, 8f, 8f, 999f, "white", "lined");
+////		UIExtras.add(newSpriteExtra);
+////		UIExtras.add(newTextExtra);
+//	}
 
 
-	public HashMap createTextExtra(String type, String content, float x, float y, float width, float height, float timeToDisplay, String color, String justification){
-		HashMap event = new HashMap();
-		event.put("type", type);
-		event.put("content", content);
-		event.put("x", x);
-		event.put("y", y);
-		event.put("width", width);
-		event.put("height", height);
-		event.put("timeToDisplay", timeToDisplay);
-		event.put("color", color);
-		event.put("justification", justification);
-		return event;
-	}
+//	public HashMap createTextExtra(String type, String content, float x, float y, float width, float height, float timeToDisplay, String color, String justification){
+//		HashMap event = new HashMap();
+//		event.put("type", type);
+//		event.put("content", content);
+//		event.put("x", x);
+//		event.put("y", y);
+//		event.put("width", width);
+//		event.put("height", height);
+//		event.put("timeToDisplay", timeToDisplay);
+//		event.put("color", color);
+//		event.put("justification", justification);
+//		return event;
+//	}
+//
+//	public void drawTextExtra(HashMap currEvent){
+//		Font currFont;
+//		if(currEvent.get("color").equals("red")){
+//			currFont = Assets.redFont;
+//		}
+//		else{
+//			currFont = Assets.font;
+//		}
+//		String justification = (String)currEvent.get("justification");
+//		String currContent = (String)currEvent.get("content");
+//		float currX = (Float)currEvent.get("x");
+//		float currY = (Float)currEvent.get("y");
+//		float currWidth = (Float)currEvent.get("width");
+//		float currHeight = (Float)currEvent.get("height");
+//		if(justification.equals("right")){
+//			currFont.drawUITextRightJustified(guiCam, batcher, currContent, currX, currY, currWidth, currHeight);
+//		}
+//		else if(justification.equals("center")){
+//			Assets.font.drawUITextCentered(guiCam, batcher, currContent, currX, currY, currWidth, currHeight);
+//		}
+//		else if(justification.equals("lined")){
+//			Assets.font.drawLinedText(batcher, currContent, currX, currY, currWidth, currHeight);
+//		}
+//		else{
+//			Assets.font.drawUITextCentered(guiCam, batcher, currContent, currX, currY, currWidth, currHeight);
+//		}
+//	}
 
-	public void drawTextExtra(HashMap currEvent){
-		Font currFont;
-		if(currEvent.get("color").equals("red")){
-			currFont = Assets.redFont;
-		}
-		else{
-			currFont = Assets.font;
-		}
-		String justification = (String)currEvent.get("justification");
-		String currContent = (String)currEvent.get("content");
-		float currX = (Float)currEvent.get("x");
-		float currY = (Float)currEvent.get("y");
-		float currWidth = (Float)currEvent.get("width");
-		float currHeight = (Float)currEvent.get("height");
-		if(justification.equals("right")){
-			currFont.drawUITextRightJustified(guiCam, batcher, currContent, currX, currY, currWidth, currHeight);
-		}
-		else if(justification.equals("center")){
-			Assets.font.drawUITextCentered(guiCam, batcher, currContent, currX, currY, currWidth, currHeight);
-		}
-		else if(justification.equals("lined")){
-			Assets.font.drawLinedText(batcher, currContent, currX, currY, currWidth, currHeight);
-		}
-		else{
-			Assets.font.drawUITextCentered(guiCam, batcher, currContent, currX, currY, currWidth, currHeight);
-		}
-	}
+//	public HashMap createSpriteExtra(String type, String content, float x, float y, float width, float height, float timeToDisplay, float angle){
+//		HashMap event = new HashMap();
+//		event.put("type", type);
+//		event.put("content", content);
+//		event.put("x", x);
+//		event.put("y", y);
+//		event.put("width", width);
+//		event.put("height", height);
+//		event.put("timeToDisplay", timeToDisplay);
+//		event.put("angle", angle);
+//		return event;
+//	}
 
-	public HashMap createSpriteExtra(String type, String content, float x, float y, float width, float height, float timeToDisplay, float angle){
-		HashMap event = new HashMap();
-		event.put("type", type);
-		event.put("content", content);
-		event.put("x", x);
-		event.put("y", y);
-		event.put("width", width);
-		event.put("height", height);
-		event.put("timeToDisplay", timeToDisplay);
-		event.put("angle", angle);
-		return event;
-	}
-
-	public void drawSpriteExtra(HashMap currEvent){
-		String currContent = (String)currEvent.get("content");
-		float currX = (Float)currEvent.get("x");
-		float currY = (Float)currEvent.get("y");
-		float currWidth = (Float)currEvent.get("width");
-		float currHeight = (Float)currEvent.get("height");
-		float currAngle = (Float)currEvent.get("angle");
-		batcher.drawUISprite(guiCam, currX, currY, currWidth, currHeight, currAngle, Assets.textureRegions.get(currContent));
-	}
+//	public void drawSpriteExtra(HashMap currEvent){
+//		String currContent = (String)currEvent.get("content");
+//		float currX = (Float)currEvent.get("x");
+//		float currY = (Float)currEvent.get("y");
+//		float currWidth = (Float)currEvent.get("width");
+//		float currHeight = (Float)currEvent.get("height");
+//		float currAngle = (Float)currEvent.get("angle");
+//		batcher.drawUISprite(guiCam, currX, currY, currWidth, currHeight, currAngle, Assets.textureRegions.get(currContent));
+//	}
 
 	private void drawBlockBank(){
 
