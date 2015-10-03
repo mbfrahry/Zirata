@@ -112,7 +112,6 @@ public class WorldRenderer {
 							EnemyTurretBlock currEnemy = (EnemyTurretBlock) currBlock;
 							Vector2 rotate = new Vector2(160,240);
 							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, world.worldAngle, Assets.textureRegions.get("TurretBase"));
-							//TODO Make turrets actually point at the right spot
 							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, rotate.sub(((EnemyTurretBlock) currBlock).position.x, ((EnemyTurretBlock) currBlock).position.y).angle() - 90, Assets.textureRegions.get("TurretTop"));
 
 							EnemyTurretBlock tBlock = (EnemyTurretBlock)currBlock;
@@ -120,7 +119,6 @@ public class WorldRenderer {
 							for(int k = 0; k < tBlock.bullets.size(); k++){
 								b = tBlock.bullets.get(k);
 								batcher.drawSprite(b.position.x, b.position.y, 5, 5, Assets.textureRegions.get("Bullet"));
-
 							}
 
 						}
