@@ -89,7 +89,6 @@ public class Enemy{
 		if(enemyBlocks.size() == 0){
 			return true;
 		}
-		
 		return false;
 	}
 	

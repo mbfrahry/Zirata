@@ -23,10 +23,11 @@ public class World {
 	public static float POS_SIN_ANGLE = (float)Math.sin(0.0035);
 	public static float NEG_SIN_ANGLE = (float) Math.sin(-0.0035);
 	public static float POS_COS_ANGLE = (float)Math.cos(0.0035);
+	public float world_sin;
+	public float world_cos;
 	
 	public Player player;
 	public final ArrayList<Enemy> enemies;
-	public final ArrayList<Enemy> testEnemies;
 	public final ArrayList<Bullet> enemyBullets;
 	public static ArrayList<Bullet> playerBullets;
 	public ArrayList<Background> backgrounds;
@@ -52,7 +53,6 @@ public class World {
 
 	public World(){
 		this.player = new Player();
-		testEnemies = EnemySettings.getEnemies(Settings.currLevel);
 		enemies = new ArrayList<Enemy>();
 		enemyBullets = new ArrayList<Bullet>();
 		playerBullets = new ArrayList<Bullet>();
@@ -76,22 +76,9 @@ public class World {
 		backgrounds = new ArrayList<Background>();
 		nearBackgrounds = new ArrayList<Background>();
 		farBackgrounds = new ArrayList<Background>();
-		//playerOnBackground = new ;
-//		backgrounds.add(new Background(0, 0, 320, 480, new Vector2(0, -3), "Background"));
-//		nearBackgrounds.add(new Background(0, 0, 320, 480, new Vector2(0, -10), "NearStar"));
-//		farBackgrounds.add(new Background(0, 0, 320, 480, new Vector2(0,-3), "FarStar"));
-//
-//		backgrounds.add(new Background(0, 480, 320, 480, new Vector2(0,-3), "Background"));
-//		nearBackgrounds.add(new Background(0, 480, 320, 480, new Vector2(0,-10), "NearStar"));
-//		farBackgrounds.add(new Background(0, 480, 320, 480, new Vector2(0,-3), "FarStar"));
-//
-//		backgrounds.add(new Background(320, 0, 320, 480, new Vector2(0,-3), "Background"));
-//		nearBackgrounds.add(new Background(320, 0, 320, 480, new Vector2(0,-10), "NearStar"));
-//		farBackgrounds.add(new Background(320, 0, 320, 480, new Vector2(0,-3), "FarStar"));
-//
-//		backgrounds.add(new Background(320, 480, 320, 480, new Vector2(0,-3), "Background"));
-//		nearBackgrounds.add(new Background(320, 480, 320, 480, new Vector2(0,-10), "NearStar"));
-//		farBackgrounds.add(new Background(320, 480, 320, 480, new Vector2(0,-3), "FarStar"));
+
+		world_cos = 1;
+		world_sin = 0;
 
 		grid = new Vector2[]{new Vector2(-1, 1), new Vector2(0, 1), new Vector2(1, 1),
 				             new Vector2(-1, 0),                   new Vector2(1, 0),
@@ -339,11 +326,14 @@ public class World {
 	
 	private void generateEnemy(){
 
-		if(testEnemies.size() > 0){
-			Enemy e = testEnemies.remove(0);
+		String levelName = "level"+Settings.currLevel;
+		double[] enemyLevelSettings = EnemySettings.enemiesInLevel.get(levelName);
+		if((int)enemyLevelSettings[0] > enemyNum) {
+			Enemy e = EnemySettings.getEnemy(Settings.currLevel);
 
-			for (Block b : e.enemyBlocks){
+			for (Block b : e.enemyBlocks) {
 				b.position.rotate(worldAngle);
+				b.velocity.rotate(worldAngle);
 			}
 
 			enemies.add(e);

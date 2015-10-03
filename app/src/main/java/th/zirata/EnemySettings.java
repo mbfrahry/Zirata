@@ -70,7 +70,22 @@ public class EnemySettings {
         reader.endObject();
     }
 
+    public static Enemy getEnemy(int level){
+        Random rand = new Random();
+        String levelName = "level"+level;
+        double[] enemyLevelSettings = enemiesInLevel.get(levelName);
+        double turretChance = enemyLevelSettings[2];
+        int enemyType;
+        if(rand.nextFloat() > turretChance){
+          enemyType = 1;
+        }
+        else{
+          enemyType = 2;
+        }
+        return new Enemy(enemyType, Settings.currLevel);
+    }
 
+/*
     public static ArrayList<Enemy> getEnemies(int level){
         Random rand = new Random();
         String levelName = "level"+level;
@@ -93,6 +108,6 @@ public class EnemySettings {
 
         return enemies;
 
-    }
+    }*/
 
 }
