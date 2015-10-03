@@ -1,6 +1,6 @@
 {
   "level1": {
-    "enemyNumber": 5,
+    "enemyNumber": 1,
     "enemyLevel": 1,
     "turretChance": 0
   },
