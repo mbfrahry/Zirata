@@ -25,6 +25,8 @@ public class World {
 	public static float POS_COS_ANGLE = (float)Math.cos(0.0035);
 	public float world_sin;
 	public float world_cos;
+	public Vector2 world_x_axis;
+	public Vector2 world_y_axis;
 	
 	public Player player;
 	public final ArrayList<Enemy> enemies;
@@ -79,6 +81,9 @@ public class World {
 
 		world_cos = 1;
 		world_sin = 0;
+		world_x_axis = new Vector2(1, 0);
+		world_y_axis = new Vector2(0, 1);
+
 
 		grid = new Vector2[]{new Vector2(-1, 1), new Vector2(0, 1), new Vector2(1, 1),
 				             new Vector2(-1, 0),                   new Vector2(1, 0),
@@ -112,6 +117,8 @@ public class World {
 			enemyAngle = NEG_SIN_ANGLE;
 			world_cos = (float)Math.cos(Math.toRadians(worldAngle));
 			world_sin = (float)Math.sin(Math.toRadians(worldAngle));
+			world_x_axis.rotate(POS_COS_ANGLE, NEG_SIN_ANGLE);
+			world_y_axis.rotate(POS_COS_ANGLE, NEG_SIN_ANGLE);
 			updateBackgroundAngles(world_cos, world_sin);
 		}
 		if(moveLeft){
@@ -119,9 +126,12 @@ public class World {
 			enemyAngle = POS_SIN_ANGLE;
 			world_cos = (float)Math.cos(Math.toRadians(worldAngle));
 			world_sin = (float)Math.sin(Math.toRadians(worldAngle));
+			world_x_axis.rotate(POS_COS_ANGLE, POS_SIN_ANGLE);
+			world_y_axis.rotate(POS_COS_ANGLE, POS_SIN_ANGLE);
 			updateBackgroundAngles(world_cos, world_sin);
 		}
-
+		Log.d("x axis", world_x_axis.x + ", " + world_x_axis.y);
+		Log.d("y axis", world_y_axis.x + ", " + world_y_axis.y);
 	}
 
 	private void updateBackgroundAngles(float cosChange, float sinChange){

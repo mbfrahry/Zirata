@@ -41,6 +41,8 @@ public class BuildScreen extends GLScreen{
 	public boolean showUpgrades;
 	public boolean showFuse;
 
+	public int fusePageNumber;
+
 	public boolean showBlockBank;
 	public int blockBankOption;
 	public static final int BLOCK_BANK_TURRET = 0;
@@ -51,7 +53,6 @@ public class BuildScreen extends GLScreen{
 	public float minHeldTime;
 	public float heldTime;
 
-	//public ArrayList<HashMap> UIExtras;
     public PopupManager popupManager;
 
 	boolean devMode;
@@ -79,6 +80,7 @@ public class BuildScreen extends GLScreen{
 		showSubmenu = true;
 		showUpgrades = false;
 		showFuse = false;
+		fusePageNumber = 0;
 		blockBankOption = BLOCK_BANK_TURRET;
 		ownedBlocksByType = getBlocksFromType(TurretBlock.class);
 
@@ -416,9 +418,10 @@ public class BuildScreen extends GLScreen{
 			}
 		}
 		if (OverlapTester.pointInRectangle(fuseBounds, touchPoint)){
-			for (int i = 0; i < compatibleFusionBlocks.size(); i++){
+			int maxFuseBlocks = compatibleFusionBlocks.size() - fusePageNumber*9 > 9 ? 9 : compatibleFusionBlocks.size() - fusePageNumber*9;
+			for (int i = 0; i < maxFuseBlocks; i++){
 				Rectangle currCoords = new Rectangle(guiCam, fuseX-12, fuseY-12, 25, 25);
-				Block currBlock = compatibleFusionBlocks.get(i);
+				Block currBlock = compatibleFusionBlocks.get(i + 9*fusePageNumber);
 				if(OverlapTester.pointInRectangle(currCoords, touchPoint)){
 					//Fuse blocks together and delete selected block
 					if(PlayerSave.activeBlocks.contains(currBlock)){
@@ -529,133 +532,6 @@ public class BuildScreen extends GLScreen{
 
 	}
 
-//	private void drawUIExtras(float deltaTime){
-//		/*UI Extra format
-//		string type: <sprite,text>
-//		string content: <spriteName, textToShow>
-//		float x: <position x>
-//		float y: <position y>
-//		float width: <width>
-//		float height: <height>
-//		float timeToDisplay: <timeToDisplay>
-//		if type == text
-//		    string color: <red, white>
-//            string justification: <left,right,center>
-//		if type == sprite
-//		    float angle: <rotationAngle>
-//		 */
-//		ArrayList<Integer> toDelete = new ArrayList<Integer>();
-//
-//		for(int i = 0; i < UIExtras.size(); i++){
-//			HashMap currEvent = UIExtras.get(i);
-//
-//			if (currEvent.get("type").equals("text")){
-//				drawTextExtra(currEvent);
-//			}
-//			else{
-//				drawSpriteExtra(currEvent);
-//			}
-//
-//			float time = (Float)currEvent.get("timeToDisplay");
-//			if(time - deltaTime < 0){
-//				toDelete.add(i);
-//			}
-//			else{
-//				time -= deltaTime;
-//				currEvent.put("timeToDisplay", time);
-//			}
-//		}
-//
-//		//Might be buggy....
-//		for(int i = toDelete.size()-1; i >= 0; i--){
-//			UIExtras.remove((int) toDelete.get(i));
-//		}
-//	}
-
-//	public synchronized void clearUIExtras(){
-//		for(int i = 0; i < UIExtras.size(); i++){
-//			UIExtras.get(i).put("timeToDisplay", 0f);
-//		}
-//	}
-
-//	//TODO: createPopup() -- create text/sprite extra with just text
-//	public void generatePopup(String content, float x, float y, float timeToDisplay){
-//		int spaces = content.length() - content.replace(" ", "").length();
-//
-//		popupManager.createSpriteExtra("sprite", "DarkGrayRectangle", x, y, 300f, (float)(spaces/5 + 1.5)*9, timeToDisplay, 0f);
-//		popupManager.createTextExtra("text", content, x, y + (spaces/5)*4, 8f, 8f, 999f, "white", "lined");
-//
-////		HashMap newSpriteExtra = createSpriteExtra("sprite", "DarkGrayRectangle", x, y, 300f, (float)(spaces/5 + 1.5)*9, timeToDisplay, 0f);
-////		HashMap newTextExtra = createTextExtra("text", content, x, y + (spaces/5)*4, 8f, 8f, 999f, "white", "lined");
-////		UIExtras.add(newSpriteExtra);
-////		UIExtras.add(newTextExtra);
-//	}
-
-
-//	public HashMap createTextExtra(String type, String content, float x, float y, float width, float height, float timeToDisplay, String color, String justification){
-//		HashMap event = new HashMap();
-//		event.put("type", type);
-//		event.put("content", content);
-//		event.put("x", x);
-//		event.put("y", y);
-//		event.put("width", width);
-//		event.put("height", height);
-//		event.put("timeToDisplay", timeToDisplay);
-//		event.put("color", color);
-//		event.put("justification", justification);
-//		return event;
-//	}
-//
-//	public void drawTextExtra(HashMap currEvent){
-//		Font currFont;
-//		if(currEvent.get("color").equals("red")){
-//			currFont = Assets.redFont;
-//		}
-//		else{
-//			currFont = Assets.font;
-//		}
-//		String justification = (String)currEvent.get("justification");
-//		String currContent = (String)currEvent.get("content");
-//		float currX = (Float)currEvent.get("x");
-//		float currY = (Float)currEvent.get("y");
-//		float currWidth = (Float)currEvent.get("width");
-//		float currHeight = (Float)currEvent.get("height");
-//		if(justification.equals("right")){
-//			currFont.drawUITextRightJustified(guiCam, batcher, currContent, currX, currY, currWidth, currHeight);
-//		}
-//		else if(justification.equals("center")){
-//			Assets.font.drawUITextCentered(guiCam, batcher, currContent, currX, currY, currWidth, currHeight);
-//		}
-//		else if(justification.equals("lined")){
-//			Assets.font.drawLinedText(batcher, currContent, currX, currY, currWidth, currHeight);
-//		}
-//		else{
-//			Assets.font.drawUITextCentered(guiCam, batcher, currContent, currX, currY, currWidth, currHeight);
-//		}
-//	}
-
-//	public HashMap createSpriteExtra(String type, String content, float x, float y, float width, float height, float timeToDisplay, float angle){
-//		HashMap event = new HashMap();
-//		event.put("type", type);
-//		event.put("content", content);
-//		event.put("x", x);
-//		event.put("y", y);
-//		event.put("width", width);
-//		event.put("height", height);
-//		event.put("timeToDisplay", timeToDisplay);
-//		event.put("angle", angle);
-//		return event;
-//	}
-
-//	public void drawSpriteExtra(HashMap currEvent){
-//		String currContent = (String)currEvent.get("content");
-//		float currX = (Float)currEvent.get("x");
-//		float currY = (Float)currEvent.get("y");
-//		float currWidth = (Float)currEvent.get("width");
-//		float currHeight = (Float)currEvent.get("height");
-//		float currAngle = (Float)currEvent.get("angle");
-//		batcher.drawUISprite(guiCam, currX, currY, currWidth, currHeight, currAngle, Assets.textureRegions.get(currContent));
-//	}
 
 	private void drawBlockBank(){
 
@@ -793,8 +669,13 @@ public class BuildScreen extends GLScreen{
 
 		ArrayList<Block> compatibleFusionBlocks = getCompatibleFusionBlocks();
 		if(compatibleFusionBlocks.size() > 0){
-			for (int i = 0; i < compatibleFusionBlocks.size(); i++){
-				Block currBlock = compatibleFusionBlocks.get(i);
+			int maxFuseChoices = compatibleFusionBlocks.size();
+			if(compatibleFusionBlocks.size() > 9){
+				//TODO: NEED TO DRAW ARROWS TO PAGINATE
+				maxFuseChoices = 9;
+			}
+			for (int i = 0; i < maxFuseChoices; i++){
+				Block currBlock = compatibleFusionBlocks.get(i + 9*fusePageNumber);
 				if(PlayerSave.activeBlocks.contains(currBlock)){
 					batcher.drawUISprite(guiCam, fuseX, fuseY, 50, 50, Assets.textureRegions.get("Bullet"));
 				}
@@ -814,29 +695,6 @@ public class BuildScreen extends GLScreen{
 
 
 
-	}
-
-	public String constructAttributeLevel(int lvl){
-
-		String one = "*";
-		String five = "$";
-		String ten = "%";
-        String fifty = "!";
-
-		String levelString = "";
-		if (lvl == 0){
-			levelString = "-";
-		}
-		else{
-			levelString += addChars(50, lvl, fifty);
-			lvl %= 50;
-			levelString += addChars(10, lvl, ten);
-			lvl %= 10;
-			levelString += addChars(5, lvl, five);
-			lvl %= 5;
-			levelString += addChars(1, lvl, one);
-		}
-		return levelString;
 	}
 
 	public String addChars(int stepValue, int startValue, String toAdd){

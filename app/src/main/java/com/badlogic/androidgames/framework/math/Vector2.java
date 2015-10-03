@@ -105,7 +105,17 @@ public class Vector2 {
 		
 		return this;
 	}
-	
+
+	public Vector2 rotate(float cos, float sin){
+		float newX = this.x * cos - this.y *sin;
+		float newY = this.x * sin + this.y * cos;
+
+		this.x = newX;
+		this.y = newY;
+
+		return this;
+	}
+
 	public float dist(Vector2 other){
 		float distX = this.x - other.x;
 		float distY = this.y - other.y;
