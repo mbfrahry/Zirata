@@ -30,7 +30,7 @@ public class Hydra extends Enemy{
         enemyBlocks.add(new EnemyTurretBlock(x-25, y, blockLevel*3, blockLevel));
         enemyBlocks.add(new EnemyTurretBlock(x, y+25, blockLevel*3, blockLevel));
         for(int i = 0; i < enemyBlocks.size(); i++){
-            enemyBlocks.get(i).velocity.set(0, -12);
+            enemyBlocks.get(i).velocity.set(0, -10);
         }
     }
 
@@ -46,7 +46,7 @@ public class Hydra extends Enemy{
         for(int i = 0; i < enemyBlocks.size(); i++){
             Block currBlock = enemyBlocks.get(i);
             currBlock.position.add(currBlock.velocity.x * deltaTime, currBlock.velocity.y * deltaTime);
-            currBlock.bounds.lowerLeft.set(currBlock.position).sub(currBlock.BLOCK_WIDTH/2, currBlock.BLOCK_HEIGHT/2);
+            currBlock.bounds.lowerLeft.add(currBlock.velocity.x * deltaTime, currBlock.velocity.y * deltaTime);
             currBlock.update(deltaTime);
             if(currBlock.checkDeath()){
                 if(currBlock.getClass().equals(EnemyTurretBlock.class)){

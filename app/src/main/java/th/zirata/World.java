@@ -415,7 +415,7 @@ public class World {
 			for(int j = 0; j < enemy.enemyBlocks.size(); j++){
 				
 				Block eBlock = enemy.enemyBlocks.get(j);
-				if(OverlapTester.overlapRectangles(bullet.bounds, eBlock.bounds)){
+				if(OverlapTester.overlapPolygons(bullet.bounds, eBlock.bounds)){
 					eBlock.health -= bullet.damage;
 					return true;
 				}
@@ -441,7 +441,7 @@ public class World {
 			for(int j = 0; j < enemy.enemyBlocks.size(); j++){
 				
 				Block eBlock = enemy.enemyBlocks.get(j);
-				if(OverlapTester.overlapRectangles(pBlock.bounds, eBlock.bounds)){
+				if(OverlapTester.overlapPolygons(pBlock.bounds, eBlock.bounds)){
 					eBlock.health -= 10;
 					pBlock.health -= 10;
 					return true;

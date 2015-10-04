@@ -108,11 +108,17 @@ public class WorldRenderer {
 				for(int i = 0; i < world.enemies.size(); i++){
 					for(int j = 0; j < world.enemies.get(i).enemyBlocks.size(); j++){
 						Block currBlock = world.enemies.get(i).enemyBlocks.get(j);
+						Vector2[] vertices = currBlock.bounds.getVertices();
+						for (Vector2 v : vertices){
+
+							batcher.drawSprite(v.x , v.y, 8, 8, Assets.textureRegions.get("Bullet"));
+						}
 						if(currBlock.getClass().equals(EnemyTurretBlock.class)){
 							EnemyTurretBlock currEnemy = (EnemyTurretBlock) currBlock;
 							Vector2 rotate = new Vector2(160,240);
 							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, world.worldAngle, Assets.textureRegions.get("TurretBase"));
 							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, rotate.sub(((EnemyTurretBlock) currBlock).position.x, ((EnemyTurretBlock) currBlock).position.y).angle() - 90, Assets.textureRegions.get("TurretTop"));
+//							batcher.drawSprite(currEnemy.bounds.lowerLeft.x  , currEnemy.bounds.lowerLeft.y, 8, 8, Assets.textureRegions.get("Bullet"));
 
 							EnemyTurretBlock tBlock = (EnemyTurretBlock)currBlock;
 							Bullet b;
@@ -124,7 +130,7 @@ public class WorldRenderer {
 						}
 
 						else if(currBlock.getClass().equals(ArmorBlock.class)){
-
+//							batcher.drawSprite(currBlock.bounds.lowerLeft.x  , currBlock.bounds.lowerLeft.y, 8, 8, Assets.textureRegions.get("Bullet"));
 							if(currBlock.health <= currBlock.maxHealth && currBlock.health > currBlock.maxHealth*.7){
 								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, world.worldAngle, Assets.textureRegions.get("FullHealthArmorBlock"));
 							}
@@ -138,10 +144,12 @@ public class WorldRenderer {
 
 						else if(currBlock.getClass().equals(EnergyBlock.class)){
 							batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.textureRegions.get("EnergyBlock"));
+//							batcher.drawSprite(currBlock.bounds.lowerLeft.x  , currBlock.bounds.lowerLeft.y, 8, 8, Assets.textureRegions.get("Bullet"));
 						}
 
 						else{
 							batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.textureRegions.get("BaseBlock"));
+//							batcher.drawSprite(currBlock.bounds.lowerLeft.x  , currBlock.bounds.lowerLeft.y, 8, 8, Assets.textureRegions.get("Bullet"));
 						}
 					}
 				}

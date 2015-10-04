@@ -95,7 +95,8 @@ public class Enemy{
 		for(int i = 0; i < enemyBlocks.size(); i++){
 			Block currBlock = enemyBlocks.get(i);
 			currBlock.position.add(currBlock.velocity.x * deltaTime, currBlock.velocity.y * deltaTime);
-			currBlock.bounds.lowerLeft.set(currBlock.position).sub(currBlock.BLOCK_WIDTH/2, currBlock.BLOCK_HEIGHT/2);
+			currBlock.bounds.lowerLeft.add(currBlock.velocity.x * deltaTime, currBlock.velocity.y * deltaTime);
+			currBlock.bounds.rotationAngle.set(world.world_cos, world.world_sin);
 			currBlock.update(deltaTime);
 			if(currBlock.checkDeath()){
 				enemyBlocks.remove(i);
