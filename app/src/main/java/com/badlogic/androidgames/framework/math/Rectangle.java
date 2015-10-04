@@ -7,12 +7,18 @@ public class Rectangle {
 	public final Vector2 lowerLeft;
 	public float width, height;
 	public Vector2 rotationAngle;
+	public Vector2[] vertices = new Vector2[4];
 
 	public Rectangle(float x, float y, float width, float height){
 		this.lowerLeft = new Vector2(x,y);
 		this.width = width;
 		this.height = height;
 		rotationAngle = new Vector2(1,0);
+		vertices[0] = new Vector2();
+		vertices[1] = new Vector2();
+		vertices[2] = new Vector2();
+		vertices[3] = new Vector2();
+		getVertices();
 	}
 
 	public Rectangle(float x, float y, float width, float height, Vector2 angle){
@@ -34,16 +40,16 @@ public class Rectangle {
 	}
 
 	public Vector2[] getVertices(){
-		Vector2[] vertices = new Vector2[4];
+
 		Vector2 widthVector = new Vector2(width, 0);
 		Vector2 heightVector = new Vector2(0, height);
 		rotateVector(widthVector);
 		rotateVector(heightVector);
 
-		vertices[0] = new Vector2(lowerLeft.x, lowerLeft.y);
-		vertices[1] = new Vector2(lowerLeft.x + widthVector.x, lowerLeft.y + widthVector.y);
-		vertices[2] = new Vector2(lowerLeft.x + widthVector.x + heightVector.x, lowerLeft.y + widthVector.y + heightVector.y);
-		vertices[3] = new Vector2(lowerLeft.x + heightVector.x, lowerLeft.y + heightVector.y);
+		vertices[0].set(lowerLeft.x, lowerLeft.y);
+		vertices[1].set(lowerLeft.x + widthVector.x, lowerLeft.y + widthVector.y);
+		vertices[2].set(lowerLeft.x + widthVector.x + heightVector.x, lowerLeft.y + widthVector.y + heightVector.y);
+		vertices[3].set(lowerLeft.x + heightVector.x, lowerLeft.y + heightVector.y);
 
 		return vertices;
 	}
