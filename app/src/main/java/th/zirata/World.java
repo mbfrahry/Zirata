@@ -284,6 +284,9 @@ public class World {
 			if (moveLeft || moveRight) {
 				playerBullets.get(i).rotate(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
 			}
+			if(playerBullets.get(i).outOfBounds()){
+				playerBullets.remove(i);
+			}
 		}
 	}
 	
