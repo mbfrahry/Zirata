@@ -113,6 +113,7 @@ public class WorldRenderer {
 
 							batcher.drawSprite(v.x , v.y, 8, 8, Assets.textureRegions.get("Bullet"));
 						}
+
 						if(currBlock.getClass().equals(EnemyTurretBlock.class)){
 							EnemyTurretBlock currEnemy = (EnemyTurretBlock) currBlock;
 							Vector2 rotate = new Vector2(160,240);
@@ -151,6 +152,7 @@ public class WorldRenderer {
 							batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.textureRegions.get("BaseBlock"));
 //							batcher.drawSprite(currBlock.bounds.lowerLeft.x  , currBlock.bounds.lowerLeft.y, 8, 8, Assets.textureRegions.get("Bullet"));
 						}
+						batcher.drawSprite(currBlock.position.x , currBlock.position.y, 8, 8, Assets.textureRegions.get("Bullet"));
 					}
 				}
 
