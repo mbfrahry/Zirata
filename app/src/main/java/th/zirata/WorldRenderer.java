@@ -108,6 +108,7 @@ public class WorldRenderer {
 				for(int i = 0; i < world.enemies.size(); i++){
 					for(int j = 0; j < world.enemies.get(i).enemyBlocks.size(); j++){
 						Block currBlock = world.enemies.get(i).enemyBlocks.get(j);
+						batcher.drawSprite(currBlock.bounds.lowerLeft.x, currBlock.bounds.lowerLeft.y, 5, 5, Assets.textureRegions.get("Bullet"));
 						Vector2[] vertices = currBlock.bounds.getVertices();
 						for (Vector2 v : vertices){
 

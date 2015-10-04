@@ -98,7 +98,7 @@ public class World {
 		updatePlayerBullets(deltaTime);
 		updateEnemies(deltaTime);
 		updateEnemyBullets(deltaTime);
-		checkPlayerBullets();
+		//checkPlayerBullets();
 		checkEnemyBullets();
 		checkPlayerCollision();
 		checkLevelEnd();
