@@ -18,10 +18,10 @@
     "bossNum": -1
   },
   "level4": {
-    "enemyNumber": 20,
+    "enemyNumber": 2,
     "enemyLevel": 2,
     "turretChance": 0.25,
-    "bossNum": 1,
+    "bossNum": 1
   },
   "level5": {
     "enemyNumber": 500,

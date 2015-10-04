@@ -378,7 +378,7 @@ public class World {
 				if(enemyLevelSettings[3] == 1) {
 					Enemy e = EnemySettings.getBoss("Hydra");
 					for (Block b : e.enemyBlocks) {
-						b.rotate(world_sin, world_cos, WORLD_MID_POINT);
+						b.rotateConstantVelocity(world_sin, world_cos, WORLD_MID_POINT);
 					}
 					enemies.add(e);
 				}

@@ -47,6 +47,7 @@ public class Hydra extends Enemy{
             Block currBlock = enemyBlocks.get(i);
             currBlock.position.add(currBlock.velocity.x * deltaTime, currBlock.velocity.y * deltaTime);
             currBlock.bounds.lowerLeft.add(currBlock.velocity.x * deltaTime, currBlock.velocity.y * deltaTime);
+            currBlock.bounds.rotationAngle.set(world.world_cos, world.world_sin);
             currBlock.update(deltaTime);
             if(currBlock.checkDeath()){
                 if(currBlock.getClass().equals(EnemyTurretBlock.class)){
