@@ -57,21 +57,29 @@ public class Hydra extends Enemy{
                         blocksPerDirection[0] +=1;
                         eBlock = new EnemyTurretBlock(currBlock.position.x-12.5f*blocksPerDirection[0]*world.world_x_axis.x,
                                 currBlock.position.y - 12.5f*blocksPerDirection[0]*world.world_x_axis.y, blockLevel*3, blockLevel);
+                        eBlock.bounds.lowerLeft.set(currBlock.bounds.lowerLeft.x-12.5f*blocksPerDirection[0]*world.world_x_axis.x,
+                                currBlock.bounds.lowerLeft.y - 12.5f*blocksPerDirection[0]*world.world_x_axis.y);
                     }
                     else if(currBlock.origin.x > enemyBlocks.get(0).origin.x){
                         blocksPerDirection[1] +=1;
                         currBlock.health = currBlock.maxHealth;
                         eBlock = new EnemyTurretBlock(currBlock.position.x+12.5f*blocksPerDirection[1]*world.world_x_axis.x,
                                 currBlock.position.y + 12.5f*blocksPerDirection[1]*world.world_x_axis.y, blockLevel*3, blockLevel);
+                        eBlock.bounds.lowerLeft.set(currBlock.bounds.lowerLeft.x+12.5f*blocksPerDirection[1]*world.world_x_axis.x,
+                                currBlock.bounds.lowerLeft.y + 12.5f*blocksPerDirection[1]*world.world_x_axis.y);
                     }
                     else{
                         blocksPerDirection[2] +=1;
                         currBlock.health = currBlock.maxHealth;
                         eBlock = new EnemyTurretBlock(currBlock.position.x + 12.5f*blocksPerDirection[2]*world.world_y_axis.x,
                                 currBlock.position.y+12.5f*blocksPerDirection[2]*world.world_y_axis.y, blockLevel*3, blockLevel);
+                        eBlock.bounds.lowerLeft.set(currBlock.bounds.lowerLeft.x+12.5f*blocksPerDirection[2]*world.world_y_axis.x,
+                                currBlock.bounds.lowerLeft.y + 12.5f*blocksPerDirection[2]*world.world_y_axis.y);
                     }
                     eBlock.velocity.set(currBlock.velocity);
                     //eBlock.rotateConstantVelocity(world.world_sin, world.world_cos, world.WORLD_MID_POINT);
+                    eBlock.bounds.rotationAngle.set(currBlock.bounds.rotationAngle);
+
                     enemyBlocks.add(eBlock);
                 }
                 else{
