@@ -1,18 +1,13 @@
 package th.zirata;
 
-import android.util.Log;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 import javax.microedition.khronos.opengles.GL10;
 
 import com.badlogic.androidgames.framework.Game;
 import com.badlogic.androidgames.framework.Input.TouchEvent;
 import com.badlogic.androidgames.framework.gl.Camera2D;
-import com.badlogic.androidgames.framework.gl.Font;
 import com.badlogic.androidgames.framework.gl.SpriteBatcher;
 import com.badlogic.androidgames.framework.impl.GLScreen;
 import com.badlogic.androidgames.framework.math.OverlapTester;
@@ -40,8 +35,6 @@ public class BuildScreen extends GLScreen{
 	public boolean showSubmenu;
 	public boolean showUpgrades;
 	public boolean showFuse;
-
-	public int fusePageNumber;
 
 	public boolean showBlockBank;
 	public int blockBankOption;
@@ -80,7 +73,6 @@ public class BuildScreen extends GLScreen{
 		showSubmenu = true;
 		showUpgrades = false;
 		showFuse = false;
-		fusePageNumber = 0;
 		blockBankOption = BLOCK_BANK_TURRET;
 		ownedBlocksByType = getBlocksFromType(TurretBlock.class);
 
@@ -276,7 +268,7 @@ public class BuildScreen extends GLScreen{
 			return;
 		}
 
-		Rectangle bankBlockBounds = null;
+		Rectangle bankBlockBounds;
 		for(int j = 0; j < ownedBlocksByType.size(); j++){
 
 			Block currBlock = ownedBlocksByType.get(j);
@@ -325,17 +317,17 @@ public class BuildScreen extends GLScreen{
 		}
         Rectangle addBlockBounds = new Rectangle(guiCam, 260, 5, 50, 150);
 		if (ownedBlocksByType.size() < 32 && OverlapTester.pointInRectangle(addBlockBounds, touchPoint)){
-			Block block = null;
+			Block block;
 			if(blockBankOption  == BLOCK_BANK_TURRET){
 				block = new TurretBlock(-100, -100, 10, 3, 1, 90);
 			}
-			if(blockBankOption  == BLOCK_BANK_ARMOR){
+			else if(blockBankOption  == BLOCK_BANK_ARMOR){
 				block = new ArmorBlock(-100, -100, 20, 1);
 			}
-			if(blockBankOption  == BLOCK_BANK_ENERGY){
+			else if(blockBankOption  == BLOCK_BANK_ENERGY){
 				block = new EnergyBlock(-100, -100, 10, 0, 1, 10);
 			}
-			if(blockBankOption  == BLOCK_BANK_MULTIPLIER){
+			else{
 				block = new MultiplierBlock(-100, -100, 10, 0, 1, 1.5f, 5, 10);
 			}
 			PlayerSave.activeBlocks.remove(selectedActiveBlock);
@@ -404,7 +396,6 @@ public class BuildScreen extends GLScreen{
 
 	public void checkFuseBounds(){
 		ArrayList<Block> compatibleFusionBlocks = getCompatibleFusionBlocks();
-		Rectangle fuseBounds = new Rectangle(guiCam, 0, 242, 110, 110);
 		int fuseX = 26;
 		int fuseY = 285;
 		if (selectedActiveBlock.getClass().equals(TurretBlock.class)) {
@@ -417,50 +408,43 @@ public class BuildScreen extends GLScreen{
 				PlayerSave.save(game.getFileIO());
 			}
 		}
-		if (OverlapTester.pointInRectangle(fuseBounds, touchPoint)){
-			int maxFuseBlocks = compatibleFusionBlocks.size() - fusePageNumber*9 > 9 ? 9 : compatibleFusionBlocks.size() - fusePageNumber*9;
-			for (int i = 0; i < maxFuseBlocks; i++){
-				Rectangle currCoords = new Rectangle(guiCam, fuseX-12, fuseY-12, 25, 25);
-				Block currBlock = compatibleFusionBlocks.get(i + 9*fusePageNumber);
-				if(OverlapTester.pointInRectangle(currCoords, touchPoint)){
-					//Fuse blocks together and delete selected block
-					if(PlayerSave.activeBlocks.contains(currBlock)){
-						popupManager.createSpriteExtra("sprite", "Rectangle", 160f, 260f, 295f, 50f, 1f, 0f);
-						popupManager.createTextExtra("text", "Can't fuse with blocks on the ship!", 160f, 260f, 8f, 8f, 1f, "white", "center");
-//						HashMap newSpriteExtra = createSpriteExtra("sprite", "Rectangle", 160f, 260f, 295f, 50f, 1f, 0f);
-//						HashMap newTextExtra = createTextExtra("text", "Can't fuse with blocks on the ship!", 160f, 260f, 8f, 8f, 1f, "white", "center");
-//						UIExtras.add(newSpriteExtra);
-//						UIExtras.add(newTextExtra);
+		int maxFuseBlocks = compatibleFusionBlocks.size() > 9 ? 9 : compatibleFusionBlocks.size();
+		for (int i = 0; i < maxFuseBlocks; i++){
+			Rectangle currCoords = new Rectangle(guiCam, fuseX-12, fuseY-12, 25, 25);
+			Block currBlock = compatibleFusionBlocks.get(i);
+			if(OverlapTester.pointInRectangle(currCoords, touchPoint)){
+				//Fuse blocks together and delete selected block
+				if(PlayerSave.activeBlocks.contains(currBlock)){
+					popupManager.createSpriteExtra("sprite", "Rectangle", 160f, 260f, 295f, 50f, 1f, 0f);
+					popupManager.createTextExtra("text", "Can't fuse with blocks on the ship!", 160f, 260f, 8f, 8f, 1f, "white", "center");
+				}
+				else{
+					selectedActiveBlock.fuseWith(currBlock);
+					PlayerSave.bankedBlocks.remove(currBlock);
+					Class c;
+					if(blockBankOption == BLOCK_BANK_TURRET){
+						c = TurretBlock.class;
+					}
+					else if (blockBankOption == BLOCK_BANK_ARMOR){
+						c = ArmorBlock.class;
+					}
+					else if (blockBankOption == BLOCK_BANK_ENERGY){
+						c = EnergyBlock.class;
 					}
 					else{
-						selectedActiveBlock.fuseWith(currBlock);
-						PlayerSave.bankedBlocks.remove(currBlock);
-						Class c;
-						if(blockBankOption == BLOCK_BANK_TURRET){
-							c = TurretBlock.class;
-						}
-						else if (blockBankOption == BLOCK_BANK_ARMOR){
-							c = ArmorBlock.class;
-						}
-						else if (blockBankOption == BLOCK_BANK_ENERGY){
-							c = EnergyBlock.class;
-						}
-						else{
-							c = MultiplierBlock.class;
-						}
-						ownedBlocksByType = getBlocksFromType(c);
-						showUpgrades = true;
-						showFuse = false;
+						c = MultiplierBlock.class;
 					}
-
-
-					return;
+					ownedBlocksByType = getBlocksFromType(c);
+					showUpgrades = true;
+					showFuse = false;
 				}
-				fuseX += 30;
-				if(fuseX > 90){
-					fuseX = 26;
-					fuseY -= 30;
-				}
+
+				return;
+			}
+			fuseX += 30;
+			if(fuseX > 90){
+				fuseX = 26;
+				fuseY -= 30;
 			}
 		}
 	}
@@ -600,8 +584,8 @@ public class BuildScreen extends GLScreen{
 		float y = 220;
 
 		String[] upgradeableAttributes = selectedActiveBlock.getUpgradableAttributes();
-		float[] attributeValues = selectedActiveBlock.getAttributeVals();
-		float[] upgradeValues = selectedActiveBlock.getUpgradeValues();
+		//float[] attributeValues = selectedActiveBlock.getAttributeVals();
+		//float[] upgradeValues = selectedActiveBlock.getUpgradeValues();
 		if (selectedActiveBlock.getClass().equals(TurretBlock.class)){
 
 			batcher.drawUISprite(guiCam, x, 217, 110, 35, Assets.textureRegions.get("Rectangle"));
@@ -610,7 +594,7 @@ public class BuildScreen extends GLScreen{
 			y+=34;
 		}
 		for (int i = 0; i < upgradeableAttributes.length; i++) {
-			float nextVal = attributeValues[i] + upgradeValues[i];
+			//float nextVal = attributeValues[i] + upgradeValues[i];
 			batcher.drawUISprite(guiCam, x, y + i * 40, 110, 40, Assets.textureRegions.get("Rectangle"));
 			Assets.font.drawUIText(guiCam, batcher, upgradeableAttributes[i], x - 45, y + 10 + i * 40, 10, 10);
 			//UpgradeCost
@@ -675,7 +659,7 @@ public class BuildScreen extends GLScreen{
 				maxFuseChoices = 9;
 			}
 			for (int i = 0; i < maxFuseChoices; i++){
-				Block currBlock = compatibleFusionBlocks.get(i + 9*fusePageNumber);
+				Block currBlock = compatibleFusionBlocks.get(i);
 				if(PlayerSave.activeBlocks.contains(currBlock)){
 					batcher.drawUISprite(guiCam, fuseX, fuseY, 50, 50, Assets.textureRegions.get("Bullet"));
 				}
@@ -695,15 +679,6 @@ public class BuildScreen extends GLScreen{
 
 
 
-	}
-
-	public String addChars(int stepValue, int startValue, String toAdd){
-        String toReturn = "";
-		while (startValue >= stepValue){
-			startValue -= stepValue;
-			toReturn += toAdd;
-		}
-		return toReturn;
 	}
 
 	public void getPotentialBlocks(){
