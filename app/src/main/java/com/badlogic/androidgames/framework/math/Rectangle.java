@@ -18,7 +18,7 @@ public class Rectangle {
 		vertices[1] = new Vector2();
 		vertices[2] = new Vector2();
 		vertices[3] = new Vector2();
-		getVertices();
+		setVertices();
 	}
 
 	public Rectangle(float x, float y, float width, float height, Vector2 angle){
@@ -26,6 +26,11 @@ public class Rectangle {
 		this.width = width;
 		this.height = height;
 		this.rotationAngle = angle;
+		vertices[0] = new Vector2();
+		vertices[1] = new Vector2();
+		vertices[2] = new Vector2();
+		vertices[3] = new Vector2();
+		setVertices();
 	}
 
 	public Rectangle(Camera2D guiCam, float x, float y, float width, float height){
@@ -39,14 +44,14 @@ public class Rectangle {
 		rotationAngle = new Vector2(1,0);
 	}
 
-	public Vector2[] getVertices(){
+	public Vector2[] setVertices(){
 
 		Vector2 widthVector = new Vector2(width, 0);
 		Vector2 heightVector = new Vector2(0, height);
 		rotateVector(widthVector);
 		rotateVector(heightVector);
 
-		vertices[0].set(lowerLeft.x, lowerLeft.y);
+		vertices[0] = lowerLeft;
 		vertices[1].set(lowerLeft.x + widthVector.x, lowerLeft.y + widthVector.y);
 		vertices[2].set(lowerLeft.x + widthVector.x + heightVector.x, lowerLeft.y + widthVector.y + heightVector.y);
 		vertices[3].set(lowerLeft.x + heightVector.x, lowerLeft.y + heightVector.y);
@@ -61,7 +66,7 @@ public class Rectangle {
 		point.y = (leftX * rotationAngle.y) + leftY * rotationAngle.x;
 	}
 
-	public Vector2[] getAxes(Vector2[] vertices){
+	public Vector2[] getAxes(){
 		Vector2[] axes = new Vector2[4];
 		for (int i = 0; i < 4; i++) {
 			// get the current vertex
@@ -81,7 +86,7 @@ public class Rectangle {
 		return axes;
 	}
 
-	public Vector2 project(Vector2 axis, Vector2[] vertices){
+	public Vector2 project(Vector2 axis){
 		float min = axis.dot(vertices[0]);
 		float max = min;
 		for (int i = 1; i < vertices.length; i++) {

@@ -1,5 +1,7 @@
 package th.zirata;
 
+import com.badlogic.androidgames.framework.math.Vector2;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -95,7 +97,10 @@ public class Enemy{
 		for(int i = 0; i < enemyBlocks.size(); i++){
 			Block currBlock = enemyBlocks.get(i);
 			currBlock.position.add(currBlock.velocity.x * deltaTime, currBlock.velocity.y * deltaTime);
-			currBlock.bounds.lowerLeft.add(currBlock.velocity.x * deltaTime, currBlock.velocity.y * deltaTime);
+			//currBlock.bounds.lowerLeft.add(currBlock.velocity.x * deltaTime, currBlock.velocity.y * deltaTime);
+			for (Vector2 v : currBlock.bounds.vertices){
+				v.add(currBlock.velocity.x * deltaTime, currBlock.velocity.y * deltaTime);
+			}
 			currBlock.bounds.rotationAngle.set(world.world_cos, world.world_sin);
 			currBlock.update(deltaTime);
 			if(currBlock.checkDeath()){

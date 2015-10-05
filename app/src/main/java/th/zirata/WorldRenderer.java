@@ -108,13 +108,12 @@ public class WorldRenderer {
 				for(int i = 0; i < world.enemies.size(); i++){
 					for(int j = 0; j < world.enemies.get(i).enemyBlocks.size(); j++){
 						Block currBlock = world.enemies.get(i).enemyBlocks.get(j);
-						/*
-						Vector2[] vertices = currBlock.bounds.getVertices();
-						for (Vector2 v : vertices){
 
-							batcher.drawSprite(v.x , v.y, 8, 8, Assets.textureRegions.get("Bullet"));
-						}*/
-
+//						for (Vector2 v : currBlock.bounds.vertices) {
+//
+//							batcher.drawSprite(v.x, v.y, 8, 8, Assets.textureRegions.get("Bullet"));
+//
+//						}
 						if(currBlock.getClass().equals(EnemyTurretBlock.class)){
 							EnemyTurretBlock currEnemy = (EnemyTurretBlock) currBlock;
 							Vector2 rotate = new Vector2(160,240);

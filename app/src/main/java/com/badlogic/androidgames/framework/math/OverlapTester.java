@@ -72,17 +72,15 @@ public class OverlapTester {
 	}
 
 	public static boolean overlapPolygons(Rectangle r1, Rectangle r2){
-		Vector2[] vertices1 = r1.getVertices();
-		Vector2[] vertices2 = r2.getVertices();
-		Vector2[] axes1 = r1.getAxes(vertices1);
-		Vector2[] axes2 = r2.getAxes(vertices2);
+		Vector2[] axes1 = r1.getAxes();
+		Vector2[] axes2 = r2.getAxes();
 
 // loop over the axes1
 		for (int i = 0; i < axes1.length; i++) {
 			Vector2 axis = axes1[i];
 			// project both shapes onto the axis
-			Vector2 p1 = r1.project(axis, vertices1);
-			Vector2 p2 = r2.project(axis, vertices2);
+			Vector2 p1 = r1.project(axis);
+			Vector2 p2 = r2.project(axis);
 			// do the projections overlap?
 			if (!overlap(p1, p2)) {
 				// then we can guarantee that the shapes do not overlap
@@ -93,8 +91,8 @@ public class OverlapTester {
 		for (int i = 0; i < axes2.length; i++) {
 			Vector2 axis = axes2[i];
 			// project both shapes onto the axis
-			Vector2 p1 = r1.project(axis, vertices1);
-			Vector2 p2 = r2.project(axis, vertices2);
+			Vector2 p1 = r1.project(axis);
+			Vector2 p2 = r2.project(axis);
 			// do the projections overlap?
 			if (!overlap(p1, p2)) {
 				// then we can guarantee that the shapes do not overlap

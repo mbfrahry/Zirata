@@ -23,6 +23,9 @@ public class Background extends DynamicGameObject {
 
     public void update(float deltaTime){
         position.add(velocity.x * deltaTime, velocity.y * deltaTime);
-        bounds.lowerLeft.add(velocity.x * deltaTime, velocity.y * deltaTime);
+        //bounds.lowerLeft.add(velocity.x * deltaTime, velocity.y * deltaTime);
+        for (Vector2 v : bounds.vertices){
+            v.add(velocity.x * deltaTime, velocity.y * deltaTime);
+        }
     }
 }

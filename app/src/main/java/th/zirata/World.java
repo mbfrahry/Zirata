@@ -130,8 +130,6 @@ public class World {
 			world_y_axis.rotate(POS_COS_ANGLE, POS_SIN_ANGLE);
 			updateBackgroundAngles(world_cos, world_sin);
 		}
-		Log.d("x axis", world_x_axis.x + ", " + world_x_axis.y);
-		Log.d("y axis", world_y_axis.x + ", " + world_y_axis.y);
 	}
 
 	private void updateBackgroundAngles(float cosChange, float sinChange){
