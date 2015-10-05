@@ -1,9 +1,11 @@
-package th.zirata;
+package th.zirata.Blocks;
 
 import android.util.JsonWriter;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import th.zirata.Game.World;
 
 //TODO
 //This whole block needs to be redone.

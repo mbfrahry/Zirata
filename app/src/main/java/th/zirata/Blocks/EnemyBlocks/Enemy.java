@@ -1,9 +1,14 @@
-package th.zirata;
+package th.zirata.Blocks.EnemyBlocks;
 
 import com.badlogic.androidgames.framework.math.Vector2;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import th.zirata.Settings.Assets;
+import th.zirata.Blocks.ArmorBlock;
+import th.zirata.Blocks.Block;
+import th.zirata.Game.World;
 
 public class Enemy{
 

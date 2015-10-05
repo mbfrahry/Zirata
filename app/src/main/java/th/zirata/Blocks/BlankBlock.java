@@ -1,10 +1,12 @@
-package th.zirata;
+package th.zirata.Blocks;
 
 import android.util.JsonWriter;
 
 import com.badlogic.androidgames.framework.math.Vector2;
 
 import java.io.IOException;
+
+import th.zirata.Game.World;
 
 /**
  * Created by Max Bauer on 9/9/2015.

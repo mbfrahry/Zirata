@@ -12,7 +12,9 @@ import com.badlogic.androidgames.framework.impl.GLGame;
 import com.revmob.RevMob;
 import com.revmob.RevMobAdsListener;
 
-import th.zirata.Help.MainHelpScreen;
+import th.zirata.Menus.MainMenuScreen;
+import th.zirata.Settings.Assets;
+import th.zirata.Settings.Settings;
 
 public class Zirata extends GLGame {
 

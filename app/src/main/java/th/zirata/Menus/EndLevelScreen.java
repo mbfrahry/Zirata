@@ -1,4 +1,4 @@
-package th.zirata;
+package th.zirata.Menus;
 
 import com.badlogic.androidgames.framework.Game;
 import com.badlogic.androidgames.framework.Input;
@@ -13,11 +13,7 @@ import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import th.zirata.Assets;
-import th.zirata.BuildScreen;
-import th.zirata.MainMenuScreen;
-import th.zirata.PlayerSave;
-import th.zirata.Settings;
+import th.zirata.Settings.Assets;
 
 /**
  * Created by Matthew on 9/7/2015.

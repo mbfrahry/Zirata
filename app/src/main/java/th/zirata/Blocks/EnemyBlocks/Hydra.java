@@ -1,5 +1,8 @@
-package th.zirata;
+package th.zirata.Blocks.EnemyBlocks;
 
+import th.zirata.Blocks.ArmorBlock;
+import th.zirata.Blocks.Block;
+import th.zirata.Game.World;
 import com.badlogic.androidgames.framework.math.Vector2;
 
 import java.util.ArrayList;
@@ -8,7 +11,7 @@ import java.util.Random;
 /**
  * Created by Matthew on 10/3/2015.
  */
-public class Hydra extends Enemy{
+public class Hydra extends Enemy {
 
 
     int x;

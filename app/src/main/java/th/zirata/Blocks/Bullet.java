@@ -1,4 +1,4 @@
-package th.zirata;
+package th.zirata.Blocks;
 
 import java.util.Random;
 
@@ -11,7 +11,7 @@ public class Bullet extends DynamicGameObject{
 	public static final float BULLET_WIDTH = 5;
 	public static final float BULLET_HEIGHT = 5;
 	Random rand;
-	int damage;
+	public int damage;
 	float range;
 	
 	public Bullet(float x, float y, float targX, float targY, int damage, float range) {

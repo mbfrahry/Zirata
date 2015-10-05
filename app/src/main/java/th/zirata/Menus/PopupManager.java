@@ -1,4 +1,4 @@
-package th.zirata;
+package th.zirata.Menus;
 
 import com.badlogic.androidgames.framework.gl.Camera2D;
 import com.badlogic.androidgames.framework.gl.Font;
@@ -6,6 +6,8 @@ import com.badlogic.androidgames.framework.gl.SpriteBatcher;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import th.zirata.Settings.Assets;
 
 /**
  * Created by Max Bauer on 10/2/2015.

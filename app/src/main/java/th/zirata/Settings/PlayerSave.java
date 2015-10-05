@@ -1,14 +1,9 @@
-package th.zirata;
+package th.zirata.Settings;
 
-import android.util.Log;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
@@ -17,6 +12,9 @@ import com.badlogic.androidgames.framework.math.Vector2;
 
 import android.util.JsonReader;
 import android.util.JsonWriter;
+
+import th.zirata.Blocks.BlankBlock;
+import th.zirata.Blocks.Block;
 
 public class PlayerSave {
 

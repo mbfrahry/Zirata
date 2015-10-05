@@ -1,29 +1,25 @@
 package th.zirata.Help;
 
-import android.os.Build;
-
 import com.badlogic.androidgames.framework.Game;
 import com.badlogic.androidgames.framework.Input;
 import com.badlogic.androidgames.framework.math.OverlapTester;
 import com.badlogic.androidgames.framework.math.Rectangle;
 import com.badlogic.androidgames.framework.math.Vector2;
 
-import java.util.HashMap;
 import java.util.List;
 
-import th.zirata.ArmorBlock;
-import th.zirata.Assets;
-import th.zirata.BlankBlock;
-import th.zirata.Block;
-import th.zirata.BuildHelpText;
-import th.zirata.BuildScreen;
-import th.zirata.EnergyBlock;
-import th.zirata.GameScreen;
-import th.zirata.MapScreen;
-import th.zirata.MultiplierBlock;
-import th.zirata.PlayerSave;
-import th.zirata.Settings;
-import th.zirata.TurretBlock;
+import th.zirata.Blocks.ArmorBlock;
+import th.zirata.Settings.Assets;
+import th.zirata.Blocks.BlankBlock;
+import th.zirata.Blocks.Block;
+import th.zirata.Settings.BuildHelpText;
+import th.zirata.Menus.BuildScreen;
+import th.zirata.Blocks.EnergyBlock;
+import th.zirata.Game.GameScreen;
+import th.zirata.Blocks.MultiplierBlock;
+import th.zirata.Settings.PlayerSave;
+import th.zirata.Settings.Settings;
+import th.zirata.Blocks.TurretBlock;
 
 
 public class BuildScreenHelp extends BuildScreen {

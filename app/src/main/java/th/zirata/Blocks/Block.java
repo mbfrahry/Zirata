@@ -1,4 +1,4 @@
-package th.zirata;
+package th.zirata.Blocks;
 
 import android.util.JsonWriter;
 
@@ -7,20 +7,21 @@ import com.badlogic.androidgames.framework.math.Vector2;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+
+import th.zirata.Game.World;
 
 public abstract class Block extends DynamicGameObject {
 
 	public static final float BLOCK_WIDTH = 24;
 	public static final float BLOCK_HEIGHT = 24;
-	int health;
-	int maxHealth;
-	int energyCost;
-	int blockLevel;
+	public int health;
+	public int maxHealth;
+	public int energyCost;
+	public int blockLevel;
 	Vector2 lastTouch;
-	boolean active;
+	public boolean active;
 
-	int constructorArgLength;
+	public int constructorArgLength;
 
 	public Block(float x, float y, int health, int energyCost, int blockLevel){
 		super(x, y, BLOCK_WIDTH, BLOCK_HEIGHT);

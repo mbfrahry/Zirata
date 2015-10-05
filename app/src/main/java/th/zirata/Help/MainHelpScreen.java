@@ -16,9 +16,7 @@ import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import th.zirata.Assets;
-import th.zirata.MainMenuScreen;
-import th.zirata.Settings;
+import th.zirata.Settings.Assets;
 
 /**
  * Created by Matthew on 9/7/2015.

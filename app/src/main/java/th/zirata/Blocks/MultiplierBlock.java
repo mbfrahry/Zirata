@@ -1,4 +1,4 @@
-package th.zirata;
+package th.zirata.Blocks;
 
 import android.util.JsonWriter;
 
@@ -7,10 +7,12 @@ import com.badlogic.androidgames.framework.math.Vector2;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import th.zirata.Game.World;
+
 /**
  * Created by Matthew on 9/8/2015.
  */
-public class MultiplierBlock extends Block{
+public class MultiplierBlock extends Block {
 
     public static String[] UpgradeAttributes = new String[]{"Health", "Cooldown", "Up Time", "Multiply"};
     public float[] defaultValueArray = {10, 10, 5, 1.5f};

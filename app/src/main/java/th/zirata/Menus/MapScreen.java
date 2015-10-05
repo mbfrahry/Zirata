@@ -1,4 +1,4 @@
-package th.zirata;
+package th.zirata.Menus;
 
 import com.badlogic.androidgames.framework.Game;
 import com.badlogic.androidgames.framework.Input;
@@ -11,11 +11,12 @@ import com.badlogic.androidgames.framework.math.Vector2;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import th.zirata.Settings.Assets;
 import th.zirata.Help.BuildScreenHelp;
+import th.zirata.Settings.Settings;
 
 
 public class MapScreen  extends GLScreen {

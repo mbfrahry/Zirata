@@ -1,8 +1,7 @@
-package th.zirata;
+package th.zirata.Game;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -15,6 +14,13 @@ import com.badlogic.androidgames.framework.impl.GLScreen;
 import com.badlogic.androidgames.framework.math.OverlapTester;
 import com.badlogic.androidgames.framework.math.Rectangle;
 import com.badlogic.androidgames.framework.math.Vector2;
+
+import th.zirata.Settings.Assets;
+import th.zirata.Blocks.Block;
+import th.zirata.Menus.EndLevelScreen;
+import th.zirata.Menus.MainMenuScreen;
+import th.zirata.Settings.PlayerSave;
+import th.zirata.Settings.Settings;
 
 
 public class GameScreen extends GLScreen {

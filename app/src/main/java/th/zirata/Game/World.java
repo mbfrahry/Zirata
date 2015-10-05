@@ -1,6 +1,5 @@
-package th.zirata;
+package th.zirata.Game;
 
-import android.preference.MultiSelectListPreference;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -9,6 +8,16 @@ import java.util.Random;
 import com.badlogic.androidgames.framework.math.OverlapTester;
 import com.badlogic.androidgames.framework.math.Rectangle;
 import com.badlogic.androidgames.framework.math.Vector2;
+
+import th.zirata.Blocks.Block;
+import th.zirata.Blocks.EnemyBlocks.Enemy;
+import th.zirata.Blocks.EnemyBlocks.EnemyTurretBlock;
+import th.zirata.Blocks.EnemyBlocks.Hydra;
+import th.zirata.Blocks.MultiplierBlock;
+import th.zirata.Blocks.TurretBlock;
+import th.zirata.Blocks.Bullet;
+import th.zirata.Settings.Settings;
+import th.zirata.Settings.EnemySettings;
 
 public class World {
 

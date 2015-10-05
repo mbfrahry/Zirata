@@ -1,6 +1,8 @@
-package th.zirata;
+package th.zirata.Blocks.EnemyBlocks;
 
-public class EnemyTurretBlock extends TurretBlock{
+import th.zirata.Blocks.TurretBlock;
+
+public class EnemyTurretBlock extends TurretBlock {
 
 	float timeToFire;
 	float initialTimeToFire;

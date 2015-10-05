@@ -1,7 +1,5 @@
-package th.zirata;
+package th.zirata.Menus;
 
-
-import android.os.Build;
 
 import com.badlogic.androidgames.framework.Game;
 import com.badlogic.androidgames.framework.Input;
@@ -15,6 +13,10 @@ import com.badlogic.androidgames.framework.math.Vector2;
 import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
+
+import th.zirata.Settings.Assets;
+import th.zirata.Settings.PlayerSave;
+import th.zirata.Blocks.TurretBlock;
 
 public class BlockDirectionScreen extends GLScreen{
     Camera2D guiCam;
@@ -67,7 +69,7 @@ public class BlockDirectionScreen extends GLScreen{
                     //Touch not on direction, be aware when adding new if statements
                     return;
                 }
-                TurretBlock tBlock = (TurretBlock)PlayerSave.activeBlocks.get(blockNum);
+                TurretBlock tBlock = (TurretBlock) PlayerSave.activeBlocks.get(blockNum);
                 tBlock.fireAngle = fireAngle;
                 //PlayerSave.activeBlocks.remove(blockNum);
                 //TurretBlock tBlock = new TurretBlock(position, fireAngle);

@@ -1,17 +1,16 @@
-package th.zirata;
+package th.zirata.Settings;
 
 import android.util.JsonReader;
 
 import com.badlogic.androidgames.framework.FileIO;
-import com.badlogic.androidgames.framework.gl.TextureRegion;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+
+import th.zirata.Blocks.EnemyBlocks.Enemy;
+import th.zirata.Blocks.EnemyBlocks.Hydra;
 
 /**
  * Created by Matthew on 9/20/2015.

@@ -1,4 +1,4 @@
-package th.zirata;
+package th.zirata.Game;
 
 import java.util.ArrayList;
 
@@ -6,9 +6,19 @@ import javax.microedition.khronos.opengles.GL10;
 
 import com.badlogic.androidgames.framework.gl.Camera2D;
 import com.badlogic.androidgames.framework.gl.SpriteBatcher;
-import com.badlogic.androidgames.framework.gl.Vertices;
 import com.badlogic.androidgames.framework.impl.GLGraphics;
 import com.badlogic.androidgames.framework.math.Vector2;
+
+import th.zirata.Settings.Assets;
+import th.zirata.Blocks.ArmorBlock;
+import th.zirata.Blocks.Block;
+import th.zirata.Blocks.BlockRenderer;
+import th.zirata.Blocks.EnemyBlocks.EnemyTurretBlock;
+import th.zirata.Blocks.EnergyBlock;
+import th.zirata.Blocks.TurretBlock;
+import th.zirata.Blocks.Bullet;
+import th.zirata.Settings.PlayerSave;
+import th.zirata.Settings.Settings;
 
 public class WorldRenderer {
 

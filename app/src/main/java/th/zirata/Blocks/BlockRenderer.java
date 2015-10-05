@@ -1,9 +1,10 @@
-package th.zirata;
+package th.zirata.Blocks;
 
 import com.badlogic.androidgames.framework.gl.Camera2D;
 import com.badlogic.androidgames.framework.gl.SpriteBatcher;
-import com.badlogic.androidgames.framework.gl.TextureRegion;
 import com.badlogic.androidgames.framework.math.Vector2;
+
+import th.zirata.Settings.Assets;
 
 /**
  * Created by Max Bauer on 9/26/2015.

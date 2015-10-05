@@ -1,4 +1,4 @@
-package th.zirata;
+package th.zirata.Game;
 
 import com.badlogic.androidgames.framework.DynamicGameObject;
 import com.badlogic.androidgames.framework.math.Vector2;

@@ -1,26 +1,29 @@
-package th.zirata;
+package th.zirata.Blocks;
 
 import android.util.JsonWriter;
-import android.util.Log;
 
 import com.badlogic.androidgames.framework.math.Vector2;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class TurretBlock extends Block{
+import th.zirata.Settings.Assets;
+import th.zirata.Blocks.EnemyBlocks.Enemy;
+import th.zirata.Game.World;
+
+public class TurretBlock extends Block {
 
 
 
-	ArrayList<Bullet> bullets;
+	public ArrayList<Bullet> bullets;
 	int maxBullets;
 	int numBullets;
 	float fireRate;
 	float currTime;
 
-	float fireAngle;
+	public float fireAngle;
 	float fireArcAngle;
-	int fireRange;
+	public int fireRange;
 
 	float coneX1;
 	float coneY1;
@@ -31,7 +34,7 @@ public class TurretBlock extends Block{
 	public static final int TURRET_RELOADING = 1;
 	
 	int bulletDamage;
-	int state;
+	public int state;
 
 	public static String[] UpgradeAttributes = new String[]{"Health", "Damage", "Fire Rate", "Range"};
 	public float[] defaultValueArray = {10, 10, 3, 150};

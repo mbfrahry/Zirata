@@ -1,13 +1,14 @@
-package th.zirata;
+package th.zirata.Blocks;
 
 import android.util.JsonWriter;
 
 import com.badlogic.androidgames.framework.math.Vector2;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
-public class ArmorBlock extends Block{
+import th.zirata.Game.World;
+
+public class ArmorBlock extends Block {
 
 
 	public static String[] UpgradeAttributes = new String[]{"Health"};

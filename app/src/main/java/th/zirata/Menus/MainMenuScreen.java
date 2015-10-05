@@ -1,8 +1,5 @@
-package th.zirata;
+package th.zirata.Menus;
 
-import android.app.Activity;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
@@ -15,10 +12,10 @@ import com.badlogic.androidgames.framework.impl.GLScreen;
 import com.badlogic.androidgames.framework.math.OverlapTester;
 import com.badlogic.androidgames.framework.math.Rectangle;
 import com.badlogic.androidgames.framework.math.Vector2;
-import com.revmob.RevMob;
-import com.revmob.RevMobAdsListener;
 
-import th.zirata.Help.MainHelpScreen;
+import th.zirata.Settings.Assets;
+import th.zirata.Settings.PlayerSave;
+import th.zirata.Settings.Settings;
 
 public class MainMenuScreen extends GLScreen{
 

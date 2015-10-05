@@ -1,4 +1,4 @@
-package th.zirata;
+package th.zirata.Settings;
 
 import com.badlogic.androidgames.framework.FileIO;
 import com.badlogic.androidgames.framework.Music;
@@ -12,6 +12,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+
+import th.zirata.Settings.Settings;
 
 public class Assets {
 

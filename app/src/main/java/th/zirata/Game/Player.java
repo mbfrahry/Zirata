@@ -1,15 +1,21 @@
-package th.zirata;
+package th.zirata.Game;
 
 import com.badlogic.androidgames.framework.math.Vector2;
 
 import java.util.ArrayList;
+
+import th.zirata.Blocks.Block;
+import th.zirata.Blocks.EnergyBlock;
+import th.zirata.Blocks.TurretBlock;
+import th.zirata.Settings.PlayerSave;
+import th.zirata.Settings.Settings;
 
 public class Player {
 
 	public ArrayList<Block> playerBlocks = new ArrayList<Block>();
     public int energy;
 	public boolean power;
-	ArrayList<Block> poweredBlocks;
+	public ArrayList<Block> poweredBlocks;
 	Vector2 velocity;
 
 	public Player(){
