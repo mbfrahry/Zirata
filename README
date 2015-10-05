@@ -3,13 +3,40 @@ Started
   Better UI/Intuitivness
 
 Needs to be done 
+ 
+  Adjust memory problems
 
   Get blocks off ship.
     -If you accidently buy a potential block, should be able to undo
 
   4 or 9 more bosses
     -Swirly whirly
+      -Swirls/whirls around player and spawns enemies at fixed points
+        -Maybe it moves faster the more health it loses and spawns more enemies
+      -It is just outside your range but will dive bomb into your range
+        -Maybe it drops enemy when it dive bombs you
+    -Stealthy healthy
+      -4 armor blocks that regenerate if you can't kill it fast enough
+        - Stealths away and regenerates killed blocks to half health
+    -Splity smitty 
+      -2 armor blocks, 2 turret blocks. One of each split and move around your ship and reconnect. 
+        -EMPs you so you watch it happen the first time
     -Spacey Shootey
+      -500 turret blocks goin all cray cray
+    -Bomby tommy
+      -Drops a ton of mines. Mine battlefield
+    -Block nest monster
+      -A ship composed of block nests. One on each corner. Nests are protected. 
+        -Would need to shoot nests off to get them un-protected
+  
+  Enemy types 
+    Mine blocks
+      Drop mines. Don't hit em
+    Asteroid - currently armor blocks
+    Block Nest
+      -Spawns blocks
+    Warping enemy
+      -When you shoot at it, it warps away
   
   45 more levels
   
