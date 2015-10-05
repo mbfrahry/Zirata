@@ -29,6 +29,8 @@ import th.zirata.Blocks.TurretBlock;
 public class BuildScreen extends GLScreen{
 
 	public Camera2D guiCam;
+	boolean isPanning = false;
+
 	public SpriteBatcher batcher;
 	BlockRenderer blockRenderer;
 	Rectangle backBounds;
@@ -65,6 +67,8 @@ public class BuildScreen extends GLScreen{
 	public BuildScreen(Game game) {
         super(game);
         guiCam = new Camera2D(glGraphics, 320, 480);
+		isPanning = false;
+
         backBounds = new Rectangle(0, 0, 64, 64);
         forwardBounds = new Rectangle(320-120, 0, 120, 60);
 		blockBankTurretBounds  = new Rectangle(0, 160, 80, 40);
@@ -176,6 +180,7 @@ public class BuildScreen extends GLScreen{
 									showBlockBank = true;
 									selectedActiveBlock = currBlock;
 									guiCam.panToPosition(selectedActiveBlock.position.x, selectedActiveBlock.position.y, .5f);
+									isPanning = true;
 									resetBlockBankBounds();
 									showUpgrades = true;
 									showFuse = false;
@@ -195,7 +200,8 @@ public class BuildScreen extends GLScreen{
 							if (OverlapTester.pointInRectangle(pBlockBounds, touchPoint) ){//&& currBlock.getClass() != BlankBlock.class) {
 								selectedActiveBlock = currBlock;
 								guiCam.panToPosition(selectedActiveBlock.position.x, selectedActiveBlock.position.y, .5f);
-								resetBlockBankBounds();
+								isPanning = true;
+								//resetBlockBankBounds();
 								if(testShowFuse()){
 									showFuse = true;
 									showUpgrades = false;
@@ -239,6 +245,7 @@ public class BuildScreen extends GLScreen{
 						}
 						if(OverlapTester.pointInRectangle(closeBankBounds, touchPoint)){
 							guiCam.panToPosition(160, 240, 1);
+							isPanning = true;
 							showBlockBank = false;
 							return;
 						}
@@ -250,9 +257,11 @@ public class BuildScreen extends GLScreen{
 			}
 
 		}
+
 		guiCam.update(deltaTime);
-		if(showBlockBank){
+		if(showBlockBank && isPanning && guiCam.zoom == guiCam.finalZoom){
 			resetBlockBankBounds();
+			isPanning = false;
 		}
 	}
 
@@ -314,6 +323,7 @@ public class BuildScreen extends GLScreen{
 				//TODO Do this mo betta
 				if(!Settings.firstTime) {
 					guiCam.panToPosition(selectedActiveBlock.position.x, selectedActiveBlock.position.y, .5f);
+					isPanning = true;
 				}
 				selectedBankBlock = null;
 				showBlockBank = true;
@@ -349,6 +359,7 @@ public class BuildScreen extends GLScreen{
 			//TODO Do this mo betta
 			if(!Settings.firstTime) {
 				guiCam.panToPosition(selectedActiveBlock.position.x, selectedActiveBlock.position.y, .5f);
+				isPanning = true;
 			}
 			PlayerSave.activeBlocks.add(block);
 			PlayerSave.bankedBlocks.add(block);
