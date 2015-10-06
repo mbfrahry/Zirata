@@ -7,18 +7,30 @@ public class Rectangle {
 	public final Vector2 lowerLeft;
 	public float width, height;
 	public Vector2 rotationAngle;
-	public Vector2[] vertices = new Vector2[4];
+	public Vector2[] vertices;
+	public Vector2[] axes;
+	public Vector2 widthVector;
+	public Vector2 heightVector;
 
 	public Rectangle(float x, float y, float width, float height){
 		this.lowerLeft = new Vector2(x,y);
 		this.width = width;
 		this.height = height;
 		rotationAngle = new Vector2(1,0);
+		vertices = new Vector2[4];
 		vertices[0] = new Vector2();
 		vertices[1] = new Vector2();
 		vertices[2] = new Vector2();
 		vertices[3] = new Vector2();
+		axes = new Vector2[4];
+		axes[0] = new Vector2();
+		axes[1] = new Vector2();
+		axes[2] = new Vector2();
+		axes[3] = new Vector2();
+		widthVector = new Vector2(width, 0);
+		heightVector = new Vector2(0, height);
 		setVertices();
+		setAxes();
 	}
 
 	public Rectangle(float x, float y, float width, float height, Vector2 angle){
@@ -26,11 +38,20 @@ public class Rectangle {
 		this.width = width;
 		this.height = height;
 		this.rotationAngle = angle;
+		vertices = new Vector2[4];
 		vertices[0] = new Vector2();
 		vertices[1] = new Vector2();
 		vertices[2] = new Vector2();
 		vertices[3] = new Vector2();
+		axes = new Vector2[4];
+		axes[0] = new Vector2();
+		axes[1] = new Vector2();
+		axes[2] = new Vector2();
+		axes[3] = new Vector2();
+		widthVector = new Vector2(width, 0);
+		heightVector = new Vector2(0, height);
 		setVertices();
+		setAxes();
 	}
 
 	public Rectangle(Camera2D guiCam, float x, float y, float width, float height){
@@ -42,12 +63,23 @@ public class Rectangle {
 		this.width = width;
 		this.height = height;
 		rotationAngle = new Vector2(1,0);
+		vertices = new Vector2[4];
+		vertices[0] = new Vector2();
+		vertices[1] = new Vector2();
+		vertices[2] = new Vector2();
+		vertices[3] = new Vector2();
+		axes = new Vector2[4];
+		axes[0] = new Vector2();
+		axes[1] = new Vector2();
+		axes[2] = new Vector2();
+		axes[3] = new Vector2();
+		widthVector = new Vector2(width, 0);
+		heightVector = new Vector2(0, height);
+		setVertices();
+		setAxes();
 	}
 
 	public Vector2[] setVertices(){
-
-		Vector2 widthVector = new Vector2(width, 0);
-		Vector2 heightVector = new Vector2(0, height);
 		rotateVector(widthVector);
 		rotateVector(heightVector);
 
@@ -56,6 +88,8 @@ public class Rectangle {
 		vertices[2].set(lowerLeft.x + widthVector.x + heightVector.x, lowerLeft.y + widthVector.y + heightVector.y);
 		vertices[3].set(lowerLeft.x + heightVector.x, lowerLeft.y + heightVector.y);
 
+		widthVector.set(width, 0);
+		heightVector.set(0, height);
 		return vertices;
 	}
 
@@ -66,24 +100,22 @@ public class Rectangle {
 		point.y = (leftX * rotationAngle.y) + leftY * rotationAngle.x;
 	}
 
-	public Vector2[] getAxes(){
-		Vector2[] axes = new Vector2[4];
+	public void setAxes(){
 		for (int i = 0; i < 4; i++) {
 			// get the current vertex
 			Vector2 p1 = vertices[i];
 			// get the next vertex
 			Vector2 p2 = vertices[i + 1 == vertices.length ? 0 : i + 1];
 			// subtract the two to get the edge vector
-			Vector2 edge = new Vector2(p1.x-p2.x, p1.y-p2.y);
+			//Vector2 edge = new Vector2(p1.x-p2.x, p1.y-p2.y);
 			// get either perpendicular vector
-			float temp = edge.x;
-			edge.x = -edge.y;
-			edge.y = temp;
+			//float temp = edge.x;
+			//edge.x = -edge.y;
+			//edge.y = temp;
 			//Vector2 normal = edge.nor();
 
-			axes[i] = edge;
+			axes[i].set(-(p1.y-p2.y), p1.x-p2.x);
 		}
-		return axes;
 	}
 
 	public Vector2 project(Vector2 axis){
@@ -108,8 +140,6 @@ public class Rectangle {
 
 		point.x -= lowerLeft.x;
 		point.y -= lowerLeft.y;
-		Vector2 widthVector = new Vector2(width, 0);
-		Vector2 heightVector = new Vector2(0, height);
 		rotateVector(widthVector);
 		rotateVector(heightVector);
 
@@ -130,6 +160,8 @@ public class Rectangle {
 		}
 
 		point.set(origX, origY);
+		widthVector.set(width, 0);
+		heightVector.set(0, height);
 		return toReturn;
 	}
 }

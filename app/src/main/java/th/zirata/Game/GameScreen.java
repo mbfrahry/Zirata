@@ -63,7 +63,7 @@ public class GameScreen extends GLScreen {
         fpsCounter = new FPSCounter();
 		steerTouches = new HashMap<Integer, Vector2>();
 		powerTouches = new HashMap<Integer, Vector2>();
-
+		pBlockBounds = new Rectangle(0, 0, 25, 25);
     }
 
 	@Override
@@ -106,7 +106,7 @@ public class GameScreen extends GLScreen {
 
 			for (int j = 0; j < world.player.playerBlocks.size(); j++) {
 				Block currBlock = world.player.playerBlocks.get(j);
-				pBlockBounds = new Rectangle(currBlock.position.x - 12, currBlock.position.y - 12, 25, 25);
+				pBlockBounds.lowerLeft.set(currBlock.position.x - 12, currBlock.position.y - 12);
 				if (OverlapTester.pointInRectangle(pBlockBounds, touchPoint)) {
 					touchedBlock = currBlock;
 					break;
