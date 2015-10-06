@@ -353,7 +353,7 @@ public class World {
 	private void updateEnemies(float deltaTime){
 		lastEnemyTime += deltaTime;
 		if(lastEnemyTime > timeToNextEnemy && state != WORLD_STATE_LAST_ENEMY){
-			//generateEnemy();
+			generateEnemy();
 			
 			if(enemyNum % 4 == 0 && timeToNextEnemy > 2){
 				timeToNextEnemy -= 0.5;
