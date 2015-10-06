@@ -161,9 +161,9 @@ public class World {
 	}
 
 	private void updateBackgrounds(float deltaTime){
-		updateBackgroundList(deltaTime, backgrounds, "background", -6);
-		updateBackgroundList(deltaTime, farBackgrounds, "FarStar", -6);
-		updateBackgroundList(deltaTime, nearBackgrounds, "NearStar", -20);
+		updateBackgroundList(deltaTime, backgrounds, "background", -60);
+		updateBackgroundList(deltaTime, farBackgrounds, "FarStar", -60);
+		updateBackgroundList(deltaTime, nearBackgrounds, "NearStar", -100);
 	}
 
 	private void updateBackgroundList(float deltaTime, ArrayList<Background> backgrounds, String sprite, float velocity){
@@ -199,6 +199,8 @@ public class World {
 		//ArrayList<Background> bCopy= new ArrayList<Background>();
 		//bCopy.addAll(backgrounds);
 		if(playerOnBackground == null){
+			//TODO: Temporary workaround for background bug, still need to investigate this
+			backgrounds.clear();
 			playerOnBackground = new Background(0, 0, 320, 480, new Vector2(0, velocity), sprite);
 			playerOnBackground.isRelevant = true;
 			backgrounds.add(playerOnBackground);
@@ -351,7 +353,7 @@ public class World {
 	private void updateEnemies(float deltaTime){
 		lastEnemyTime += deltaTime;
 		if(lastEnemyTime > timeToNextEnemy && state != WORLD_STATE_LAST_ENEMY){
-			generateEnemy();
+			//generateEnemy();
 			
 			if(enemyNum % 4 == 0 && timeToNextEnemy > 2){
 				timeToNextEnemy -= 0.5;
