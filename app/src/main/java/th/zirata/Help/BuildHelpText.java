@@ -1,4 +1,4 @@
-package th.zirata.Settings;
+package th.zirata.Help;
 
 import android.util.JsonReader;
 

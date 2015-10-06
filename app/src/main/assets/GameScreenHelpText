@@ -1,0 +1,132 @@
+{
+  "0": {
+    "Text": "This is the game screen. You will fight the baddest of baddies here. You just need to learn the basics before you start",
+    "TextLocation":{
+      "X": 160,
+      "Y": 240
+    },
+    "Action": false,
+    "Touchpoint": {
+      "X": 0,
+      "Y": 0,
+      "Width": 320,
+      "Height": 480
+    },
+    "hasSprite": false
+  },
+  "1": {
+    "Text": "Turrets require energy, luckily you put an energy block on your ship. Your turret is already powered on, but it's good to know how to turn it on and off. Go ahead and tap it.",
+    "TextLocation":{
+      "X": 160,
+      "Y": 350
+    },
+    "Action": true,
+    "Touchpoint": {
+      "X": 148,
+      "Y": 228,
+      "Width": 25,
+      "Height": 25
+    },
+    "hasSprite" : true,
+    "Sprite":{
+      "X": 160,
+      "Y": 275,
+      "Width": 50,
+      "Height": 50,
+      "SpriteAngle": 270,
+      "SpriteName": "Arrow"
+    }
+  },
+  "2": {
+    "Text": "Great. You'll move faster the less turrets you have on.",
+    "TextLocation":{
+      "X": 160,
+      "Y": 350
+    },
+    "Action": true,
+    "Touchpoint": {
+      "X": 148,
+      "Y": 228,
+      "Width": 25,
+      "Height": 25
+    },
+    "hasSprite" : true,
+    "Sprite":{
+      "X": 160,
+      "Y": 275,
+      "Width": 50,
+      "Height": 50,
+      "SpriteAngle": 270,
+      "SpriteName": "Arrow"
+    }
+  },
+  "3": {
+    "Text": "Let's go ahead and practice rotating. Tap the lower left of the screen and move from right to left and back again.",
+    "TextLocation":{
+      "X": 160,
+      "Y": 350
+    },
+    "Action": true,
+    "Touchpoint": {
+      "X": 148,
+      "Y": 228,
+      "Width": 25,
+      "Height": 25
+    },
+    "hasSprite" : true,
+    "Sprite":{
+      "X": 160,
+      "Y": 275,
+      "Width": 50,
+      "Height": 50,
+      "SpriteAngle": 270,
+      "SpriteName": "Arrow"
+    }
+  },
+  "4": {
+    "Text": "You also have a nifty e-brake at your disposal. Hold it and everything turns off. Let go and everything will turn back. It's a great way to move around faster without turning turrets off.",
+    "TextLocation":{
+      "X": 160,
+      "Y": 350
+    },
+    "Action": true,
+    "Touchpoint": {
+      "X": 148,
+      "Y": 228,
+      "Width": 25,
+      "Height": 25
+    },
+    "hasSprite" : true,
+    "Sprite":{
+      "X": 160,
+      "Y": 275,
+      "Width": 50,
+      "Height": 50,
+      "SpriteAngle": 270,
+      "SpriteName": "Arrow"
+    }
+  },
+  "6": {
+    "Text": "That's about it! Here come some baddies. Good luck out there.",
+    "TextLocation":{
+      "X": 160,
+      "Y": 350
+    },
+    "Action": true,
+    "Touchpoint": {
+      "X": 148,
+      "Y": 228,
+      "Width": 25,
+      "Height": 25
+    },
+    "hasSprite" : true,
+    "Sprite":{
+      "X": 160,
+      "Y": 275,
+      "Width": 50,
+      "Height": 50,
+      "SpriteAngle": 270,
+      "SpriteName": "Arrow"
+    }
+  }
+}

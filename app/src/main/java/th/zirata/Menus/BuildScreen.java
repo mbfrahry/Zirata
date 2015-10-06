@@ -15,6 +15,7 @@ import com.badlogic.androidgames.framework.math.Rectangle;
 import com.badlogic.androidgames.framework.math.Vector2;
 
 import th.zirata.Blocks.ArmorBlock;
+import th.zirata.Help.GameScreenHelp;
 import th.zirata.Settings.Assets;
 import th.zirata.Blocks.BlankBlock;
 import th.zirata.Blocks.Block;
@@ -157,7 +158,7 @@ public class BuildScreen extends GLScreen{
 								Settings.save(game.getFileIO());
 								PlayerSave.save(game.getFileIO());
 								setTurretDirections();
-								game.setScreen(new GameScreen(game));
+								game.setScreen(new GameScreenHelp(game));
 								return;
 							}
 

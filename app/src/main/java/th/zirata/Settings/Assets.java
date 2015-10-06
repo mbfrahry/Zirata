@@ -13,7 +13,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 
-import th.zirata.Settings.Settings;
+import th.zirata.Help.BuildHelpText;
+import th.zirata.Help.GameHelpText;
 
 public class Assets {
 
@@ -48,6 +49,7 @@ public class Assets {
 		PlayerSave.load(game.getFileIO());
 		EnemySettings.load(game.getFileIO());
 		BuildHelpText.load(game.getFileIO());
+        GameHelpText.load(game.getFileIO());
 	}
 
 	private static void addTextures(FileIO files, Texture texture, String filename){

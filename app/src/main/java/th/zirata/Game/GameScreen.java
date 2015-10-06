@@ -15,6 +15,7 @@ import com.badlogic.androidgames.framework.math.OverlapTester;
 import com.badlogic.androidgames.framework.math.Rectangle;
 import com.badlogic.androidgames.framework.math.Vector2;
 
+import th.zirata.Menus.PopupManager;
 import th.zirata.Settings.Assets;
 import th.zirata.Blocks.Block;
 import th.zirata.Menus.EndLevelScreen;
@@ -24,16 +25,16 @@ import th.zirata.Settings.Settings;
 
 
 public class GameScreen extends GLScreen {
-    static final int GAME_READY = 0;    
-    static final int GAME_RUNNING = 1;
+    public static final int GAME_READY = 0;
+    public static final int GAME_RUNNING = 1;
     static final int GAME_PAUSED = 2;
     static final int GAME_LEVEL_END = 3;
     static final int GAME_OVER = 4;
   
-    int state;
-    Camera2D guiCam;
-    Vector2 touchPoint;
-    SpriteBatcher batcher;
+    public int state;
+    public Camera2D guiCam;
+    public Vector2 touchPoint;
+    public SpriteBatcher batcher;
     Rectangle pauseBounds;
     Rectangle resumeBounds;
     Rectangle quitBounds;
@@ -44,6 +45,7 @@ public class GameScreen extends GLScreen {
     FPSCounter fpsCounter;
     HashMap<Integer,Vector2> steerTouches;
 	HashMap<Integer,Vector2> powerTouches;
+    public PopupManager popupManager;
 
 	public GameScreen(Game game) {
         super(game);
@@ -63,6 +65,8 @@ public class GameScreen extends GLScreen {
         fpsCounter = new FPSCounter();
 		steerTouches = new HashMap<Integer, Vector2>();
 		powerTouches = new HashMap<Integer, Vector2>();
+
+        popupManager = new PopupManager(batcher, guiCam);
 		pBlockBounds = new Rectangle(0, 0, 25, 25);
     }
 
@@ -91,7 +95,7 @@ public class GameScreen extends GLScreen {
 	}
 	
 	private void updateReady() {
-		state = GAME_RUNNING;
+
 	}
 
 	private void updateRunning(float deltaTime) {
@@ -290,7 +294,7 @@ public class GameScreen extends GLScreen {
 	        presentGameOver();
 	        break;
 	    }
-	    
+        popupManager.drawUIExtras(deltaTime);
 	    gl.glDisable(GL10.GL_BLEND);
 	    //fpsCounter.logFrame();
 	    

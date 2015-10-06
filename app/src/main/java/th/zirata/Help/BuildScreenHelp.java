@@ -12,7 +12,6 @@ import th.zirata.Blocks.ArmorBlock;
 import th.zirata.Settings.Assets;
 import th.zirata.Blocks.BlankBlock;
 import th.zirata.Blocks.Block;
-import th.zirata.Settings.BuildHelpText;
 import th.zirata.Menus.BuildScreen;
 import th.zirata.Blocks.EnergyBlock;
 import th.zirata.Game.GameScreen;
@@ -104,7 +103,7 @@ public class BuildScreenHelp extends BuildScreen {
                     Settings.firstTime = false;
                     Settings.save(game.getFileIO());
                     PlayerSave.save(game.getFileIO());
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new GameScreenHelp(game));
                     return;
                 }
 
