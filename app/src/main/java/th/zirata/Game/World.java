@@ -22,7 +22,9 @@ import th.zirata.Settings.EnemySettings;
 public class World {
 
 	public static final float WORLD_WIDTH = 320;
+	public Vector2 worldWidthVector;
 	public static final float WORLD_HEIGHT = 480;
+	public Vector2 worldHeightVector;
 	public Vector2 WORLD_MID_POINT;
 	public static final int WORLD_STATE_RUNNING = 0;
 	public static final int WORLD_STATE_LAST_ENEMY = 1;
@@ -98,6 +100,8 @@ public class World {
 				             new Vector2(-1, 0),                   new Vector2(1, 0),
 				             new Vector2(-1, -1), new Vector2(0, -1), new Vector2(1, -1)};
 		currView = new Rectangle(0, 0, 340, 500);
+		worldWidthVector = new Vector2(WORLD_WIDTH, 0);
+		worldHeightVector = new Vector2(0, WORLD_HEIGHT);
 	}
 	
 	public void update(float deltaTime){
@@ -171,6 +175,7 @@ public class World {
 
 		for(int i = 0; i < backgrounds.size(); i++){
 			Background currBackground = backgrounds.get(i);
+			currBackground.isRelevant = false;
 			if(moveLeft || moveRight) {
 				currBackground.rotateConstantVelocity(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
 			}
@@ -178,6 +183,7 @@ public class World {
 			//Rectangle backgroundRect = currBackground.bounds;
 			if(playerOnBackground == null && OverlapTester.pointInRotatedRectangle(currBackground.bounds, WORLD_MID_POINT)){
 				playerOnBackground = currBackground;
+				playerOnBackground.isRelevant = true;
 			}
 //			if(OverlapTester.overlapPolygons(backgroundRect, currView)){
 //				onScreen.add(currBackground);
@@ -186,49 +192,59 @@ public class World {
 //				notOnScreen.add(currBackground);
 //			}
 		}
-		Vector2 widthVector = new Vector2(320, 0);
-		Vector2 heightVector = new Vector2(0, 480);
+//		Vector2 widthVector = new Vector2(320, 0);
+//		Vector2 heightVector = new Vector2(0, 480);
 
-		ArrayList<Background> newBackgrounds = new ArrayList<Background>();
+		//ArrayList<Background> newBackgrounds = new ArrayList<Background>();
 		//ArrayList<Background> bCopy= new ArrayList<Background>();
 		//bCopy.addAll(backgrounds);
 		if(playerOnBackground == null){
 			playerOnBackground = new Background(0, 0, 320, 480, new Vector2(0, velocity), sprite);
-
+			playerOnBackground.isRelevant = true;
+			backgrounds.add(playerOnBackground);
 			//onScreen.add(playerOnBackground);
 		}
 		else{
 			//bCopy.remove(playerOnBackground);
 
 		}
-		newBackgrounds.add(playerOnBackground);
+		//newBackgrounds.add(playerOnBackground);
 
-		playerOnBackground.bounds.rotateVector(widthVector);
-		playerOnBackground.bounds.rotateVector(heightVector);
-
+		//TODO: Already have axes rotated, should be able to go along it 320 and 480...
+		playerOnBackground.bounds.rotateVector(worldWidthVector);
+		playerOnBackground.bounds.rotateVector(worldHeightVector);
+		ArrayList<Vector2> undrawn = null;
 		for(int i = 0; i < grid.length; i++){
-			float widthAdd = grid[i].x*widthVector.x + grid[i].y*heightVector.x;
-			float heightAdd = grid[i].x*widthVector.y + grid[i].y*heightVector.y;
-			Vector2 currSpot = new Vector2(playerOnBackground.position.x + widthAdd, playerOnBackground.position.y + heightAdd);
-			Vector2 currLowerLeft = new Vector2(playerOnBackground.bounds.lowerLeft.x + widthAdd, playerOnBackground.bounds.lowerLeft.y + heightAdd);
+			float widthAdd = grid[i].x*worldWidthVector.x + grid[i].y*worldHeightVector.x;
+			float heightAdd = grid[i].x*worldWidthVector.y + grid[i].y*worldHeightVector.y;
+			float currSpotX = playerOnBackground.position.x + widthAdd;
+			float currSpotY = playerOnBackground.position.y + heightAdd;
+//			float currLowerLeftX = playerOnBackground.bounds.lowerLeft.x + widthAdd;
+//			float currLowerLeftY = playerOnBackground.bounds.lowerLeft.y + heightAdd;
+			//Vector2 currSpot = new Vector2(, );
+			//Vector2 currLowerLeft = new Vector2(, );
 			Background covers = null;
 			//currGrid.add(currSpot);
 			for(int j = 0; j < backgrounds.size(); j++){
-				if (Math.abs(currSpot.x-backgrounds.get(j).position.x) < 5 && Math.abs(currSpot.y - backgrounds.get(j).position.y) < 5){
+				if(backgrounds.get(j).isRelevant){
+					continue;
+				}
+				if (Math.abs(currSpotX-backgrounds.get(j).position.x) < 5 && Math.abs(currSpotY - backgrounds.get(j).position.y) < 5){
 					covers = backgrounds.get(j);
+					covers.isRelevant = true;
 					break;
 				}
 			}
 			if (covers == null) {
-				Background toMove = new Background(currSpot.x, currSpot.y, 320, 480, new Vector2(0, velocity), sprite);
-				toMove.bounds.rotationAngle.set(playerOnBackground.bounds.rotationAngle.x, playerOnBackground.bounds.rotationAngle.y);
-				toMove.position.set(currSpot.x, currSpot.y);
-				toMove.bounds.lowerLeft.set(currLowerLeft.x, currLowerLeft.y);
-				newBackgrounds.add(toMove);
-			}
-			else{
-				//bCopy.remove(covers);
-				newBackgrounds.add(covers);
+				if(undrawn == null){
+					undrawn = new ArrayList<Vector2>();
+				}
+				undrawn.add(grid[i]);
+//				Background toMove = new Background(currSpotX, currSpotY, 320, 480, new Vector2(0, velocity), sprite);
+//				toMove.bounds.rotationAngle.set(playerOnBackground.bounds.rotationAngle.x, playerOnBackground.bounds.rotationAngle.y);
+//				toMove.position.set(currSpot.x, currSpot.y);
+//				toMove.bounds.lowerLeft.set(currLowerLeft.x, currLowerLeft.y);
+//				newBackgrounds.add(toMove);
 			}
 		}
 //		for(int i = 0; i < bCopy.size(); i++){
@@ -237,15 +253,50 @@ public class World {
 //		for(int i = 0; i < newBackgrounds.size(); i++){
 //			backgrounds.add(newBackgrounds.get(i));
 //		}
-		if(sprite.equals("background")){
-			this.backgrounds = newBackgrounds;
+		if(undrawn != null){
+			for (int i = 0; i < undrawn.size(); i++){
+				float widthAdd = undrawn.get(i).x*worldWidthVector.x + undrawn.get(i).y*worldHeightVector.x;
+				float heightAdd = undrawn.get(i).x*worldWidthVector.y + undrawn.get(i).y*worldHeightVector.y;
+				float currSpotX = playerOnBackground.position.x + widthAdd;
+				float currSpotY = playerOnBackground.position.y + heightAdd;
+			    float currLowerLeftX = playerOnBackground.bounds.lowerLeft.x + widthAdd;
+			    float currLowerLeftY = playerOnBackground.bounds.lowerLeft.y + heightAdd;
+				Background toMove = null;
+				for(Background b : backgrounds){
+					if (!b.isRelevant){
+						toMove = b;
+						break;
+					}
+				}
+				if(toMove == null){
+				    toMove = new Background(currSpotX, currSpotY, 320, 480, new Vector2(0, velocity), sprite);
+		    		toMove.bounds.rotationAngle.set(playerOnBackground.bounds.rotationAngle.x, playerOnBackground.bounds.rotationAngle.y);
+				    toMove.position.set(currSpotX, currSpotY);
+				    toMove.bounds.lowerLeft.set(currLowerLeftX, currLowerLeftY);
+					toMove.bounds.setVertices();
+					toMove.isRelevant = true;
+				    backgrounds.add(toMove);
+				}
+				else{
+					toMove.bounds.rotationAngle.set(playerOnBackground.bounds.rotationAngle.x, playerOnBackground.bounds.rotationAngle.y);
+					toMove.position.set(currSpotX, currSpotY);
+					toMove.bounds.lowerLeft.set(currLowerLeftX, currLowerLeftY);
+					toMove.bounds.setVertices();
+					toMove.isRelevant = true;
+				}
+			}
 		}
-		else if(sprite.equals("FarStar")){
-			this.farBackgrounds = newBackgrounds;
-		}
-		else{
-			this.nearBackgrounds = newBackgrounds;
-		}
+		worldWidthVector.set(WORLD_WIDTH, 0);
+		worldHeightVector.set(0, WORLD_HEIGHT);
+//		if(sprite.equals("background")){
+//			this.backgrounds = newBackgrounds;
+//		}
+//		else if(sprite.equals("FarStar")){
+//			this.farBackgrounds = newBackgrounds;
+//		}
+//		else{
+//			this.nearBackgrounds = newBackgrounds;
+//		}
 	}
 
 	private void updatePlayer(float deltaTime){

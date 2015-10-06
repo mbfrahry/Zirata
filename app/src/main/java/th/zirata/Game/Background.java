@@ -9,16 +9,20 @@ import com.badlogic.androidgames.framework.math.Vector2;
 public class Background extends DynamicGameObject {
 
     String type;
+    boolean isRelevant;
+
     public Background(float x, float y, float width, float height, Vector2 velocity, String type) {
         super(x, y, width, height);
         this.velocity.set(velocity);
         this.type = type;
+        this.isRelevant = true;
     }
 
     public Background(float x, float y, float width, float height, Vector2 velocity, String type, Vector2 angle) {
         super(x, y, width, height, angle);
         this.velocity.set(velocity);
         this.type = type;
+        this.isRelevant = true;
     }
 
     public void update(float deltaTime){
