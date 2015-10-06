@@ -23,12 +23,12 @@ public class GameScreenHelp extends GameScreen {
     public GameScreenHelp(Game game){
         super(game);
         tutorialNum = 0;
-        currStep = BuildHelpText.tutorialSteps.get(tutorialNum);
-
+        currStep = GameHelpText.tutorialSteps.get(tutorialNum);
         state = GAME_RUNNING;
     }
 
     public void update(float deltaTime){
+        popupManager.updatePopups(deltaTime);
         if(popupManager.getPopupsSize() < 3) {
             String text = currStep.content;
             popupManager.generatePopup(text, currStep.contentLocation.x, currStep.contentLocation.y, 999f);
@@ -65,9 +65,12 @@ public class GameScreenHelp extends GameScreen {
                     if(currStep.action) {
                         checkTouchEvent(deltaTime, touchPoint);
                     }
-                    if(tutorialNum < 15){
+                    if(tutorialNum < 5){
                         tutorialNum +=1;
-                        currStep = BuildHelpText.tutorialSteps.get(tutorialNum);
+                        currStep = GameHelpText.tutorialSteps.get(tutorialNum);
+                    }
+                    else{
+                        game.setScreen(new GameScreen(game));
                     }
                 }
             }
@@ -76,7 +79,10 @@ public class GameScreenHelp extends GameScreen {
     }
 
     public void checkTouchEvent(float deltaTime, Vector2 touchPoint) {
-
+        if (OverlapTester.pointInRectangle(pauseBounds, touchPoint) ) {
+            state = GAME_PAUSED;
+            return;
+        }
 
     }
 }

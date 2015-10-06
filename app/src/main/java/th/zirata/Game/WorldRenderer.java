@@ -9,6 +9,7 @@ import com.badlogic.androidgames.framework.gl.SpriteBatcher;
 import com.badlogic.androidgames.framework.impl.GLGraphics;
 import com.badlogic.androidgames.framework.math.Vector2;
 
+import th.zirata.Menus.PopupManager;
 import th.zirata.Settings.Assets;
 import th.zirata.Blocks.ArmorBlock;
 import th.zirata.Blocks.Block;
@@ -29,14 +30,16 @@ public class WorldRenderer {
 	Camera2D cam;
 	SpriteBatcher batcher;
 	BlockRenderer blockRenderer;
+    PopupManager popupManager;
 	
-	public WorldRenderer(GLGraphics glGraphics, SpriteBatcher batcher, World world){
+	public WorldRenderer(GLGraphics glGraphics, SpriteBatcher batcher, World world, PopupManager popManager){
 		this.glGraphics = glGraphics;
 		this.world = world;
         this.cam = new Camera2D(glGraphics, FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
 		this.batcher = batcher;
 		setTurretDirections();
 		blockRenderer = new BlockRenderer();
+        this.popupManager = popManager;
 	}
 	
 	public  void render(){
@@ -45,10 +48,10 @@ public class WorldRenderer {
 		GL10 gl = glGraphics.getGL();
 		gl.glEnable(GL10.GL_BLEND);
 		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
-
 		batcher.beginBatch(Assets.imageTextures);
 		renderBackground();
 		renderObjects();
+        popupManager.drawUIExtras();
 		batcher.endBatch();
 
 		gl.glDisable(GL10.GL_BLEND);

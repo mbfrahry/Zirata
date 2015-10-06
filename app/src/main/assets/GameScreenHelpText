@@ -22,10 +22,10 @@
     },
     "Action": true,
     "Touchpoint": {
-      "X": 148,
-      "Y": 228,
-      "Width": 25,
-      "Height": 25
+      "X": 0,
+      "Y": 0,
+      "Width": 320,
+      "Height": 480
     },
     "hasSprite" : true,
     "Sprite":{
@@ -45,10 +45,10 @@
     },
     "Action": true,
     "Touchpoint": {
-      "X": 148,
-      "Y": 228,
-      "Width": 25,
-      "Height": 25
+      "X": 0,
+      "Y": 0,
+      "Width": 320,
+      "Height": 480
     },
     "hasSprite" : true,
     "Sprite":{
@@ -68,10 +68,10 @@
     },
     "Action": true,
     "Touchpoint": {
-      "X": 148,
-      "Y": 228,
-      "Width": 25,
-      "Height": 25
+      "X": 0,
+      "Y": 0,
+      "Width": 320,
+      "Height": 480
     },
     "hasSprite" : true,
     "Sprite":{
@@ -91,10 +91,10 @@
     },
     "Action": true,
     "Touchpoint": {
-      "X": 148,
-      "Y": 228,
-      "Width": 25,
-      "Height": 25
+      "X": 0,
+      "Y": 0,
+      "Width": 320,
+      "Height": 480
     },
     "hasSprite" : true,
     "Sprite":{
@@ -114,10 +114,10 @@
     },
     "Action": true,
     "Touchpoint": {
-      "X": 148,
-      "Y": 228,
-      "Width": 25,
-      "Height": 25
+      "X": 0,
+      "Y": 0,
+      "Width": 320,
+      "Height": 480
     },
     "hasSprite" : true,
     "Sprite":{

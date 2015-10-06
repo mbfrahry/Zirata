@@ -144,6 +144,52 @@ public class PopupManager {
         }
     }
 
+    public void drawUIExtras() {
+		/*UI Extra format
+		string type: <sprite,text>
+		string content: <spriteName, textToShow>
+		float x: <position x>
+		float y: <position y>
+		float width: <width>
+		float height: <height>
+		float timeToDisplay: <timeToDisplay>
+		if type == text
+		    string color: <red, white>
+            string justification: <left,right,center>
+		if type == sprite
+		    float angle: <rotationAngle>
+		 */
+
+        for (int i = 0; i < popups.size(); i++) {
+            HashMap currEvent = popups.get(i);
+
+            if (currEvent.get("type").equals("text")) {
+                drawTextExtra(currEvent);
+            } else {
+                drawSpriteExtra(currEvent);
+            }
+        }
+    }
+
+    public void updatePopups(float deltaTime){
+        ArrayList<Integer> toDelete = new ArrayList<Integer>();
+        for(int i = 0; i < popups.size(); i++){
+            HashMap currEvent = popups.get(i);
+            float time = (Float)currEvent.get("timeToDisplay");
+            if(time - deltaTime < 0){
+                toDelete.add(i);
+            }
+            else{
+                time -= deltaTime;
+                currEvent.put("timeToDisplay", time);
+            }
+        }
+        for(int i = toDelete.size()-1; i >= 0; i--){
+            popups.remove((int) toDelete.get(i));
+        }
+
+    }
+
     public synchronized void clearUIExtras(){
         for(int i = 0; i < popups.size(); i++){
             popups.get(i).put("timeToDisplay", 0f);

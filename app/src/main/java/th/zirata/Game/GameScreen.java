@@ -27,7 +27,7 @@ import th.zirata.Settings.Settings;
 public class GameScreen extends GLScreen {
     public static final int GAME_READY = 0;
     public static final int GAME_RUNNING = 1;
-    static final int GAME_PAUSED = 2;
+    public static final int GAME_PAUSED = 2;
     static final int GAME_LEVEL_END = 3;
     static final int GAME_OVER = 4;
   
@@ -35,7 +35,7 @@ public class GameScreen extends GLScreen {
     public Camera2D guiCam;
     public Vector2 touchPoint;
     public SpriteBatcher batcher;
-    Rectangle pauseBounds;
+    public Rectangle pauseBounds;
     Rectangle resumeBounds;
     Rectangle quitBounds;
     Rectangle pBlockBounds;
@@ -56,8 +56,9 @@ public class GameScreen extends GLScreen {
 
         PlayerSave.load(game.getFileIO());
 
+        popupManager = new PopupManager(batcher, guiCam);
         world = new World();
-        renderer = new WorldRenderer(glGraphics, batcher, world);
+        renderer = new WorldRenderer(glGraphics, batcher, world, popupManager);
         pauseBounds = new Rectangle(320- 64, 480- 64, 64, 64);
         resumeBounds = new Rectangle(0, 220, 320, 50);
         quitBounds = new Rectangle(0, 175, 320, 50);
@@ -66,13 +67,12 @@ public class GameScreen extends GLScreen {
 		steerTouches = new HashMap<Integer, Vector2>();
 		powerTouches = new HashMap<Integer, Vector2>();
 
-        popupManager = new PopupManager(batcher, guiCam);
 		pBlockBounds = new Rectangle(0, 0, 25, 25);
     }
 
 	@Override
 	public void update(float deltaTime) {
-		
+		popupManager.updatePopups(deltaTime);
 	    switch(state) {
 	    case GAME_READY:
 	        updateReady();
@@ -95,7 +95,7 @@ public class GameScreen extends GLScreen {
 	}
 	
 	private void updateReady() {
-
+        state = GAME_RUNNING;
 	}
 
 	private void updateRunning(float deltaTime) {
@@ -276,7 +276,7 @@ public class GameScreen extends GLScreen {
 	    	    
 	    gl.glEnable(GL10.GL_BLEND);
 	    gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
-	    
+
 	    switch(state) {
 	    case GAME_READY:
 	        presentReady();
@@ -294,7 +294,7 @@ public class GameScreen extends GLScreen {
 	        presentGameOver();
 	        break;
 	    }
-        popupManager.drawUIExtras(deltaTime);
+
 	    gl.glDisable(GL10.GL_BLEND);
 	    //fpsCounter.logFrame();
 	    
