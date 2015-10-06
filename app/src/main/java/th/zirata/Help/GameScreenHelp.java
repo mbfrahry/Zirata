@@ -7,6 +7,7 @@ import com.badlogic.androidgames.framework.math.Vector2;
 
 import java.util.List;
 
+import th.zirata.Blocks.Block;
 import th.zirata.Game.GameScreen;
 import th.zirata.Menus.PopupManager;
 import th.zirata.Settings.Assets;
@@ -79,10 +80,33 @@ public class GameScreenHelp extends GameScreen {
     }
 
     public void checkTouchEvent(float deltaTime, Vector2 touchPoint) {
+        Block touchedBlock = null;
+
+        for (int j = 0; j < world.player.playerBlocks.size(); j++) {
+            Block currBlock = world.player.playerBlocks.get(j);
+            pBlockBounds.lowerLeft.set(currBlock.position.x - 12, currBlock.position.y - 12);
+            if (OverlapTester.pointInRectangle(pBlockBounds, touchPoint)) {
+                touchedBlock = currBlock;
+                break;
+            }
+        }
+
         if (OverlapTester.pointInRectangle(pauseBounds, touchPoint) ) {
             state = GAME_PAUSED;
             return;
         }
 
+        if(touchedBlock != null){
+            if (!touchedBlock.active && touchedBlock.energyCost <= world.player.energy) {
+                touchedBlock.active = true;
+                if(touchedBlock.energyCost > 0) {
+                    world.player.poweredBlocks.add(touchedBlock);
+                }
+            } else {
+                touchedBlock.active = false;
+                world.player.poweredBlocks.remove(touchedBlock);
+            }
+            return;
+        }
     }
 }

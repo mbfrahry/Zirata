@@ -36,11 +36,11 @@ public class GameScreen extends GLScreen {
     public Vector2 touchPoint;
     public SpriteBatcher batcher;
     public Rectangle pauseBounds;
-    Rectangle resumeBounds;
-    Rectangle quitBounds;
-    Rectangle pBlockBounds;
-	Rectangle powerBounds;
-    World world;
+    public Rectangle resumeBounds;
+    public Rectangle quitBounds;
+    public Rectangle pBlockBounds;
+	public Rectangle powerBounds;
+    public World world;
     WorldRenderer renderer;
     FPSCounter fpsCounter;
     HashMap<Integer,Vector2> steerTouches;
