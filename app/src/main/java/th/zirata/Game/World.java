@@ -167,11 +167,7 @@ public class World {
 	}
 
 	private void updateBackgroundList(float deltaTime, ArrayList<Background> backgrounds, String sprite, float velocity){
-		//ArrayList<Background> onScreen = new ArrayList<Background>();
-		//ArrayList<Background> notOnScreen = new ArrayList<Background>();
 		Background playerOnBackground = null;
-
-		//Rectangle currView = new Rectangle(0, 0, 340, 500);
 
 		for(int i = 0; i < backgrounds.size(); i++){
 			Background currBackground = backgrounds.get(i);
@@ -180,38 +176,22 @@ public class World {
 				currBackground.rotateConstantVelocity(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
 			}
 			backgrounds.get(i).update(deltaTime);
-			//Rectangle backgroundRect = currBackground.bounds;
 			if(playerOnBackground == null && OverlapTester.pointInRotatedRectangle(currBackground.bounds, WORLD_MID_POINT)){
 				playerOnBackground = currBackground;
 				playerOnBackground.isRelevant = true;
 			}
-//			if(OverlapTester.overlapPolygons(backgroundRect, currView)){
-//				onScreen.add(currBackground);
-//			}
-//			else{
-//				notOnScreen.add(currBackground);
-//			}
 		}
-//		Vector2 widthVector = new Vector2(320, 0);
-//		Vector2 heightVector = new Vector2(0, 480);
 
-		//ArrayList<Background> newBackgrounds = new ArrayList<Background>();
-		//ArrayList<Background> bCopy= new ArrayList<Background>();
-		//bCopy.addAll(backgrounds);
 		if(playerOnBackground == null){
 			//TODO: Temporary workaround for background bug, still need to investigate this
-			backgrounds.clear();
+			if(backgrounds.size() > 0){
+				Log.d("SKIPPING", "***************");
+				return;
+			}
 			playerOnBackground = new Background(0, 0, 320, 480, new Vector2(0, velocity), sprite);
 			playerOnBackground.isRelevant = true;
 			backgrounds.add(playerOnBackground);
-			//onScreen.add(playerOnBackground);
 		}
-		else{
-			//bCopy.remove(playerOnBackground);
-
-		}
-		//newBackgrounds.add(playerOnBackground);
-
 		//TODO: Already have axes rotated, should be able to go along it 320 and 480...
 		playerOnBackground.bounds.rotateVector(worldWidthVector);
 		playerOnBackground.bounds.rotateVector(worldHeightVector);
@@ -221,12 +201,7 @@ public class World {
 			float heightAdd = grid[i].x*worldWidthVector.y + grid[i].y*worldHeightVector.y;
 			float currSpotX = playerOnBackground.position.x + widthAdd;
 			float currSpotY = playerOnBackground.position.y + heightAdd;
-//			float currLowerLeftX = playerOnBackground.bounds.lowerLeft.x + widthAdd;
-//			float currLowerLeftY = playerOnBackground.bounds.lowerLeft.y + heightAdd;
-			//Vector2 currSpot = new Vector2(, );
-			//Vector2 currLowerLeft = new Vector2(, );
 			Background covers = null;
-			//currGrid.add(currSpot);
 			for(int j = 0; j < backgrounds.size(); j++){
 				if(backgrounds.get(j).isRelevant){
 					continue;
@@ -242,19 +217,8 @@ public class World {
 					undrawn = new ArrayList<Vector2>();
 				}
 				undrawn.add(grid[i]);
-//				Background toMove = new Background(currSpotX, currSpotY, 320, 480, new Vector2(0, velocity), sprite);
-//				toMove.bounds.rotationAngle.set(playerOnBackground.bounds.rotationAngle.x, playerOnBackground.bounds.rotationAngle.y);
-//				toMove.position.set(currSpot.x, currSpot.y);
-//				toMove.bounds.lowerLeft.set(currLowerLeft.x, currLowerLeft.y);
-//				newBackgrounds.add(toMove);
 			}
 		}
-//		for(int i = 0; i < bCopy.size(); i++){
-//			backgrounds.remove(bCopy.get(i));
-//		}
-//		for(int i = 0; i < newBackgrounds.size(); i++){
-//			backgrounds.add(newBackgrounds.get(i));
-//		}
 		if(undrawn != null){
 			for (int i = 0; i < undrawn.size(); i++){
 				float widthAdd = undrawn.get(i).x*worldWidthVector.x + undrawn.get(i).y*worldHeightVector.x;
@@ -290,15 +254,6 @@ public class World {
 		}
 		worldWidthVector.set(WORLD_WIDTH, 0);
 		worldHeightVector.set(0, WORLD_HEIGHT);
-//		if(sprite.equals("background")){
-//			this.backgrounds = newBackgrounds;
-//		}
-//		else if(sprite.equals("FarStar")){
-//			this.farBackgrounds = newBackgrounds;
-//		}
-//		else{
-//			this.nearBackgrounds = newBackgrounds;
-//		}
 	}
 
 	private void updatePlayer(float deltaTime){
@@ -405,7 +360,7 @@ public class World {
 	}
 	
 	public void generateEnemyBullet(EnemyTurretBlock tBlock){
-		if(tBlock.state == tBlock.TURRET_READY && tBlock.bullets.size() < 1){
+		if(tBlock.state == TurretBlock.TURRET_READY && tBlock.bullets.size() < 1){
 			if(player.playerBlocks.size() > 0){
 				Block randBlock = player.playerBlocks.get(Math.abs(rand.nextInt()) % player.playerBlocks.size());
 				enemyBullets.add(new Bullet(tBlock.position.x, tBlock.position.y,randBlock.position.x, randBlock.position.y, tBlock.bulletDamage, tBlock.fireRange));
@@ -427,7 +382,6 @@ public class World {
 		double[] enemyLevelSettings = EnemySettings.enemiesInLevel.get(levelName);
 		if((int)enemyLevelSettings[0] > enemyNum) {
 			Enemy e = EnemySettings.getEnemy(Settings.currLevel);
-			//Enemy e = EnemySettings.getBoss("Hydra");
 			e.editBlockAttributes();
 			for (Block b : e.enemyBlocks) {
 				b.rotate(world_sin, world_cos, WORLD_MID_POINT);
