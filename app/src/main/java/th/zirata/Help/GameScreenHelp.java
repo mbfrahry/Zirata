@@ -29,6 +29,7 @@ public class GameScreenHelp extends GameScreen {
     }
 
     public void update(float deltaTime){
+        world.updateBackgrounds(deltaTime);
         popupManager.updatePopups(deltaTime);
         if(popupManager.getPopupsSize() < 3) {
             String text = currStep.content;
