@@ -160,10 +160,10 @@ public class World {
 		}
 	}
 
-	private void updateBackgrounds(float deltaTime){
-		updateBackgroundList(deltaTime, backgrounds, "background", -60);
-		updateBackgroundList(deltaTime, farBackgrounds, "FarStar", -60);
-		updateBackgroundList(deltaTime, nearBackgrounds, "NearStar", -100);
+	public void updateBackgrounds(float deltaTime){
+		updateBackgroundList(deltaTime, backgrounds, "background", -6);
+		updateBackgroundList(deltaTime, farBackgrounds, "FarStar", -6);
+		updateBackgroundList(deltaTime, nearBackgrounds, "NearStar", -10);
 	}
 
 	private void updateBackgroundList(float deltaTime, ArrayList<Background> backgrounds, String sprite, float velocity){
