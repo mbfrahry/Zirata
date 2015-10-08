@@ -158,7 +158,7 @@ public class BuildScreen extends GLScreen{
 								Settings.save(game.getFileIO());
 								PlayerSave.save(game.getFileIO());
 								setTurretDirections();
-								game.setScreen(new GameScreenHelp(game));
+								game.setScreen(new GameScreen (game));
 								return;
 							}
 
