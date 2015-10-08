@@ -75,7 +75,6 @@ public abstract class Block extends DynamicGameObject {
 		else{
 			return (int)(5*Math.pow(2,2*blockLevel-3));
 		}
-
 	}
 
 	public boolean checkDeath(){

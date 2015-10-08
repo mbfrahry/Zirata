@@ -132,7 +132,6 @@ public class TurretBlock extends Block {
 				}
 			}
 		}
-
 	}
 
 	private int[] enemyInRange(ArrayList<Enemy> enemies){
@@ -173,13 +172,6 @@ public class TurretBlock extends Block {
 				numBullets = 0;
 			}
 		}
-		for(int i = 0; i < World.playerBullets.size(); i++){
-			World.playerBullets.get(i).update(deltaTime);
-			if(World.playerBullets.get(i).outOfBounds()){
-				World.playerBullets.remove(i);
-			}
-		}
-
 	}
 
 	public void writeExtraInfo(JsonWriter writer) throws IOException {
