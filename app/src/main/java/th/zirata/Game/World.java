@@ -402,7 +402,6 @@ public class World {
 				}
 			}
 			enemies.add(e);
-			enemies.add(e);
 		}
 
 	}
