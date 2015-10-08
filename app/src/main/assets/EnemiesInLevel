@@ -1,33 +1,32 @@
 {
   "level1": {
     "enemyNumber": 5,
-    "enemyLevel": 1,
-    "turretChance": 0,
+    "enemyLevel": [1],
+    "enemyChance": [1],
     "bossNum": -1
   },
   "level2": {
     "enemyNumber": 10,
-    "enemyLevel": 1,
-    "turretChance": 0.25,
+    "enemyLevel": [1],
+    "enemyChance": [1],
     "bossNum": -1
   },
   "level3": {
     "enemyNumber": 10,
-    "enemyLevel": 2,
-    "turretChance": 0,
+    "enemyLevel": [2],
+    "enemyChance": [1],
     "bossNum": -1
   },
   "level4": {
     "enemyNumber": 1,
-    "enemyLevel": 2,
-    "turretChance": 0.25,
+    "enemyLevel": [2],
+    "enemyChance": [1],
     "bossNum": 1
   },
   "level5": {
     "enemyNumber": 500,
-    "enemyLevel": 5,
-    "turretChance": 0,
+    "enemyLevel": [5],
+    "enemyChance": [1],
     "bossNum": -1
   }
-  
 }

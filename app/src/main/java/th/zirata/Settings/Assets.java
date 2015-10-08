@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 
+import th.zirata.Game.Level;
 import th.zirata.Help.BuildHelpText;
 import th.zirata.Help.GameHelpText;
 
@@ -47,7 +48,11 @@ public class Assets {
 
 		Settings.load(game.getFileIO());
 		PlayerSave.load(game.getFileIO());
-		EnemySettings.load(game.getFileIO());
+		Level level4 = EnemySettings.loadLevel(game.getFileIO(), "level4");
+		Level level1 =  EnemySettings.loadLevel(game.getFileIO(), "level1");
+		Level level5 = EnemySettings.loadLevel(game.getFileIO(), "level5");
+		Level leve3l = EnemySettings.loadLevel(game.getFileIO(), "level3");
+		Level level2 = EnemySettings.loadLevel(game.getFileIO(), "level2");
 		BuildHelpText.load(game.getFileIO());
         GameHelpText.load(game.getFileIO());
 	}

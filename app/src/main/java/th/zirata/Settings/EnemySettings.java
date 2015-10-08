@@ -11,6 +11,7 @@ import java.util.Random;
 
 import th.zirata.Blocks.EnemyBlocks.Enemy;
 import th.zirata.Blocks.EnemyBlocks.Hydra;
+import th.zirata.Game.Level;
 
 /**
  * Created by Matthew on 9/20/2015.
@@ -19,16 +20,15 @@ public class EnemySettings {
 
     public static HashMap<String, double[]> enemiesInLevel = new HashMap<String, double[]>();
     public static HashMap<String, double[]> bossInLevel = new HashMap<String, double[]>();
+    public static int ENEMYTYPES = 1;
 
-//    public EnemySettings(){
-//        enemiesInLevel = new HashMap<String, int[]>();
-//    }
 
-    public static void load(FileIO files){
+    public static Level loadLevel(FileIO files, String levelName){
         JsonReader reader = null;
+        Level level = null;
         try {
             reader = new JsonReader(new InputStreamReader(files.readAsset("EnemiesInLevel"), "UTF-8"));
-            readEnemy(reader);
+            level = readLevel(reader, levelName);
         }catch(IOException e){
 
         }finally{
@@ -39,38 +39,48 @@ public class EnemySettings {
 
             }
         }
+        return level;
     }
 
-    public static void readEnemiesArray(JsonReader reader) throws IOException {
-
-        while (reader.hasNext()) {
-            readEnemy(reader);
-        }
-    }
-
-    public static void readEnemy(JsonReader reader) throws IOException{
-        String level = null;
+    public static Level readLevel(JsonReader reader, String levelName) throws IOException{
+        Level level = null;
         reader.beginObject();
         while (reader.hasNext()) {
             String name = reader.nextName();
 
+
             reader.beginObject();
             String enemyNumName = reader.nextName();
             int enemyNum = reader.nextInt();
-            String enemyLevel = reader.nextName();
-            int enemyLevelnum = reader.nextInt();
+
+            String enemyLevelName = reader.nextName();
+            int[] enemyLevel = new int[ENEMYTYPES];
+            reader.beginArray();
+            for (int i = 0; i < ENEMYTYPES; i++) {
+                enemyLevel[i] = reader.nextInt();
+            }
+            reader.endArray();
+
             String turretChance = reader.nextName();
-            double turretChanceNum = reader.nextDouble();
+            double[] enemyChance = new double[ENEMYTYPES];
+            reader.beginArray();
+            for (int i = 0; i < ENEMYTYPES; i++) {
+                enemyChance[i] = reader.nextDouble();
+            }
+            reader.endArray();
+
             String bossNumName = reader.nextName();
             int bossNum = reader.nextInt();
-            double[] levelData = {enemyNum, enemyLevelnum, turretChanceNum, bossNum};
-            enemiesInLevel.put(name, levelData);
 
+            if(name.equals(levelName)) {
+                level = new Level(enemyNum, enemyLevel, enemyChance, bossNum);
+                break;
+            }
             reader.endObject();
 
         }
 
-        reader.endObject();
+        return level;
     }
 
     public static Enemy getEnemy(int level){
@@ -85,7 +95,8 @@ public class EnemySettings {
         else{
           enemyType = 2;
         }
-        return new Enemy(enemyType, Settings.currLevel);
+       // return new Enemy(enemyType, Settings.currLevel);
+        return null; //yo mama
     }
 
     public static Enemy getBoss(String type){

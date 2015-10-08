@@ -15,19 +15,23 @@ public class Enemy{
 	public ArrayList<Block> enemyBlocks;
 	Random rand;
 	int enemyLevel;
-	int enemyType;
+    int[] blockTypes;
+    boolean constantVelocity;
 	
-	public Enemy(int enemyType, int enemyLevel){
+	public Enemy(int[] blockTypes, int enemyLevel ){
 		enemyBlocks = new ArrayList<Block>();
 		rand = new Random();
-		this.enemyType = enemyType;
 		this.enemyLevel = enemyLevel;
+        this.blockTypes = blockTypes;
+        constantVelocity = false;
 	}
+    public Enemy(int  enemyLevel){
 
-	public void editBlockAttributes(){
+    }
+
+	public float[] generateBlockAttributes(){
 		float num = rand.nextFloat();
-		
-		int health = 10;
+
 		float x;
 		float y;
 		float multiplier = 1;
@@ -57,15 +61,9 @@ public class Enemy{
 		double angle = Math.atan((240-y)/(160-x));
 		double xVelocity = multiplier*Math.cos(angle)*10;
 		double yVelocity = multiplier*Math.sin(angle)*10;
-		generateBlock(enemyType, health, x, y, (float)xVelocity, (float)yVelocity);
 
-		if(enemyType == 1){
-			//ArmorBlock special actions
-
-		}
-		else if(enemyType == 2){
-			//TurretBlock special actions
-		}
+        float[] attributes = {x, y, (float) xVelocity, (float)yVelocity};
+        return attributes;
 	}
 
 
@@ -80,14 +78,6 @@ public class Enemy{
 		}
 		newEnemyBlock.velocity.add(xVelocity, yVelocity);
 		enemyBlocks.add(newEnemyBlock);
-		/*
-		newEnemyBlock = new ArmorBlock(x, y, health * enemyLevel, enemyLevel);
-		newEnemyBlock.velocity.add(xVelocity, yVelocity);
-		enemyBlocks.add(newEnemyBlock);
-		newEnemyBlock = new EnemyTurretBlock(x + 25, y, health * enemyLevel / 2, 3 * enemyLevel);
-		newEnemyBlock.velocity.add(xVelocity, yVelocity);
-		enemyBlocks.add(newEnemyBlock);*/
-
 	}
 	
 	public boolean checkDead(){
@@ -107,7 +97,7 @@ public class Enemy{
 				v.add(currBlock.velocity.x * deltaTime, currBlock.velocity.y * deltaTime);
 			}
 			currBlock.bounds.rotationAngle.set(world.world_cos, world.world_sin);
-			currBlock.update(deltaTime);
+            currBlock.update(deltaTime);
 			if(currBlock.checkDeath()){
 				enemyBlocks.remove(i);
 				Assets.playSound(Assets.explosionSound);

@@ -80,7 +80,7 @@ public class Settings {
 		enemyHealth = 10;
 		numEnemies = 10;
 		currLevel = 1;
-		maxLevel = 1;
+		maxLevel = 5;
 		firstTime = true;
 	}
 

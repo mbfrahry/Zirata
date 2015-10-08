@@ -382,7 +382,6 @@ public class World {
 		double[] enemyLevelSettings = EnemySettings.enemiesInLevel.get(levelName);
 		if((int)enemyLevelSettings[0] > enemyNum) {
 			Enemy e = EnemySettings.getEnemy(Settings.currLevel);
-			e.editBlockAttributes();
 			for (Block b : e.enemyBlocks) {
 				b.rotate(world_sin, world_cos, WORLD_MID_POINT);
 			}
