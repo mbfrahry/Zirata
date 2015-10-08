@@ -1,10 +1,14 @@
+Schedule:
+Finalize block builder - done on 10/10
+Enemies/Easy level creation - done by 10/13
+Bosses/Map Exploration - done by 10/18
+Block visual upgrades - done by 10/21
+
 Started
   Tutorial for Game Screen
   Better UI/Intuitivness
 
-Needs to be done 
- 
-  Adjust memory problems
+Needs to be done
 
   Get blocks off ship.
     -If you accidently buy a potential block, should be able to undo
@@ -47,10 +51,7 @@ Needs to be done
     Freeze Block
     etc
   
-  Show offscreen enemies with a red area 
-  
-  Unique enemy movements
-    -aka galaga movements
+  Show offscreen enemies with a red area
     
   Bugs:
     Sometimes data doesn't seem to get cleared out when reset button is hit, this causes the tutorial to crash(no idea why yet...).
