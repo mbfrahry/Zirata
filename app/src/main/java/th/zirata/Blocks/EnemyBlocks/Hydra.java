@@ -23,7 +23,7 @@ public class Hydra extends Enemy {
         super( blockLevel);
         constantVelocity = true;
         this.x = 150;
-        this.y = 150;
+        this.y = 380;
         this.blockLevel = blockLevel;
         blocksPerDirection = new int[] {1,1,1};
         createHydra();
@@ -34,7 +34,7 @@ public class Hydra extends Enemy {
         enemyBlocks.add(new ArmorBlock(x, y, blockLevel*10, blockLevel));
         enemyBlocks.add(new EnemyTurretBlock(x+25, y, blockLevel*3, blockLevel));
         enemyBlocks.add(new EnemyTurretBlock(x-25, y, blockLevel*3, blockLevel));
-        enemyBlocks.add(new EnemyTurretBlock(x, y+25, blockLevel*3, blockLevel));
+        enemyBlocks.add(new EnemyTurretBlock(x, y-25, blockLevel*3, blockLevel));
         for(int i = 0; i < enemyBlocks.size(); i++){
             enemyBlocks.get(i).velocity.set(0, -10);
         }
@@ -83,10 +83,10 @@ public class Hydra extends Enemy {
                     else{
                         blocksPerDirection[2] +=1;
                         currBlock.health = currBlock.maxHealth;
-                        eBlock = new EnemyTurretBlock(enemyBlocks.get(0).position.x + 25f*blocksPerDirection[2]*world.world_y_axis.x,
-                                enemyBlocks.get(0).position.y+25f*blocksPerDirection[2]*world.world_y_axis.y, blockLevel*3, blockLevel);
-                        eBlock.bounds.lowerLeft.set(enemyBlocks.get(0).bounds.lowerLeft.x+25f*blocksPerDirection[2]*world.world_y_axis.x,
-                                enemyBlocks.get(0).bounds.lowerLeft.y + 25f*blocksPerDirection[2]*world.world_y_axis.y);
+                        eBlock = new EnemyTurretBlock(enemyBlocks.get(0).position.x - 25f*blocksPerDirection[2]*world.world_y_axis.x,
+                                enemyBlocks.get(0).position.y-25f*blocksPerDirection[2]*world.world_y_axis.y, blockLevel*3, blockLevel);
+                        eBlock.bounds.lowerLeft.set(enemyBlocks.get(0).bounds.lowerLeft.x-25f*blocksPerDirection[2]*world.world_y_axis.x,
+                                enemyBlocks.get(0).bounds.lowerLeft.y - 25f*blocksPerDirection[2]*world.world_y_axis.y);
                     }
                     eBlock.origin.set(currBlock.origin);
                     eBlock.velocity.set(currBlock.velocity);
