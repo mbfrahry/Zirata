@@ -70,7 +70,7 @@ public class StandardEnemy extends Enemy {
         }
 
         for (Block b : enemyBlocks){
-            b.velocity.set(xVelocity, yVelocity);
+            b.velocity.add(xVelocity, yVelocity);
         }
     }
 
