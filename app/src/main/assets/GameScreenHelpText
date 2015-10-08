@@ -1,6 +1,6 @@
 {
   "0": {
-    "Text": "This is the game screen. You will fight the baddest of baddies here. You just need to learn the basics before you start",
+    "Text": "You've entered enemy space! You will fight the baddest of baddies here, you just need to learn the basics before you start.",
     "TextLocation":{
       "X": 160,
       "Y": 240
@@ -15,7 +15,7 @@
     "hasSprite": false
   },
   "1": {
-    "Text": "Turrets require energy, luckily you put an energy block on your ship. Your turret is already powered on, but it's good to know how to turn it on and off. Tap it to turn it off.",
+    "Text": "Turrets require energy, luckily you put an energy block on your ship. Your turret is already powered on, tap it to turn it off in case you need extra energy.",
     "TextLocation":{
       "X": 160,
       "Y": 350
@@ -38,7 +38,30 @@
     }
   },
   "2": {
-    "Text": "Great. You'll move faster the less turrets you have on.",
+    "Text": "Great, you have more energy now! The more energy you have, the faster you'll rotate.",
+    "TextLocation":{
+      "X": 160,
+      "Y": 350
+    },
+    "Action": true,
+    "Touchpoint": {
+      "X": 0,
+      "Y": 0,
+      "Width": 320,
+      "Height": 480
+    },
+    "hasSprite" : true,
+    "Sprite":{
+      "X": 150,
+      "Y": 420,
+      "Width": 50,
+      "Height": 50,
+      "SpriteAngle": 90,
+      "SpriteName": "Arrow"
+    }
+  },
+  "3": {
+    "Text": "Touch and drag anywhere outside of your ship to steer. The joystick will let you know which way you are rotating.",
     "TextLocation":{
       "X": 160,
       "Y": 350
@@ -52,34 +75,11 @@
     },
     "hasSprite" : false
   },
-  "3": {
-    "Text": "Let's go ahead and practice rotating. Tap the lower left of the screen and move from right to left and back again.",
-    "TextLocation":{
-      "X": 160,
-      "Y": 350
-    },
-    "Action": true,
-    "Touchpoint": {
-      "X": 0,
-      "Y": 0,
-      "Width": 120,
-      "Height": 100
-    },
-    "hasSprite" : true,
-    "Sprite":{
-      "X": 60,
-      "Y": 125,
-      "Width": 50,
-      "Height": 50,
-      "SpriteAngle": 270,
-      "SpriteName": "Arrow"
-    }
-  },
   "4": {
-    "Text": "You also have a nifty e-brake at your disposal. Hold it and everything turns off. Let go and everything will turn back. It's a great way to move around faster without turning turrets off.",
+    "Text": "You also have a nifty e-brake at your disposal. Hold it to reroute power to engines and turn faster, then let go and everything will turn back on. It's a great way to make crafty maneuvers when you are in a tight spot!",
     "TextLocation":{
       "X": 160,
-      "Y": 350
+      "Y": 200
     },
     "Action": true,
     "Touchpoint": {
@@ -99,7 +99,7 @@
     }
   },
   "6": {
-    "Text": "That's about it! Here come some baddies. Good luck out there.",
+    "Text": "Here come some baddies, Your turrets will automatically fire at them if they are in range. Good luck out there!",
     "TextLocation":{
       "X": 160,
       "Y": 350
