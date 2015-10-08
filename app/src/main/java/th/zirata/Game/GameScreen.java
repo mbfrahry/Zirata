@@ -159,10 +159,15 @@ public class GameScreen extends GLScreen {
 					world.moveRight = false;
 					return;
 				}
-				if (OverlapTester.pointInRectangle(powerBounds, touchPoint) && powerTouches.keySet().contains(event.pointer)){
-					world.player.power = true;
+				if (powerTouches.keySet().contains(event.pointer)){
+					if(OverlapTester.pointInRectangle(powerBounds, touchPoint)){
+						world.player.power = true;
+					}
 					powerTouches.remove(event.pointer);
 					return;
+				}
+				if(powerTouches.keySet().contains(event.pointer)){
+					powerTouches.remove(event.pointer);
 				}
 				if (steerTouches.keySet().contains(event.pointer)) {
 					steerTouches.remove(event.pointer);
