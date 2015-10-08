@@ -1,6 +1,6 @@
 {
   "level1": {
-    "enemyNumber": 1,
+    "enemyNumber": 5,
     "enemyLevel": [1],
     "enemyChance": [1],
     "bossNum": 1
