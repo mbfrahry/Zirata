@@ -15,18 +15,22 @@ public class Enemy{
 	public ArrayList<Block> enemyBlocks;
 	Random rand;
 	int enemyLevel;
-    int[] blockTypes;
-    boolean constantVelocity;
+    ArrayList<Integer> blockTypes;
+    public boolean constantVelocity;
 	
-	public Enemy(int[] blockTypes, int enemyLevel ){
-		enemyBlocks = new ArrayList<Block>();
-		rand = new Random();
+	public Enemy(ArrayList<Integer> blockTypes, int enemyLevel ){
+		this.enemyBlocks = new ArrayList<Block>();
+		this.rand = new Random();
 		this.enemyLevel = enemyLevel;
         this.blockTypes = blockTypes;
-        constantVelocity = false;
+        this.constantVelocity = false;
 	}
     public Enemy(int  enemyLevel){
-
+		this.enemyBlocks = new ArrayList<Block>();
+		this.rand = new Random();
+		this.enemyLevel = enemyLevel;
+		this.blockTypes = new ArrayList<Integer>();
+		this.constantVelocity = false;
     }
 
 	public float[] generateBlockAttributes(){

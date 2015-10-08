@@ -20,6 +20,7 @@ import th.zirata.Settings.Assets;
 import th.zirata.Blocks.Block;
 import th.zirata.Menus.EndLevelScreen;
 import th.zirata.Menus.MainMenuScreen;
+import th.zirata.Settings.EnemySettings;
 import th.zirata.Settings.PlayerSave;
 import th.zirata.Settings.Settings;
 
@@ -57,7 +58,8 @@ public class GameScreen extends GLScreen {
         PlayerSave.load(game.getFileIO());
 
         popupManager = new PopupManager(batcher, guiCam);
-        world = new World();
+		String levelName = "level"+Settings.currLevel;
+        world = new World(EnemySettings.loadLevel(game.getFileIO(), levelName));
         renderer = new WorldRenderer(glGraphics, batcher, world, popupManager);
         pauseBounds = new Rectangle(320- 64, 480- 64, 64, 64);
         resumeBounds = new Rectangle(0, 220, 320, 50);
@@ -238,13 +240,13 @@ public class GameScreen extends GLScreen {
 	            continue;
 	      
 	    }
-	    if(Settings.numEnemies >= 30){
-        	Settings.numEnemies = 10;
-        	Settings.enemyHealth += 10;
-        }
-        else{
-        	Settings.numEnemies += 10;
-        }
+//	    if(Settings.numEnemies >= 30){
+//        	Settings.numEnemies = 10;
+//        	Settings.enemyHealth += 10;
+//        }
+//        else{
+//        	Settings.numEnemies += 10;
+//        }
 		world.clearBullets();
 
 		Settings.spaceBucks += Settings.currLevel*1.5;

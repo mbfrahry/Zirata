@@ -51,7 +51,7 @@ public class World {
 
 	public float lastEnemyTime;
 	public float timeToNextEnemy;
-	public float enemyNum;
+	//public float enemyNum;
 	
 	public int state;
 	Random rand;
@@ -64,14 +64,15 @@ public class World {
 	public int spaceBucksEarned;
 	public int enemiesKilled;
 
-	public World(){
+	public Level level;
+
+	public World(Level currLevel){
 		this.player = new Player();
 		enemies = new ArrayList<Enemy>();
 		enemyBullets = new ArrayList<Bullet>();
 		playerBullets = new ArrayList<Bullet>();
 		lastEnemyTime = 0;
 		timeToNextEnemy = 4;
-		enemyNum = 0;
 		this.state = WORLD_STATE_RUNNING;
 		rand = new Random();
 
@@ -102,6 +103,8 @@ public class World {
 		currView = new Rectangle(0, 0, 340, 500);
 		worldWidthVector = new Vector2(WORLD_WIDTH, 0);
 		worldHeightVector = new Vector2(0, WORLD_HEIGHT);
+
+		level = currLevel;
 	}
 	
 	public void update(float deltaTime){
@@ -310,7 +313,7 @@ public class World {
 		if(lastEnemyTime > timeToNextEnemy && state != WORLD_STATE_LAST_ENEMY){
 			generateEnemy();
 			
-			if(enemyNum % 4 == 0 && timeToNextEnemy > 2){
+			if(level.enemyNum % 4 == 0 && timeToNextEnemy > 2){
 				timeToNextEnemy -= 0.5;
 			}
 			
@@ -377,29 +380,31 @@ public class World {
 	}
 	
 	private void generateEnemy(){
-
-		String levelName = "level"+Settings.currLevel;
-		double[] enemyLevelSettings = EnemySettings.enemiesInLevel.get(levelName);
-		if((int)enemyLevelSettings[0] > enemyNum) {
-			Enemy e = EnemySettings.getEnemy(Settings.currLevel);
-			for (Block b : e.enemyBlocks) {
-				b.rotate(world_sin, world_cos, WORLD_MID_POINT);
-			}
-			enemyNum += 1;
-			enemies.add(e);
+		Enemy e = null;
+		if(level.enemyNum > 0) {
+			e = level.generateEnemy();
 		}
 		else{
 			state = WORLD_STATE_LAST_ENEMY;
-			if(enemyLevelSettings[3] >= 0) {
-				if(enemyLevelSettings[3] == 1) {
-					Enemy e = EnemySettings.getBoss("Hydra");
-					for (Block b : e.enemyBlocks) {
-						b.rotateConstantVelocity(world_sin, world_cos, WORLD_MID_POINT);
-					}
-					enemies.add(e);
+			if(level.bossType >= 0) {
+				if(level.bossType == 1) {
+					e = EnemySettings.getBoss("Hydra");
 				}
 			}
 		}
+		if(e != null){
+			for (Block b : e.enemyBlocks) {
+				if(e.constantVelocity){
+					b.rotateConstantVelocity(world_sin, world_cos, WORLD_MID_POINT);
+				}
+				else{
+					b.rotate(world_sin, world_cos, WORLD_MID_POINT);
+				}
+			}
+			enemies.add(e);
+			enemies.add(e);
+		}
+
 	}
 	
 	private void checkEnemyBullets(){
