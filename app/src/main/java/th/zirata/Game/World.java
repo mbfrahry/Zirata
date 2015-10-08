@@ -16,6 +16,7 @@ import th.zirata.Blocks.EnemyBlocks.Hydra;
 import th.zirata.Blocks.MultiplierBlock;
 import th.zirata.Blocks.TurretBlock;
 import th.zirata.Blocks.Bullet;
+import th.zirata.Menus.PopupManager;
 import th.zirata.Settings.Settings;
 import th.zirata.Settings.EnemySettings;
 
@@ -66,7 +67,10 @@ public class World {
 
 	public Level level;
 
-	public World(Level currLevel){
+	PopupManager popupManager;
+	float eventCountdown;
+
+	public World(Level currLevel, PopupManager popupManager){
 		this.player = new Player();
 		enemies = new ArrayList<Enemy>();
 		enemyBullets = new ArrayList<Bullet>();
@@ -104,7 +108,10 @@ public class World {
 		worldWidthVector = new Vector2(WORLD_WIDTH, 0);
 		worldHeightVector = new Vector2(0, WORLD_HEIGHT);
 
+		this.popupManager = popupManager;
 		level = currLevel;
+
+		eventCountdown = 0;
 	}
 	
 	public void update(float deltaTime){
@@ -383,10 +390,23 @@ public class World {
 		Enemy e = null;
 		if(level.enemyNum > 0) {
 			e = level.generateEnemy();
+			if(level.enemyNum == 0){
+				//TODO: NEED TO CHANGE THIS TO ADD SPECIFIC ANIMATION FOR A BOSS FIGHT
+				if(level.bossType >= 0){
+					popupManager.createTextExtra("text", "The", 160, 350, 25, 25, 2f, "red", "center");
+					String bossName = "";
+					if(level.bossType == 1) {
+						bossName = "Hydra";
+					}
+					popupManager.createTextExtra("text", bossName, 160, 300, 25, 25, 2f, "red", "center");
+					popupManager.createTextExtra("text", "approaches", 160, 250, 25, 25, 2f, "red", "center");
+				}
+
+			}
 		}
 		else{
 			state = WORLD_STATE_LAST_ENEMY;
-			if(level.bossType >= 0) {
+			if(level.bossType >= 0 && popupManager.getPopupsSize() == 0) {
 				if(level.bossType == 1) {
 					e = EnemySettings.getBoss("Hydra");
 				}

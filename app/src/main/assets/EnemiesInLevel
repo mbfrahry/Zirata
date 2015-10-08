@@ -18,7 +18,7 @@
     "bossNum": -1
   },
   "level4": {
-    "enemyNumber": 1,
+    "enemyNumber": 20,
     "enemyLevel": [2],
     "enemyChance": [1],
     "bossNum": 1

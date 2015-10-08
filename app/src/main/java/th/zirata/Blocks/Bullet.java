@@ -42,7 +42,7 @@ public class Bullet extends DynamicGameObject{
 		if(position.x > 320 || position.x < 0 || position.y < 0 || position.y > 480){
 			toReturn = true;
 		}
-		else if(position.dist(origin) > range){
+		else if(position.dist(origin) > range - range/5){
 			toReturn = true;
 		}
 		return toReturn;

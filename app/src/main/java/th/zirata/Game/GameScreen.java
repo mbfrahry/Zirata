@@ -59,7 +59,7 @@ public class GameScreen extends GLScreen {
 
         popupManager = new PopupManager(batcher, guiCam);
 		String levelName = "level"+Settings.currLevel;
-        world = new World(EnemySettings.loadLevel(game.getFileIO(), levelName));
+        world = new World(EnemySettings.loadLevel(game.getFileIO(), levelName), popupManager);
         renderer = new WorldRenderer(glGraphics, batcher, world, popupManager);
         pauseBounds = new Rectangle(320- 64, 480- 64, 64, 64);
         resumeBounds = new Rectangle(0, 220, 320, 50);

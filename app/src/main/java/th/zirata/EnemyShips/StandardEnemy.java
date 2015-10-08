@@ -3,6 +3,8 @@ package th.zirata.EnemyShips;
 import th.zirata.Blocks.ArmorBlock;
 import th.zirata.Blocks.Block;
 import th.zirata.Blocks.EnemyBlocks.Enemy;
+import th.zirata.Blocks.EnemyBlocks.EnemyTurretBlock;
+import th.zirata.Blocks.TurretBlock;
 
 /**
  * Created by Max Bauer on 10/7/2015.
@@ -30,15 +32,41 @@ public class StandardEnemy extends Enemy {
         }
         else if(enemyLevel == 2){
             //Create armor or turret
+            Block nextBlock;
+            if(Math.random() < .75){
+                nextBlock = new ArmorBlock(x, y, 10, enemyLevel);
+            }
+            else{
+                nextBlock = new EnemyTurretBlock(x, y, enemyLevel*3, enemyLevel);
+            }
+            enemyBlocks.add(nextBlock);
         }
         else if(enemyLevel == 3){
             //Create 2
+            Block nextBlock;
+            if(Math.random() < .5){
+                nextBlock = new ArmorBlock(x, y, 10, enemyLevel);
+            }
+            else{
+                nextBlock = new EnemyTurretBlock(x, y, enemyLevel*3, enemyLevel);
+            }
+            enemyBlocks.add(nextBlock);
         }
         else if(enemyLevel == 4){
             //create 3
+            Block nextBlock;
+            if(Math.random() < .25){
+                nextBlock = new ArmorBlock(x, y, 10, enemyLevel);
+            }
+            else{
+                nextBlock = new EnemyTurretBlock(x, y, enemyLevel*3, enemyLevel);
+            }
+            enemyBlocks.add(nextBlock);
         }
         else{
             //create 4
+            ArmorBlock aBlock = new ArmorBlock(x, y, 10, enemyLevel);
+            enemyBlocks.add(aBlock);
         }
 
         for (Block b : enemyBlocks){

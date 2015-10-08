@@ -22,8 +22,8 @@ public class Hydra extends Enemy {
     public Hydra(int blockLevel){
         super( blockLevel);
         constantVelocity = true;
-        this.x = 100;
-        this.y = 100;
+        this.x = 150;
+        this.y = 150;
         this.blockLevel = blockLevel;
         blocksPerDirection = new int[] {1,1,1};
         createHydra();
