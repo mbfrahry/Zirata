@@ -305,7 +305,7 @@ public class World {
 
 
 	private void updatePlayerBullets(float deltaTime){
-        ArrayList<Bullet> toRemoveBullets = new ArrayList<Bullet>();
+
 		for(int i = 0; i < playerBullets.size(); i++) {
             Bullet b = playerBullets.get(i);
             b.update(deltaTime);
@@ -313,10 +313,9 @@ public class World {
 				b.rotate(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
 			}
 			if(playerBullets.get(i).outOfBounds()){
-				toRemoveBullets.add(b);
+				playerBullets.remove(b);
 			}
 		}
-        playerBullets.removeAll(toRemoveBullets);
 	}
 	
 	private void updateEnemies(float deltaTime){
