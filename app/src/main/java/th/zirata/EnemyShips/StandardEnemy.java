@@ -2,9 +2,7 @@ package th.zirata.EnemyShips;
 
 import th.zirata.Blocks.ArmorBlock;
 import th.zirata.Blocks.Block;
-import th.zirata.Blocks.EnemyBlocks.Enemy;
-import th.zirata.Blocks.EnemyBlocks.EnemyTurretBlock;
-import th.zirata.Blocks.TurretBlock;
+import th.zirata.Blocks.EnemyTurretBlock;
 
 /**
  * Created by Max Bauer on 10/7/2015.

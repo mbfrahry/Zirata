@@ -1,10 +1,11 @@
-package th.zirata.Blocks.EnemyBlocks;
+package th.zirata.EnemyShips;
 
 import com.badlogic.androidgames.framework.math.Vector2;
 
 import java.util.ArrayList;
 import java.util.Random;
 
+import th.zirata.Blocks.EnemyTurretBlock;
 import th.zirata.Settings.Assets;
 import th.zirata.Blocks.ArmorBlock;
 import th.zirata.Blocks.Block;
@@ -96,7 +97,7 @@ public class Enemy{
 		for(int i = 0; i < enemyBlocks.size(); i++){
 			Block currBlock = enemyBlocks.get(i);
 			currBlock.position.add(currBlock.velocity.x * deltaTime, currBlock.velocity.y * deltaTime);
-			//currBlock.bounds.lowerLeft.add(currBlock.velocity.x * deltaTime, currBlock.velocity.y * deltaTime);
+
 			for (Vector2 v : currBlock.bounds.vertices){
 				v.add(currBlock.velocity.x * deltaTime, currBlock.velocity.y * deltaTime);
 			}

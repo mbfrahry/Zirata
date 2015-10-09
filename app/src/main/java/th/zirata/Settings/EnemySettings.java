@@ -9,8 +9,8 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Random;
 
-import th.zirata.Blocks.EnemyBlocks.Enemy;
-import th.zirata.Blocks.EnemyBlocks.Hydra;
+import th.zirata.EnemyShips.Enemy;
+import th.zirata.EnemyShips.Hydra;
 import th.zirata.Game.Level;
 
 /**
@@ -20,7 +20,7 @@ public class EnemySettings {
 
     public static HashMap<String, double[]> enemiesInLevel = new HashMap<String, double[]>();
     public static HashMap<String, double[]> bossInLevel = new HashMap<String, double[]>();
-    public static int ENEMYTYPES = 1;
+    public static int ENEMYTYPES = 2;
 
     public static int STANDARD_ENEMY = 0;
     public static int TELEPORTER_ENEMY = 1;

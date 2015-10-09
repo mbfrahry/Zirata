@@ -1,4 +1,4 @@
-package th.zirata.Blocks.EnemyBlocks;
+package th.zirata.Blocks;
 
 import th.zirata.Blocks.TurretBlock;
 

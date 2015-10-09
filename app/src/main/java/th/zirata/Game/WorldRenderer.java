@@ -14,12 +14,11 @@ import th.zirata.Settings.Assets;
 import th.zirata.Blocks.ArmorBlock;
 import th.zirata.Blocks.Block;
 import th.zirata.Blocks.BlockRenderer;
-import th.zirata.Blocks.EnemyBlocks.EnemyTurretBlock;
+import th.zirata.Blocks.EnemyTurretBlock;
 import th.zirata.Blocks.EnergyBlock;
 import th.zirata.Blocks.TurretBlock;
 import th.zirata.Blocks.Bullet;
 import th.zirata.Settings.PlayerSave;
-import th.zirata.Settings.Settings;
 
 public class WorldRenderer {
 

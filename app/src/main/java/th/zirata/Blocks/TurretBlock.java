@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import th.zirata.Settings.Assets;
-import th.zirata.Blocks.EnemyBlocks.Enemy;
+import th.zirata.EnemyShips.Enemy;
 import th.zirata.Game.World;
 
 public class TurretBlock extends Block {

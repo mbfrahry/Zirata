@@ -1,6 +1,7 @@
 package th.zirata.Game;
 
-import th.zirata.Blocks.EnemyBlocks.Enemy;
+import th.zirata.EnemyShips.Enemy;
+import th.zirata.EnemyShips.EnemyTeleporter;
 import th.zirata.EnemyShips.StandardEnemy;
 import th.zirata.Settings.EnemySettings;
 
@@ -38,7 +39,7 @@ public class Level {
             newEnemy = new StandardEnemy(enemyLevels[type]);
         }
         else if(type == EnemySettings.TELEPORTER_ENEMY){
-
+            newEnemy = new EnemyTeleporter(enemyLevels[type]);
         }
         else{
 
