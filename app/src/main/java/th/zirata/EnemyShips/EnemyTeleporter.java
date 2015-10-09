@@ -33,6 +33,7 @@ public class EnemyTeleporter extends Enemy {
         float[] atts = generateBlockAttributes();
         x = 150;
         y = 380;
+        position = new Vector2(x, y);
         xVelocity = 0;
         yVelocity = -10;
         cooldown = 10/blockLevel*2;

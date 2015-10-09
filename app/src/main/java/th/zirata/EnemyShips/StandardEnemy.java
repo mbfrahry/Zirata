@@ -1,5 +1,7 @@
 package th.zirata.EnemyShips;
 
+import com.badlogic.androidgames.framework.math.Vector2;
+
 import th.zirata.Blocks.ArmorBlock;
 import th.zirata.Blocks.Block;
 import th.zirata.Blocks.EnemyTurretBlock;
@@ -20,6 +22,7 @@ public class StandardEnemy extends Enemy {
         float[] atts = generateBlockAttributes();
         x = atts[0];
         y = atts[1];
+        position = new Vector2(x, y);
         xVelocity = atts[2];
         yVelocity = atts[3];
 

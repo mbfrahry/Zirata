@@ -18,14 +18,8 @@ public class Enemy{
 	int enemyLevel;
     ArrayList<Integer> blockTypes;
     public boolean constantVelocity;
-	
-	public Enemy(ArrayList<Integer> blockTypes, int enemyLevel ){
-		this.enemyBlocks = new ArrayList<Block>();
-		this.rand = new Random();
-		this.enemyLevel = enemyLevel;
-        this.blockTypes = blockTypes;
-        this.constantVelocity = false;
-	}
+	public Vector2 position;
+
     public Enemy(int  enemyLevel){
 		this.enemyBlocks = new ArrayList<Block>();
 		this.rand = new Random();

@@ -7,6 +7,8 @@ import javax.microedition.khronos.opengles.GL10;
 import com.badlogic.androidgames.framework.gl.Camera2D;
 import com.badlogic.androidgames.framework.gl.SpriteBatcher;
 import com.badlogic.androidgames.framework.impl.GLGraphics;
+import com.badlogic.androidgames.framework.math.OverlapTester;
+import com.badlogic.androidgames.framework.math.Rectangle;
 import com.badlogic.androidgames.framework.math.Vector2;
 
 import th.zirata.Menus.PopupManager;
@@ -30,6 +32,7 @@ public class WorldRenderer {
 	SpriteBatcher batcher;
 	BlockRenderer blockRenderer;
     PopupManager popupManager;
+    Rectangle worldBounds;
 	
 	public WorldRenderer(GLGraphics glGraphics, SpriteBatcher batcher, World world, PopupManager popManager){
 		this.glGraphics = glGraphics;
@@ -39,6 +42,7 @@ public class WorldRenderer {
 		setTurretDirections();
 		blockRenderer = new BlockRenderer();
         this.popupManager = popManager;
+        worldBounds = new Rectangle(0,0, 320, 480);
 	}
 	
 	public  void render(){
@@ -120,6 +124,22 @@ public class WorldRenderer {
 				for(int i = 0; i < world.enemies.size(); i++){
 					for(int j = 0; j < world.enemies.get(i).enemyBlocks.size(); j++){
 						Block currBlock = world.enemies.get(i).enemyBlocks.get(j);
+                        if(!OverlapTester.pointInRectangle(worldBounds, currBlock.position)){
+                            Vector2 ePosition = currBlock.position;
+                            if(ePosition.x < 0){
+                                batcher.drawSprite(0, ePosition.y, 5, 100, Assets.textureRegions.get("Bullet"));
+                            }
+                            else if(ePosition.x > 320){
+                                batcher.drawSprite(315, ePosition.y, 5, 100, Assets.textureRegions.get("Bullet"));
+                            }
+                            else if(ePosition.y < 0){
+                                batcher.drawSprite(ePosition.x, 0, 100, 5, Assets.textureRegions.get("Bullet"));
+                            }
+                            else{
+                                batcher.drawSprite(ePosition.x, 475, 100, 5, Assets.textureRegions.get("Bullet"));
+                            }
+
+                        }
 
 //						for (Vector2 v : currBlock.bounds.vertices) {
 //
