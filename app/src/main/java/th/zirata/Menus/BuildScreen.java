@@ -40,6 +40,7 @@ public class BuildScreen extends GLScreen{
 	Rectangle blockBankArmorBounds;
 	Rectangle blockBankEnergyBounds;
 	Rectangle blockBankMultiplierBounds;
+	Rectangle trashBounds;
 	public Rectangle closeBankBounds;
 	public Vector2 touchPoint;
 	public ArrayList<Block> potentialBlocks;
@@ -77,6 +78,7 @@ public class BuildScreen extends GLScreen{
 		blockBankEnergyBounds = new Rectangle(160, 160, 80, 40);
 		blockBankMultiplierBounds  = new Rectangle(240, 160, 80, 40);
 		closeBankBounds = new Rectangle(120, 200, 360, 360);
+		trashBounds = new Rectangle(200, 200, 60, 30);
 		selectedBankBlock = null;
 		selectedActiveBlock = null;
 
@@ -96,7 +98,6 @@ public class BuildScreen extends GLScreen{
 		minHeldTime = 0.5f;
 		heldTime = 0;
 		devMode = true;
-		//UIExtras = new ArrayList<HashMap>();
 		popupManager = new PopupManager(batcher, guiCam);
     }
 
@@ -133,7 +134,6 @@ public class BuildScreen extends GLScreen{
 							Settings.spaceBucks += 100;
 						}
 					}
-
 					if (selectedBankBlock != null && selectedActiveBlock == null) {
 						selectedBankBlock = null;
 						showBlockBank = false;
@@ -149,10 +149,6 @@ public class BuildScreen extends GLScreen{
 							if(checkForBlankBlocks()){
 								popupManager.createSpriteExtra("sprite", "Rectangle", 160f, 260f, 260f, 50f, 1f, 0f);
 								popupManager.createTextExtra("text", "Can't launch with blank blocks!", 160f, 260f, 8f, 8f, 1f, "white", "center");
-//								HashMap newSpriteExtra = createSpriteExtra("sprite", "Rectangle", 160f, 260f, 260f, 50f, 1f, 0f);
-//								HashMap newTextExtra = createTextExtra("text", "Can't launch with blank blocks!", 160f, 260f, 8f, 8f, 1f, "white", "center");
-//								UIExtras.add(newSpriteExtra);
-//								UIExtras.add(newTextExtra);
 							}
 							else{
 								Settings.save(game.getFileIO());
@@ -163,7 +159,6 @@ public class BuildScreen extends GLScreen{
 							}
 
 						}
-
 
 						Rectangle pBlockBounds;
 						for (int j = 0; j < potentialBlocks.size(); j++) {
@@ -188,8 +183,6 @@ public class BuildScreen extends GLScreen{
 								}
 								else{
 									popupManager.createTextExtra("text", "Bank", 217f, 395f, 12f, 12f, .25f, "red", "right");
-//									HashMap newExtra = createTextExtra("text", "Bank", 217f, 395f, 12f, 12f, .25f, "red", "right");
-//									UIExtras.add(newExtra);
 								}
 								return;
 							}
@@ -237,6 +230,21 @@ public class BuildScreen extends GLScreen{
 							}
 						}
 					} else {
+						if(OverlapTester.pointInRectangle(trashBounds, touchPoint)){
+							//popupManager.generatePopup("wow", 160, 240, 1f);
+							PlayerSave.activeBlocks.remove(selectedActiveBlock);
+							selectedActiveBlock = null;
+							getPotentialBlocks();
+							showFuse = false;
+							showUpgrades = false;
+							showBlockBank = false;
+							Settings.spaceBucks += (int)Math.ceil((Settings.nextBlockCost-1)*.6);
+							guiCam.panToPosition(160, 240, 1);
+							isPanning = true;
+
+							PlayerSave.save(game.getFileIO());
+							return;
+						}
 						checkBankBlocks(touchPoint);
 						if(showUpgrades && showSubmenu){
 							checkUpgradeBounds(touchPoint);
@@ -416,6 +424,7 @@ public class BuildScreen extends GLScreen{
 		blockBankEnergyBounds = new Rectangle(guiCam, 160, 160, 80, 40);
 		blockBankMultiplierBounds  = new Rectangle(guiCam, 240, 160, 80, 40);
 		closeBankBounds = new Rectangle(guiCam, 120, 200, 360, 240);
+		trashBounds = new Rectangle(guiCam, 200, 200, 60, 30);
 	}
 
 	public void checkFuseBounds(){
@@ -545,6 +554,10 @@ public class BuildScreen extends GLScreen{
 
 		batcher.drawUISprite(guiCam, 290, 215, 60, 30, Assets.textureRegions.get("DarkGrayRectangle"));
 		Assets.font.drawUIText(guiCam, batcher, "X", 290, 215, 24, 24);
+
+		batcher.drawUISprite(guiCam, 230, 215, 60, 30, Assets.textureRegions.get("DarkGrayRectangle"));
+		Assets.font.drawUIText(guiCam, batcher, "T", 230, 215, 24, 24);
+
 
 		batcher.drawUISprite(guiCam, 160, 100, 320, 200, Assets.textureRegions.get("Rectangle"));
 		batcher.drawUISprite(guiCam, 40, 175, 80, 50, Assets.textureRegions.get("Rectangle"));
@@ -706,6 +719,7 @@ public class BuildScreen extends GLScreen{
 	}
 
 	public void getPotentialBlocks(){
+		potentialBlocks.clear();
 		ArrayList<Integer> emptyBlocks;
 		for(int i = 0; i < PlayerSave.activeBlocks.size(); i++){
 			Block currBlock = PlayerSave.activeBlocks.get(i);

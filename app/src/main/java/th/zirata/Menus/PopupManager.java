@@ -93,7 +93,7 @@ public class PopupManager {
         int spaces = content.length() - content.replace(" ", "").length();
 
         createSpriteExtra("sprite", "DarkGrayRectangle", x, y, 300f, (float)(spaces/5 + 1.5)*9, timeToDisplay, 0f);
-        createTextExtra("text", content, x, y + (spaces/5)*4, 8f, 8f, 999f, "white", "lined");
+        createTextExtra("text", content, x, y + (spaces/5)*4, 8f, 8f, timeToDisplay, "white", "lined");
 
 //		HashMap newSpriteExtra = createSpriteExtra("sprite", "DarkGrayRectangle", x, y, 300f, (float)(spaces/5 + 1.5)*9, timeToDisplay, 0f);
 //		HashMap newTextExtra = createTextExtra("text", content, x, y + (spaces/5)*4, 8f, 8f, 999f, "white", "lined");
