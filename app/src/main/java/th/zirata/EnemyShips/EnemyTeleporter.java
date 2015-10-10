@@ -65,18 +65,27 @@ public class EnemyTeleporter extends Enemy {
         int teleX = 0;
         int teleY = 0;
         Vector2 currPosition = enemyBlocks.get(0).position;
-        if(currPosition.x < 160 && (currPosition.y > 300 || currPosition.y < 180 ) ){
-            teleX = 40;
-        }
-        else if(currPosition.x > 160 && (currPosition.y > 300 || currPosition.y < 180 ) ){
-            teleX = 40;
-        }
-        else if(currPosition.y >= 240  ){
-            teleY = 40;
-        }
-        else{
-            teleY = 40;
-        }
+//        if(currPosition.x < 160 && (currPosition.y > 300 || currPosition.y < 180 ) ){
+//            teleX = 40;
+//        }
+//        else if(currPosition.x > 160 && (currPosition.y > 300 || currPosition.y < 180 ) ){
+//            teleX = 40;
+//        }
+//        else if(currPosition.y >= 240  ){
+//            teleY = 40;
+//        }
+//        else{
+//            teleY = 40;
+//        }
+
+        teleX = -200 + rand.nextInt(400);
+        teleY = -200 + rand.nextInt(400);
+//        if(teleX%2 > 0){
+//            teleX *=-1;
+//        }
+//        if(teleY%2 > 0){
+//            teleY *= -1;
+//        }
 
         for(Block b : enemyBlocks){
             b.position.x += teleX;
