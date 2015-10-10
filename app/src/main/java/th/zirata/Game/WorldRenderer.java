@@ -127,16 +127,16 @@ public class WorldRenderer {
                         if(!OverlapTester.pointInRectangle(worldBounds, currBlock.position)){
                             Vector2 ePosition = currBlock.position;
                             if(ePosition.x < 0){
-                                batcher.drawSprite(0, ePosition.y, 5, 100, Assets.textureRegions.get("Bullet"));
+                                batcher.drawSprite(0, ePosition.y, 5, 50, Assets.textureRegions.get("Bullet"));
                             }
                             else if(ePosition.x > 320){
-                                batcher.drawSprite(315, ePosition.y, 5, 100, Assets.textureRegions.get("Bullet"));
+                                batcher.drawSprite(315, ePosition.y, 5, 50, Assets.textureRegions.get("Bullet"));
                             }
                             else if(ePosition.y < 0){
-                                batcher.drawSprite(ePosition.x, 0, 100, 5, Assets.textureRegions.get("Bullet"));
+                                batcher.drawSprite(ePosition.x, 0, 50, 7, Assets.textureRegions.get("Bullet"));
                             }
                             else{
-                                batcher.drawSprite(ePosition.x, 475, 100, 5, Assets.textureRegions.get("Bullet"));
+                                batcher.drawSprite(ePosition.x, 475, 50, 5, Assets.textureRegions.get("Bullet"));
                             }
 
                         }
@@ -145,7 +145,7 @@ public class WorldRenderer {
 //
 //							batcher.drawSprite(v.x, v.y, 8, 8, Assets.textureRegions.get("Bullet"));
 //
-//						}
+//s						}
 						if(currBlock.getClass().equals(EnemyTurretBlock.class)){
 							EnemyTurretBlock currEnemy = (EnemyTurretBlock) currBlock;
 							Vector2 rotate = new Vector2(160,240);
