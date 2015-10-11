@@ -41,8 +41,8 @@ public class World {
 	public Vector2 world_y_axis;
 	
 	public Player player;
-	public final ArrayList<Enemy> enemies;
-	public final ArrayList<Bullet> enemyBullets;
+	//public final ArrayList<Enemy> enemies;
+	//public final ArrayList<Bullet> enemyBullets;
 	public EnemyManager enemyManager;
 	public static ArrayList<Bullet> playerBullets;
 	public ArrayList<Background> backgrounds;
@@ -73,8 +73,8 @@ public class World {
 
 	public World(Level currLevel, PopupManager popupManager){
 		this.player = new Player();
-		enemies = new ArrayList<Enemy>();
-		enemyBullets = new ArrayList<Bullet>();
+//		enemies = new ArrayList<Enemy>();
+//		enemyBullets = new ArrayList<Bullet>();
 		playerBullets = new ArrayList<Bullet>();
 		lastEnemyTime = 0;
 		timeToNextEnemy = 4;
@@ -121,10 +121,8 @@ public class World {
 		updateBackgrounds(deltaTime);
 		updatePlayer(deltaTime);
 		updatePlayerBullets(deltaTime);
-		enemyManager.updateEnemies(deltaTime);
-		enemyManager.updateEnemyBullets(deltaTime);
+		enemyManager.update(deltaTime);
 		checkPlayerBullets();
-		enemyManager.checkEnemyBullets();
 		checkPlayerCollision();
 		checkLevelEnd();
 		checkGameOver();
@@ -133,6 +131,8 @@ public class World {
 
 	private void updateWorld(float deltaTime){
 		double angleDiff = findSpeed();
+
+		//TODO transition to using the x and y axis and eliminate sin/cos calls
 
 		POS_SIN_ANGLE = (float)Math.sin(Math.toRadians(angleDiff));
 		NEG_SIN_ANGLE = (float)Math.sin(-POS_SIN_ANGLE);
@@ -144,7 +144,6 @@ public class World {
 			world_sin = (float)Math.sin(Math.toRadians(worldAngle));
 			world_x_axis.rotate(POS_COS_ANGLE, NEG_SIN_ANGLE);
 			world_y_axis.rotate(POS_COS_ANGLE, NEG_SIN_ANGLE);
-			updateBackgroundAngles(world_cos, world_sin);
 		}
 		if(moveLeft){
 			worldAngle += angleDiff;
@@ -153,23 +152,7 @@ public class World {
 			world_sin = (float)Math.sin(Math.toRadians(worldAngle));
 			world_x_axis.rotate(POS_COS_ANGLE, POS_SIN_ANGLE);
 			world_y_axis.rotate(POS_COS_ANGLE, POS_SIN_ANGLE);
-			updateBackgroundAngles(world_cos, world_sin);
 		}
-	}
-
-	private void updateBackgroundAngles(float cosChange, float sinChange){
-//		for(int i = 0; i < backgrounds.size(); i++){
-//			backgrounds.get(i).bounds.rotationAngle.x = cosChange;
-//			backgrounds.get(i).bounds.rotationAngle.y = sinChange;
-//		}
-//		for (int i = 0; i < farBackgrounds.size(); i++){
-//			farBackgrounds.get(i).bounds.rotationAngle.x = cosChange;
-//			farBackgrounds.get(i).bounds.rotationAngle.y = sinChange;
-//		}
-//		for (int i = 0; i < nearBackgrounds.size(); i++){
-//			nearBackgrounds.get(i).bounds.rotationAngle.x = cosChange;
-//			nearBackgrounds.get(i).bounds.rotationAngle.y = sinChange;
-//		}
 	}
 
 	public void updateBackgrounds(float deltaTime){
@@ -197,7 +180,7 @@ public class World {
 		if(playerOnBackground == null){
 			//TODO: Temporary workaround for background bug, still need to investigate this
 			if(backgrounds.size() > 0){
-				Log.d("SKIPPING", "***************");
+				//Log.d("SKIPPING", "***************");
 				return;
 			}
 			playerOnBackground = new Background(0, 0, 320, 480, new Vector2(0, velocity), sprite);
@@ -272,7 +255,7 @@ public class World {
 		Block currBlock;
 		for(int i = 0; i < player.playerBlocks.size(); i++){
 			currBlock = player.playerBlocks.get(i);
-			if(currBlock.getClass().equals(TurretBlock.class) && currBlock.active && enemies.size() > 0 && enemies.get(0).enemyBlocks.size() > 0){
+			if(currBlock.getClass().equals(TurretBlock.class) && currBlock.active && enemyManager.enemies.size() > 0 && enemyManager.enemies.get(0).enemyBlocks.size() > 0){
 				TurretBlock tBlock = (TurretBlock) currBlock;
 				tBlock.action(this);
 			}
@@ -319,129 +302,13 @@ public class World {
 			}
 		}
 	}
-	
-//	private void updateEnemies(float deltaTime){
-//		lastEnemyTime += deltaTime;
-//		if(lastEnemyTime > timeToNextEnemy && state != WORLD_STATE_LAST_ENEMY){
-//			enemyManager.generateEnemy();
-//
-//			if(level.enemyNum % 4 == 0 && timeToNextEnemy > 2){
-//				timeToNextEnemy -= 0.5;
-//			}
-//
-//			lastEnemyTime = 0;
-//		}
-//
-//		for(int i = 0; i < enemies.size(); i++){
-//			Enemy enemy = enemies.get(i);
-//			for(int j = 0; j < enemy.enemyBlocks.size(); j++){
-//				Block currBlock = enemy.enemyBlocks.get(j);
-//
-//				if(moveLeft || moveRight) {
-//					if(enemy.constantVelocity){
-//						currBlock.rotateConstantVelocity(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
-//					}
-//					else {
-//						currBlock.rotate(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
-//					}
-//				}
-//
-//				if(currBlock.getClass().equals(EnemyTurretBlock.class)){
-//					EnemyTurretBlock tBlock = (EnemyTurretBlock) currBlock;
-//					generateEnemyBullet(tBlock);
-//				}
-//			}
-//			enemy.update(deltaTime, this);
-//
-//			if(enemy.checkDead()){
-//				enemies.remove(i);
-//				enemiesKilled += 1;
-//				createCurrency();
-//			}
-//		}
-//	}
-	
-	public void updateEnemyBullets(float deltaTime){
-		for(int i = 0; i < enemyBullets.size(); i++){
-			Bullet b = enemyBullets.get(i);
-			if (moveLeft || moveRight) {
-				b.rotate(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
-			}
-			b.update(deltaTime);
-			if(b.outOfBounds()){
-				enemyBullets.remove(i);
-			}
-		}
-	}
-	
-	public void generateEnemyBullet(EnemyTurretBlock tBlock){
-		if(tBlock.state == TurretBlock.TURRET_READY && tBlock.bullets.size() < 1){
-			if(player.playerBlocks.size() > 0){
-				Block randBlock = player.playerBlocks.get(Math.abs(rand.nextInt()) % player.playerBlocks.size());
-				enemyBullets.add(new Bullet(tBlock.position.x, tBlock.position.y,randBlock.position.x, randBlock.position.y, tBlock.bulletDamage, tBlock.fireRange));
-				tBlock.resetBlock();
-			}
-		}
-	}
-	
+
 	public void createCurrency(){
 		if(rand.nextFloat() < .25){
 			Settings.spaceBucks += 1;
 			spaceBucksEarned += 1;
 		}
 	}
-	
-//	private void generateEnemy(){
-//		Enemy e = null;
-//		if(level.enemyNum > 0) {
-//			e = level.generateEnemy();
-//			if(level.enemyNum == 0){
-//				//TODO: NEED TO CHANGE THIS TO ADD SPECIFIC ANIMATION FOR A BOSS FIGHT
-//				if(level.bossType >= 0){
-//					popupManager.createTextExtra("text", "The", 160, 350, 25, 25, 2f, "red", "center");
-//					String bossName = "";
-//					if(level.bossType == 1) {
-//						bossName = "Hydra";
-//					}
-//					popupManager.createTextExtra("text", bossName, 160, 300, 25, 25, 2f, "red", "center");
-//					popupManager.createTextExtra("text", "approaches", 160, 250, 25, 25, 2f, "red", "center");
-//				}
-//
-//			}
-//		}
-//		else{
-//			state = WORLD_STATE_LAST_ENEMY;
-//			if(level.bossType >= 0 && popupManager.getPopupsSize() == 0) {
-//				if(level.bossType == 1) {
-//					e = EnemySettings.getBoss("Hydra");
-//				}
-//			}
-//		}
-//		if(e != null){
-//			for (Block b : e.enemyBlocks) {
-//				if(e.constantVelocity){
-//					b.rotateConstantVelocity(world_sin, world_cos, WORLD_MID_POINT);
-//				}
-//				else{
-//					b.rotate(world_sin, world_cos, WORLD_MID_POINT);
-//				}
-//			}
-//			enemies.add(e);
-//		}
-//
-//	}
-	
-//	private void checkEnemyBullets(){
-//		Bullet b;
-//		for(int i = 0; i < enemyBullets.size(); i++){
-//
-//			b = enemyBullets.get(i);
-//			if(checkPlayerCollision(b)){
-//				enemyBullets.remove(i);
-//			}
-//		}
-//	}
-
 
 	private void checkPlayerBullets(){
 		for(int i = 0; i < playerBullets.size(); i++) {
@@ -455,8 +322,8 @@ public class World {
 	
 	private boolean checkEnemyCollision(Bullet bullet){
 		
-		for(int i = 0; i < enemies.size(); i++){
-			Enemy enemy = enemies.get(i);
+		for(int i = 0; i < enemyManager.enemies.size(); i++){
+			Enemy enemy = enemyManager.enemies.get(i);
 			for(int j = 0; j < enemy.enemyBlocks.size(); j++){
 				
 				Block eBlock = enemy.enemyBlocks.get(j);
@@ -481,8 +348,8 @@ public class World {
 	}
 	
 	public boolean checkEnemyCollision(Block pBlock){
-		for(int i = 0; i < enemies.size(); i++){
-			Enemy enemy = enemies.get(i);
+		for(int i = 0; i < enemyManager.enemies.size(); i++){
+			Enemy enemy = enemyManager.enemies.get(i);
 			for(int j = 0; j < enemy.enemyBlocks.size(); j++){
 				
 				Block eBlock = enemy.enemyBlocks.get(j);
@@ -504,7 +371,7 @@ public class World {
 	}
 	
 	private void checkLevelEnd(){
-		if(state == WORLD_STATE_LAST_ENEMY && enemies.size() == 0){
+		if(state == WORLD_STATE_LAST_ENEMY && enemyManager.enemies.size() == 0){
 			state = WORLD_STATE_LEVEL_END;
 		}
 	}

@@ -101,7 +101,7 @@ public class Enemy{
 				enemyBlocks.remove(i);
 				Assets.playSound(Assets.explosionSound);
 			}
-			else if(currBlock.position.x > 600 || currBlock.position.y > 650 || currBlock.position.x < -180 || currBlock.position.y < -180){
+			else if(currBlock.position.x > 600 || currBlock.position.y > 650 || currBlock.position.x < -180 || currBlock.position.y < -180 && !constantVelocity){
 				enemyBlocks.remove(i);
 			}
 		}

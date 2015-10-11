@@ -118,12 +118,12 @@ public class WorldRenderer {
 	}
 
 	private void renderEnemies(){
-		if(world.enemies.size() > 0){
+		if(world.enemyManager.enemies.size() > 0){
 
 			try{
-				for(int i = 0; i < world.enemies.size(); i++){
-					for(int j = 0; j < world.enemies.get(i).enemyBlocks.size(); j++){
-						Block currBlock = world.enemies.get(i).enemyBlocks.get(j);
+				for(int i = 0; i < world.enemyManager.enemies.size(); i++){
+					for(int j = 0; j < world.enemyManager.enemies.get(i).enemyBlocks.size(); j++){
+						Block currBlock = world.enemyManager.enemies.get(i).enemyBlocks.get(j);
                         if(!OverlapTester.pointInRectangle(worldBounds, currBlock.position)){
                             Vector2 ePosition = currBlock.position;
                             if(ePosition.x < 0){
@@ -196,10 +196,10 @@ public class WorldRenderer {
 	}
 
 	private void renderEnemyBullets(){
-		if(world.enemyBullets.size() > 0){
+		if(world.enemyManager.enemyBullets.size() > 0){
 			Bullet b;
-			for(int i = 0; i < world.enemyBullets.size(); i++){
-				b = world.enemyBullets.get(i);
+			for(int i = 0; i < world.enemyManager.enemyBullets.size(); i++){
+				b = world.enemyManager.enemyBullets.get(i);
 				batcher.drawSprite(b.position.x, b.position.y, 5, 5, Assets.textureRegions.get("Bullet"));
 
 			}
