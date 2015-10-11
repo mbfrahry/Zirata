@@ -591,7 +591,7 @@ public class BuildScreen extends GLScreen{
 			if(!PlayerSave.activeBlocks.contains(currBlock)){
 				currBlock.position.x = storeX;
 				currBlock.position.y = storeY;
-				blockRenderer.renderSimpleUIBlock(guiCam, currBlock, batcher, currBlock.position.x , currBlock.position.y, 24, 24);
+				blockRenderer.renderSimpleUIBlock(guiCam, currBlock, batcher, currBlock.position.x, currBlock.position.y, 24, 24);
 			}
 			else{
 				if (currBlock == selectedActiveBlock){
@@ -602,7 +602,7 @@ public class BuildScreen extends GLScreen{
 				}
 				blockRenderer.renderSimpleUIBlock(guiCam, currBlock, batcher, storeX, storeY, 24, 24);
 			}
-
+            Assets.redFont.drawUIText(guiCam, batcher, currBlock.blockLevel + "", storeX + 5, storeY -5, 10, 10);
 
 			storeX += 30;
 			if(storeX >  240){
