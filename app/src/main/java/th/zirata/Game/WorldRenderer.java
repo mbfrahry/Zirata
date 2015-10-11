@@ -63,15 +63,15 @@ public class WorldRenderer {
 	public void renderBackground(){
 		for(int i = 0; i < world.backgrounds.size(); i++){
 			Background currBackground = world.backgrounds.get(i);
-			batcher.drawSprite(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("background"));
+			batcher.drawSprite(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, currBackground.bounds.rotationAngle.angle(), Assets.textureRegions.get("background"));
 		}
 		for (int i = 0; i < world.farBackgrounds.size(); i++){
 			Background currBackground = world.farBackgrounds.get(i);
-			batcher.drawSprite(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("StarBG"));
+			batcher.drawSprite(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, currBackground.bounds.rotationAngle.angle(), Assets.textureRegions.get("StarBG"));
 		}
 		for (int i = 0; i < world.nearBackgrounds.size(); i++){
 			Background currBackground = world.nearBackgrounds.get(i);
-			batcher.drawSprite(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, world.worldAngle, Assets.textureRegions.get("NearStarBG"));
+			batcher.drawSprite(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, currBackground.bounds.rotationAngle.angle(), Assets.textureRegions.get("NearStarBG"));
 		}
 	}
 	
@@ -145,12 +145,12 @@ public class WorldRenderer {
 //
 //							batcher.drawSprite(v.x, v.y, 8, 8, Assets.textureRegions.get("Bullet"));
 //
-//s						}
+//						}
 						if(currBlock.getClass().equals(EnemyTurretBlock.class)){
 							EnemyTurretBlock currEnemy = (EnemyTurretBlock) currBlock;
 							Vector2 rotate = new Vector2(160,240);
-							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, world.worldAngle, Assets.textureRegions.get("TurretBase"));
-							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, rotate.sub(((EnemyTurretBlock) currBlock).position.x, ((EnemyTurretBlock) currBlock).position.y).angle() - 90, Assets.textureRegions.get("TurretTop"));
+							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, currEnemy.bounds.rotationAngle.angle() - 90, Assets.textureRegions.get("TurretBase"));
+							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, rotate.sub(currEnemy.position.x, currEnemy.position.y).angle() - 90, Assets.textureRegions.get("TurretTop"));
 //							batcher.drawSprite(currEnemy.bounds.lowerLeft.x  , currEnemy.bounds.lowerLeft.y, 8, 8, Assets.textureRegions.get("Bullet"));
 
 							EnemyTurretBlock tBlock = (EnemyTurretBlock)currBlock;
@@ -165,26 +165,26 @@ public class WorldRenderer {
 						else if(currBlock.getClass().equals(ArmorBlock.class)){
 //							batcher.drawSprite(currBlock.bounds.lowerLeft.x  , currBlock.bounds.lowerLeft.y, 8, 8, Assets.textureRegions.get("Bullet"));
 							if(currBlock.health <= currBlock.maxHealth && currBlock.health > currBlock.maxHealth*.7){
-								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, world.worldAngle, Assets.textureRegions.get("FullHealthArmorBlock"));
+								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, currBlock.bounds.rotationAngle.angle() - 90, Assets.textureRegions.get("FullHealthArmorBlock"));
 							}
 							else if(currBlock.health <= currBlock.maxHealth*.7 && currBlock.health > currBlock.maxHealth*.3){
-								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, world.worldAngle, Assets.textureRegions.get("MidHealthArmorBlock"));
+								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, currBlock.bounds.rotationAngle.angle() - 90, Assets.textureRegions.get("MidHealthArmorBlock"));
 							}
 							else if(currBlock.health <= currBlock.maxHealth*.3 && currBlock.health > 0){
-								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, world.worldAngle, Assets.textureRegions.get("LowHealthArmorBlock"));
+								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, currBlock.bounds.rotationAngle.angle() - 90, Assets.textureRegions.get("LowHealthArmorBlock"));
 							}
 						}
 
 						else if(currBlock.getClass().equals(EnergyBlock.class)){
-							batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.textureRegions.get("EnergyBlock"));
+							batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, currBlock.bounds.rotationAngle.angle() - 90, Assets.textureRegions.get("EnergyBlock"));
 //							batcher.drawSprite(currBlock.bounds.lowerLeft.x  , currBlock.bounds.lowerLeft.y, 8, 8, Assets.textureRegions.get("Bullet"));
 						}
 
 						else{
-							batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, Assets.textureRegions.get("BaseBlock"));
+							batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, currBlock.bounds.rotationAngle.angle() - 90, Assets.textureRegions.get("BaseBlock"));
 //							batcher.drawSprite(currBlock.bounds.lowerLeft.x  , currBlock.bounds.lowerLeft.y, 8, 8, Assets.textureRegions.get("Bullet"));
 						}
-
+						//batcher.drawSprite(currBlock.position.x, currBlock.position.y, 8, 8, Assets.textureRegions.get("Bullet"));
 					}
 				}
 

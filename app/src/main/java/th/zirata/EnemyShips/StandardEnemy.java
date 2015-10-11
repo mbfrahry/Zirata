@@ -18,13 +18,15 @@ public class StandardEnemy extends Enemy {
 
     public StandardEnemy(int enemyLevel){
         super(enemyLevel);
-
         float[] atts = generateBlockAttributes();
         x = atts[0];
         y = atts[1];
         position = new Vector2(x, y);
         xVelocity = atts[2];
         yVelocity = atts[3];
+
+        Vector2 velocityNorm = new Vector2(xVelocity, yVelocity).nor();
+        Vector2 velocityNormX =  new Vector2(xVelocity, yVelocity).rotate(90).nor();
 
         if(enemyLevel == 1){
             //Create one armor block
@@ -72,6 +74,9 @@ public class StandardEnemy extends Enemy {
 
         for (Block b : enemyBlocks){
             b.velocity.add(xVelocity, yVelocity);
+            b.bounds.rotationAngle.set(velocityNorm.x, velocityNorm.y);
+            b.bounds.lowerLeft.set(b.position.x - 12f*velocityNorm.x - 12f*velocityNormX.x, b.position.y - 12f*velocityNorm.y - 12f*velocityNormX.y);
+            b.bounds.setVertices();
         }
     }
 

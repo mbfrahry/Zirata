@@ -47,6 +47,9 @@ public class EnemyTeleporter extends Enemy {
         }
         for (Block b : enemyBlocks){
             b.velocity.add(xVelocity, yVelocity);
+            b.bounds.rotationAngle.set(0, 1);
+            b.bounds.lowerLeft.set(b.position.x + 12f, b.position.y - 12f);
+            b.bounds.setVertices();
         }
     }
 
@@ -78,8 +81,8 @@ public class EnemyTeleporter extends Enemy {
 //            teleY = 40;
 //        }
 
-        teleX = -200 + rand.nextInt(400);
-        teleY = -200 + rand.nextInt(400);
+        teleX = -100 + rand.nextInt(100);
+        teleY = -100 + rand.nextInt(100);
 //        if(teleX%2 > 0){
 //            teleX *=-1;
 //        }

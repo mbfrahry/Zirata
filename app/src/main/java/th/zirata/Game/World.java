@@ -43,6 +43,7 @@ public class World {
 	public Player player;
 	public final ArrayList<Enemy> enemies;
 	public final ArrayList<Bullet> enemyBullets;
+	public EnemyManager enemyManager;
 	public static ArrayList<Bullet> playerBullets;
 	public ArrayList<Background> backgrounds;
 	public ArrayList<Background> nearBackgrounds;
@@ -112,6 +113,7 @@ public class World {
 		level = currLevel;
 
 		eventCountdown = 0;
+		enemyManager = new EnemyManager(this);
 	}
 	
 	public void update(float deltaTime){
@@ -119,10 +121,10 @@ public class World {
 		updateBackgrounds(deltaTime);
 		updatePlayer(deltaTime);
 		updatePlayerBullets(deltaTime);
-		updateEnemies(deltaTime);
-		updateEnemyBullets(deltaTime);
+		enemyManager.updateEnemies(deltaTime);
+		enemyManager.updateEnemyBullets(deltaTime);
 		checkPlayerBullets();
-		checkEnemyBullets();
+		enemyManager.checkEnemyBullets();
 		checkPlayerCollision();
 		checkLevelEnd();
 		checkGameOver();
@@ -156,18 +158,18 @@ public class World {
 	}
 
 	private void updateBackgroundAngles(float cosChange, float sinChange){
-		for(int i = 0; i < backgrounds.size(); i++){
-			backgrounds.get(i).bounds.rotationAngle.x = cosChange;
-			backgrounds.get(i).bounds.rotationAngle.y = sinChange;
-		}
-		for (int i = 0; i < farBackgrounds.size(); i++){
-			farBackgrounds.get(i).bounds.rotationAngle.x = cosChange;
-			farBackgrounds.get(i).bounds.rotationAngle.y = sinChange;
-		}
-		for (int i = 0; i < nearBackgrounds.size(); i++){
-			nearBackgrounds.get(i).bounds.rotationAngle.x = cosChange;
-			nearBackgrounds.get(i).bounds.rotationAngle.y = sinChange;
-		}
+//		for(int i = 0; i < backgrounds.size(); i++){
+//			backgrounds.get(i).bounds.rotationAngle.x = cosChange;
+//			backgrounds.get(i).bounds.rotationAngle.y = sinChange;
+//		}
+//		for (int i = 0; i < farBackgrounds.size(); i++){
+//			farBackgrounds.get(i).bounds.rotationAngle.x = cosChange;
+//			farBackgrounds.get(i).bounds.rotationAngle.y = sinChange;
+//		}
+//		for (int i = 0; i < nearBackgrounds.size(); i++){
+//			nearBackgrounds.get(i).bounds.rotationAngle.x = cosChange;
+//			nearBackgrounds.get(i).bounds.rotationAngle.y = sinChange;
+//		}
 	}
 
 	public void updateBackgrounds(float deltaTime){
@@ -318,46 +320,46 @@ public class World {
 		}
 	}
 	
-	private void updateEnemies(float deltaTime){
-		lastEnemyTime += deltaTime;
-		if(lastEnemyTime > timeToNextEnemy && state != WORLD_STATE_LAST_ENEMY){
-			generateEnemy();
-			
-			if(level.enemyNum % 4 == 0 && timeToNextEnemy > 2){
-				timeToNextEnemy -= 0.5;
-			}
-			
-			lastEnemyTime = 0;
-		}
-		
-		for(int i = 0; i < enemies.size(); i++){
-			Enemy enemy = enemies.get(i);
-			for(int j = 0; j < enemy.enemyBlocks.size(); j++){
-				Block currBlock = enemy.enemyBlocks.get(j);
-
-				if(moveLeft || moveRight) {
-					if(enemy.constantVelocity){
-						currBlock.rotateConstantVelocity(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
-					}
-					else {
-						currBlock.rotate(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
-					}
-				}
-
-				if(currBlock.getClass().equals(EnemyTurretBlock.class)){
-					EnemyTurretBlock tBlock = (EnemyTurretBlock) currBlock;
-					generateEnemyBullet(tBlock);
-				}
-			}
-			enemy.update(deltaTime, this);
-			
-			if(enemy.checkDead()){
-				enemies.remove(i);
-				enemiesKilled += 1;
-				createCurrency();
-			}
-		}
-	}
+//	private void updateEnemies(float deltaTime){
+//		lastEnemyTime += deltaTime;
+//		if(lastEnemyTime > timeToNextEnemy && state != WORLD_STATE_LAST_ENEMY){
+//			enemyManager.generateEnemy();
+//
+//			if(level.enemyNum % 4 == 0 && timeToNextEnemy > 2){
+//				timeToNextEnemy -= 0.5;
+//			}
+//
+//			lastEnemyTime = 0;
+//		}
+//
+//		for(int i = 0; i < enemies.size(); i++){
+//			Enemy enemy = enemies.get(i);
+//			for(int j = 0; j < enemy.enemyBlocks.size(); j++){
+//				Block currBlock = enemy.enemyBlocks.get(j);
+//
+//				if(moveLeft || moveRight) {
+//					if(enemy.constantVelocity){
+//						currBlock.rotateConstantVelocity(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
+//					}
+//					else {
+//						currBlock.rotate(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
+//					}
+//				}
+//
+//				if(currBlock.getClass().equals(EnemyTurretBlock.class)){
+//					EnemyTurretBlock tBlock = (EnemyTurretBlock) currBlock;
+//					generateEnemyBullet(tBlock);
+//				}
+//			}
+//			enemy.update(deltaTime, this);
+//
+//			if(enemy.checkDead()){
+//				enemies.remove(i);
+//				enemiesKilled += 1;
+//				createCurrency();
+//			}
+//		}
+//	}
 	
 	public void updateEnemyBullets(float deltaTime){
 		for(int i = 0; i < enemyBullets.size(); i++){
@@ -382,63 +384,63 @@ public class World {
 		}
 	}
 	
-	private void createCurrency(){
+	public void createCurrency(){
 		if(rand.nextFloat() < .25){
 			Settings.spaceBucks += 1;
 			spaceBucksEarned += 1;
 		}
 	}
 	
-	private void generateEnemy(){
-		Enemy e = null;
-		if(level.enemyNum > 0) {
-			e = level.generateEnemy();
-			if(level.enemyNum == 0){
-				//TODO: NEED TO CHANGE THIS TO ADD SPECIFIC ANIMATION FOR A BOSS FIGHT
-				if(level.bossType >= 0){
-					popupManager.createTextExtra("text", "The", 160, 350, 25, 25, 2f, "red", "center");
-					String bossName = "";
-					if(level.bossType == 1) {
-						bossName = "Hydra";
-					}
-					popupManager.createTextExtra("text", bossName, 160, 300, 25, 25, 2f, "red", "center");
-					popupManager.createTextExtra("text", "approaches", 160, 250, 25, 25, 2f, "red", "center");
-				}
-
-			}
-		}
-		else{
-			state = WORLD_STATE_LAST_ENEMY;
-			if(level.bossType >= 0 && popupManager.getPopupsSize() == 0) {
-				if(level.bossType == 1) {
-					e = EnemySettings.getBoss("Hydra");
-				}
-			}
-		}
-		if(e != null){
-			for (Block b : e.enemyBlocks) {
-				if(e.constantVelocity){
-					b.rotateConstantVelocity(world_sin, world_cos, WORLD_MID_POINT);
-				}
-				else{
-					b.rotate(world_sin, world_cos, WORLD_MID_POINT);
-				}
-			}
-			enemies.add(e);
-		}
-
-	}
+//	private void generateEnemy(){
+//		Enemy e = null;
+//		if(level.enemyNum > 0) {
+//			e = level.generateEnemy();
+//			if(level.enemyNum == 0){
+//				//TODO: NEED TO CHANGE THIS TO ADD SPECIFIC ANIMATION FOR A BOSS FIGHT
+//				if(level.bossType >= 0){
+//					popupManager.createTextExtra("text", "The", 160, 350, 25, 25, 2f, "red", "center");
+//					String bossName = "";
+//					if(level.bossType == 1) {
+//						bossName = "Hydra";
+//					}
+//					popupManager.createTextExtra("text", bossName, 160, 300, 25, 25, 2f, "red", "center");
+//					popupManager.createTextExtra("text", "approaches", 160, 250, 25, 25, 2f, "red", "center");
+//				}
+//
+//			}
+//		}
+//		else{
+//			state = WORLD_STATE_LAST_ENEMY;
+//			if(level.bossType >= 0 && popupManager.getPopupsSize() == 0) {
+//				if(level.bossType == 1) {
+//					e = EnemySettings.getBoss("Hydra");
+//				}
+//			}
+//		}
+//		if(e != null){
+//			for (Block b : e.enemyBlocks) {
+//				if(e.constantVelocity){
+//					b.rotateConstantVelocity(world_sin, world_cos, WORLD_MID_POINT);
+//				}
+//				else{
+//					b.rotate(world_sin, world_cos, WORLD_MID_POINT);
+//				}
+//			}
+//			enemies.add(e);
+//		}
+//
+//	}
 	
-	private void checkEnemyBullets(){
-		Bullet b;
-		for(int i = 0; i < enemyBullets.size(); i++){
-
-			b = enemyBullets.get(i);
-			if(checkPlayerCollision(b)){
-				enemyBullets.remove(i);
-			}
-		}
-	}
+//	private void checkEnemyBullets(){
+//		Bullet b;
+//		for(int i = 0; i < enemyBullets.size(); i++){
+//
+//			b = enemyBullets.get(i);
+//			if(checkPlayerCollision(b)){
+//				enemyBullets.remove(i);
+//			}
+//		}
+//	}
 
 
 	private void checkPlayerBullets(){
@@ -467,7 +469,7 @@ public class World {
 		return false;
 	}
 	
-	private boolean checkPlayerCollision(Bullet bullet){
+	public boolean checkPlayerCollision(Bullet bullet){
 		for(int i = 0; i < player.playerBlocks.size(); i++){
 			Block pBlock = player.playerBlocks.get(i);
 				if(OverlapTester.overlapRectangles(bullet.bounds, pBlock.bounds)){

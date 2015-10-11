@@ -95,7 +95,7 @@ public class Enemy{
 			for (Vector2 v : currBlock.bounds.vertices){
 				v.add(currBlock.velocity.x * deltaTime, currBlock.velocity.y * deltaTime);
 			}
-			currBlock.bounds.rotationAngle.set(world.world_cos, world.world_sin);
+			//currBlock.bounds.rotationAngle.set(world.world_cos, world.world_sin);
             currBlock.update(deltaTime);
 			if(currBlock.checkDeath()){
 				enemyBlocks.remove(i);
