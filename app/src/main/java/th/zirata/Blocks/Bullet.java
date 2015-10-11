@@ -47,7 +47,8 @@ public class Bullet extends DynamicGameObject{
 	
 	public void update(float deltaTime){
 		position.add(velocity.x * deltaTime, velocity.y * deltaTime);
-		bounds.lowerLeft.set(position).sub(BULLET_WIDTH/2, BULLET_HEIGHT/2);
+		bounds.lowerLeft.add(velocity.x * deltaTime, velocity.y * deltaTime);
+		bounds.setVertices();
 	}
 
 }

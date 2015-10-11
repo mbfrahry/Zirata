@@ -52,19 +52,19 @@ public class EnemyManager {
             world.state = World.WORLD_STATE_LAST_ENEMY;
             if(world.level.bossType >= 0 && world.popupManager.getPopupsSize() == 0) {
                 if(world.level.bossType == 1) {
-                    e = new Hydra(1, 1, 0);
+                    e = new Hydra(1, world.world_cos, world.world_sin);
                 }
             }
         }
         if(e != null){
-            for (Block b : e.enemyBlocks) {
-                if(e.constantVelocity){
-                    //b.rotateConstantVelocity(world.world_sin, world.world_cos, world.WORLD_MID_POINT);
-                }
-                else{
-                    //b.rotate(world.world_sin, world.world_cos, world.WORLD_MID_POINT);
-                }
-            }
+//            for (Block b : e.enemyBlocks) {
+//                if(e.constantVelocity){
+//                    //b.rotateConstantVelocity(world.world_sin, world.world_cos, world.WORLD_MID_POINT);
+//                }
+//                else{
+//                    //b.rotate(world.world_sin, world.world_cos, world.WORLD_MID_POINT);
+//                }
+//            }
             enemies.add(e);
         }
 

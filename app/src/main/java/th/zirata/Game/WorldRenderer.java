@@ -184,7 +184,7 @@ public class WorldRenderer {
 							batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, currBlock.bounds.rotationAngle.angle() - 90, Assets.textureRegions.get("BaseBlock"));
 //							batcher.drawSprite(currBlock.bounds.lowerLeft.x  , currBlock.bounds.lowerLeft.y, 8, 8, Assets.textureRegions.get("Bullet"));
 						}
-						//batcher.drawSprite(currBlock.position.x, currBlock.position.y, 8, 8, Assets.textureRegions.get("Bullet"));
+//						batcher.drawSprite(currBlock.position.x, currBlock.position.y, 8, 8, Assets.textureRegions.get("Bullet"));
 					}
 				}
 

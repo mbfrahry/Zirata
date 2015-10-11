@@ -93,6 +93,10 @@ public class Rectangle {
 		return vertices;
 	}
 
+	public void setVertex(int index, float newX, float newY){
+		vertices[index].set(newX, newY);
+	}
+
 	public void rotateVector(Vector2 point){
 		float leftX = point.x;
 		float leftY = point.y;

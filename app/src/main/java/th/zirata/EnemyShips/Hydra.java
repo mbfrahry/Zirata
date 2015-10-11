@@ -23,8 +23,8 @@ public class Hydra extends Enemy {
     public Hydra(int blockLevel, float world_cos, float world_sin){
         super( blockLevel);
         constantVelocity = true;
-        this.x = 150;
-        this.y = 450;
+        this.x = 60;
+        this.y = 340;
         position = new Vector2(x, y);
         this.blockLevel = blockLevel;
         blocksPerDirection = new int[] {1,1,1};
@@ -32,7 +32,10 @@ public class Hydra extends Enemy {
         Vector2 x_axis = new Vector2(160 - position.x, 240-position.y).rotate(90).nor();
         left = x_axis;
 
-        createHydra(x_axis, y_axis, world_cos, world_sin);
+        Log.d("cos/sin", world_cos + " " + world_sin);
+        Log.d("xaxis", x_axis.x + " " + x_axis.y);
+        Log.d("yaxis", y_axis.x + " " + y_axis.y);
+        createHydra(x_axis, y_axis);
     }
 
 
@@ -47,11 +50,7 @@ public class Hydra extends Enemy {
 //        createHydra(world_x_axis, world_y_axis, world_cos, world_sin);
 //    }
 
-
-
-
-
-    public void createHydra(Vector2 world_x_axis, Vector2 world_y_axis, float world_cos, float world_sin){
+    public void createHydra(Vector2 world_x_axis, Vector2 world_y_axis){
         enemyBlocks.add(new ArmorBlock(x, y, blockLevel*10, blockLevel));
         enemyBlocks.add(new EnemyTurretBlock(enemyBlocks.get(0).position.x+25f*world_x_axis.x,
                 enemyBlocks.get(0).position.y + 25f*world_x_axis.y, blockLevel*3, blockLevel));
@@ -62,20 +61,15 @@ public class Hydra extends Enemy {
         for(int i = 0; i < enemyBlocks.size(); i++){
             Block e = enemyBlocks.get(i);
             e.velocity.set(0, -10);
-            e.bounds.rotationAngle.set(world_cos, world_sin);
-            e.bounds.lowerLeft.set(e.position.x-12f*world_x_axis.x -12f*world_y_axis.x,
-                    e.position.y + 12f*world_x_axis.y + 12f*world_y_axis.y);
+            e.bounds.rotationAngle.set(world_y_axis.x, world_y_axis.y);
+            e.bounds.lowerLeft.set(e.position.x - 12f * world_x_axis.x - 12f * world_y_axis.x,
+                    e.position.y - 12f*world_x_axis.y - 12f*world_y_axis.y);
             e.bounds.setVertices();
-
         }
     }
 
     public boolean checkDead(){
-        if(enemyBlocks.size() == 0){
-            return true;
-        }
-
-        return false;
+        return enemyBlocks.size() == 0;
     }
 
     public void update(float deltaTime, World world){
@@ -96,10 +90,9 @@ public class Hydra extends Enemy {
             }
             if(currBlock.checkDeath()){
                 if(currBlock.getClass().equals(EnemyTurretBlock.class)){
-                    EnemyTurretBlock eBlock = null;
+                    EnemyTurretBlock eBlock;
                     //right
                     float dir = checkDirection(currBlock);
-                    Log.d("rotato", "" + dir);
                     if(dir < -1){
                         currBlock.health = currBlock.maxHealth;
                         blocksPerDirection[0] +=1;

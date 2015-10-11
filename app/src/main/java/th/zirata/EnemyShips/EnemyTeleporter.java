@@ -31,8 +31,14 @@ public class EnemyTeleporter extends Enemy {
         constantVelocity = true;
 
         float[] atts = generateBlockAttributes();
-        x = 150;
-        y = 380;
+        x = 12 + rand.nextFloat()*300;
+        y = 12 + rand.nextFloat()*450;
+        if(x > 140 && x < 180){
+            if(y > 220 && y < 260){
+                x += 75;
+                y += 75;
+            }
+        }
         position = new Vector2(x, y);
         xVelocity = 0;
         yVelocity = -10;
@@ -81,8 +87,8 @@ public class EnemyTeleporter extends Enemy {
 //            teleY = 40;
 //        }
 
-        teleX = -100 + rand.nextInt(100);
-        teleY = -100 + rand.nextInt(100);
+        teleX = -99 + rand.nextInt(200);
+        teleY = -99 + rand.nextInt(200);
 //        if(teleX%2 > 0){
 //            teleX *=-1;
 //        }
