@@ -1,5 +1,7 @@
 package th.zirata.Game;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 import th.zirata.Blocks.Block;
@@ -8,6 +10,9 @@ import th.zirata.Blocks.EnemyTurretBlock;
 import th.zirata.Blocks.TurretBlock;
 import th.zirata.EnemyShips.Enemy;
 import th.zirata.EnemyShips.Hydra;
+import th.zirata.EnemyShips.StandardEnemy;
+import th.zirata.EnemyShips.SwirlyWhirly;
+import th.zirata.Settings.EnemySettings;
 
 /**
  * Created by Max Bauer on 10/10/2015.
@@ -42,6 +47,9 @@ public class EnemyManager {
                     if(world.level.bossType == 1) {
                         bossName = "Hydra";
                     }
+                    else if(world.level.bossType == 2){
+                        bossName = "Orbiter";
+                    }
                     world.popupManager.createTextExtra("text", bossName, 160, 300, 25, 25, 2f, "red", "center");
                     world.popupManager.createTextExtra("text", "approaches", 160, 250, 25, 25, 2f, "red", "center");
                 }
@@ -53,6 +61,9 @@ public class EnemyManager {
             if(world.level.bossType >= 0 && world.popupManager.getPopupsSize() == 0) {
                 if(world.level.bossType == 1) {
                     e = new Hydra(1, world.world_cos, world.world_sin);
+                }
+                else if(world.level.bossType == 2){
+                    e = new SwirlyWhirly(5);
                 }
             }
         }
@@ -68,6 +79,13 @@ public class EnemyManager {
             enemies.add(e);
         }
 
+    }
+
+    public void generateEnemy(int type, int level, float x, float y){
+        //Make this generate an enemy at a specific location
+        if(type == EnemySettings.STANDARD_ENEMY){
+            enemies.add(new StandardEnemy(level, x, y));
+        }
     }
 
     public void generateEnemyBullet(EnemyTurretBlock tBlock){
@@ -112,6 +130,10 @@ public class EnemyManager {
                 }
             }
             enemy.update(deltaTime, world);
+
+            if(enemy.getClass().equals(SwirlyWhirly.class)){
+                Log.d("size of enemyBlocks", " " + enemy.enemyBlocks.size());
+            }
 
             if(enemy.checkDead()){
                 enemies.remove(i);

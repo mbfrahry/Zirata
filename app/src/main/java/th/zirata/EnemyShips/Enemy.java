@@ -57,14 +57,27 @@ public class Enemy{
 				multiplier = -1;
 			}
 		}
+		return generateSpecificAttributes(x, y, multiplier);
+	}
+
+	public float[] generateBlockAttributes(float x, float y){
+		float multiplier = 1;
+		if (x > 160){
+			multiplier = -1;
+		}
+		return generateSpecificAttributes(x, y, multiplier);
+	}
+
+	public float[] generateSpecificAttributes(float x, float y, float multiplier){
+
 		double angle = Math.atan((240-y)/(160-x));
 		double xVelocity = multiplier*Math.cos(angle)*10;
 		double yVelocity = multiplier*Math.sin(angle)*10;
 
-        float[] attributes = {x, y, (float) xVelocity, (float)yVelocity};
-        return attributes;
-	}
+		float[] attributes = {x, y, (float) xVelocity, (float)yVelocity};
+		return attributes;
 
+	}
 
 
 	public void generateBlock(int enemyType, int health, float x, float y, float xVelocity, float yVelocity){

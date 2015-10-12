@@ -27,7 +27,25 @@ public class StandardEnemy extends Enemy {
 
         Vector2 velocityNorm = new Vector2(xVelocity, yVelocity).nor();
         Vector2 velocityNormX =  new Vector2(xVelocity, yVelocity).rotate(90).nor();
+        setupBlocks(velocityNorm, velocityNormX);
 
+    }
+
+    public StandardEnemy(int enemyLevel, float x, float y){
+        super(enemyLevel);
+        float[] atts = generateBlockAttributes(x, y);
+        this.x = x;
+        this.y = y;
+        position = new Vector2(x, y);
+        xVelocity = atts[2];
+        yVelocity = atts[3];
+
+        Vector2 velocityNorm = new Vector2(xVelocity, yVelocity).nor();
+        Vector2 velocityNormX =  new Vector2(xVelocity, yVelocity).rotate(90).nor();
+        setupBlocks(velocityNorm, velocityNormX);
+    }
+
+    public void setupBlocks(Vector2 velocityNorm, Vector2 velocityNormX){
         if(enemyLevel == 1){
             //Create one armor block
             ArmorBlock aBlock = new ArmorBlock(x, y, 10, enemyLevel);
@@ -79,8 +97,4 @@ public class StandardEnemy extends Enemy {
             b.bounds.setVertices();
         }
     }
-
-
-
-
 }

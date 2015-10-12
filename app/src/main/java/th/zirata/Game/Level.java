@@ -44,10 +44,6 @@ public class Level {
         else{
 
         }
-
-
-
-
         //Make call to new enemy creation
         enemyNum--;
         return newEnemy;
