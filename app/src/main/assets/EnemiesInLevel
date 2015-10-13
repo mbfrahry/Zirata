@@ -20,7 +20,7 @@
   "level4": {
     "enemyNumber": 10,
     "enemyLevel": [2, 1, 1],
-    "enemyChance": [0.33, 0.33, .34],
+    "enemyChance": [0.33, 0.33, 0.34],
     "bossNum": 2
   },
   "level5": {
