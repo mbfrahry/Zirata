@@ -17,6 +17,7 @@ public class Hydra extends Enemy {
     int x;
     int y;
     int blockLevel;
+    float cooldown;
     int[] blocksPerDirection;
     Vector2 left;
 
@@ -28,6 +29,7 @@ public class Hydra extends Enemy {
         position = new Vector2(x, y);
         this.blockLevel = blockLevel;
         blocksPerDirection = new int[] {1,1,1};
+        cooldown = .25f;
         Vector2 y_axis = new Vector2(160 - position.x, 240-position.y).nor();
         Vector2 x_axis = new Vector2(160 - position.x, 240-position.y).rotate(90).nor();
         left = x_axis;
@@ -73,7 +75,7 @@ public class Hydra extends Enemy {
     }
 
     public void update(float deltaTime, World world){
-
+        cooldown += deltaTime;
 
         for(int i = 0; i < enemyBlocks.size(); i++){
             Block currBlock = enemyBlocks.get(i);
@@ -88,7 +90,8 @@ public class Hydra extends Enemy {
                 left.set(enemyBlocks.get(1).position.x - enemyBlocks.get(0).position.x, enemyBlocks.get(1).position.y - enemyBlocks.get(0).position.y);
                 left.nor();
             }
-            if(currBlock.checkDeath()){
+            if(currBlock.checkDeath() && cooldown > .1){
+                cooldown = 0;
                 if(currBlock.getClass().equals(EnemyTurretBlock.class)){
                     EnemyTurretBlock eBlock;
                     //right
