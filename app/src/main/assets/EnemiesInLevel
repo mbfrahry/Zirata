@@ -1,32 +1,32 @@
 {
   "level1": {
     "enemyNumber": 5,
-    "enemyLevel": [1, 0],
-    "enemyChance": [1, 0],
-    "bossNum": 2
+    "enemyLevel": [1, 0, 1],
+    "enemyChance": [0, 0, 1],
+    "bossNum": -1
   },
   "level2": {
     "enemyNumber": 10,
-    "enemyLevel": [1, 0],
-    "enemyChance": [1, 0],
+    "enemyLevel": [1, 0, 0],
+    "enemyChance": [1, 0, 0],
     "bossNum": -1
   },
   "level3": {
     "enemyNumber": 10,
-    "enemyLevel": [2, 1],
-    "enemyChance": [0, 1],
+    "enemyLevel": [2, 1, 0],
+    "enemyChance": [0, 1, 0],
     "bossNum": -1
   },
   "level4": {
     "enemyNumber": 2,
-    "enemyLevel": [2, 1],
-    "enemyChance": [0.5, 0.5],
+    "enemyLevel": [2, 1, 0],
+    "enemyChance": [0.5, 0.5, 0],
     "bossNum": 1
   },
   "level5": {
     "enemyNumber": 500,
-    "enemyLevel": [5, 0],
-    "enemyChance": [1, 0],
+    "enemyLevel": [5, 0, 0],
+    "enemyChance": [1, 0, 0],
     "bossNum": -1
   }
 }

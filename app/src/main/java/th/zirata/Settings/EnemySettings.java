@@ -20,10 +20,11 @@ public class EnemySettings {
 
     public static HashMap<String, double[]> enemiesInLevel = new HashMap<String, double[]>();
     public static HashMap<String, double[]> bossInLevel = new HashMap<String, double[]>();
-    public static int ENEMYTYPES = 2;
+    public static int ENEMYTYPES = 3;
 
     public static int STANDARD_ENEMY = 0;
     public static int TELEPORTER_ENEMY = 1;
+    public static int SPINNER_ENEMY = 2;
 
 
 

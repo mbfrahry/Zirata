@@ -30,7 +30,7 @@ public class SwirlyWhirly extends Enemy {
         angularSpeed = new Vector2();
         degreesPerSecond = .5f;
         setAngularSpeed(degreesPerSecond);
-        position = new Vector2(160,  390);
+        position = new Vector2(160, 390);
         enemyBlocks.add(new ArmorBlock(position.x, position.y, 10, 1));
         worldMidpoint = new Vector2(160, 240);
         loops = 0;
