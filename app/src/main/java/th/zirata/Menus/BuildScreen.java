@@ -578,9 +578,9 @@ public class BuildScreen extends GLScreen{
 		}
 
 
-		batcher.drawUISprite(guiCam, 40, 175, 24, 24, Assets.textureRegions.get("TurretBase"));
-		batcher.drawUISprite(guiCam, 40, 175, 24, 24, Assets.textureRegions.get("TurretTop"));
-		batcher.drawUISprite(guiCam, 120, 175, 24, 24, Assets.textureRegions.get("ArmorBlock"));
+		batcher.drawUISprite(guiCam, 40, 175, 24, 24, Assets.textureRegions.get("GreenBase3"));
+		batcher.drawUISprite(guiCam, 40, 175, 24, 24, Assets.textureRegions.get("GreenTurret3"));
+		batcher.drawUISprite(guiCam, 120, 175, 24, 24, Assets.textureRegions.get("GreenBase1"));
 		batcher.drawUISprite(guiCam, 200, 175, 24, 24, Assets.textureRegions.get("EnergyBlock"));
 		batcher.drawUISprite(guiCam, 280, 175, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
 

@@ -11,6 +11,7 @@ import com.badlogic.androidgames.framework.math.OverlapTester;
 import com.badlogic.androidgames.framework.math.Rectangle;
 import com.badlogic.androidgames.framework.math.Vector2;
 
+import th.zirata.EnemyShips.Spinner;
 import th.zirata.Menus.PopupManager;
 import th.zirata.Settings.Assets;
 import th.zirata.Blocks.ArmorBlock;
@@ -152,8 +153,8 @@ public class WorldRenderer {
 						if(currBlock.getClass().equals(EnemyTurretBlock.class)){
 							EnemyTurretBlock currEnemy = (EnemyTurretBlock) currBlock;
 							Vector2 rotate = new Vector2(160,240);
-							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, currEnemy.bounds.rotationAngle.angle() - 90, Assets.textureRegions.get("TurretBase"));
-							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, rotate.sub(currEnemy.position.x, currEnemy.position.y).angle() - 90, Assets.textureRegions.get("TurretTop"));
+							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, currEnemy.bounds.rotationAngle.angle() - 90, Assets.textureRegions.get("PurpleBase3"));
+							batcher.drawSprite(currBlock.position.x  , currBlock.position.y, 24, 24, rotate.sub(currEnemy.position.x, currEnemy.position.y).angle() - 90, Assets.textureRegions.get("PurpleTurret3"));
 //							batcher.drawSprite(currEnemy.bounds.lowerLeft.x  , currEnemy.bounds.lowerLeft.y, 8, 8, Assets.textureRegions.get("Bullet"));
 
 							EnemyTurretBlock tBlock = (EnemyTurretBlock)currBlock;
@@ -168,13 +169,13 @@ public class WorldRenderer {
 						else if(currBlock.getClass().equals(ArmorBlock.class)){
 //							batcher.drawSprite(currBlock.bounds.lowerLeft.x  , currBlock.bounds.lowerLeft.y, 8, 8, Assets.textureRegions.get("Bullet"));
 							if(currBlock.health <= currBlock.maxHealth && currBlock.health > currBlock.maxHealth*.7){
-								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, currBlock.bounds.rotationAngle.angle() - 90, Assets.textureRegions.get("FullHealthArmorBlock"));
+								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, currBlock.bounds.rotationAngle.angle() - 90, Assets.textureRegions.get("PurpleBase3"));
 							}
 							else if(currBlock.health <= currBlock.maxHealth*.7 && currBlock.health > currBlock.maxHealth*.3){
-								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, currBlock.bounds.rotationAngle.angle() - 90, Assets.textureRegions.get("MidHealthArmorBlock"));
+								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, currBlock.bounds.rotationAngle.angle() - 90, Assets.textureRegions.get("PurpleBase2"));
 							}
 							else if(currBlock.health <= currBlock.maxHealth*.3 && currBlock.health > 0){
-								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, currBlock.bounds.rotationAngle.angle() - 90, Assets.textureRegions.get("LowHealthArmorBlock"));
+								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, currBlock.bounds.rotationAngle.angle() - 90, Assets.textureRegions.get("PurpleBase1"));
 							}
 						}
 
@@ -188,6 +189,10 @@ public class WorldRenderer {
 //							batcher.drawSprite(currBlock.bounds.lowerLeft.x  , currBlock.bounds.lowerLeft.y, 8, 8, Assets.textureRegions.get("Bullet"));
 						}
 //						batcher.drawSprite(currBlock.position.x, currBlock.position.y, 8, 8, Assets.textureRegions.get("Bullet"));
+//						if(world.enemyManager.enemies.get(i).getClass().equals(Spinner.class)){
+//							Spinner currEnemy = (Spinner)world.enemyManager.enemies.get(i);
+//							batcher.drawSprite(currEnemy.shipMidPoint.x, currEnemy.shipMidPoint.y, 8, 8, Assets.textureRegions.get("GreenBullet"));
+//						}
 					}
 				}
 

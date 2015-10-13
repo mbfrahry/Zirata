@@ -95,7 +95,7 @@ public class BlockRenderer {
     }
 
     private void renderSimpleArmorBlock(SpriteBatcher batcher, float x, float y, float width, float height){
-        batcher.drawSprite(x , y, width , height, Assets.textureRegions.get("ArmorBlock"));
+        batcher.drawSprite(x , y, width , height, Assets.textureRegions.get("GreenBase1"));
     }
 
     private void renderSimpleMultiplierBlock(SpriteBatcher batcher, float x, float y, float width, float height){
@@ -165,7 +165,7 @@ public class BlockRenderer {
     }
 
     private void renderGameArmorBlock(SpriteBatcher batcher, ArmorBlock aBlock){
-        batcher.drawSprite(aBlock.position.x , aBlock.position.y, 24 , 24, Assets.textureRegions.get("ArmorBlock"));
+        batcher.drawSprite(aBlock.position.x , aBlock.position.y, 24 , 24, Assets.textureRegions.get("GreenBase1"));
     }
 
     private void renderGameMultiplierBlock(SpriteBatcher batcher, MultiplierBlock mBlock){

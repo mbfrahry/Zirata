@@ -1,5 +1,6 @@
 package th.zirata.EnemyShips;
 
+import com.badlogic.androidgames.framework.gl.Vertices;
 import com.badlogic.androidgames.framework.math.Vector2;
 
 import th.zirata.Blocks.ArmorBlock;
@@ -18,25 +19,29 @@ public class Spinner extends Enemy {
     float xVelocity;
     float yVelocity;
     Vector2 angularSpeed;
+    float radius;
     float degreesPerSecond;
-    Vector2 shipMidPoint;
+    public Vector2 shipMidPoint;
+    Vector2 velocityNorm;
 
     public Spinner(int enemyLevel){
         super(enemyLevel);
         angularSpeed = new Vector2();
-        degreesPerSecond = .5f;
+        degreesPerSecond = .7f;
         setAngularSpeed(degreesPerSecond);
 
         float[] atts = generateBlockAttributes();
         x = atts[0];
         y = atts[1];
         position = new Vector2(x, y);
-        xVelocity = atts[2];
-        yVelocity = atts[3];
+        xVelocity = atts[2]/2;
+        yVelocity = atts[3]/2;
 
-        shipMidPoint = new Vector2(x+12, y+12);
+        shipMidPoint = new Vector2(x, y);
 
-        Vector2 velocityNorm = new Vector2(xVelocity, yVelocity).nor();
+        radius = 25;
+
+        velocityNorm = new Vector2(xVelocity, yVelocity).nor();
         Vector2 velocityNormX =  new Vector2(xVelocity, yVelocity).rotate(90).nor();
         setupBlocks(velocityNorm, velocityNormX);
     }
@@ -48,15 +53,19 @@ public class Spinner extends Enemy {
 
             nextBlock = new EnemyTurretBlock(x, y, enemyLevel*3, enemyLevel);
             enemyBlocks.add(nextBlock);
-            nextBlock = new ArmorBlock(x, y+36, 10, enemyLevel);
+            //nextBlock = new ArmorBlock(x +10f*velocityNormX.x +10f*velocityNorm.x, y + 10f*velocityNormX.y + 10f*velocityNorm.y, 10, enemyLevel);
+            nextBlock = new ArmorBlock(x +radius*velocityNorm.x, y + radius*velocityNorm.y, 10, enemyLevel);
             enemyBlocks.add(nextBlock);
         }
 
-        Block firstBlock = enemyBlocks.get(0);
-        firstBlock.velocity.add(xVelocity, yVelocity);
-        firstBlock.bounds.rotationAngle.set(velocityNorm.x, velocityNorm.y);
-        firstBlock.bounds.lowerLeft.set(firstBlock.position.x - 12f*velocityNorm.x - 12f*velocityNormX.x, firstBlock.position.y - 12f*velocityNorm.y - 12f*velocityNormX.y);
-        firstBlock.bounds.setVertices();
+        for(int i = 0; i < enemyBlocks.size(); i++){
+            Block firstBlock = enemyBlocks.get(0);
+            firstBlock.velocity.add(xVelocity, yVelocity);
+            firstBlock.bounds.rotationAngle.set(velocityNorm.x, velocityNorm.y);
+            firstBlock.bounds.lowerLeft.set(firstBlock.position.x - 12f*velocityNorm.x - 12f*velocityNormX.x, firstBlock.position.y - 12f*velocityNorm.y - 12f*velocityNormX.y);
+            firstBlock.bounds.setVertices();
+        }
+
 
 
     }
@@ -67,10 +76,13 @@ public class Spinner extends Enemy {
     }
 
     public void update(float deltaTime, World world){
+        //TODO: Might need to take into account player rotation as well
+        velocityNorm.rotate(angularSpeed.x, angularSpeed.y);
         for(int i = 0; i < enemyBlocks.size(); i++){
             Block currBlock = enemyBlocks.get(i);
+            currBlock.update(deltaTime);
             if(currBlock.getClass().equals(EnemyTurretBlock.class)) {
-                shipMidPoint.set(currBlock.position.x +12, currBlock.position.y+12);
+                shipMidPoint.set(currBlock.position.x, currBlock.position.y);
                 currBlock.position.add(currBlock.velocity.x * deltaTime, currBlock.velocity.y * deltaTime);
 
                 for (Vector2 v : currBlock.bounds.vertices) {
@@ -88,14 +100,22 @@ public class Spinner extends Enemy {
                 }
             }
             else{
-                currBlock.rotate(angularSpeed.y, angularSpeed.x, shipMidPoint);
+                //currBlock.rotateConstantVelocity(angularSpeed.y, angularSpeed.x, shipMidPoint);
+
+                float xDiff = radius*velocityNorm.x + shipMidPoint.x - currBlock.position.x;
+                float yDiff = radius*velocityNorm.y + shipMidPoint.y - currBlock.position.y;
+                currBlock.position.add(xDiff, yDiff);
+                for (Vector2 v : currBlock.bounds.vertices){
+                    v.add(xDiff, yDiff);
+                }
+
                 if(currBlock.checkDeath()){
                     enemyBlocks.remove(i);
                     Assets.playSound(Assets.explosionSound);
                 }
             }
             //currBlock.bounds.rotationAngle.set(world.world_cos, world.world_sin);
-            currBlock.update(deltaTime);
+
 
             if(currBlock.position.x > 600 || currBlock.position.y > 650 || currBlock.position.x < -180 || currBlock.position.y < -180 && !constantVelocity) {
                 enemyBlocks.remove(i);
