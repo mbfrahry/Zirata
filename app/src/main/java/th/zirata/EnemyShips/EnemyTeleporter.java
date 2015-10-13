@@ -89,6 +89,16 @@ public class EnemyTeleporter extends Enemy {
 
         teleX = -99 + rand.nextInt(200);
         teleY = -99 + rand.nextInt(200);
+
+        float newX = enemyBlocks.get(0).position.x + teleX;
+        float newY = enemyBlocks.get(0).position.y + teleY;
+
+        if(newX > 120 && newX < 200){
+            if(newY > 200 && newY < 280){
+                teleX += 225;
+                teleY += 225;
+            }
+        }
 //        if(teleX%2 > 0){
 //            teleX *=-1;
 //        }

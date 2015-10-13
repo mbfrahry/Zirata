@@ -78,6 +78,12 @@ public class Spinner extends Enemy {
     public void update(float deltaTime, World world){
         //TODO: Might need to take into account player rotation as well
         velocityNorm.rotate(angularSpeed.x, angularSpeed.y);
+        if(world.moveLeft){
+            velocityNorm.rotate(World.POS_COS_ANGLE, World.POS_SIN_ANGLE);
+        }
+        else if(world.moveRight){
+            velocityNorm.rotate(World.POS_COS_ANGLE, World.NEG_SIN_ANGLE);
+        }
         for(int i = 0; i < enemyBlocks.size(); i++){
             Block currBlock = enemyBlocks.get(i);
             currBlock.update(deltaTime);
