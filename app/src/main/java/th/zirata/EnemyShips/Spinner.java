@@ -46,7 +46,7 @@ public class Spinner extends Enemy {
         if(enemyLevel == 1){
             //Create one armor block
 
-            nextBlock = new EnemyTurretBlock(x, y+36, enemyLevel*3, enemyLevel);
+            nextBlock = new EnemyTurretBlock(x, y, enemyLevel*3, enemyLevel);
             enemyBlocks.add(nextBlock);
             nextBlock = new ArmorBlock(x, y+36, 10, enemyLevel);
             enemyBlocks.add(nextBlock);
@@ -88,7 +88,7 @@ public class Spinner extends Enemy {
                 }
             }
             else{
-                currBlock.rotate(angularSpeed.y, angularSpeed.x, enemyBlocks.get(0).position);
+                currBlock.rotate(angularSpeed.y, angularSpeed.x, shipMidPoint);
                 if(currBlock.checkDeath()){
                     enemyBlocks.remove(i);
                     Assets.playSound(Assets.explosionSound);
