@@ -30,7 +30,7 @@ public class EnemyTeleporter extends Enemy {
         super( blockLevel);
         constantVelocity = true;
 
-        float[] atts = generateBlockAttributes();
+        //float[] atts = generateBlockAttributes();
         x = 12 + rand.nextFloat()*300;
         y = 12 + rand.nextFloat()*450;
         if(x > 140 && x < 180){
@@ -71,21 +71,8 @@ public class EnemyTeleporter extends Enemy {
     }
 
     public void teleportBlocks(){
-        int teleX = 0;
-        int teleY = 0;
-        Vector2 currPosition = enemyBlocks.get(0).position;
-//        if(currPosition.x < 160 && (currPosition.y > 300 || currPosition.y < 180 ) ){
-//            teleX = 40;
-//        }
-//        else if(currPosition.x > 160 && (currPosition.y > 300 || currPosition.y < 180 ) ){
-//            teleX = 40;
-//        }
-//        else if(currPosition.y >= 240  ){
-//            teleY = 40;
-//        }
-//        else{
-//            teleY = 40;
-//        }
+        int teleX;
+        int teleY;
 
         teleX = -99 + rand.nextInt(200);
         teleY = -99 + rand.nextInt(200);
@@ -99,12 +86,6 @@ public class EnemyTeleporter extends Enemy {
                 teleY += 225;
             }
         }
-//        if(teleX%2 > 0){
-//            teleX *=-1;
-//        }
-//        if(teleY%2 > 0){
-//            teleY *= -1;
-//        }
 
         for(Block b : enemyBlocks){
             b.position.x += teleX;
@@ -120,8 +101,14 @@ public class EnemyTeleporter extends Enemy {
     public void update(float deltaTime, World world){
         super.update(deltaTime, world);
         if(state == TELEPORT_READY) {
-            if (bulletInRange(world.playerBullets)) {
+            if (bulletInRange(World.playerBullets)) {
+                world.popupManager.createSpriteExtra("sprite", "PotentialBlock", enemyBlocks.get(0).position.x, enemyBlocks.get(0).position.y, 25f, 25f,.3f, 0f);
+                world.popupManager.createSpriteExtra("sprite", "BaseBlock", enemyBlocks.get(0).position.x, enemyBlocks.get(0).position.y, 35f,35f,.2f, 0f);
+                world.popupManager.createSpriteExtra("sprite", "PotentialBlock", enemyBlocks.get(0).position.x, enemyBlocks.get(0).position.y, 45f, 45f, .1f, 0f);
                 teleportBlocks();
+                world.popupManager.createSpriteExtra("sprite", "PotentialBlock", enemyBlocks.get(0).position.x, enemyBlocks.get(0).position.y, 25f, 25f,.3f, 0f);
+                world.popupManager.createSpriteExtra("sprite", "BaseBlock", enemyBlocks.get(0).position.x, enemyBlocks.get(0).position.y, 35f,35f,.2f, 0f);
+                world.popupManager.createSpriteExtra("sprite", "PotentialBlock", enemyBlocks.get(0).position.x, enemyBlocks.get(0).position.y, 45f,45f,.1f, 0f);
             }
         }
         else {

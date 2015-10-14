@@ -69,7 +69,7 @@ public class World {
 
 	public Level level;
 
-	PopupManager popupManager;
+	public PopupManager popupManager;
 	float eventCountdown;
 
 	public World(Level currLevel, PopupManager popupManager){

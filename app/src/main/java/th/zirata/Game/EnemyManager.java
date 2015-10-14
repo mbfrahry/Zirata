@@ -40,6 +40,11 @@ public class EnemyManager {
         Enemy e = null;
         if(world.level.enemyNum > 0) {
             e = world.level.generateEnemy();
+            world.popupManager.createSpriteExtra("sprite", "PotentialBlock", e.enemyBlocks.get(0).position.x, e.enemyBlocks.get(0).position.y, 25f, 25f,.3f, 0f);
+            world.popupManager.createSpriteExtra("sprite", "BaseBlock", e.enemyBlocks.get(0).position.x, e.enemyBlocks.get(0).position.y, 35f,35f,.2f, 0f);
+            world.popupManager.createSpriteExtra("sprite", "PotentialBlock", e.enemyBlocks.get(0).position.x, e.enemyBlocks.get(0).position.y, 45f,45f,.1f, 0f);
+
+
             if(world.level.enemyNum == 0){
                 //TODO: NEED TO CHANGE THIS TO ADD SPECIFIC ANIMATION FOR A BOSS FIGHT
                 if(world.level.bossType >= 0){
