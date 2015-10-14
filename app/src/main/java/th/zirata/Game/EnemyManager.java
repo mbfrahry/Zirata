@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import th.zirata.Blocks.Block;
 import th.zirata.Blocks.Bullet;
 import th.zirata.Blocks.EnemyTurretBlock;
+import th.zirata.Blocks.Mine;
 import th.zirata.Blocks.TurretBlock;
 import th.zirata.EnemyShips.Enemy;
 import th.zirata.EnemyShips.Hydra;
@@ -158,7 +159,13 @@ public class EnemyManager {
         for(int i = 0; i < enemyBullets.size(); i++){
             Bullet b = enemyBullets.get(i);
             if (world.moveLeft || world.moveRight) {
-                b.rotate(world.enemyAngle, World.POS_COS_ANGLE, world.WORLD_MID_POINT);
+                if(b.getClass().equals(Mine.class)){
+                    b.rotateConstantVelocity(world.enemyAngle, World.POS_COS_ANGLE, world.WORLD_MID_POINT);
+                }
+                else{
+                    b.rotate(world.enemyAngle, World.POS_COS_ANGLE, world.WORLD_MID_POINT);
+                }
+
             }
             b.update(deltaTime);
             if(b.outOfBounds()){

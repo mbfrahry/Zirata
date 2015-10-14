@@ -11,6 +11,7 @@ import com.badlogic.androidgames.framework.math.OverlapTester;
 import com.badlogic.androidgames.framework.math.Rectangle;
 import com.badlogic.androidgames.framework.math.Vector2;
 
+import th.zirata.Blocks.Mine;
 import th.zirata.EnemyShips.Spinner;
 import th.zirata.Menus.PopupManager;
 import th.zirata.Settings.Assets;
@@ -113,7 +114,13 @@ public class WorldRenderer {
 			Bullet b;
 			for(int i = 0; i < World.playerBullets.size(); i++){
 				b = World.playerBullets.get(i);
-				batcher.drawSprite(b.position.x, b.position.y, 5, 5, Assets.textureRegions.get("Bullet"));
+				if(b.getClass().equals(Mine.class)){
+					batcher.drawSprite(b.position.x, b.position.y, 10, 10, Assets.textureRegions.get("GreenBullet"));
+				}
+				else{
+					batcher.drawSprite(b.position.x, b.position.y, 5, 5, Assets.textureRegions.get("Bullet"));
+				}
+
                 //for (Vector2 v : b.bounds.vertices) {
 				//	batcher.drawSprite(v.x, v.y, 2, 2, Assets.textureRegions.get("Bullet"));
 				//}
@@ -208,8 +215,12 @@ public class WorldRenderer {
 			Bullet b;
 			for(int i = 0; i < world.enemyManager.enemyBullets.size(); i++){
 				b = world.enemyManager.enemyBullets.get(i);
-				batcher.drawSprite(b.position.x, b.position.y, 5, 5, Assets.textureRegions.get("Bullet"));
-
+				if(b.getClass().equals(Mine.class)){
+					batcher.drawSprite(b.position.x, b.position.y, 10, 10, Assets.textureRegions.get("GreenBullet"));
+				}
+				else{
+					batcher.drawSprite(b.position.x, b.position.y, 5, 5, Assets.textureRegions.get("Bullet"));
+				}
 			}
 		}
 	}

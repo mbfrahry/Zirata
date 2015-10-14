@@ -2,6 +2,7 @@ package th.zirata.Game;
 
 import th.zirata.EnemyShips.Enemy;
 import th.zirata.EnemyShips.EnemyTeleporter;
+import th.zirata.EnemyShips.MineEnemy;
 import th.zirata.EnemyShips.Spinner;
 import th.zirata.EnemyShips.StandardEnemy;
 import th.zirata.Settings.EnemySettings;
@@ -44,6 +45,9 @@ public class Level {
         }
         else if(type == EnemySettings.SPINNER_ENEMY){
             newEnemy = new Spinner(enemyLevels[type]);
+        }
+        else if (type == EnemySettings.MINE_ENEMY){
+            newEnemy = new MineEnemy(enemyLevels[type]);
         }
         else{
 

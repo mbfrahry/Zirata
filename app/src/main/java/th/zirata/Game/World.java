@@ -10,6 +10,7 @@ import com.badlogic.androidgames.framework.math.Rectangle;
 import com.badlogic.androidgames.framework.math.Vector2;
 
 import th.zirata.Blocks.Block;
+import th.zirata.Blocks.Mine;
 import th.zirata.EnemyShips.Enemy;
 import th.zirata.Blocks.EnemyTurretBlock;
 import th.zirata.EnemyShips.Hydra;
@@ -295,7 +296,13 @@ public class World {
             Bullet b = playerBullets.get(i);
             b.update(deltaTime);
 			if (moveLeft || moveRight) {
-				b.rotate(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
+				if(b.getClass().equals(Mine.class)){
+					b.rotateConstantVelocity(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
+				}
+				else{
+					b.rotate(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
+				}
+
 			}
 			if(playerBullets.get(i).outOfBounds()){
 				playerBullets.remove(b);

@@ -21,6 +21,14 @@ public class Bullet extends DynamicGameObject{
 		this.damage = damage;
 		this.range = range;
 	}
+
+	public Bullet(float x, float y, float width, float height, float targX, float targY, int damage, float range) {
+		super(x, y, width, height);
+		rand = new Random();
+		setVelocity(targX, targY);
+		this.damage = damage;
+		this.range = range;
+	}
 	
 	public void setVelocity(float targX, float targY){
 		double xDiff = position.x - targX + 12;
