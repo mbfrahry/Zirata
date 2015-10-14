@@ -1,8 +1,8 @@
 {
   "level1": {
     "enemyNumber": 5,
-    "enemyLevel": [0, 0, 0, 1],
-    "enemyChance": [0, 0, 0, 1],
+    "enemyLevel": [1, 0, 0, 0],
+    "enemyChance": [1, 0, 0, 0],
     "bossNum": -1
   },
   "level2": {
@@ -25,8 +25,8 @@
   },
   "level5": {
     "enemyNumber": 500,
-    "enemyLevel": [5, 0, 0, 0],
-    "enemyChance": [1, 0, 0, 0],
+    "enemyLevel": [5, 0, 0, 1],
+    "enemyChance": [0.8, 0, 0, 0.2],
     "bossNum": -1
   }
 }

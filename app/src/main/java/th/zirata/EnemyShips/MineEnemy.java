@@ -21,6 +21,7 @@ public class MineEnemy extends Enemy {
         enemyBlocks.add(aBlock);
         cooldown = 1;
         reloadTime = 6;
+        constantVelocity = true;
     }
 
     public void update(float deltaTime, World world){
@@ -28,7 +29,7 @@ public class MineEnemy extends Enemy {
         if(cooldown >= reloadTime){
             cooldown = 0;
             //TODO: Should probably switch this to action
-            world.enemyManager.enemyBullets.add(new Mine(enemyBlocks.get(0).position.x, enemyBlocks.get(0).position.y, 0, 0, 30, 500));
+            world.enemyManager.enemyBullets.add(new Mine(enemyBlocks.get(0).position.x, enemyBlocks.get(0).position.y, 0, -10, 30, 500));
         }
         int xMultiplier = 1;
         int yMultiplier = 1;

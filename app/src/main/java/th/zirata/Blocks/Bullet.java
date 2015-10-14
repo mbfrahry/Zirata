@@ -5,6 +5,7 @@ import java.util.Random;
 import android.util.Log;
 
 import com.badlogic.androidgames.framework.DynamicGameObject;
+import com.badlogic.androidgames.framework.math.Vector2;
 
 public class Bullet extends DynamicGameObject{
 
@@ -55,8 +56,9 @@ public class Bullet extends DynamicGameObject{
 	
 	public void update(float deltaTime){
 		position.add(velocity.x * deltaTime, velocity.y * deltaTime);
-		bounds.lowerLeft.add(velocity.x * deltaTime, velocity.y * deltaTime);
-		bounds.setVertices();
+		for(Vector2 v : bounds.vertices){
+			v.add(velocity.x * deltaTime, velocity.y * deltaTime);
+		}
 	}
 
 }

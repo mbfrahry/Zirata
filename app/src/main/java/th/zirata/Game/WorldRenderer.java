@@ -115,7 +115,7 @@ public class WorldRenderer {
 			for(int i = 0; i < World.playerBullets.size(); i++){
 				b = World.playerBullets.get(i);
 				if(b.getClass().equals(Mine.class)){
-					batcher.drawSprite(b.position.x, b.position.y, 10, 10, Assets.textureRegions.get("GreenBullet"));
+					batcher.drawSprite(b.position.x, b.position.y, 15, 15, Assets.textureRegions.get("GreenBullet"));
 				}
 				else{
 					batcher.drawSprite(b.position.x, b.position.y, 5, 5, Assets.textureRegions.get("Bullet"));
@@ -217,6 +217,9 @@ public class WorldRenderer {
 				b = world.enemyManager.enemyBullets.get(i);
 				if(b.getClass().equals(Mine.class)){
 					batcher.drawSprite(b.position.x, b.position.y, 10, 10, Assets.textureRegions.get("GreenBullet"));
+//					for(Vector2 v : b.bounds.vertices){
+//						batcher.drawSprite(v.x, v.y, 3, 3, Assets.textureRegions.get("Bullet"));
+//					}
 				}
 				else{
 					batcher.drawSprite(b.position.x, b.position.y, 5, 5, Assets.textureRegions.get("Bullet"));

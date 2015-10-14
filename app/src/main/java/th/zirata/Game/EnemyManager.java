@@ -132,10 +132,6 @@ public class EnemyManager {
             }
             enemy.update(deltaTime, world);
 
-            if(enemy.getClass().equals(SwirlyWhirly.class)){
-                Log.d("size of enemyBlocks", " " + enemy.enemyBlocks.size());
-            }
-
             if(enemy.checkDead()){
                 enemies.remove(i);
                 world.enemiesKilled += 1;

@@ -346,7 +346,7 @@ public class World {
 	public boolean checkPlayerCollision(Bullet bullet){
 		for(int i = 0; i < player.playerBlocks.size(); i++){
 			Block pBlock = player.playerBlocks.get(i);
-				if(OverlapTester.overlapRectangles(bullet.bounds, pBlock.bounds)){
+				if(OverlapTester.overlapPolygons(bullet.bounds, pBlock.bounds)){
 					pBlock.health -= bullet.damage;
 					return true;
 				}
