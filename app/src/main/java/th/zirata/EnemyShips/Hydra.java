@@ -62,7 +62,7 @@ public class Hydra extends Enemy {
                 enemyBlocks.get(0).position.y + 25f * world_y_axis.y, blockLevel * 3, blockLevel));
         for(int i = 0; i < enemyBlocks.size(); i++){
             Block e = enemyBlocks.get(i);
-            e.velocity.set(0, -10);
+            e.velocity.set(0, -30);
             e.bounds.rotationAngle.set(world_y_axis.x, world_y_axis.y);
             e.bounds.lowerLeft.set(e.position.x - 12f * world_x_axis.x - 12f * world_y_axis.x,
                     e.position.y - 12f*world_x_axis.y - 12f*world_y_axis.y);

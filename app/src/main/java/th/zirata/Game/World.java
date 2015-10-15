@@ -157,9 +157,9 @@ public class World {
 	}
 
 	public void updateBackgrounds(float deltaTime){
-		updateBackgroundList(deltaTime, backgrounds, "background", -6);
-		updateBackgroundList(deltaTime, farBackgrounds, "FarStar", -6);
-		updateBackgroundList(deltaTime, nearBackgrounds, "NearStar", -10);
+		updateBackgroundList(deltaTime, backgrounds, "background", -15);
+		updateBackgroundList(deltaTime, farBackgrounds, "FarStar", -23);
+		updateBackgroundList(deltaTime, nearBackgrounds, "NearStar", -30);
 	}
 
 	private void updateBackgroundList(float deltaTime, ArrayList<Background> backgrounds, String sprite, float velocity){

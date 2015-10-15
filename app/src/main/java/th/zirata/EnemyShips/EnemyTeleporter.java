@@ -41,7 +41,7 @@ public class EnemyTeleporter extends Enemy {
         }
         position = new Vector2(x, y);
         xVelocity = 0;
-        yVelocity = -10;
+        yVelocity = -30;
         cooldown = 10/blockLevel*2;
         cooldownTime = 0;
         state = TELEPORT_READY;
