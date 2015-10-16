@@ -202,13 +202,20 @@ public class GameScreen extends GLScreen {
 	}
 
 	private void updateRotation(TouchEvent event){
-		if (touchPoint.x < steerTouches.get(event.pointer).x) {
+		if (touchPoint.x < steerTouches.get(event.pointer).x - 8) {
 			world.moveRight = true;
 			world.moveLeft = false;
 		}
-		if (touchPoint.x > steerTouches.get(event.pointer).x ) {
+		else if (touchPoint.x > steerTouches.get(event.pointer).x + 8) {
 			world.moveLeft = true;
-			world.moveRight = false;}
+			world.moveRight = false;
+		}
+		if(touchPoint.y < steerTouches.get(event.pointer).y - 10 && World.playerSpeed.y <= -10){
+			World.playerSpeed.y += 1;
+		}
+		else if(touchPoint.y > steerTouches.get(event.pointer).y + 10  && World.playerSpeed.y >= -40){
+			World.playerSpeed.y -= 1;
+		}
 	}
 
 	private void updatePaused() {

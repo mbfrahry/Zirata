@@ -61,7 +61,7 @@
     }
   },
   "3": {
-    "Text": "Touch and drag anywhere outside of your ship to steer. The joystick will let you know which way you are rotating.",
+    "Text": "Touch and drag left or right anywhere outside of your ship to steer. Drag up or down to change speed. The joystick will let you know which way you are rotating and how fast you are going!",
     "TextLocation":{
       "X": 160,
       "Y": 350

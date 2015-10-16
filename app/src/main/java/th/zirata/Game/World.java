@@ -12,14 +12,11 @@ import com.badlogic.androidgames.framework.math.Vector2;
 import th.zirata.Blocks.Block;
 import th.zirata.Blocks.Mine;
 import th.zirata.EnemyShips.Enemy;
-import th.zirata.Blocks.EnemyTurretBlock;
-import th.zirata.EnemyShips.Hydra;
 import th.zirata.Blocks.MultiplierBlock;
 import th.zirata.Blocks.TurretBlock;
 import th.zirata.Blocks.Bullet;
 import th.zirata.Menus.PopupManager;
 import th.zirata.Settings.Settings;
-import th.zirata.Settings.EnemySettings;
 
 public class World {
 
@@ -42,8 +39,6 @@ public class World {
 	public Vector2 world_y_axis;
 	
 	public Player player;
-	//public final ArrayList<Enemy> enemies;
-	//public final ArrayList<Bullet> enemyBullets;
 	public EnemyManager enemyManager;
 	public static ArrayList<Bullet> playerBullets;
 	public ArrayList<Background> backgrounds;
@@ -54,7 +49,6 @@ public class World {
 
 	public float lastEnemyTime;
 	public float timeToNextEnemy;
-	//public float enemyNum;
 	
 	public int state;
 	Random rand;
@@ -71,11 +65,10 @@ public class World {
 
 	public PopupManager popupManager;
 	float eventCountdown;
+	public static Vector2 playerSpeed;
 
 	public World(Level currLevel, PopupManager popupManager){
 		this.player = new Player();
-//		enemies = new ArrayList<Enemy>();
-//		enemyBullets = new ArrayList<Bullet>();
 		playerBullets = new ArrayList<Bullet>();
 		lastEnemyTime = 0;
 		timeToNextEnemy = 4;
@@ -115,6 +108,7 @@ public class World {
 
 		eventCountdown = 0;
 		enemyManager = new EnemyManager(this);
+		playerSpeed = new Vector2(0, -10);
 	}
 	
 	public void update(float deltaTime){
@@ -157,12 +151,12 @@ public class World {
 	}
 
 	public void updateBackgrounds(float deltaTime){
-		updateBackgroundList(deltaTime, backgrounds, "background", -15);
-		updateBackgroundList(deltaTime, farBackgrounds, "FarStar", -23);
-		updateBackgroundList(deltaTime, nearBackgrounds, "NearStar", -30);
+		updateBackgroundList(deltaTime, backgrounds, "background", playerSpeed.y*.6f, .6f);
+		updateBackgroundList(deltaTime, farBackgrounds, "FarStar", playerSpeed.y*.8f, .8f);
+		updateBackgroundList(deltaTime, nearBackgrounds, "NearStar", playerSpeed.y, 1f);
 	}
 
-	private void updateBackgroundList(float deltaTime, ArrayList<Background> backgrounds, String sprite, float velocity){
+	private void updateBackgroundList(float deltaTime, ArrayList<Background> backgrounds, String sprite, float velocity, float speedMultipler){
 		Background playerOnBackground = null;
 
 		for(int i = 0; i < backgrounds.size(); i++){
@@ -184,7 +178,7 @@ public class World {
 				//Log.d("SKIPPING", "***************");
 				return;
 			}
-			playerOnBackground = new Background(0, 0, 320, 480, new Vector2(0, velocity), sprite);
+			playerOnBackground = new Background(0, 0, 320, 480, new Vector2(0, velocity), speedMultipler, sprite);
 			playerOnBackground.isRelevant = true;
 			backgrounds.add(playerOnBackground);
 		}
@@ -231,7 +225,7 @@ public class World {
 					}
 				}
 				if(toMove == null){
-				    toMove = new Background(currSpotX, currSpotY, 320, 480, new Vector2(0, velocity), sprite);
+				    toMove = new Background(currSpotX, currSpotY, 320, 480, new Vector2(0, velocity), speedMultipler, sprite);
 		    		toMove.bounds.rotationAngle.set(playerOnBackground.bounds.rotationAngle.x, playerOnBackground.bounds.rotationAngle.y);
 				    toMove.position.set(currSpotX, currSpotY);
 				    toMove.bounds.lowerLeft.set(currLowerLeftX, currLowerLeftY);

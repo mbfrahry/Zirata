@@ -62,7 +62,7 @@ public class Hydra extends Enemy {
                 enemyBlocks.get(0).position.y + 25f * world_y_axis.y, blockLevel * 3, blockLevel));
         for(int i = 0; i < enemyBlocks.size(); i++){
             Block e = enemyBlocks.get(i);
-            e.velocity.set(0, -30);
+            e.velocity.set(World.playerSpeed.x, World.playerSpeed.y);
             e.bounds.rotationAngle.set(world_y_axis.x, world_y_axis.y);
             e.bounds.lowerLeft.set(e.position.x - 12f * world_x_axis.x - 12f * world_y_axis.x,
                     e.position.y - 12f*world_x_axis.y - 12f*world_y_axis.y);
@@ -79,10 +79,10 @@ public class Hydra extends Enemy {
 
         for(int i = 0; i < enemyBlocks.size(); i++){
             Block currBlock = enemyBlocks.get(i);
-            currBlock.position.add(currBlock.velocity.x * deltaTime, currBlock.velocity.y * deltaTime);
+            currBlock.position.add(World.playerSpeed.x * deltaTime, World.playerSpeed.y * deltaTime);
             //currBlock.bounds.lowerLeft.add(currBlock.velocity.x * deltaTime, currBlock.velocity.y * deltaTime);
             for (Vector2 v : currBlock.bounds.vertices){
-                v.add(currBlock.velocity.x * deltaTime, currBlock.velocity.y * deltaTime);
+                v.add(World.playerSpeed.x * deltaTime, World.playerSpeed.y * deltaTime);
             }
             //currBlock.bounds.rotationAngle.rotate(world.world_cos, world.world_sin);
             currBlock.update(deltaTime);
@@ -125,7 +125,7 @@ public class Hydra extends Enemy {
                         left.rotate(0, -1);
                     }
                     eBlock.origin.set(currBlock.origin);
-                    eBlock.velocity.set(currBlock.velocity);
+                    eBlock.velocity.set(World.playerSpeed);
                     //eBlock.rotateConstantVelocity(world.world_sin, world.world_cos, world.WORLD_MID_POINT);
                     eBlock.bounds.rotationAngle.set(currBlock.bounds.rotationAngle);
                     eBlock.bounds.setVertices();

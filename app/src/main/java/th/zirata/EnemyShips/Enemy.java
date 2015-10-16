@@ -103,10 +103,10 @@ public class Enemy{
 	public void update(float deltaTime, World world){
 		for(int i = 0; i < enemyBlocks.size(); i++){
 			Block currBlock = enemyBlocks.get(i);
-			currBlock.position.add(currBlock.velocity.x * deltaTime, currBlock.velocity.y * deltaTime);
+			currBlock.position.add((currBlock.velocity.x + World.playerSpeed.x)* deltaTime, (currBlock.velocity.y + World.playerSpeed.y)* deltaTime);
 
 			for (Vector2 v : currBlock.bounds.vertices){
-				v.add(currBlock.velocity.x * deltaTime, currBlock.velocity.y * deltaTime);
+				v.add((currBlock.velocity.x + World.playerSpeed.x)* deltaTime, (currBlock.velocity.y + World.playerSpeed.y)* deltaTime);
 			}
 			//currBlock.bounds.rotationAngle.set(world.world_cos, world.world_sin);
             currBlock.update(deltaTime);
