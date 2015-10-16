@@ -233,19 +233,23 @@ public class WorldRenderer {
 
 		batcher.drawSprite(285, 30, 60, 60, Assets.textureRegions.get("PowerButton"));
 		Vector2 rotate = new Vector2();
+		float multiplier = -Player.playerSpeed.y/40;
+		if (multiplier > 1) {
+			multiplier = 1;
+		}
 		if (world.moveLeft){
 			rotate.set(1,1);
 			batcher.drawSprite(85, 45, 15, 130, rotate.sub(new Vector2(0, 0)).angle() - 90, Assets.textureRegions.get("GreenBullet"));
-			batcher.drawSprite(85, 45, 15, (World.playerSpeed.y/40)*130, rotate.sub(new Vector2(0,0)).angle()-90, Assets.textureRegions.get("Bullet"));
+			batcher.drawSprite(85, 45, 15, multiplier*130, rotate.sub(new Vector2(0,0)).angle()-90, Assets.textureRegions.get("Bullet"));
 		}
 		else if(world.moveRight){
 			rotate.set(-1,1);
 			batcher.drawSprite(35, 45, 15, 130, rotate.sub(new Vector2(0, 0)).angle() - 90, Assets.textureRegions.get("GreenBullet"));
-			batcher.drawSprite(35, 45, 15, (World.playerSpeed.y/40)*130, rotate.sub(new Vector2(0,0)).angle()-90, Assets.textureRegions.get("Bullet"));
+			batcher.drawSprite(35, 45, 15, multiplier*130, rotate.sub(new Vector2(0,0)).angle()-90, Assets.textureRegions.get("Bullet"));
 		}
 		else{
 			batcher.drawSprite(60, 55, 15, 130, Assets.textureRegions.get("GreenBullet"));
-			batcher.drawSprite(60, 55, 15, (World.playerSpeed.y/40)*130, Assets.textureRegions.get("Bullet"));
+			batcher.drawSprite(60, 55, 15, multiplier*130, Assets.textureRegions.get("Bullet"));
 		}
 
 		batcher.drawSprite(280, 450, 5, 35, Assets.textureRegions.get("BaseBlock"));

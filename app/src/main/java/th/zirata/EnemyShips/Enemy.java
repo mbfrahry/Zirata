@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import th.zirata.Blocks.EnemyTurretBlock;
+import th.zirata.Game.Player;
 import th.zirata.Settings.Assets;
 import th.zirata.Blocks.ArmorBlock;
 import th.zirata.Blocks.Block;
@@ -103,10 +104,10 @@ public class Enemy{
 	public void update(float deltaTime, World world){
 		for(int i = 0; i < enemyBlocks.size(); i++){
 			Block currBlock = enemyBlocks.get(i);
-			currBlock.position.add((currBlock.velocity.x + World.playerSpeed.x)* deltaTime, (currBlock.velocity.y + World.playerSpeed.y)* deltaTime);
+			currBlock.position.add(currBlock.velocity.x* deltaTime, currBlock.velocity.y* deltaTime);
 
 			for (Vector2 v : currBlock.bounds.vertices){
-				v.add((currBlock.velocity.x + World.playerSpeed.x)* deltaTime, (currBlock.velocity.y + World.playerSpeed.y)* deltaTime);
+				v.add(currBlock.velocity.x* deltaTime, currBlock.velocity.y* deltaTime);
 			}
 			//currBlock.bounds.rotationAngle.set(world.world_cos, world.world_sin);
             currBlock.update(deltaTime);

@@ -65,7 +65,7 @@ public class World {
 
 	public PopupManager popupManager;
 	float eventCountdown;
-	public static Vector2 playerSpeed;
+	//public static Vector2 playerSpeed;
 
 	public World(Level currLevel, PopupManager popupManager){
 		this.player = new Player();
@@ -108,7 +108,7 @@ public class World {
 
 		eventCountdown = 0;
 		enemyManager = new EnemyManager(this);
-		playerSpeed = new Vector2(0, -10);
+		//playerSpeed = new Vector2(0, -10);
 	}
 	
 	public void update(float deltaTime){
@@ -151,9 +151,9 @@ public class World {
 	}
 
 	public void updateBackgrounds(float deltaTime){
-		updateBackgroundList(deltaTime, backgrounds, "background", playerSpeed.y*.6f, .6f);
-		updateBackgroundList(deltaTime, farBackgrounds, "FarStar", playerSpeed.y*.8f, .8f);
-		updateBackgroundList(deltaTime, nearBackgrounds, "NearStar", playerSpeed.y, 1f);
+		updateBackgroundList(deltaTime, backgrounds, "background", Player.playerSpeed.y*.6f, .6f);
+		updateBackgroundList(deltaTime, farBackgrounds, "FarStar", Player.playerSpeed.y*.8f, .8f);
+		updateBackgroundList(deltaTime, nearBackgrounds, "NearStar", Player.playerSpeed.y, 1f);
 	}
 
 	private void updateBackgroundList(float deltaTime, ArrayList<Background> backgrounds, String sprite, float velocity, float speedMultipler){

@@ -29,10 +29,10 @@ public class Background extends DynamicGameObject {
     }
 
     public void update(float deltaTime){
-        position.add(speedMultiplier*World.playerSpeed.x*deltaTime, speedMultiplier*World.playerSpeed.y * deltaTime);
+        position.add(speedMultiplier*Player.playerSpeed.x*deltaTime, speedMultiplier*Player.playerSpeed.y * deltaTime);
         //bounds.lowerLeft.add(velocity.x * deltaTime, velocity.y * deltaTime);
         for (Vector2 v : bounds.vertices){
-            v.add(speedMultiplier*World.playerSpeed.x*deltaTime, speedMultiplier*World.playerSpeed.y * deltaTime);
+            v.add(speedMultiplier*Player.playerSpeed.x*deltaTime, speedMultiplier*Player.playerSpeed.y * deltaTime);
         }
     }
 }

@@ -7,6 +7,8 @@ import android.util.Log;
 import com.badlogic.androidgames.framework.DynamicGameObject;
 import com.badlogic.androidgames.framework.math.Vector2;
 
+import th.zirata.Game.Player;
+
 public class Bullet extends DynamicGameObject{
 
 	public static final float BULLET_WIDTH = 5;
@@ -55,9 +57,9 @@ public class Bullet extends DynamicGameObject{
 	}
 	
 	public void update(float deltaTime){
-		position.add(velocity.x * deltaTime, velocity.y * deltaTime);
+		position.add((velocity.x + Player.playerSpeed.x) * deltaTime, (velocity.y + Player.playerSpeed.y)* deltaTime);
 		for(Vector2 v : bounds.vertices){
-			v.add(velocity.x * deltaTime, velocity.y * deltaTime);
+			v.add((velocity.x + Player.playerSpeed.x) * deltaTime, (velocity.y + Player.playerSpeed.y)* deltaTime);
 		}
 	}
 

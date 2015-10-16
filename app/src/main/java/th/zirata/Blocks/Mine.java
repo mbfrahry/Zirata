@@ -10,6 +10,6 @@ public class Mine extends Bullet {
 
     public Mine(float x, float y, float targX, float targY, int damage, float range) {
         super(x, y, MINE_WIDTH, MINE_HEITH, targX, targY, damage, range);
-        velocity.set(0, -10);
+        velocity.set(0, 0);
     }
 }

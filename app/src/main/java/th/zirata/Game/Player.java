@@ -17,6 +17,7 @@ public class Player {
 	public boolean power;
 	public ArrayList<Block> poweredBlocks;
 	Vector2 velocity;
+	public static Vector2 playerSpeed;
 
 	public Player(){
 		for(Block b : PlayerSave.activeBlocks){
@@ -26,6 +27,7 @@ public class Player {
 
 		power = true;
 		poweredBlocks = new ArrayList<Block>();
+		playerSpeed = new Vector2(0, -10);
 	}
 
 	public void getEnergy(){
@@ -39,6 +41,9 @@ public class Player {
 				currEnergy -= playerBlocks.get(i).energyCost;
 			}
 		}
+		//Need to figure out how to account for speed
+//		currEnergy += Math.floor(playerSpeed.y) + 10;
+
 		energy = currEnergy;
 	}
 
@@ -50,7 +55,13 @@ public class Player {
 		}
 		if(power == true){
 			for(int i = 0; i < poweredBlocks.size(); i++){
-				poweredBlocks.get(i).active = true;
+				if(energy - poweredBlocks.get(i).energyCost >= 0){
+					poweredBlocks.get(i).active = true;
+					energy -= poweredBlocks.get(i).energyCost;
+				}
+				else{
+					poweredBlocks.remove(i);
+				}
 			}
 		}
 	}
@@ -64,6 +75,13 @@ public class Player {
 			//currBlock.bounds.lowerLeft.set(currBlock.position).sub(currBlock.BLOCK_WIDTH/2, currBlock.BLOCK_HEIGHT/2);
 			currBlock.update(deltaTime);
 			if(currBlock.checkDeath()){
+				if(currBlock.getClass().equals(EnergyBlock.class)){
+					EnergyBlock e = (EnergyBlock) currBlock;
+					playerSpeed.y += e.energy;
+					if (playerSpeed.y > -10){
+						playerSpeed.y = -10;
+					}
+				}
 				playerBlocks.remove(i);
 			}
 		}

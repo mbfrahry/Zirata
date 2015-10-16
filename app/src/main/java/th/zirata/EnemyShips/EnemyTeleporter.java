@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import th.zirata.Blocks.ArmorBlock;
 import th.zirata.Blocks.Block;
 import th.zirata.Blocks.Bullet;
+import th.zirata.Game.Player;
 import th.zirata.Game.World;
 
 /**
@@ -16,8 +17,8 @@ public class EnemyTeleporter extends Enemy {
 
     float x;
     float y;
-    //float xVelocity;
-    //float yVelocity;
+    float xVelocity;
+    float yVelocity;
     float cooldown;
     float cooldownTime;
 
@@ -40,8 +41,8 @@ public class EnemyTeleporter extends Enemy {
             }
         }
         position = new Vector2(x, y);
-        //xVelocity = World.playerSpeed.x;
-        //yVelocity = World.playerSpeed.y;
+        xVelocity = Player.playerSpeed.x;
+        yVelocity = Player.playerSpeed.y;
         cooldown = 10/blockLevel*2;
         cooldownTime = 0;
         state = TELEPORT_READY;
@@ -52,7 +53,7 @@ public class EnemyTeleporter extends Enemy {
             enemyBlocks.add(aBlock);
         }
         for (Block b : enemyBlocks){
-            //b.velocity.add(xVelocity, yVelocity);
+            b.velocity.add(xVelocity, yVelocity);
             b.bounds.rotationAngle.set(0, 1);
             b.bounds.lowerLeft.set(b.position.x + 12f, b.position.y - 12f);
             b.bounds.setVertices();
