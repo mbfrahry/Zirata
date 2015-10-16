@@ -164,7 +164,6 @@ public class GameScreen extends GLScreen {
 						world.player.power = true;
 					}
 					powerTouches.remove(event.pointer);
-					return;
 				}
 				if(powerTouches.keySet().contains(event.pointer)){
 					powerTouches.remove(event.pointer);
