@@ -103,13 +103,13 @@ public class EnemyTeleporter extends Enemy {
         super.update(deltaTime, world);
         if(state == TELEPORT_READY) {
             if (bulletInRange(World.playerBullets)) {
-                world.popupManager.createSpriteExtra("sprite", "PotentialBlock", enemyBlocks.get(0).position.x, enemyBlocks.get(0).position.y, 25f, 25f,.3f, 0f);
-                world.popupManager.createSpriteExtra("sprite", "BaseBlock", enemyBlocks.get(0).position.x, enemyBlocks.get(0).position.y, 35f,35f,.2f, 0f);
-                world.popupManager.createSpriteExtra("sprite", "PotentialBlock", enemyBlocks.get(0).position.x, enemyBlocks.get(0).position.y, 45f, 45f, .1f, 0f);
+                World.popupManager.createSpriteExtra("sprite", "PotentialBlock", enemyBlocks.get(0).position.x, enemyBlocks.get(0).position.y, 25f, 25f,.3f, 0f);
+                World.popupManager.createSpriteExtra("sprite", "BaseBlock", enemyBlocks.get(0).position.x, enemyBlocks.get(0).position.y, 35f,35f,.2f, 0f);
+                World.popupManager.createSpriteExtra("sprite", "PotentialBlock", enemyBlocks.get(0).position.x, enemyBlocks.get(0).position.y, 45f, 45f, .1f, 0f);
                 teleportBlocks();
-                world.popupManager.createSpriteExtra("sprite", "PotentialBlock", enemyBlocks.get(0).position.x, enemyBlocks.get(0).position.y, 25f, 25f,.3f, 0f);
-                world.popupManager.createSpriteExtra("sprite", "BaseBlock", enemyBlocks.get(0).position.x, enemyBlocks.get(0).position.y, 35f,35f,.2f, 0f);
-                world.popupManager.createSpriteExtra("sprite", "PotentialBlock", enemyBlocks.get(0).position.x, enemyBlocks.get(0).position.y, 45f,45f,.1f, 0f);
+                World.popupManager.createSpriteExtra("sprite", "PotentialBlock", enemyBlocks.get(0).position.x, enemyBlocks.get(0).position.y, 25f, 25f,.3f, 0f);
+                World.popupManager.createSpriteExtra("sprite", "BaseBlock", enemyBlocks.get(0).position.x, enemyBlocks.get(0).position.y, 35f,35f,.2f, 0f);
+                World.popupManager.createSpriteExtra("sprite", "PotentialBlock", enemyBlocks.get(0).position.x, enemyBlocks.get(0).position.y, 45f,45f,.1f, 0f);
             }
         }
         else {

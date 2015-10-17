@@ -49,12 +49,12 @@ public class Player {
 	}
 
 	public void checkPower(){
-		if(power == false){
+		if(!power){
 			for(int i = 0; i < poweredBlocks.size(); i++){
 				poweredBlocks.get(i).active = false;
 			}
 		}
-		if(power == true){
+		if(power){
 			for(int i = 0; i < poweredBlocks.size(); i++){
 				//if(energy - poweredBlocks.get(i).energyCost >= 0){
 					poweredBlocks.get(i).active = true;

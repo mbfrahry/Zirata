@@ -40,15 +40,15 @@ public class EnemyManager {
         Enemy e = null;
         if(world.level.enemyNum > 0) {
             e = world.level.generateEnemy();
-            world.popupManager.createSpriteExtra("sprite", "PotentialBlock", e.enemyBlocks.get(0).position.x, e.enemyBlocks.get(0).position.y, 25f, 25f,.3f, 0f);
-            world.popupManager.createSpriteExtra("sprite", "BaseBlock", e.enemyBlocks.get(0).position.x, e.enemyBlocks.get(0).position.y, 35f,35f,.2f, 0f);
-            world.popupManager.createSpriteExtra("sprite", "PotentialBlock", e.enemyBlocks.get(0).position.x, e.enemyBlocks.get(0).position.y, 45f,45f,.1f, 0f);
+            World.popupManager.createSpriteExtra("sprite", "PotentialBlock", e.enemyBlocks.get(0).position.x, e.enemyBlocks.get(0).position.y, 25f, 25f,.3f, 0f);
+            World.popupManager.createSpriteExtra("sprite", "BaseBlock", e.enemyBlocks.get(0).position.x, e.enemyBlocks.get(0).position.y, 35f,35f,.2f, 0f);
+            World.popupManager.createSpriteExtra("sprite", "PotentialBlock", e.enemyBlocks.get(0).position.x, e.enemyBlocks.get(0).position.y, 45f,45f,.1f, 0f);
 
 
             if(world.level.enemyNum == 0){
                 //TODO: NEED TO CHANGE THIS TO ADD SPECIFIC ANIMATION FOR A BOSS FIGHT
                 if(world.level.bossType >= 0){
-                    world.popupManager.createTextExtra("text", "The", 160, 350, 25, 25, 2f, "red", "center");
+                    World.popupManager.createTextExtra("text", "The", 160, 350, 25, 25, 2f, "red", "center");
                     String bossName = "";
                     if(world.level.bossType == 1) {
                         bossName = "Hydra";
@@ -56,8 +56,8 @@ public class EnemyManager {
                     else if(world.level.bossType == 2){
                         bossName = "Orbiter";
                     }
-                    world.popupManager.createTextExtra("text", bossName, 160, 300, 25, 25, 2f, "red", "center");
-                    world.popupManager.createTextExtra("text", "approaches", 160, 250, 25, 25, 2f, "red", "center");
+                    World.popupManager.createTextExtra("text", bossName, 160, 300, 25, 25, 2f, "red", "center");
+                    World.popupManager.createTextExtra("text", "approaches", 160, 250, 25, 25, 2f, "red", "center");
                 }
 
             }
