@@ -64,12 +64,15 @@ public class EnemyManager {
         }
         else{
             world.state = World.WORLD_STATE_LAST_ENEMY;
-            if(world.level.bossType >= 0 && world.popupManager.getPopupsSize() == 0) {
+            if(world.level.bossType >= 0 && world.lastEnemyTime > 2) {
                 if(world.level.bossType == 1) {
                     e = new Hydra(1, world.world_cos, world.world_sin);
                 }
                 else if(world.level.bossType == 2){
                     e = new SwirlyWhirly(5);
+                }
+                else{
+                    Log.d("this", "is a bad thing");
                 }
             }
         }

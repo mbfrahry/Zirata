@@ -134,6 +134,32 @@ public class Hydra extends Enemy {
                     enemyBlocks.add(eBlock);
                 }
                 else{
+                    //World.popupManager.createExplosion(enemyBlocks.get(0).position.x, enemyBlocks.get(0).position.y, 500);
+                    int max = blocksPerDirection[0];
+                    if (blocksPerDirection[1] > max){
+                        max = blocksPerDirection[1];
+                    }
+                    if (blocksPerDirection[2] > max){
+                        max = blocksPerDirection[2];
+                    }
+
+                    for(int j = blocksPerDirection[0]; j > 0 ; j--){
+                        World.popupManager.createExplosion(enemyBlocks.get(0).position.x-25f*j*left.x,
+                                enemyBlocks.get(0).position.y - 25f*j*left.y, 50, j*.15f);
+                    }
+                    for(int j = blocksPerDirection[1]; j > 0 ; j--){
+                        World.popupManager.createExplosion(enemyBlocks.get(0).position.x+25f*j*left.x,
+                                enemyBlocks.get(0).position.y + 25f*j*left.y, 50, j*.15f);
+                    }
+                    for(int j = blocksPerDirection[2]; j > 0 ; j--){
+                        left.rotate(0, 1);
+                        World.popupManager.createExplosion(enemyBlocks.get(0).position.x - 25f*j*left.x,
+                                enemyBlocks.get(0).position.y-25f*j*left.y, 50, j*.15f);
+                        left.rotate(0, -1);
+
+                    }
+
+                    //World.popupManager.createExplosion(enemyBlocks.get(0).position.x, enemyBlocks.get(0).position.y, 500, max*.2f);
                     enemyBlocks.clear();
                 }
             }

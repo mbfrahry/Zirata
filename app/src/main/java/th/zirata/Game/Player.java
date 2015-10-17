@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import th.zirata.Blocks.Block;
 import th.zirata.Blocks.EnergyBlock;
 import th.zirata.Blocks.TurretBlock;
+import th.zirata.Settings.Assets;
 import th.zirata.Settings.PlayerSave;
 import th.zirata.Settings.Settings;
 
@@ -55,13 +56,13 @@ public class Player {
 		}
 		if(power == true){
 			for(int i = 0; i < poweredBlocks.size(); i++){
-				if(energy - poweredBlocks.get(i).energyCost >= 0){
+				//if(energy - poweredBlocks.get(i).energyCost >= 0){
 					poweredBlocks.get(i).active = true;
-					energy -= poweredBlocks.get(i).energyCost;
-				}
-				else{
-					poweredBlocks.remove(i);
-				}
+				//	energy -= poweredBlocks.get(i).energyCost;
+				//}
+			//	else{
+			//		poweredBlocks.remove(i);
+			//	}
 			}
 		}
 	}
@@ -75,13 +76,15 @@ public class Player {
 			//currBlock.bounds.lowerLeft.set(currBlock.position).sub(currBlock.BLOCK_WIDTH/2, currBlock.BLOCK_HEIGHT/2);
 			currBlock.update(deltaTime);
 			if(currBlock.checkDeath()){
-				if(currBlock.getClass().equals(EnergyBlock.class)){
-					EnergyBlock e = (EnergyBlock) currBlock;
-					playerSpeed.y += e.energy;
-					if (playerSpeed.y > -10){
-						playerSpeed.y = -10;
-					}
-				}
+				World.popupManager.createExplosion(currBlock.position.x, currBlock.position.y, 50);
+				Assets.playSound(Assets.explosionSound);
+//				if(currBlock.getClass().equals(EnergyBlock.class)){
+//					EnergyBlock e = (EnergyBlock) currBlock;
+//					playerSpeed.y += e.energy;
+//					if (playerSpeed.y > -10){
+//						playerSpeed.y = -10;
+//					}
+//				}
 				playerBlocks.remove(i);
 			}
 		}

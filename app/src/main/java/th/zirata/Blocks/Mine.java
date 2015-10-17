@@ -1,5 +1,7 @@
 package th.zirata.Blocks;
 
+import th.zirata.Game.Player;
+
 /**
  * Created by Max Bauer on 10/13/2015.
  */
@@ -10,6 +12,6 @@ public class Mine extends Bullet {
 
     public Mine(float x, float y, float targX, float targY, int damage, float range) {
         super(x, y, MINE_WIDTH, MINE_HEITH, targX, targY, damage, range);
-        velocity.set(0, 0);
+        velocity.set(0, Player.playerSpeed.y);
     }
 }

@@ -33,6 +33,21 @@ public class PopupManager {
         event.put("width", width);
         event.put("height", height);
         event.put("timeToDisplay", timeToDisplay);
+        event.put("delay", 0f);
+        event.put("angle", angle);
+        popups.add(event);
+    }
+
+    public void createSpriteExtra(String type, String content, float x, float y, float width, float height, float timeToDisplay, float delay, float angle){
+        HashMap event = new HashMap();
+        event.put("type", type);
+        event.put("content", content);
+        event.put("x", x);
+        event.put("y", y);
+        event.put("width", width);
+        event.put("height", height);
+        event.put("timeToDisplay", timeToDisplay);
+        event.put("delay", delay);
         event.put("angle", angle);
         popups.add(event);
     }
@@ -56,6 +71,22 @@ public class PopupManager {
         event.put("width", width);
         event.put("height", height);
         event.put("timeToDisplay", timeToDisplay);
+        event.put("delay", 0f);
+        event.put("color", color);
+        event.put("justification", justification);
+        popups.add(event);
+    }
+
+    public void createTextExtra(String type, String content, float x, float y, float width, float height, float timeToDisplay, float delay, String color, String justification){
+        HashMap event = new HashMap();
+        event.put("type", type);
+        event.put("content", content);
+        event.put("x", x);
+        event.put("y", y);
+        event.put("width", width);
+        event.put("height", height);
+        event.put("timeToDisplay", timeToDisplay);
+        event.put("delay", delay);
         event.put("color", color);
         event.put("justification", justification);
         popups.add(event);
@@ -120,22 +151,29 @@ public class PopupManager {
 
         for(int i = 0; i < popups.size(); i++){
             HashMap currEvent = popups.get(i);
+            float delay = (Float)currEvent.get("delay");
+            if(delay > 0){
+                delay -= deltaTime;
+                currEvent.put("delay", delay);
 
-            if (currEvent.get("type").equals("text")){
-                drawTextExtra(currEvent);
             }
             else{
-                drawSpriteExtra(currEvent);
+                if (currEvent.get("type").equals("text")){
+                    drawTextExtra(currEvent);
+                }
+                else{
+                    drawSpriteExtra(currEvent);
+                }
+                float time = (Float)currEvent.get("timeToDisplay");
+                if(time - deltaTime < 0){
+                    toDelete.add(i);
+                }
+                else{
+                    time -= deltaTime;
+                    currEvent.put("timeToDisplay", time);
+                }
             }
 
-            float time = (Float)currEvent.get("timeToDisplay");
-            if(time - deltaTime < 0){
-                toDelete.add(i);
-            }
-            else{
-                time -= deltaTime;
-                currEvent.put("timeToDisplay", time);
-            }
         }
 
         //Might be buggy....
@@ -162,11 +200,13 @@ public class PopupManager {
 
         for (int i = 0; i < popups.size(); i++) {
             HashMap currEvent = popups.get(i);
-
-            if (currEvent.get("type").equals("text")) {
-                drawTextExtra(currEvent);
-            } else {
-                drawSpriteExtra(currEvent);
+            float delay = (Float)currEvent.get("delay");
+            if(delay <= 0){
+                if (currEvent.get("type").equals("text")) {
+                    drawTextExtra(currEvent);
+                } else {
+                    drawSpriteExtra(currEvent);
+                }
             }
         }
     }
@@ -175,14 +215,23 @@ public class PopupManager {
         ArrayList<Integer> toDelete = new ArrayList<Integer>();
         for(int i = 0; i < popups.size(); i++){
             HashMap currEvent = popups.get(i);
-            float time = (Float)currEvent.get("timeToDisplay");
-            if(time - deltaTime < 0){
-                toDelete.add(i);
+            float delay = (Float)currEvent.get("delay");
+            if(delay > 0){
+                delay -= deltaTime;
+                currEvent.put("delay", delay);
+
             }
             else{
-                time -= deltaTime;
-                currEvent.put("timeToDisplay", time);
+                float time = (Float)currEvent.get("timeToDisplay");
+                if(time - deltaTime < 0){
+                    toDelete.add(i);
+                }
+                else{
+                    time -= deltaTime;
+                    currEvent.put("timeToDisplay", time);
+                }
             }
+
         }
         for(int i = toDelete.size()-1; i >= 0; i--){
             popups.remove((int) toDelete.get(i));
@@ -199,4 +248,32 @@ public class PopupManager {
     public int getPopupsSize(){
         return popups.size();
     }
+
+    public void createAnimation(){
+
+    }
+
+    public void createExplosion(float x, float y, float size){
+        /*
+        All frames need: name, time, size*2, location
+         */
+        createSpriteExtra("sprite", "Exp11", x, y, size, size, .08f, 0, 0);
+        createSpriteExtra("sprite", "Exp12", x, y, size, size, .08f, .08f, 0);
+        createSpriteExtra("sprite", "Exp13", x, y, size, size, .08f, .16f, 0);
+        createSpriteExtra("sprite", "Exp14", x, y, size, size, .08f, .24f, 0);
+        createSpriteExtra("sprite", "Exp15", x, y, size, size, .08f, .32f, 0);
+        createSpriteExtra("sprite", "Exp16", x, y, size, size, .08f, .4f, 0);
+    }
+    public void createExplosion(float x, float y, float size, float delay){
+        /*
+        All frames need: name, time, size*2, location
+         */
+        createSpriteExtra("sprite", "Exp11", x, y, size, size, .08f, delay + 0, 0);
+        createSpriteExtra("sprite", "Exp12", x, y, size, size, .08f, delay + .08f, 0);
+        createSpriteExtra("sprite", "Exp13", x, y, size, size, .08f, delay + .16f, 0);
+        createSpriteExtra("sprite", "Exp14", x, y, size, size, .08f, delay + .24f, 0);
+        createSpriteExtra("sprite", "Exp15", x, y, size, size, .08f, delay + .32f, 0);
+        createSpriteExtra("sprite", "Exp16", x, y, size, size, .08f, delay + .4f, 0);
+    }
+
 }

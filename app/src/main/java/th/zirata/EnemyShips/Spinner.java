@@ -97,6 +97,7 @@ public class Spinner extends Enemy {
 
                 if(currBlock.checkDeath()){
                     if(enemyBlocks.size() == 1) {
+                        World.popupManager.createExplosion(currBlock.position.x, currBlock.position.y, 50);
                         enemyBlocks.remove(i);
                         Assets.playSound(Assets.explosionSound);
                     }
@@ -116,6 +117,7 @@ public class Spinner extends Enemy {
                 }
 
                 if(currBlock.checkDeath()){
+                    World.popupManager.createExplosion(currBlock.position.x, currBlock.position.y, 50);
                     enemyBlocks.remove(i);
                     Assets.playSound(Assets.explosionSound);
                 }

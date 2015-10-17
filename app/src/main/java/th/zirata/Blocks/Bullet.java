@@ -57,9 +57,9 @@ public class Bullet extends DynamicGameObject{
 	}
 	
 	public void update(float deltaTime){
-		position.add((velocity.x + Player.playerSpeed.x) * deltaTime, (velocity.y + Player.playerSpeed.y)* deltaTime);
+		position.add(velocity.x* deltaTime, velocity.y * deltaTime);
 		for(Vector2 v : bounds.vertices){
-			v.add((velocity.x + Player.playerSpeed.x) * deltaTime, (velocity.y + Player.playerSpeed.y)* deltaTime);
+			v.add(velocity.x * deltaTime, velocity.y* deltaTime);
 		}
 	}
 

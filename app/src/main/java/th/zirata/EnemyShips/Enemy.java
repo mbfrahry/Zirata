@@ -112,6 +112,7 @@ public class Enemy{
 			//currBlock.bounds.rotationAngle.set(world.world_cos, world.world_sin);
             currBlock.update(deltaTime);
 			if(currBlock.checkDeath()){
+				World.popupManager.createExplosion(currBlock.position.x, currBlock.position.y, 50);
 				enemyBlocks.remove(i);
 				Assets.playSound(Assets.explosionSound);
 			}

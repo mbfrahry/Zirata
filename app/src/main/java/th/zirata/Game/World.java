@@ -63,8 +63,11 @@ public class World {
 
 	public Level level;
 
-	public PopupManager popupManager;
+	public static PopupManager popupManager;
 	float eventCountdown;
+	boolean levelEnding;
+	float levelEndCountdown;
+
 	//public static Vector2 playerSpeed;
 
 	public World(Level currLevel, PopupManager popupManager){
@@ -108,6 +111,9 @@ public class World {
 
 		eventCountdown = 0;
 		enemyManager = new EnemyManager(this);
+		levelEndCountdown = 0;
+		levelEnding = false;
+
 		//playerSpeed = new Vector2(0, -10);
 	}
 	
@@ -119,7 +125,7 @@ public class World {
 		enemyManager.update(deltaTime);
 		checkPlayerBullets();
 		checkPlayerCollision();
-		checkLevelEnd();
+		checkLevelEnd(deltaTime);
 		checkGameOver();
 
 	}
@@ -152,7 +158,7 @@ public class World {
 
 	public void updateBackgrounds(float deltaTime){
 		updateBackgroundList(deltaTime, backgrounds, "background", Player.playerSpeed.y*.6f, .6f);
-		updateBackgroundList(deltaTime, farBackgrounds, "FarStar", Player.playerSpeed.y*.8f, .8f);
+		updateBackgroundList(deltaTime, farBackgrounds, "FarStar", Player.playerSpeed.y * .8f, .8f);
 		updateBackgroundList(deltaTime, nearBackgrounds, "NearStar", Player.playerSpeed.y, 1f);
 	}
 
@@ -299,7 +305,9 @@ public class World {
 
 			}
 			if(playerBullets.get(i).outOfBounds()){
+				popupManager.createExplosion(playerBullets.get(i).position.x, playerBullets.get(i).position.y, 20);
 				playerBullets.remove(b);
+
 			}
 		}
 	}
@@ -315,7 +323,9 @@ public class World {
 		for(int i = 0; i < playerBullets.size(); i++) {
 			Bullet b = playerBullets.get(i);
 			if (checkEnemyCollision(b)) {
+				popupManager.createExplosion(playerBullets.get(i).position.x, playerBullets.get(i).position.y, 20);
 				playerBullets.remove(i);
+
 			}
 
 		}
@@ -371,9 +381,22 @@ public class World {
 		}
 	}
 	
-	private void checkLevelEnd(){
+	private void checkLevelEnd(float deltaTime){
 		if(state == WORLD_STATE_LAST_ENEMY && enemyManager.enemies.size() == 0){
-			state = WORLD_STATE_LEVEL_END;
+			if(!levelEnding){
+				levelEnding = true;
+				levelEndCountdown = 2;
+			}
+			else{
+				if(levelEndCountdown <= 0){
+					state = WORLD_STATE_LEVEL_END;
+				}
+				else{
+					levelEndCountdown -= deltaTime;
+				}
+
+			}
+
 		}
 	}
 	
