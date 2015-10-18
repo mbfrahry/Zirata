@@ -11,6 +11,7 @@ import java.util.Random;
 
 import th.zirata.EnemyShips.Enemy;
 import th.zirata.EnemyShips.Hydra;
+import th.zirata.Game.Gate;
 import th.zirata.Game.Level;
 
 /**
@@ -76,8 +77,23 @@ public class EnemySettings {
             String bossNumName = reader.nextName();
             int bossNum = reader.nextInt();
 
+            reader.nextName();
+            boolean hasGate = reader.nextBoolean();
+
+            Gate gate = null;
+            if(hasGate){
+                reader.nextName();
+                reader.beginObject();
+                reader.nextName();
+                double x = reader.nextDouble();
+                reader.nextName();
+                double y = reader.nextDouble();
+                gate = new Gate((float)x, (float)y, 25, 25);
+                reader.endObject();
+            }
+
             if(name.equals(levelName)) {
-                level = new Level(enemyNum, enemyLevel, enemyChance, bossNum);
+                level = new Level(enemyNum, enemyLevel, enemyChance, bossNum, gate);
                 break;
             }
             reader.endObject();

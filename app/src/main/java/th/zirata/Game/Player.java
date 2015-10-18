@@ -18,7 +18,7 @@ public class Player {
 	public boolean power;
 	public ArrayList<Block> poweredBlocks;
 	Vector2 velocity;
-	public static Vector2 playerSpeed;
+	public static Vector2 playerSpeed  = new Vector2(0, -10);
 
 	public Player(){
 		for(Block b : PlayerSave.activeBlocks){
@@ -28,7 +28,6 @@ public class Player {
 
 		power = true;
 		poweredBlocks = new ArrayList<Block>();
-		playerSpeed = new Vector2(0, -10);
 	}
 
 	public void getEnergy(){

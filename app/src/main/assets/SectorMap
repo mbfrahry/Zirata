@@ -1,0 +1,58 @@
+{
+  "Sector1":{
+    "nextSector": "Sector2",
+    "levels":{
+      "level1":{
+        "x": 160,
+        "y": 480
+      },
+      "level2":{
+        "x": 160,
+        "y": 680
+      }
+    },
+    "gate":{
+      "x": 160,
+      "y": 880,
+      "locked": true,
+      "revealBoss": true
+    },
+    "boss":{
+      "type": 1,
+      "x": 450,
+      "y": 880,
+      "level": 1,
+      "beaten": false,
+      "hidden": true
+    },
+    "requiresAction": true,
+    "requiredAction": 1
+  },
+  "Sector2":{
+      "nextSector": "Sector2",
+      "levels":{
+        "level1":{
+          "x": 160,
+          "y": 480
+        },
+        "level2":{
+          "x": 160,
+          "y": 680
+        }
+      },
+      "gate":{
+        "x": 160,
+        "y": 880,
+        "locked": true,
+        "revealBoss": true
+      },
+      "boss":{
+        "type": 2,
+        "x": 160,
+        "y": 390,
+        "level": 1
+      },
+      "requiresBoss": true,
+      "levelsBeaten": 0
+    }
+}

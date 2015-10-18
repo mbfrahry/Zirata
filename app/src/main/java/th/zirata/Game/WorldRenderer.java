@@ -82,6 +82,9 @@ public class WorldRenderer {
 		renderEnemies();
 		renderEnemyBullets();
 		renderText();
+		if(world.level.gate != null){
+			renderGate();
+		}
 	}
 
 	public void setTurretDirections(){
@@ -101,6 +104,10 @@ public class WorldRenderer {
 			}
 		}
 		return blocksRequested;
+	}
+
+	private void renderGate(){
+		batcher.drawSprite(world.level.gate.position.x, world.level.gate.position.y, 60, 60, Assets.textureRegions.get("YellowBullet"));
 	}
 
 	private void renderPlayer(){

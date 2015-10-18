@@ -127,6 +127,10 @@ public class World {
 		checkPlayerCollision();
 		checkLevelEnd(deltaTime);
 		checkGameOver();
+		if(level.gate != null){
+			updateGate(deltaTime);
+			checkGateCollision();
+		}
 
 	}
 
@@ -154,6 +158,15 @@ public class World {
 			world_x_axis.rotate(POS_COS_ANGLE, POS_SIN_ANGLE);
 			world_y_axis.rotate(POS_COS_ANGLE, POS_SIN_ANGLE);
 		}
+	}
+
+	public void updateGate(float deltaTime){
+		level.gate.update(deltaTime);
+
+		if(moveLeft || moveRight) {
+			level.gate.rotateConstantVelocity(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
+		}
+		Log.d("Gate", level.gate.position.x + " " + level.gate.position.y);
 	}
 
 	public void updateBackgrounds(float deltaTime){
@@ -316,6 +329,12 @@ public class World {
 		if(rand.nextFloat() < .25){
 			Settings.spaceBucks += 1;
 			spaceBucksEarned += 1;
+		}
+	}
+
+	private void checkGateCollision(){
+		if(OverlapTester.pointInRotatedRectangle(level.gate.bounds, WORLD_MID_POINT)){
+			state = WORLD_STATE_LEVEL_END;
 		}
 	}
 

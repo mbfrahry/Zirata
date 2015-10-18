@@ -1,5 +1,7 @@
 package th.zirata.Game;
 
+import com.badlogic.androidgames.framework.math.Vector2;
+
 import th.zirata.EnemyShips.Enemy;
 import th.zirata.EnemyShips.EnemyTeleporter;
 import th.zirata.EnemyShips.MineEnemy;
@@ -16,12 +18,14 @@ public class Level {
     double[] enemyChance;
     int enemyNum;
     int bossType;
+    public Gate gate;
 
-    public Level(int enemyNum, int[] enemyLevels, double[] enemyChance, int bossType){
+    public Level(int enemyNum, int[] enemyLevels, double[] enemyChance, int bossType, Gate gate){
         this.enemyNum = enemyNum;
         this.enemyLevels = enemyLevels;
         this.enemyChance = enemyChance;
         this.bossType = bossType;
+        this.gate = gate;
     }
 
     public Enemy generateEnemy(){
