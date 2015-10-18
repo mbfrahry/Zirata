@@ -1,5 +1,7 @@
 package th.zirata.Blocks;
 
+import android.util.Log;
+
 import com.badlogic.androidgames.framework.gl.Camera2D;
 import com.badlogic.androidgames.framework.gl.SpriteBatcher;
 import com.badlogic.androidgames.framework.math.Vector2;
@@ -85,7 +87,7 @@ public class BlockRenderer {
     private void renderSimpleTurret(SpriteBatcher batcher, float x, float y, float width, float height, float angle){
         //batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("NearStarBG"));
         batcher.drawSprite(x, y, width, height, Assets.textureRegions.get("GreenBase3"));
-        batcher.drawSprite(x, y, width, height, angle, Assets.textureRegions.get("GreenTurret3"));
+        batcher.drawSprite(x, y, width, height, angle, Assets.textureRegions.get("GreenTurret300"));
         //need to draw activity marker here too
 
     }
@@ -146,7 +148,8 @@ public class BlockRenderer {
     private void renderGameTurret(SpriteBatcher batcher, TurretBlock tBlock){
         Vector2 rotate = new Vector2(tBlock.lastTouch);
         batcher.drawSprite(tBlock.position.x  , tBlock.position.y, 24, 24, Assets.textureRegions.get("GreenBase3"));
-        batcher.drawSprite(tBlock.position.x  , tBlock.position.y, 36, 36, rotate.sub(tBlock.position).angle()-90, Assets.textureRegions.get("GreenTurret3"));
+        Log.d("PowerImage", tBlock.powerImage + " " );
+        batcher.drawSprite(tBlock.position.x, tBlock.position.y, 36, 36, rotate.sub(tBlock.position).angle() - 90, Assets.textureRegions.get("GreenTurret" + tBlock.powerImage));
 
         if(tBlock.active){
             batcher.drawSprite(tBlock.position.x - 8 + 3, tBlock.position.y - 8, 5, 5, Assets.textureRegions.get("GreenBullet"));
@@ -157,7 +160,6 @@ public class BlockRenderer {
         else{
             batcher.drawSprite(tBlock.position.x - 8 + 3, tBlock.position.y - 8, 5, 5, Assets.textureRegions.get("Bullet"));
         }
-
     }
 
     private void renderGameEnergyBlock(SpriteBatcher batcher, EnergyBlock eBlock){

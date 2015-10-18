@@ -32,6 +32,15 @@ public class TurretBlock extends Block {
 
 	public static final int TURRET_READY = 0;
 	public static final int TURRET_RELOADING = 1;
+
+    public static final int TURRET_TURNING_ON = 0;
+    public static final int TURRET_TURNING_OFF = 1;
+    public static final int TURRET_ON = 2;
+    public static final int TURRET_OFF = 3;
+    public int powerState;
+    public float powerTime;
+    public float currPowerTime;
+    public int powerImage;
 	
 	int bulletDamage;
 	public int state;
@@ -84,7 +93,10 @@ public class TurretBlock extends Block {
 
 		state = TURRET_READY;
 
-
+        powerTime = 0.05f;
+        currPowerTime = 0;
+        powerImage = 311;
+        powerState = TURRET_OFF;
 	}
 
 	private void calcCone(float x, float y){
@@ -172,6 +184,32 @@ public class TurretBlock extends Block {
 				numBullets = 0;
 			}
 		}
+        if(powerState == TURRET_OFF && active){
+            powerState = TURRET_TURNING_ON;
+        }
+        else if(powerState == TURRET_ON && !active){
+            powerState = TURRET_TURNING_OFF;
+        }
+        else if(powerState == TURRET_TURNING_ON){
+            currPowerTime+=deltaTime;
+            if(currPowerTime >= powerTime){
+                currPowerTime = 0;
+                powerImage -= 1;
+                if(powerImage == 300){
+                    powerState = TURRET_ON;
+                }
+            }
+        }
+        else if(powerState == TURRET_TURNING_OFF){
+            currPowerTime+=deltaTime;
+            if(currPowerTime >= powerTime) {
+                currPowerTime = 0;
+                powerImage += 1;
+                if (powerImage == 311) {
+                    powerState = TURRET_OFF;
+                }
+            }
+        }
 	}
 
 	public void writeExtraInfo(JsonWriter writer) throws IOException {
