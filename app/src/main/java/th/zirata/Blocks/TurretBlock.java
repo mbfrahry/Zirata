@@ -93,7 +93,7 @@ public class TurretBlock extends Block {
 
 		state = TURRET_READY;
 
-        powerTime = 0.05f;
+        powerTime = 0.025f;
         currPowerTime = 0;
         powerImage = 311;
         powerState = TURRET_OFF;
