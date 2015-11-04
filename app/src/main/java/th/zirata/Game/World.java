@@ -44,6 +44,7 @@ public class World {
 	public ArrayList<Background> backgrounds;
 	public ArrayList<Background> nearBackgrounds;
 	public ArrayList<Background> farBackgrounds;
+    public ArrayList<Background> spaceItems;
 	public Vector2[] grid;
 	Rectangle currView;
 
@@ -93,6 +94,9 @@ public class World {
 		nearBackgrounds = new ArrayList<Background>();
 		farBackgrounds = new ArrayList<Background>();
 
+        spaceItems = new ArrayList<Background>();
+        generateSpaceItems();
+
 		world_cos = 1;
 		world_sin = 0;
 		world_x_axis = new Vector2(1, 0);
@@ -120,6 +124,7 @@ public class World {
 	public void update(float deltaTime){
 		updateWorld(deltaTime);
 		updateBackgrounds(deltaTime);
+        updateSpaceItems(deltaTime);
 		updatePlayer(deltaTime);
 		updatePlayerBullets(deltaTime);
 		enemyManager.update(deltaTime);
@@ -174,6 +179,16 @@ public class World {
 		updateBackgroundList(deltaTime, farBackgrounds, "FarStar", Player.playerSpeed.y * .8f, .8f);
 		updateBackgroundList(deltaTime, nearBackgrounds, "NearStar", Player.playerSpeed.y, 1f);
 	}
+
+    public void updateSpaceItems(float deltaTime){
+        for(int i = 0; i < spaceItems.size(); i++){
+            Background currSpaceItem = spaceItems.get(i);
+            if(moveLeft || moveRight) {
+                currSpaceItem.rotateConstantVelocity(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
+            }
+            currSpaceItem.update(deltaTime);
+        }
+    }
 
 	private void updateBackgroundList(float deltaTime, ArrayList<Background> backgrounds, String sprite, float velocity, float speedMultipler){
 		Background playerOnBackground = null;
@@ -435,4 +450,12 @@ public class World {
 			}
 		}
 	}
+
+    public void generateSpaceItems(){
+        for(int i = 0; i < 1; i++){
+            Background spaceItem = new Background(0,0, 100, 100, new Vector2(0, Player.playerSpeed.y*.6f), .6f, "Earthish");
+
+            spaceItems.add(spaceItem);
+        }
+    }
 }

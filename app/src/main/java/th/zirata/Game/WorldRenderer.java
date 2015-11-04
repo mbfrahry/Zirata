@@ -75,6 +75,11 @@ public class WorldRenderer {
 			Background currBackground = world.nearBackgrounds.get(i);
 			batcher.drawSprite(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, currBackground.bounds.rotationAngle.angle(), Assets.textureRegions.get("NearStarBG"));
 		}
+        for(int i = 0; i < world.spaceItems.size(); i++){
+            Background currSpaceItem = world.spaceItems.get(i);
+            batcher.drawSprite(currSpaceItem.position.x, currSpaceItem.position.y, currSpaceItem.bounds.width, currSpaceItem.bounds.height, currSpaceItem.bounds.rotationAngle.angle(), Assets.textureRegions.get(currSpaceItem.type));
+
+        }
 	}
 	
 	public void renderObjects(){
