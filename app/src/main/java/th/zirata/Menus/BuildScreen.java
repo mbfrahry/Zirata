@@ -579,7 +579,7 @@ public class BuildScreen extends GLScreen{
 
 		Assets.font.drawUITextCentered(guiCam, batcher, "Turret", 40, 192, 7, 7);
 		batcher.drawUISprite(guiCam, 40, 175, 24, 24, Assets.textureRegions.get("GreenBase3"));
-		batcher.drawUISprite(guiCam, 40, 175, 24, 24, Assets.textureRegions.get("GreenTurret3"));
+		batcher.drawUISprite(guiCam, 40, 175, 24, 24, Assets.textureRegions.get("GreenTurret300"));
 		Assets.font.drawUITextCentered(guiCam, batcher, "Armor", 120, 192, 7, 7);
 		batcher.drawUISprite(guiCam, 120, 175, 24, 24, Assets.textureRegions.get("GreenBase1"));
 		Assets.font.drawUITextCentered(guiCam, batcher, "Energy", 200, 192, 7, 7);
