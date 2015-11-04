@@ -37,8 +37,8 @@ public class Assets {
 
 		imageTextures = new Texture(game, "Images.png");
 		addTextures(game.getFileIO(), imageTextures, "Images.txt");
-		font = new Font(imageTextures, 0, 2001, 16, 16, 20);
-		redFont = new Font(imageTextures, 257, 2001, 16, 16, 20);
+		font = new Font(imageTextures, 301, 2001, 16, 16, 20);
+		redFont = new Font(imageTextures, 558, 2001, 16, 16, 20);
 
 		explosionSound = game.getAudio().newSound("Explosion.wav");
 		shootSound = game.getAudio().newSound("Shoot.wav");

@@ -93,15 +93,15 @@ public class BlockRenderer {
     }
 
     private void renderSimpleEnergyBlock(SpriteBatcher batcher, float x, float y, float width, float height){
-        batcher.drawSprite(x , y, width , height, Assets.textureRegions.get("EnergyBlock"));
+        batcher.drawSprite(x , y, width , height, Assets.textureRegions.get("EnergyBlock3"));
     }
 
     private void renderSimpleArmorBlock(SpriteBatcher batcher, float x, float y, float width, float height){
-        batcher.drawSprite(x , y, width , height, Assets.textureRegions.get("GreenBase1"));
+        batcher.drawSprite(x , y, width , height, Assets.textureRegions.get("Armor3"));
     }
 
     private void renderSimpleMultiplierBlock(SpriteBatcher batcher, float x, float y, float width, float height){
-        batcher.drawSprite(x , y, width , height, Assets.textureRegions.get("MultiplierBlock"));
+        batcher.drawSprite(x , y, width , height, Assets.textureRegions.get("Multiplier3"));
         //need to draw activity marker here too
     }
 
@@ -163,15 +163,15 @@ public class BlockRenderer {
     }
 
     private void renderGameEnergyBlock(SpriteBatcher batcher, EnergyBlock eBlock){
-        batcher.drawSprite(eBlock.position.x  , eBlock.position.y , 24, 24, Assets.textureRegions.get("EnergyBlock"));
+        batcher.drawSprite(eBlock.position.x  , eBlock.position.y , 24, 24, Assets.textureRegions.get("EnergyBlock3"));
     }
 
     private void renderGameArmorBlock(SpriteBatcher batcher, ArmorBlock aBlock){
-        batcher.drawSprite(aBlock.position.x , aBlock.position.y, 24 , 24, Assets.textureRegions.get("GreenBase1"));
+        batcher.drawSprite(aBlock.position.x , aBlock.position.y, 24 , 24, Assets.textureRegions.get("Armor3"));
     }
 
     private void renderGameMultiplierBlock(SpriteBatcher batcher, MultiplierBlock mBlock){
-        batcher.drawSprite(mBlock.position.x  , mBlock.position.y, 24, 24, Assets.textureRegions.get("MultiplierBlock"));
+        batcher.drawSprite(mBlock.position.x  , mBlock.position.y, 24, 24, Assets.textureRegions.get("Multiplier3"));
         if(mBlock.state == MultiplierBlock.MULTIPLIER_READY){
             batcher.drawSprite(mBlock.position.x , mBlock.position.y + 2, 10, 10, Assets.textureRegions.get("Bullet"));
         }
