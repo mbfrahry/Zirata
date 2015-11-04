@@ -9,6 +9,7 @@ import com.badlogic.androidgames.framework.math.OverlapTester;
 import com.badlogic.androidgames.framework.math.Rectangle;
 import com.badlogic.androidgames.framework.math.Vector2;
 
+import th.zirata.Blocks.BlankBlock;
 import th.zirata.Blocks.Block;
 import th.zirata.Blocks.Mine;
 import th.zirata.EnemyShips.Enemy;
@@ -452,9 +453,9 @@ public class World {
 	}
 
     public void generateSpaceItems(){
-        for(int i = 0; i < 1; i++){
-            Background spaceItem = new Background(0,0, 100, 100, new Vector2(0, Player.playerSpeed.y*.6f), .6f, "Earthish");
-
+        String[] spaceItemNames = {"BlueJaggedPlanet", "Earthish", "DarkShadeyPlanet", "DarkWatersPlanet", "GreenStripePlanet", "PurpleSpeckPlanet", "ShadeyPlanet", "YellowStripedPlanet"};
+        for(int i = 0; i < 8; i++){
+            Background spaceItem = new Background(0 + 50*i,0+50*i, 100, 100, new Vector2(0, Player.playerSpeed.y*1.2f), 1.2f, spaceItemNames[i]);
             spaceItems.add(spaceItem);
         }
     }
