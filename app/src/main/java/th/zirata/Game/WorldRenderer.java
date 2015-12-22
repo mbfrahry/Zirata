@@ -187,19 +187,12 @@ public class WorldRenderer {
 
 						else if(currBlock.getClass().equals(ArmorBlock.class)){
 //							batcher.drawSprite(currBlock.bounds.lowerLeft.x  , currBlock.bounds.lowerLeft.y, 8, 8, Assets.textureRegions.get("Bullet"));
-							if(currBlock.health <= currBlock.maxHealth && currBlock.health > currBlock.maxHealth*.7){
-								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, currBlock.bounds.rotationAngle.angle() - 90, Assets.textureRegions.get("PurpleBase3"));
-							}
-							else if(currBlock.health <= currBlock.maxHealth*.7 && currBlock.health > currBlock.maxHealth*.3){
-								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, currBlock.bounds.rotationAngle.angle() - 90, Assets.textureRegions.get("PurpleBase2"));
-							}
-							else if(currBlock.health <= currBlock.maxHealth*.3 && currBlock.health > 0){
-								batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, currBlock.bounds.rotationAngle.angle() - 90, Assets.textureRegions.get("PurpleBase1"));
-							}
+							batcher.drawSprite(currBlock.position.x , currBlock.position.y, 24 , 24, currBlock.bounds.rotationAngle.angle() - 90, Assets.textureRegions.get("PurpleBase3"));
+
 						}
 
 						else if(currBlock.getClass().equals(EnergyBlock.class)){
-							batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, currBlock.bounds.rotationAngle.angle() - 90, Assets.textureRegions.get("EnergyBlock"));
+							batcher.drawSprite(currBlock.position.x  , currBlock.position.y , 24, 24, currBlock.bounds.rotationAngle.angle() - 90, Assets.textureRegions.get("EnergyBlock3"));
 //							batcher.drawSprite(currBlock.bounds.lowerLeft.x  , currBlock.bounds.lowerLeft.y, 8, 8, Assets.textureRegions.get("Bullet"));
 						}
 
