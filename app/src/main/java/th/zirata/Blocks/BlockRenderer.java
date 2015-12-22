@@ -16,39 +16,40 @@ public class BlockRenderer {
     public BlockRenderer(){
 
     }
-
+/*
     public void renderSimpleBlock(String blockType, SpriteBatcher batcher, float x, float y, float width, float height){
         if(blockType.equals("Turret")){
             float angle = 0;
-            renderSimpleTurret(batcher, x, y, width, height, angle);
+            renderSimpleTurret(batcher, new TurretBlock(new Vector2(0,0) ,0), x, y, width, height, angle);
         }
         else if(blockType.equals("Energy")){
-            renderSimpleEnergyBlock(batcher, x, y, width, height);
+            renderSimpleEnergyBlock(batcher, new EnergyBlock(new Vector2(0,0)), x, y, width, height);
         } else if(blockType.equals("Armor")){
-            renderSimpleArmorBlock(batcher, x, y, width, height);
+            renderSimpleArmorBlock(batcher, new ArmorBlock(new Vector2(0,0)),  x, y, width, height);
         } else if (blockType.equals("Multiplier")){
-            renderSimpleMultiplierBlock(batcher, x, y, width, height);
+            renderSimpleMultiplierBlock(batcher, new MultiplierBlock(new Vector2(0,0)), x, y, width, height);
         }
         else{
             renderSimpleBaseBlock(batcher, x, y, width, height);
         }
-    }
+    }*/
+
     public void renderSimpleBlock(Block b, SpriteBatcher batcher, float x, float y, float width, float height){
         if(b.getClass().equals(TurretBlock.class)){
             TurretBlock tBlock = (TurretBlock) b;
             float angle = 0;
             Vector2 rotate = getRotationVector(tBlock.fireAngle);
             angle = rotate.sub(new Vector2(0,0)).angle()-90;
-            renderSimpleTurret(batcher, x, y, width, height, angle);
+            renderSimpleTurret(batcher, b,  x, y, width, height, angle);
         }
         else if(b.getClass().equals(EnergyBlock.class)){
-            renderSimpleEnergyBlock(batcher, x, y, width, height);
+            renderSimpleEnergyBlock(batcher, b, x, y, width, height);
         }
         else if(b.getClass().equals(ArmorBlock.class)){
-            renderSimpleArmorBlock(batcher, x, y, width, height);
+            renderSimpleArmorBlock(batcher, b, x, y, width, height);
         }
         else if (b.getClass().equals(MultiplierBlock.class)){
-            renderSimpleMultiplierBlock(batcher, x, y, width, height);
+            renderSimpleMultiplierBlock(batcher, b, x, y, width, height);
         }
         else{
             renderSimpleBaseBlock(batcher, x, y, width, height);
@@ -65,16 +66,17 @@ public class BlockRenderer {
             float angle = 0;
             Vector2 rotate = getRotationVector(tBlock.fireAngle);
             angle = rotate.sub(new Vector2(0,0)).angle()-90;
-            renderSimpleTurret(batcher, x, y, width, height, angle);
+            renderSimpleTurret(batcher, b, x, y, width, height, angle);
         }
         else if(b.getClass().equals(EnergyBlock.class)){
-            renderSimpleEnergyBlock(batcher, x, y, width, height);
+            renderSimpleEnergyBlock(batcher, b, x, y, width, height);
         }
         else if(b.getClass().equals(ArmorBlock.class)){
-            renderSimpleArmorBlock(batcher, x, y, width, height);
+            renderSimpleArmorBlock(batcher, b, x, y, width, height);
         }
         else if (b.getClass().equals(MultiplierBlock.class)){
-            renderSimpleMultiplierBlock(batcher, x, y, width, height);
+            //Log.d("Stuff3", b.imageNums[0] + " ");
+            renderSimpleMultiplierBlock(batcher, b, x, y, width, height);
         }
         else{
             renderSimpleBaseBlock(batcher, x, y, width, height);
@@ -84,24 +86,40 @@ public class BlockRenderer {
 
 
     //Eventually we will get the asset information from the block to put all the sprites together
-    private void renderSimpleTurret(SpriteBatcher batcher, float x, float y, float width, float height, float angle){
-        //batcher.drawSprite(160, 240, 320, 480, Assets.textureRegions.get("NearStarBG"));
+    private void renderSimpleTurret(SpriteBatcher batcher, Block tBlock, float x, float y, float width, float height, float angle){
+
+        //batcher.drawSprite(x, y, width, height, Assets.textureRegions.get("TurretLevel" + tBlock.imageNums[0] + "Base"));
+        //batcher.drawSprite(x, y, width, height, Assets.textureRegions.get("TurretLevel" + tBlock.imageNums[1] + "Damage"));
+        //batcher.drawSprite(x, y, width, height, Assets.textureRegions.get("TurretLevel" + tBlock.imageNums[2] + "FireRate"));
+        //batcher.drawSprite(x, y, width, height, Assets.textureRegions.get("TurretLevel" + tBlock.imageNums[3] + "Range"));
         batcher.drawSprite(x, y, width, height, Assets.textureRegions.get("GreenBase3"));
         batcher.drawSprite(x, y, width, height, angle, Assets.textureRegions.get("GreenTurret300"));
         //need to draw activity marker here too
 
     }
 
-    private void renderSimpleEnergyBlock(SpriteBatcher batcher, float x, float y, float width, float height){
+    private void renderSimpleEnergyBlock(SpriteBatcher batcher, Block eBlock, float x, float y, float width, float height){
+
+        //batcher.drawSprite(x, y, width, height, Assets.textureRegions.get("EnergyLevel" + eBlock.imageNums[0] + "Base"));
+        //batcher.drawSprite(x, y, width, height, Assets.textureRegions.get("EnergyLevel" + eBlock.imageNums[1] + "Energy"));
         batcher.drawSprite(x , y, width , height, Assets.textureRegions.get("EnergyBlock3"));
     }
 
-    private void renderSimpleArmorBlock(SpriteBatcher batcher, float x, float y, float width, float height){
+    private void renderSimpleArmorBlock(SpriteBatcher batcher, Block aBlock, float x, float y, float width, float height){
+        //batcher.drawSprite(x , y, width , height, Assets.textureRegions.get("ArmorLevel" + aBlock.imageNums[0] + "Base"));
         batcher.drawSprite(x , y, width , height, Assets.textureRegions.get("Armor3"));
     }
 
-    private void renderSimpleMultiplierBlock(SpriteBatcher batcher, float x, float y, float width, float height){
-        batcher.drawSprite(x , y, width , height, Assets.textureRegions.get("Multiplier3"));
+    private void renderSimpleMultiplierBlock(SpriteBatcher batcher, Block mBlock, float x, float y, float width, float height){
+        //Log.d("Stuff2", mBlock.imageNums[0] + " ");
+        batcher.drawSprite(x, y, width, height, Assets.textureRegions.get("Level" + mBlock.imageNums[0] + "Base"));
+        batcher.drawSprite(x  , y, width, height, Assets.textureRegions.get("Level" + mBlock.imageNums[2] + "Towers"));
+        batcher.drawSprite(x  , y, width, height, Assets.textureRegions.get("Level" + mBlock.imageNums[3] + "Round"));
+        batcher.drawSprite(x  , y, width, height, Assets.textureRegions.get("Level" + mBlock.imageNums[1] + "Bar"));
+//      batcher.drawSprite(x, y, width, height, Assets.textureRegions.get("MultiplierLevel" + mBlock.imageNums[0] + "Base"));
+//      batcher.drawSprite(x  , y, width, height, Assets.textureRegions.get("MultiplierLevel" + mBlock.imageNums[2] + "Towers"));
+//      batcher.drawSprite(x  , y, width, height, Assets.textureRegions.get("MultiplierLevel" + mBlock.imageNums[3] + "Round"));
+//      batcher.drawSprite(x  , y, width, height, Assets.textureRegions.get("MultiplierLevel" + mBlock.imageNums[1] + "Bar"));
         //need to draw activity marker here too
     }
 
@@ -147,9 +165,13 @@ public class BlockRenderer {
 
     private void renderGameTurret(SpriteBatcher batcher, TurretBlock tBlock){
         Vector2 rotate = new Vector2(tBlock.lastTouch);
-        batcher.drawSprite(tBlock.position.x  , tBlock.position.y, 24, 24, Assets.textureRegions.get("GreenBase3"));
-        Log.d("PowerImage", tBlock.powerImage + " " );
+        //batcher.drawSprite(tBlock.position.x, tBlock.position.y, 24, 24, Assets.textureRegions.get("TurretLevel" + tBlock.imageNums[0] + "Base"));
+        //batcher.drawSprite(tBlock.position.x, tBlock.position.y, 24, 24, Assets.textureRegions.get("TurretLevel" + tBlock.imageNums[1] + "Damage"));
+        //batcher.drawSprite(tBlock.position.x, tBlock.position.y, 24, 24, Assets.textureRegions.get("TurretLevel" + tBlock.imageNums[2] + "FireRate"));
+        //batcher.drawSprite(tBlock.position.x, tBlock.position.y, 24, 24, Assets.textureRegions.get("TurretLevel" + tBlock.imageNums[3] + "Range"));
+        batcher.drawSprite(tBlock.position.x, tBlock.position.y, 24, 24, Assets.textureRegions.get("GreenBase3"));
         batcher.drawSprite(tBlock.position.x, tBlock.position.y, 36, 36, rotate.sub(tBlock.position).angle() - 90, Assets.textureRegions.get("GreenTurret" + tBlock.powerImage));
+
 
         if(tBlock.active){
             batcher.drawSprite(tBlock.position.x - 8 + 3, tBlock.position.y - 8, 5, 5, Assets.textureRegions.get("GreenBullet"));
@@ -163,15 +185,22 @@ public class BlockRenderer {
     }
 
     private void renderGameEnergyBlock(SpriteBatcher batcher, EnergyBlock eBlock){
+        //batcher.drawSprite(eBlock.position.x  , eBlock.position.y , 24, 24, Assets.textureRegions.get("EnergyLevel" + eBlock.imageNums[0] + "Base"));
+        //batcher.drawSprite(eBlock.position.x  , eBlock.position.y , 24, 24, Assets.textureRegions.get("EnergyLevel" + eBlock.imageNums[1] + "Energy"));
         batcher.drawSprite(eBlock.position.x  , eBlock.position.y , 24, 24, Assets.textureRegions.get("EnergyBlock3"));
     }
 
     private void renderGameArmorBlock(SpriteBatcher batcher, ArmorBlock aBlock){
+        //batcher.drawSprite(aBlock.position.x , aBlock.position.y, 24 , 24, Assets.textureRegions.get("ArmorLevel" + aBlock.imageNums[0] + "Base"));
         batcher.drawSprite(aBlock.position.x , aBlock.position.y, 24 , 24, Assets.textureRegions.get("Armor3"));
     }
 
     private void renderGameMultiplierBlock(SpriteBatcher batcher, MultiplierBlock mBlock){
-        batcher.drawSprite(mBlock.position.x  , mBlock.position.y, 24, 24, Assets.textureRegions.get("Multiplier3"));
+        batcher.drawSprite(mBlock.position.x  , mBlock.position.y, 24, 24, Assets.textureRegions.get("Level" + mBlock.imageNums[0] + "Base"));
+        batcher.drawSprite(mBlock.position.x  , mBlock.position.y, 24, 24, Assets.textureRegions.get("Level" + mBlock.imageNums[1] + "Bar"));
+        batcher.drawSprite(mBlock.position.x  , mBlock.position.y, 24, 24, Assets.textureRegions.get("Level" + mBlock.imageNums[2] + "Towers"));
+        batcher.drawSprite(mBlock.position.x  , mBlock.position.y, 24, 24, Assets.textureRegions.get("Level" + mBlock.imageNums[3] + "Round"));
+        //batcher.drawSprite(mBlock.position.x  , mBlock.position.y, 24, 24, Assets.textureRegions.get("Multiplier3"));
         if(mBlock.state == MultiplierBlock.MULTIPLIER_READY){
             batcher.drawSprite(mBlock.position.x , mBlock.position.y + 2, 10, 10, Assets.textureRegions.get("Bullet"));
         }

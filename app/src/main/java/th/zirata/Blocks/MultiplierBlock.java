@@ -50,6 +50,7 @@ public class MultiplierBlock extends Block {
         cooldownTime = 0;
         multiplierActiveTime = 0;
         multiplyingBlocks = new ArrayList<Block>();
+        updateImageNums();
     }
 
     @Override

@@ -1,5 +1,7 @@
 package th.zirata.Menus;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -406,6 +408,7 @@ public class BuildScreen extends GLScreen{
 							showFuse = true;
 							showUpgrades = false;
 						}
+						selectedActiveBlock.updateImageNums();
 						PlayerSave.save(game.getFileIO());
 					}
 					else{
@@ -499,6 +502,9 @@ public class BuildScreen extends GLScreen{
 
 		for(int i = 0; i < PlayerSave.activeBlocks.size(); i++){
 			Block currBlock = PlayerSave.activeBlocks.get(i);
+			if(currBlock.getClass().equals(MultiplierBlock.class)){
+				//Log.d("Stuff", currBlock.imageNums[0] + " " );
+			}
 			blockRenderer.renderSimpleBlock(currBlock, batcher, currBlock.position.x , currBlock.position.y, 24, 24);
 		}
 

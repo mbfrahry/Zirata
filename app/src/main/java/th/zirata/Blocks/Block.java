@@ -23,6 +23,8 @@ public abstract class Block extends DynamicGameObject {
 
 	public int constructorArgLength;
 
+	public int[] imageNums;
+
 	public Block(float x, float y, int health, int energyCost, int blockLevel){
 		super(x, y, BLOCK_WIDTH, BLOCK_HEIGHT);
 		this.health = health;
@@ -53,6 +55,23 @@ public abstract class Block extends DynamicGameObject {
 	public abstract int getAttributeLevel(int attributeIndex);
 
 	public abstract boolean checkMaxAttributeLevel(int attributeIndex);
+
+	public void updateImageNums(){
+		float[] attributeVals = getAttributeVals();
+		imageNums = new int[attributeVals.length];
+		for(int i = 0; i < attributeVals.length; i++){
+			int level = getAttributeLevel(i);
+			if( level < 5){
+				imageNums[i] = 1;
+			}
+			else if(level < 20){
+				imageNums[i] = 2;
+			}
+			else{
+				imageNums[i] = 3;
+			}
+		}
+	}
 
 	public int getExperienceLevel(int attNum){
         int sum = 0;
