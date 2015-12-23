@@ -24,8 +24,9 @@ public class TEP extends Enemy {
     public TEP(int blockLevel, float world_cos, float world_sin){
         super( blockLevel);
         constantVelocity = true;
-        this.x = 160;
-        this.y = 500;
+        float[] atts = generateBlockAttributes();
+        this.x = atts[0];
+        this.y = atts[1];
         position = new Vector2(x, y);
         this.blockLevel = blockLevel;
         cooldown = .25f;
@@ -38,11 +39,11 @@ public class TEP extends Enemy {
 
     public void createTEP(Vector2 world_x_axis, Vector2 world_y_axis){
         for(int i = 0; i < 6; i++){
-            enemyBlocks.add(new ArmorBlock(x + i * 25f*world_x_axis.x, y , blockLevel * 10, blockLevel));
-            enemyBlocks.add(new ArmorBlock(x + i * 25f*world_x_axis.x, y + 52f*world_y_axis.y, blockLevel * 10, blockLevel));
+            enemyBlocks.add(new ArmorBlock(x + i * 25f*world_x_axis.x, y + i*25f*world_x_axis.y, blockLevel * 10, blockLevel));
+            enemyBlocks.add(new ArmorBlock(x + i * 25f*world_x_axis.x + 52f*world_y_axis.x, y + i * 25f*world_x_axis.y + 52f*world_y_axis.y, blockLevel * 10, blockLevel));
         }
-        enemyBlocks.add(new ArmorBlock(x, y + 26f*world_y_axis.y, blockLevel * 10, blockLevel));
-        enemyBlocks.add(new EnergyBlock(x + 25f*world_x_axis.x, y + 26f*world_y_axis.y, 10,  blockLevel * 10, blockLevel, 10));
+        enemyBlocks.add(new ArmorBlock(x  + 26f*world_y_axis.x, y + 26f*world_y_axis.y, blockLevel * 10, blockLevel));
+        enemyBlocks.add(new EnergyBlock(x + 25f*world_x_axis.x  + 26f*world_y_axis.x, y + 25f*world_x_axis.y + 26f*world_y_axis.y, 10,  blockLevel * 10, blockLevel, 10));
 
         for(int i = 0; i < enemyBlocks.size(); i++){
             Block e = enemyBlocks.get(i);
