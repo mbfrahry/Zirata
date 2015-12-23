@@ -12,6 +12,7 @@ import th.zirata.Blocks.TurretBlock;
 import th.zirata.EnemyShips.Enemy;
 import th.zirata.EnemyShips.Hydra;
 import th.zirata.EnemyShips.StandardEnemy;
+import th.zirata.EnemyShips.StealthyHealthy;
 import th.zirata.EnemyShips.SwirlyWhirly;
 import th.zirata.EnemyShips.TEP;
 import th.zirata.Settings.EnemySettings;
@@ -58,7 +59,10 @@ public class EnemyManager {
                         bossName = "Orbiter";
                     }
                     else if(world.level.bossType == 3){
-                        bossName = "TEP";
+                        bossName = "T.E.P.";
+                    }
+                    else if(world.level.bossType == 4){
+                        bossName = "Rewinder";
                     }
                     World.popupManager.createTextExtra("text", bossName, 160, 300, 25, 25, 2f, "red", "center");
                     World.popupManager.createTextExtra("text", "approaches", 160, 250, 25, 25, 2f, "red", "center");
@@ -77,6 +81,9 @@ public class EnemyManager {
                 }
                 else if (world.level.bossType == 3){
                     e = new TEP(1, world.world_cos, world.world_sin);
+                }
+                else if (world.level.bossType == 4){
+                    e = new StealthyHealthy(2);
                 }
                 else{
                     Log.d("this", "is a bad thing");

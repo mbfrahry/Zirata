@@ -61,14 +61,14 @@ public class TEP extends Enemy {
     public void update(float deltaTime, World world) {
 
         for (int i = 0; i < enemyBlocks.size(); i++) {
-            Block currBlock = enemyBlocks.get(i);
-            currBlock.position.add(Player.playerSpeed.x * deltaTime, Player.playerSpeed.y * deltaTime);
-            for (Vector2 v : currBlock.bounds.vertices) {
-                v.add(Player.playerSpeed.x * deltaTime, Player.playerSpeed.y * deltaTime);
-            }
-            currBlock.update(deltaTime);
+                Block currBlock = enemyBlocks.get(i);
+                currBlock.position.add(Player.playerSpeed.x * deltaTime, Player.playerSpeed.y * deltaTime);
+                for (Vector2 v : currBlock.bounds.vertices) {
+                    v.add(Player.playerSpeed.x * deltaTime, Player.playerSpeed.y * deltaTime);
+                }
+                currBlock.update(deltaTime);
 
-            if (i == 1) {
+                if (i == 1) {
                 left.set(enemyBlocks.get(1).position.x - enemyBlocks.get(0).position.x, enemyBlocks.get(1).position.y - enemyBlocks.get(0).position.y);
                 left.nor();
             }

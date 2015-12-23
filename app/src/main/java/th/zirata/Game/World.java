@@ -45,7 +45,7 @@ public class World {
 	public ArrayList<Background> backgrounds;
 	public ArrayList<Background> nearBackgrounds;
 	public ArrayList<Background> farBackgrounds;
-    public ArrayList<Background> spaceItems;
+    public ArrayList<Planet> spaceItems;
 	public Vector2[] grid;
 	Rectangle currView;
 
@@ -95,7 +95,7 @@ public class World {
 		nearBackgrounds = new ArrayList<Background>();
 		farBackgrounds = new ArrayList<Background>();
 
-        spaceItems = new ArrayList<Background>();
+        spaceItems = new ArrayList<Planet>();
         generateSpaceItems();
 
 		world_cos = 1;
@@ -183,7 +183,7 @@ public class World {
 
     public void updateSpaceItems(float deltaTime){
         for(int i = 0; i < spaceItems.size(); i++){
-            Background currSpaceItem = spaceItems.get(i);
+            Planet currSpaceItem = spaceItems.get(i);
             if(moveLeft || moveRight) {
                 currSpaceItem.rotateConstantVelocity(enemyAngle, POS_COS_ANGLE, WORLD_MID_POINT);
             }
@@ -453,9 +453,8 @@ public class World {
 	}
 
     public void generateSpaceItems(){
-        String[] spaceItemNames = {"BlueJaggedPlanet", "Earthish", "DarkShadeyPlanet", "DarkWatersPlanet", "GreenStripePlanet", "PurpleSpeckPlanet", "ShadeyPlanet", "YellowStripedPlanet"};
-        for(int i = 0; i < 8; i++){
-            Background spaceItem = new Background(0 + 50*i,0+50*i, 100, 100, new Vector2(0, Player.playerSpeed.y*1.2f), 1.2f, spaceItemNames[i]);
+        for(int i = 0; i < 9; i++){
+            Planet spaceItem = new Planet(-1200+rand.nextInt(2400),-1200+rand.nextInt(2400), 100, 100, new Vector2(0, Player.playerSpeed.y*1.2f), rand.nextFloat()+0.5f, rand.nextFloat()+0.5f);
             spaceItems.add(spaceItem);
         }
     }

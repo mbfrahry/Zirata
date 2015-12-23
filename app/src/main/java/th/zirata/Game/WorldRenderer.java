@@ -76,8 +76,8 @@ public class WorldRenderer {
 			batcher.drawSprite(currBackground.position.x, currBackground.position.y, currBackground.bounds.width, currBackground.bounds.height, currBackground.bounds.rotationAngle.angle(), Assets.textureRegions.get("NearStarBG"));
 		}
         for(int i = 0; i < world.spaceItems.size(); i++){
-            Background currSpaceItem = world.spaceItems.get(i);
-            batcher.drawSprite(currSpaceItem.position.x, currSpaceItem.position.y, currSpaceItem.bounds.width, currSpaceItem.bounds.height, currSpaceItem.bounds.rotationAngle.angle(), Assets.textureRegions.get(currSpaceItem.type));
+            Planet currSpaceItem = world.spaceItems.get(i);
+            batcher.drawSprite(currSpaceItem.position.x, currSpaceItem.position.y, currSpaceItem.bounds.width*currSpaceItem.scale, currSpaceItem.bounds.height*currSpaceItem.scale, currSpaceItem.bounds.rotationAngle.angle(), Assets.textureRegions.get(currSpaceItem.type));
 
         }
 	}
