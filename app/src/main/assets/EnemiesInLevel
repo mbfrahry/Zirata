@@ -1,36 +1,36 @@
 {
   "level1": {
     "enemyNumber": 1,
-    "enemyLevel": [1, 0, 0, 0],
-    "enemyChance": [1, 0, 0, 0],
+    "enemyLevel": [1, 0, 0, 0, 0],
+    "enemyChance": [1, 0, 0, 0, 0],
     "bossNum": 4,
     "hasGate": false
   },
   "level2": {
-    "enemyNumber": 10,
-    "enemyLevel": [2, 0, 0, 0],
-    "enemyChance": [1, 0, 0, 0],
-    "bossNum": -1,
+    "enemyNumber": 1,
+    "enemyLevel": [2, 0, 0, 0, 0],
+    "enemyChance": [1, 0, 0, 0, 0],
+    "bossNum": 5,
     "hasGate": false
   },
   "level3": {
     "enemyNumber": 10,
-    "enemyLevel": [2, 1, 0, 0],
-    "enemyChance": [0.6, 0.4, 0, 0],
+    "enemyLevel": [2, 1, 0, 0, 0],
+    "enemyChance": [0.6, 0.4, 0, 0, 0],
     "bossNum": 1,
     "hasGate": false
   },
   "level4": {
     "enemyNumber": 10,
-    "enemyLevel": [2, 1, 1, 0],
-    "enemyChance": [0.33, 0.33, 0.34, 0],
+    "enemyLevel": [2, 1, 1, 0, 1],
+    "enemyChance": [0, 0, 0, 0, 1],
     "bossNum": 2,
     "hasGate": false
   },
   "level5": {
     "enemyNumber": 1,
-    "enemyLevel": [5, 0, 0, 1],
-    "enemyChance": [1, 0, 0, 0],
+    "enemyLevel": [5, 0, 0, 1, 0],
+    "enemyChance": [1, 0, 0, 0, 0],
     "bossNum": 3,
     "hasGate": false
   }

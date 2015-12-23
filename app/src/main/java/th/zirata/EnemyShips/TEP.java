@@ -84,7 +84,6 @@ public class TEP extends Enemy {
                 else{
                     currBlock.health = currBlock.maxHealth;
                 }
-
             }
         }
     }

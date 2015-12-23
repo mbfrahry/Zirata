@@ -2,6 +2,7 @@ package th.zirata.Game;
 
 import com.badlogic.androidgames.framework.math.Vector2;
 
+import th.zirata.EnemyShips.BlockNest;
 import th.zirata.EnemyShips.Enemy;
 import th.zirata.EnemyShips.EnemyTeleporter;
 import th.zirata.EnemyShips.MineEnemy;
@@ -52,6 +53,9 @@ public class Level {
         }
         else if (type == EnemySettings.MINE_ENEMY){
             newEnemy = new MineEnemy(enemyLevels[type]);
+        }
+        else if (type == EnemySettings.BLOCK_NEST_ENEMY){
+            newEnemy = new BlockNest(enemyLevels[type]);
         }
         else{
 

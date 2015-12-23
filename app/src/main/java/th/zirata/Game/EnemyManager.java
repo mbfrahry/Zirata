@@ -9,6 +9,8 @@ import th.zirata.Blocks.Bullet;
 import th.zirata.Blocks.EnemyTurretBlock;
 import th.zirata.Blocks.Mine;
 import th.zirata.Blocks.TurretBlock;
+import th.zirata.EnemyShips.BNM;
+import th.zirata.EnemyShips.BlockNest;
 import th.zirata.EnemyShips.Enemy;
 import th.zirata.EnemyShips.Hydra;
 import th.zirata.EnemyShips.StandardEnemy;
@@ -64,6 +66,9 @@ public class EnemyManager {
                     else if(world.level.bossType == 4){
                         bossName = "Rewinder";
                     }
+                    else if(world.level.bossType == 5){
+                        bossName = "Loch Ness";
+                    }
                     World.popupManager.createTextExtra("text", bossName, 160, 300, 25, 25, 2f, "red", "center");
                     World.popupManager.createTextExtra("text", "approaches", 160, 250, 25, 25, 2f, "red", "center");
                 }
@@ -84,6 +89,9 @@ public class EnemyManager {
                 }
                 else if (world.level.bossType == 4){
                     e = new StealthyHealthy(2);
+                }
+                else if (world.level.bossType == 5){
+                    e = new BNM(1, world.world_cos, world.world_sin);
                 }
                 else{
                     Log.d("this", "is a bad thing");
