@@ -47,8 +47,9 @@ public class GameScreen extends GLScreen {
     HashMap<Integer,Vector2> steerTouches;
 	HashMap<Integer,Vector2> powerTouches;
     public PopupManager popupManager;
+	String gameType;
 
-	public GameScreen(Game game) {
+	public GameScreen(Game game, String gameType) {
         super(game);
         state = GAME_READY;
         guiCam = new Camera2D(glGraphics, 320, 480);
@@ -57,9 +58,16 @@ public class GameScreen extends GLScreen {
 
         PlayerSave.load(game.getFileIO());
 
+		this.gameType = gameType;
         popupManager = new PopupManager(batcher, guiCam);
 		String levelName = "level"+Settings.currLevel;
-        world = new World(EnemySettings.loadLevel(game.getFileIO(), levelName), popupManager);
+		if(gameType.equals("normal")){
+			world = new World(EnemySettings.loadLevel(game.getFileIO(), levelName), popupManager, gameType);
+		}
+        else{
+			world = new World(null, popupManager, gameType);
+		}
+
         renderer = new WorldRenderer(glGraphics, batcher, world, popupManager);
         pauseBounds = new Rectangle(320- 64, 480- 64, 64, 64);
         resumeBounds = new Rectangle(0, 220, 320, 50);
@@ -268,13 +276,13 @@ public class GameScreen extends GLScreen {
 		}
 		PlayerSave.load(game.getFileIO());
         Settings.save(game.getFileIO());
-		game.setScreen(new EndLevelScreen(game, true, world.spaceBucksEarned, world.enemiesKilled));
+		game.setScreen(new EndLevelScreen(game, true, world.spaceBucksEarned, world.enemiesKilled, gameType));
 	}
 	
 	private void updateGameOver() {
 		world.clearBullets();
 	    PlayerSave.load(game.getFileIO());
-	    game.setScreen(new EndLevelScreen(game, false, world.spaceBucksEarned, world.enemiesKilled));
+	    game.setScreen(new EndLevelScreen(game, false, world.spaceBucksEarned, world.enemiesKilled, gameType));
 	}
 
 	@Override

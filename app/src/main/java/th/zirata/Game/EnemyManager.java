@@ -134,7 +134,7 @@ public class EnemyManager {
         if(world.lastEnemyTime > world.timeToNextEnemy && world.state != World.WORLD_STATE_LAST_ENEMY){
             world.enemyManager.generateEnemy();
 
-            if(world.level.enemyNum % 4 == 0 && world.timeToNextEnemy > 2){
+            if(world.enemiesKilled % 4 == 0 && world.timeToNextEnemy > 2){
                 world.timeToNextEnemy -= 0.5;
             }
 

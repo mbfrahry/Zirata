@@ -49,7 +49,7 @@ public class BlockUpgradeScreen extends GLScreen{
 			
 			if(event.type == TouchEvent.TOUCH_UP){
 				if (OverlapTester.pointInRectangle(backBounds, touchPoint)) {
-					game.setScreen(new BuildScreen(game));
+					game.setScreen(new BuildScreen(game, null));
 					return;
 				}
 				updateAttributes();
@@ -146,7 +146,7 @@ public class BlockUpgradeScreen extends GLScreen{
 	private void updateEnergyAttributes(){
 		Rectangle pBlockBounds = new Rectangle(0, 50, 160, 80);
 		if (OverlapTester.pointInRectangle(pBlockBounds, touchPoint)) {
-			game.setScreen(new BuildScreen(game));
+			game.setScreen(new BuildScreen(game, null));
 		}
 	}
 

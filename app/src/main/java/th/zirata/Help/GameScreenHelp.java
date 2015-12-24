@@ -22,7 +22,7 @@ public class GameScreenHelp extends GameScreen {
 
 
     public GameScreenHelp(Game game){
-        super(game);
+        super(game, "normal");
         tutorialNum = 0;
         currStep = GameHelpText.tutorialSteps.get(tutorialNum);
         state = GAME_RUNNING;
@@ -73,7 +73,7 @@ public class GameScreenHelp extends GameScreen {
                         currStep = GameHelpText.tutorialSteps.get(tutorialNum);
                     }
                     else{
-                        game.setScreen(new GameScreen(game));
+                        game.setScreen(new GameScreen(game, "normal"));
                     }
                 }
             }

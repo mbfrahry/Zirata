@@ -8,7 +8,7 @@ import com.badlogic.androidgames.framework.impl.GLScreen;
  */
 public class SectorScreen extends GameScreen {
     public SectorScreen(Game game) {
-        super(game);
+        super(game, null);
     }
 
 }

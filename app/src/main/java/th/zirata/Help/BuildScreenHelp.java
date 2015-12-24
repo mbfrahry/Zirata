@@ -27,7 +27,7 @@ public class BuildScreenHelp extends BuildScreen {
     TutorialStep currStep;
 
     public BuildScreenHelp(Game game) {
-        super(game);
+        super(game, "normal");
         tutorialNum = 0;
         currStep = BuildHelpText.tutorialSteps.get(tutorialNum);
     }

@@ -25,6 +25,7 @@ public class MainMenuScreen extends GLScreen{
 	Rectangle playBounds;
 	Rectangle resetBounds;
 	Rectangle helpBounds;
+	Rectangle infiniteBounds;
 	Vector2 touchPoint;
 
 	public MainMenuScreen(Game game){
@@ -34,6 +35,7 @@ public class MainMenuScreen extends GLScreen{
 		playBounds = new Rectangle(160 - 50, 200-25, 128, 74);
 		helpBounds = new Rectangle(160 - 50, 125-25, 110, 55);
 		resetBounds = new Rectangle(160 - 50, 400 - 100, 128, 74);
+		infiniteBounds = new Rectangle(100, 75, 200, 100);
 		soundBounds = new Rectangle(0, 0, 50, 50);
 		touchPoint = new Vector2();
 	}
@@ -67,6 +69,9 @@ public class MainMenuScreen extends GLScreen{
 					Settings.save(game.getFileIO());
 					return;
 				}
+				if(OverlapTester.pointInRectangle(infiniteBounds, touchPoint)){
+					game.setScreen(new BuildScreen(game, "infinite"));
+				}
 
 			}
 		}
@@ -89,6 +94,7 @@ public class MainMenuScreen extends GLScreen{
 
 		batcher.drawSprite(160, 200, 128, 74, Assets.textureRegions.get("Play"));
 		Assets.font.drawTextCentered(batcher, "Reset", 160, 320, 24, 24);
+		Assets.font.drawTextCentered(batcher, "Infinite", 160, 100, 24, 24);
 
 		batcher.endBatch();
 		gl.glDisable(GL10.GL_BLEND);

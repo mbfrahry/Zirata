@@ -33,7 +33,6 @@ public class Level {
         //Decide which type of enemy to produce
         double rand = Math.random();
         int type = 0;
-        //Does this work?
         for(int i = 0; i < enemyChance.length; i++){
             rand -= enemyChance[i];
             if (rand <= 0){

@@ -70,9 +70,11 @@ public class World {
 	boolean levelEnding;
 	float levelEndCountdown;
 
+	String gameType;
+
 	//public static Vector2 playerSpeed;
 
-	public World(Level currLevel, PopupManager popupManager){
+	public World(Level currLevel, PopupManager popupManager, String gameType){
 		this.player = new Player();
 		playerBullets = new ArrayList<Bullet>();
 		lastEnemyTime = 0;
@@ -115,9 +117,16 @@ public class World {
 		level = currLevel;
 
 		eventCountdown = 0;
-		enemyManager = new EnemyManager(this);
+		if(currLevel == null){
+			enemyManager = new InfiniteEnemyManager(this);
+		}
+		else{
+			enemyManager = new EnemyManager(this);
+		}
+
 		levelEndCountdown = 0;
 		levelEnding = false;
+		this.gameType = gameType;
 
 		//playerSpeed = new Vector2(0, -10);
 	}
@@ -133,10 +142,10 @@ public class World {
 		checkPlayerCollision();
 		checkLevelEnd(deltaTime);
 		checkGameOver();
-		if(level.gate != null){
-			updateGate(deltaTime);
-			checkGateCollision();
-		}
+//		if(level.gate != null){
+//			updateGate(deltaTime);
+//			checkGateCollision();
+//		}
 
 	}
 

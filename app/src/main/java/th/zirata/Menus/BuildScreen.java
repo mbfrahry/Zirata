@@ -66,9 +66,11 @@ public class BuildScreen extends GLScreen{
 
     public PopupManager popupManager;
 
+	String gameType;
+
 	boolean devMode;
 
-	public BuildScreen(Game game) {
+	public BuildScreen(Game game, String gameType) {
         super(game);
         guiCam = new Camera2D(glGraphics, 320, 480);
 		isPanning = false;
@@ -101,10 +103,12 @@ public class BuildScreen extends GLScreen{
 		heldTime = 0;
 		devMode = true;
 		popupManager = new PopupManager(batcher, guiCam);
+
+		this.gameType = gameType;
     }
 
 	public BuildScreen(Game game, boolean showBlockBank, Block activeBlock){
-		this(game);
+		this(game, "normal");
 		this.showBlockBank = showBlockBank;
 		this.selectedActiveBlock = activeBlock;
 		blockRenderer = new BlockRenderer();
@@ -156,7 +160,7 @@ public class BuildScreen extends GLScreen{
 								Settings.save(game.getFileIO());
 								PlayerSave.save(game.getFileIO());
 								setTurretDirections();
-								game.setScreen(new GameScreen (game));
+								game.setScreen(new GameScreen (game, gameType));
 								return;
 							}
 
@@ -520,7 +524,12 @@ public class BuildScreen extends GLScreen{
 		Assets.font.drawUITextCentered(guiCam, batcher, "Launch", 260, 30, 15, 15);
 		Assets.font.drawTextCentered(batcher, "Prepare Your", 160, 460, 20, 23);
 		Assets.font.drawTextCentered(batcher, "Ship For", 160, 438, 20, 23);
-		Assets.font.drawTextCentered(batcher, "Level " + Settings.currLevel, 160, 416, 16, 16);
+		if(gameType == "normal") {
+			Assets.font.drawTextCentered(batcher, "Level " + Settings.currLevel, 160, 416, 16, 16);
+		}
+		else{
+			Assets.font.drawTextCentered(batcher, "Level infinite", 160, 416, 16, 16);
+		}
 
 		Assets.font.drawUITextRightJustified(guiCam, batcher, "Bank:", 229, 395, 12, 12);
 		Assets.font.drawUITextRightJustified(guiCam, batcher, Settings.spaceBucks + " ", 300, 395, 12, 12);

@@ -58,7 +58,7 @@ public class MapScreen  extends GLScreen {
                             game.setScreen(new BuildScreenHelp(game));
                         }
                         else{
-                            game.setScreen(new BuildScreen(game));
+                            game.setScreen(new BuildScreen(game, "normal"));
                         }
                         return;
                     }

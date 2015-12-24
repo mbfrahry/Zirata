@@ -87,9 +87,10 @@ public class WorldRenderer {
 		renderEnemies();
 		renderEnemyBullets();
 		renderText();
+		/*
 		if(world.level.gate != null){
 			renderGate();
-		}
+		}*/
 	}
 
 	public void setTurretDirections(){
@@ -235,6 +236,7 @@ public class WorldRenderer {
 
 	private void renderText(){
 		Assets.font.drawText(batcher, "Energy: " + world.player.energy + " ", 16, 480 - 20);
+		Assets.font.drawText(batcher, "Score: " + world.enemiesKilled + " ", 16, 440);
 
 		batcher.drawSprite(285, 30, 60, 60, Assets.textureRegions.get("PowerButton"));
 		Vector2 rotate = new Vector2();

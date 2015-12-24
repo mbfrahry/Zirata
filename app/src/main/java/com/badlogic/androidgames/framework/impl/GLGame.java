@@ -10,6 +10,7 @@ import android.opengl.GLSurfaceView.Renderer;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -43,8 +44,15 @@ public abstract class GLGame extends Activity implements Game, Renderer {
 	
 	public void onCreate(Bundle savedInstanceState){
 		super .onCreate(savedInstanceState);
+
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		getWindow().getDecorView().setSystemUiVisibility(
+				View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+						| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+						| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+						| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+						| View.SYSTEM_UI_FLAG_FULLSCREEN
+						| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 		glView = new GLSurfaceView(this);
 		glView.setRenderer(this);
 		setContentView(glView);
@@ -62,10 +70,22 @@ public abstract class GLGame extends Activity implements Game, Renderer {
 		glView.onResume();
 		wakeLock.acquire();
 	}
-	
+
+	public void onWindowFocusChanged(boolean hasFocus)
+	{
+		super.onWindowFocusChanged(hasFocus);
+			getWindow().getDecorView().setSystemUiVisibility(
+					View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+							| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+							| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+							| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+							| View.SYSTEM_UI_FLAG_FULLSCREEN
+							| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+	}
+
 	public void onSurfaceCreated(GL10 gl, EGLConfig config){
 		glGraphics.setGL(gl);
-		
+
 		synchronized(stateChanged){
 			if(state == GLGameState.Initialized)
 				screen = getStartScreen();
@@ -76,7 +96,6 @@ public abstract class GLGame extends Activity implements Game, Renderer {
 	}
 	
 	public void onSurfaceChanged(GL10 gl, int width, int height){
-		
 	}
 	
 	public void onDrawFrame(GL10 gl){
@@ -159,6 +178,7 @@ public abstract class GLGame extends Activity implements Game, Renderer {
 		newScreen.resume();
 		newScreen.update(0);
 		this.screen = newScreen;
+
 	}
 	
 	public Screen getCurrentScreen(){

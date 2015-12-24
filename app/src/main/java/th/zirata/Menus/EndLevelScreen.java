@@ -27,8 +27,9 @@ public class EndLevelScreen extends GLScreen {
     String result;
     int spaceBucksEarned;
     float enemiesKilled;
+    String gameType;
 
-    public EndLevelScreen(Game game, boolean win, int spaceBucksEarned, float enemiesKilled){
+    public EndLevelScreen(Game game, boolean win, int spaceBucksEarned, float enemiesKilled, String gameType){
         super(game);
         guiCam = new Camera2D(glGraphics, 320, 480);
         batcher = new SpriteBatcher(glGraphics, 100);
@@ -39,6 +40,7 @@ public class EndLevelScreen extends GLScreen {
         result = win ? "Onward!" : "Try Again!";
         this.spaceBucksEarned = spaceBucksEarned;
         this.enemiesKilled = enemiesKilled;
+        this.gameType = gameType;
     }
 
     @Override
@@ -54,7 +56,7 @@ public class EndLevelScreen extends GLScreen {
 
             if (event.type == Input.TouchEvent.TOUCH_UP) {
                 if (OverlapTester.pointInRectangle(backBounds, touchPoint)) {
-                    game.setScreen(new BuildScreen(game));
+                    game.setScreen(new BuildScreen(game, gameType));
                     return;
                 }
 
