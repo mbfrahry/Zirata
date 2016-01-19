@@ -593,12 +593,15 @@ public class BuildScreen extends GLScreen{
 		}
 
 		Assets.font.drawUITextCentered(guiCam, batcher, "Turret", 40, 192, 7, 7);
-		batcher.drawUISprite(guiCam, 40, 175, 24, 24, Assets.textureRegions.get("GreenBase3"));
-		batcher.drawUISprite(guiCam, 40, 175, 24, 24, Assets.textureRegions.get("GreenTurret300"));
+		batcher.drawUISprite(guiCam, 40, 175, 24, 24, Assets.textureRegions.get("TurrBase1"));
+        batcher.drawUISprite(guiCam, 40, 175, 24, 24, Assets.textureRegions.get("TurrConnector1"));
+        batcher.drawUISprite(guiCam, 40, 175, 24, 24, Assets.textureRegions.get("TurrMag1"));
+		batcher.drawUISprite(guiCam, 40, 175, 24, 24, Assets.textureRegions.get("TurrGuns1"));
 		Assets.font.drawUITextCentered(guiCam, batcher, "Armor", 120, 192, 7, 7);
 		batcher.drawUISprite(guiCam, 120, 175, 24, 24, Assets.textureRegions.get("Armor3"));
 		Assets.font.drawUITextCentered(guiCam, batcher, "Energy", 200, 192, 7, 7);
-		batcher.drawUISprite(guiCam, 200, 175, 24, 24, Assets.textureRegions.get("EnergyBlock3"));
+		batcher.drawUISprite(guiCam, 200, 175, 24, 24, Assets.textureRegions.get("EnergyBase1"));
+        batcher.drawUISprite(guiCam, 200, 175, 24, 24, Assets.textureRegions.get("EnergyStrut1"));
 		Assets.font.drawUITextCentered(guiCam, batcher, "Mutliplier", 280, 192, 7, 7);
 		batcher.drawUISprite(guiCam, 280, 175, 24, 24, Assets.textureRegions.get("Multiplier3"));
 

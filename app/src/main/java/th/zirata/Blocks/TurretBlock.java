@@ -97,6 +97,8 @@ public class TurretBlock extends Block {
         currPowerTime = 0;
         powerImage = 311;
         powerState = TURRET_OFF;
+
+        updateImageNums();
 	}
 
 	private void calcCone(float x, float y){

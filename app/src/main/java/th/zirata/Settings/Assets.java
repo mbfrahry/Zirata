@@ -28,6 +28,7 @@ public class Assets {
 	public static Sound shootSound;
 
 	public static Music menuMusic;
+    public static Music gameMusic;
 
 	public static HashMap<String, TextureRegion> textureRegions;
 
@@ -42,7 +43,8 @@ public class Assets {
 
 		explosionSound = game.getAudio().newSound("Explosion.wav");
 		shootSound = game.getAudio().newSound("Shoot.wav");
-		menuMusic = game.getAudio().newMusic("MenuMusic.ogg");
+        gameMusic = game.getAudio().newMusic("MenuMusic.ogg");
+		menuMusic = game.getAudio().newMusic("Menu.mp3");
 		menuMusic.setLooping(true);
 		menuMusic.play();
 

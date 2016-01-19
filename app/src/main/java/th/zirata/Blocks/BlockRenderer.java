@@ -92,8 +92,11 @@ public class BlockRenderer {
         //batcher.drawSprite(x, y, width, height, Assets.textureRegions.get("TurretLevel" + tBlock.imageNums[1] + "Damage"));
         //batcher.drawSprite(x, y, width, height, Assets.textureRegions.get("TurretLevel" + tBlock.imageNums[2] + "FireRate"));
         //batcher.drawSprite(x, y, width, height, Assets.textureRegions.get("TurretLevel" + tBlock.imageNums[3] + "Range"));
-        batcher.drawSprite(x, y, width, height, Assets.textureRegions.get("GreenBase3"));
-        batcher.drawSprite(x, y, width, height, angle, Assets.textureRegions.get("GreenTurret300"));
+        batcher.drawSprite(x, y, width, height, Assets.textureRegions.get("TurrBase" + tBlock.imageNums[0]));
+        batcher.drawSprite(x, y, width, height, angle, Assets.textureRegions.get("TurrConnector" + tBlock.imageNums[3]));
+        batcher.drawSprite(x, y, width, height, angle, Assets.textureRegions.get("TurrGuns" + tBlock.imageNums[1]));
+        batcher.drawSprite(x, y, width, height, angle, Assets.textureRegions.get("TurrMag" + tBlock.imageNums[2]));
+
         //need to draw activity marker here too
 
     }
@@ -102,7 +105,8 @@ public class BlockRenderer {
 
         //batcher.drawSprite(x, y, width, height, Assets.textureRegions.get("EnergyLevel" + eBlock.imageNums[0] + "Base"));
         //batcher.drawSprite(x, y, width, height, Assets.textureRegions.get("EnergyLevel" + eBlock.imageNums[1] + "Energy"));
-        batcher.drawSprite(x , y, width , height, Assets.textureRegions.get("EnergyBlock3"));
+        batcher.drawSprite(x , y, width , height, Assets.textureRegions.get("EnergyBase" + eBlock.imageNums[0]));
+        batcher.drawSprite(x , y, width , height, Assets.textureRegions.get("EnergyStrut" + eBlock.imageNums[1]));
     }
 
     private void renderSimpleArmorBlock(SpriteBatcher batcher, Block aBlock, float x, float y, float width, float height){
@@ -169,8 +173,11 @@ public class BlockRenderer {
         //batcher.drawSprite(tBlock.position.x, tBlock.position.y, 24, 24, Assets.textureRegions.get("TurretLevel" + tBlock.imageNums[1] + "Damage"));
         //batcher.drawSprite(tBlock.position.x, tBlock.position.y, 24, 24, Assets.textureRegions.get("TurretLevel" + tBlock.imageNums[2] + "FireRate"));
         //batcher.drawSprite(tBlock.position.x, tBlock.position.y, 24, 24, Assets.textureRegions.get("TurretLevel" + tBlock.imageNums[3] + "Range"));
-        batcher.drawSprite(tBlock.position.x, tBlock.position.y, 24, 24, Assets.textureRegions.get("GreenBase3"));
-        batcher.drawSprite(tBlock.position.x, tBlock.position.y, 36, 36, rotate.sub(tBlock.position).angle() - 90, Assets.textureRegions.get("GreenTurret" + tBlock.powerImage));
+        batcher.drawSprite(tBlock.position.x, tBlock.position.y, 24, 24, Assets.textureRegions.get("TurrBase" + tBlock.imageNums[0]));
+        batcher.drawSprite(tBlock.position.x, tBlock.position.y, 36, 36, rotate.sub(tBlock.position).angle() - 90, Assets.textureRegions.get("TurrConnector" + tBlock.imageNums[3]));
+        batcher.drawSprite(tBlock.position.x, tBlock.position.y, 36, 36, rotate.sub(tBlock.position).angle() - 90, Assets.textureRegions.get("TurrGuns" + tBlock.imageNums[1]));
+        batcher.drawSprite(tBlock.position.x, tBlock.position.y, 36, 36, rotate.sub(tBlock.position).angle() - 90, Assets.textureRegions.get("TurrMag" + tBlock.imageNums[2]));
+
 
 
         if(tBlock.active){
@@ -187,7 +194,8 @@ public class BlockRenderer {
     private void renderGameEnergyBlock(SpriteBatcher batcher, EnergyBlock eBlock){
         //batcher.drawSprite(eBlock.position.x  , eBlock.position.y , 24, 24, Assets.textureRegions.get("EnergyLevel" + eBlock.imageNums[0] + "Base"));
         //batcher.drawSprite(eBlock.position.x  , eBlock.position.y , 24, 24, Assets.textureRegions.get("EnergyLevel" + eBlock.imageNums[1] + "Energy"));
-        batcher.drawSprite(eBlock.position.x  , eBlock.position.y , 24, 24, Assets.textureRegions.get("EnergyBlock3"));
+        batcher.drawSprite(eBlock.position.x  , eBlock.position.y , 24, 24, Assets.textureRegions.get("EnergyBase" + eBlock.imageNums[0]));
+        batcher.drawSprite(eBlock.position.x  , eBlock.position.y , 24, 24, Assets.textureRegions.get("EnergyStrut" + eBlock.imageNums[1]));
     }
 
     private void renderGameArmorBlock(SpriteBatcher batcher, ArmorBlock aBlock){

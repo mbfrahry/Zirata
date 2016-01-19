@@ -43,6 +43,8 @@ public class EnergyBlock extends Block {
         this.constructorArgLength = 6;
 
         this.energy = energy;
+        updateImageNums();
+
     }
 
     @Override
