@@ -18,7 +18,7 @@ public class Player {
 	public boolean power;
 	public ArrayList<Block> poweredBlocks;
 	Vector2 velocity;
-	public static Vector2 playerSpeed  = new Vector2(0, -10);
+	public static Vector2 playerSpeed  = new Vector2(0, -20);
 
 	public Player(){
 		for(Block b : PlayerSave.activeBlocks){
@@ -88,6 +88,15 @@ public class Player {
 			}
 		}
 		checkPower();
+	}
+
+	public String toString(){
+		String playerText = "";
+		for(int i = 0; i < playerBlocks.size(); i++){
+			Block currBlock = playerBlocks.get(i);
+			playerText += currBlock.getClass() + "\n";
+		}
+		return playerText;
 	}
 
 	public void turnOnTurrets(){

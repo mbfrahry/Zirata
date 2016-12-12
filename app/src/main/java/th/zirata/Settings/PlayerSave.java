@@ -61,6 +61,7 @@ public class PlayerSave {
 			activeBlocks.clear();
 			bankedBlocks.clear();
 			for(int i = 0; i < potentialActiveBlocks.size(); i++){
+				potentialActiveBlocks.get(i).getAttributeVals();
 				activeBlocks.add(potentialActiveBlocks.get(i));
 				bankedBlocks.add(potentialActiveBlocks.get(i));
 			}
@@ -193,6 +194,20 @@ public class PlayerSave {
 		writer.value(block.blockLevel);
 		block.writeExtraInfo(writer);
 		writer.endArray();
+	}
+
+	public static String printActiveBlocks(){
+		String blockInfo = "";
+		for (int i = 0; i < activeBlocks.size(); i++){
+			Block currBlock = activeBlocks.get(i);
+			blockInfo += currBlock.getClass() + " ";
+			for (int j = 0; j < currBlock.getAttributeVals().length-1; j++){
+				float currVal = currBlock.getAttributeVals()[j];
+				blockInfo += currVal + ",";
+			}
+			blockInfo += "\n";
+		}
+		return blockInfo;
 	}
 
 	public static void reset(){

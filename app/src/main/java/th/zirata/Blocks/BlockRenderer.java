@@ -93,9 +93,9 @@ public class BlockRenderer {
         //batcher.drawSprite(x, y, width, height, Assets.textureRegions.get("TurretLevel" + tBlock.imageNums[2] + "FireRate"));
         //batcher.drawSprite(x, y, width, height, Assets.textureRegions.get("TurretLevel" + tBlock.imageNums[3] + "Range"));
         batcher.drawSprite(x, y, width, height, Assets.textureRegions.get("TurrBase" + tBlock.imageNums[0]));
-        batcher.drawSprite(x, y, width, height, angle, Assets.textureRegions.get("TurrConnector" + tBlock.imageNums[3]));
-        batcher.drawSprite(x, y, width, height, angle, Assets.textureRegions.get("TurrGuns" + tBlock.imageNums[1]));
-        batcher.drawSprite(x, y, width, height, angle, Assets.textureRegions.get("TurrMag" + tBlock.imageNums[2]));
+        batcher.drawSprite(x, y, 36, 36, angle, Assets.textureRegions.get("TurrConnector" + tBlock.imageNums[3]));
+        batcher.drawSprite(x, y, 36, 36, angle, Assets.textureRegions.get("TurrGuns" + tBlock.imageNums[1]));
+        batcher.drawSprite(x, y, 36, 36, angle, Assets.textureRegions.get("TurrMag" + tBlock.imageNums[2]));
 
         //need to draw activity marker here too
 
@@ -168,15 +168,17 @@ public class BlockRenderer {
     }
 
     private void renderGameTurret(SpriteBatcher batcher, TurretBlock tBlock){
-        Vector2 rotate = new Vector2(tBlock.lastTouch);
+        Vector2 rotate = getRotationVector(tBlock.fireAngle);
+        float angle = 0;
+        angle = rotate.sub(new Vector2(0,0)).angle()-90;
         //batcher.drawSprite(tBlock.position.x, tBlock.position.y, 24, 24, Assets.textureRegions.get("TurretLevel" + tBlock.imageNums[0] + "Base"));
         //batcher.drawSprite(tBlock.position.x, tBlock.position.y, 24, 24, Assets.textureRegions.get("TurretLevel" + tBlock.imageNums[1] + "Damage"));
         //batcher.drawSprite(tBlock.position.x, tBlock.position.y, 24, 24, Assets.textureRegions.get("TurretLevel" + tBlock.imageNums[2] + "FireRate"));
         //batcher.drawSprite(tBlock.position.x, tBlock.position.y, 24, 24, Assets.textureRegions.get("TurretLevel" + tBlock.imageNums[3] + "Range"));
-        batcher.drawSprite(tBlock.position.x, tBlock.position.y, 24, 24, Assets.textureRegions.get("TurrBase" + tBlock.imageNums[0]));
-        batcher.drawSprite(tBlock.position.x, tBlock.position.y, 36, 36, rotate.sub(tBlock.position).angle() - 90, Assets.textureRegions.get("TurrConnector" + tBlock.imageNums[3]));
-        batcher.drawSprite(tBlock.position.x, tBlock.position.y, 36, 36, rotate.sub(tBlock.position).angle() - 90, Assets.textureRegions.get("TurrGuns" + tBlock.imageNums[1]));
-        batcher.drawSprite(tBlock.position.x, tBlock.position.y, 36, 36, rotate.sub(tBlock.position).angle() - 90, Assets.textureRegions.get("TurrMag" + tBlock.imageNums[2]));
+        batcher.drawSprite(tBlock.position.x, tBlock.position.y, 24, 24,        Assets.textureRegions.get("TurrBase" + tBlock.imageNums[0]));
+        batcher.drawSprite(tBlock.position.x, tBlock.position.y, 36, 36, angle, Assets.textureRegions.get("TurrConnector" + tBlock.imageNums[3]));
+        batcher.drawSprite(tBlock.position.x, tBlock.position.y, 36, 36, angle, Assets.textureRegions.get("TurrGuns" + tBlock.imageNums[1]));
+        batcher.drawSprite(tBlock.position.x, tBlock.position.y, 36, 36, angle, Assets.textureRegions.get("TurrMag" + tBlock.imageNums[2]));
 
 
 

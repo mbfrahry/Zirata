@@ -11,6 +11,11 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <!-- Required -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Strongly recommended (for better segmentation) -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:icon="@drawable/icon"
         android:label="Zirata" >
@@ -25,6 +30,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Declare RevMob activity -->
+        <activity
+            android:name="com.revmob.FullscreenActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:theme="@android:style/Theme.Translucent" >
+        </activity>
+
+        <!-- RevMob Media ID -->
+        <meta-data
+            android:name="com.revmob.app.id"
+            android:value="560212a548821a914b806fc4" />
     </application>
 
 </manifest>

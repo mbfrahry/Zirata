@@ -105,6 +105,7 @@ public class BuildScreen extends GLScreen{
 		popupManager = new PopupManager(batcher, guiCam);
 
 		this.gameType = gameType;
+		Log.d("ActiveBlocks", potentialBlocks.get(0).printImageNums());
     }
 
 	public BuildScreen(Game game, boolean showBlockBank, Block activeBlock){

@@ -35,9 +35,6 @@ public class Hydra extends Enemy {
         Vector2 x_axis = new Vector2(160 - position.x, 240-position.y).rotate(90).nor();
         left = x_axis;
 
-        Log.d("cos/sin", world_cos + " " + world_sin);
-        Log.d("xaxis", x_axis.x + " " + x_axis.y);
-        Log.d("yaxis", y_axis.x + " " + y_axis.y);
         createHydra(x_axis, y_axis);
     }
 

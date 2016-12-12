@@ -49,7 +49,6 @@ public abstract class Block extends DynamicGameObject {
 
 	public abstract float[] getUpgradeValues();
 
-
 	public abstract void updateAttribute(int attributeIndex, float upgradeNum);
 
 	public abstract int getAttributeLevel(int attributeIndex);
@@ -137,4 +136,12 @@ public abstract class Block extends DynamicGameObject {
 	public abstract void fuseWith(Block b);
 
 	public abstract void fuseLevels(int attIndex, int levelsAdded);
+
+	public String printImageNums(){
+		String images = "";
+		for(int i = 0; i < imageNums.length -1; i++){
+		  	images += imageNums[0];
+		}
+		return images;
+	}
 }
